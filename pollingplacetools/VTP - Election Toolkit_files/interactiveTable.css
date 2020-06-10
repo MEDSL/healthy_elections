@@ -1,0 +1,54 @@
+.interactiveTableDiv {
+  position: relative;
+}
+.interactiveTableDiv td.controls {
+  max-width: 70px;
+  text-align: right;
+}
+.interactiveTableDiv .table-add {
+  cursor: pointer;
+  top: 4px;
+  right: 4px;
+}
+.interactiveTableDiv .table-add:active {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  color: #8F8;
+}
+.interactiveTableDiv tr.empty td {
+  text-align: center;
+  color: #ffffff;
+  line-height: 3em;
+  font-family: Monaco, Courier, monospace;
+}
+.interactiveTableDiv .control-hover {
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+.interactiveTableDiv .control-active {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+.interactiveTableDiv .table-remove {
+  color: #B00;
+  cursor: pointer;
+}
+.interactiveTableDiv .table-remove:hover {
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  color: #F00;
+}
+.interactiveTableDiv .table-remove:active {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  color: #F88;
+}
+.interactiveTableDiv .table-up,
+.interactiveTableDiv .table-down {
+  cursor: pointer;
+}
+.interactiveTableDiv .table-up:hover,
+.interactiveTableDiv .table-down:hover {
+  color: #00F;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+.interactiveTableDiv .table-up:active,
+.interactiveTableDiv .table-down:active {
+  color: #88F;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
