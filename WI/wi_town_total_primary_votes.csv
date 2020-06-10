@@ -1,0 +1,1620 @@
+,Town.Name,totalvotes16,totalvotes20,difference,percent_diff
+1,,NA,925065,NA,NA
+2,city of abbotsford,223,147,-76,-0.340807175
+3,city of adams,254,165,-89,-0.350393701
+4,city of algoma,603,503,-100,-0.165837479
+5,city of alma,145,134,-11,-0.075862069
+6,city of altoona,1411,1437,26,0.018426648
+7,city of amery,389,309,-80,-0.205655527
+8,city of antigo,1045,743,-302,-0.288995215
+9,city of appleton,13756,12492,-1264,-0.091887177
+10,city of arcadia,220,164,-56,-0.254545455
+11,city of ashland,1988,1406,-582,-0.292756539
+12,city of augusta,166,150,-16,-0.096385542
+13,city of baraboo,2485,2283,-202,-0.081287726
+14,city of barron,377,458,81,0.214854111
+15,city of bayfield,237,234,-3,-0.012658228
+16,city of beaver dam,2575,2261,-314,-0.121941748
+17,city of beloit,5349,3628,-1721,-0.321742382
+18,city of berlin,552,486,-66,-0.119565217
+19,city of black river falls,599,507,-92,-0.153589316
+20,city of blair,175,151,-24,-0.137142857
+21,city of bloomer,475,385,-90,-0.189473684
+22,city of boscobel,537,415,-122,-0.227188082
+23,city of brillion,365,272,-93,-0.254794521
+24,city of brodhead,503,460,-43,-0.085487078
+25,city of brookfield,5423,7143,1720,0.317167619
+26,city of buffalo city,178,143,-35,-0.196629213
+27,city of burlington,1395,1481,86,0.061648746
+28,city of cedarburg,1906,2342,436,0.228751312
+29,city of chetek,250,251,1,0.004
+30,city of chilton,517,403,-114,-0.220502901
+31,city of chippewa falls,2336,2116,-220,-0.094178082
+32,city of clintonville,537,473,-64,-0.119180633
+33,city of colby,163,173,10,0.061349693
+34,city of columbus,1055,1195,140,0.132701422
+35,city of cornell,171,150,-21,-0.122807018
+36,city of crandon,212,162,-50,-0.235849057
+37,city of cuba city,319,277,-42,-0.131661442
+38,city of cudahy,3388,2889,-499,-0.147284534
+39,city of cumberland,363,285,-78,-0.214876033
+40,city of darlington,423,390,-33,-0.078014184
+41,city of de pere,4301,3923,-378,-0.087886538
+42,city of delafield,905,1291,386,0.426519337
+43,city of delavan,1034,1037,3,0.002901354
+44,city of dodgeville,1091,925,-166,-0.152153987
+45,city of durand,239,182,-57,-0.238493724
+46,city of eagle river,193,179,-14,-0.07253886
+47,city of eau claire,15378,12870,-2508,-0.163090129
+48,city of edgerton,1295,1247,-48,-0.037065637
+49,city of elkhorn,1278,1247,-31,-0.024256651
+50,city of elroy,205,187,-18,-0.087804878
+51,city of evansville,1375,1292,-83,-0.060363636
+52,city of fennimore,334,298,-36,-0.107784431
+53,city of fitchburg,7028,8028,1000,0.142287991
+54,city of fond du lac,5687,4962,-725,-0.127483735
+55,city of fort atkinson,2114,2067,-47,-0.022232734
+56,city of fountain city,149,128,-21,-0.140939597
+57,city of fox lake,204,157,-47,-0.230392157
+58,city of franklin,5067,6080,1013,0.199921058
+59,city of galesville,262,202,-60,-0.229007634
+60,city of gillett,182,130,-52,-0.285714286
+61,city of glendale,3990,4231,241,0.060401003
+62,city of glenwood city,138,86,-52,-0.376811594
+63,city of green bay,16174,9507,-6667,-0.412204773
+64,city of green lake,138,163,25,0.18115942
+65,city of greenfield,6120,5641,-479,-0.078267974
+66,city of greenwood,170,144,-26,-0.152941176
+67,city of hartford,1406,1650,244,0.173541963
+68,city of hayward,277,225,-52,-0.187725632
+69,city of hillsboro,202,152,-50,-0.247524752
+70,city of horicon,471,415,-56,-0.118895966
+71,city of hudson,2156,2160,4,0.001855288
+72,city of hurley,237,252,15,0.063291139
+73,city of independence,146,110,-36,-0.246575342
+74,city of janesville,11676,10028,-1648,-0.141144227
+75,city of jefferson,1135,983,-152,-0.133920705
+76,city of juneau,259,259,0,0
+77,city of kaukauna,2540,2361,-179,-0.070472441
+78,city of kenosha,16503,12933,-3570,-0.216324305
+79,city of kewaunee,494,401,-93,-0.188259109
+80,city of kiel,555,479,-76,-0.136936937
+81,city of la crosse,12324,9087,-3237,-0.262658228
+82,city of ladysmith,443,380,-63,-0.14221219
+83,city of lake geneva,1045,1126,81,0.077511962
+84,city of lake mills,1228,1342,114,0.092833876
+85,city of lancaster,486,461,-25,-0.051440329
+86,city of lodi,798,804,6,0.007518797
+87,city of loyal,142,120,-22,-0.154929577
+88,city of madison,93334,89024,-4310,-0.046178242
+89,city of manawa,116,84,-32,-0.275862069
+90,city of manitowoc,4772,4058,-714,-0.1496228
+91,city of marinette,1327,1079,-248,-0.186887717
+92,city of marion,101,88,-13,-0.128712871
+93,city of markesan,132,105,-27,-0.204545455
+94,city of marshfield,2969,2620,-349,-0.117547996
+95,city of mauston,490,467,-23,-0.046938776
+96,city of mayville,724,608,-116,-0.160220994
+97,city of medford,570,498,-72,-0.126315789
+98,city of mellen,96,89,-7,-0.072916667
+99,city of menasha,3112,2661,-451,-0.144922879
+100,city of menomonie,2898,1882,-1016,-0.350586611
+101,city of mequon,4002,5252,1250,0.312343828
+102,city of merrill,1313,1109,-204,-0.155369383
+103,city of middleton,6495,7604,1109,0.170746728
+104,city of milton,1155,1026,-129,-0.111688312
+105,city of milwaukee,124450,78474,-45976,-0.369433507
+106,city of mineral point,675,667,-8,-0.011851852
+107,city of mondovi,374,292,-82,-0.219251337
+108,city of monona,3419,3331,-88,-0.02573852
+109,city of monroe,1797,1814,17,0.009460211
+110,city of montello,255,177,-78,-0.305882353
+111,city of montreal,139,176,37,0.26618705
+112,city of mosinee,700,500,-200,-0.285714286
+113,city of muskego,3156,3464,308,0.097591888
+114,city of neenah,4481,5184,703,0.156884624
+115,city of neillsville,322,312,-10,-0.031055901
+116,city of nekoosa,303,312,9,0.02970297
+117,city of new berlin,5745,6679,934,0.162576153
+118,city of new holstein,495,539,44,0.088888889
+119,city of new lisbon,147,121,-26,-0.176870748
+120,city of new london,864,747,-117,-0.135416667
+121,city of new richmond,888,1044,156,0.175675676
+122,city of niagara,135,174,39,0.288888889
+123,city of oak creek,4934,5318,384,0.077827321
+124,city of oconomowoc,2089,2822,733,0.350885591
+125,city of oconto,689,480,-209,-0.303338171
+126,city of oconto falls,339,266,-73,-0.215339233
+127,city of omro,511,510,-1,-0.001956947
+128,city of onalaska,3395,3254,-141,-0.041531664
+129,city of oshkosh,12367,8408,-3959,-0.320126142
+130,city of osseo,269,273,4,0.014869888
+131,city of owen,151,116,-35,-0.231788079
+132,city of park falls,393,295,-98,-0.249363868
+133,city of peshtigo,448,341,-107,-0.238839286
+134,city of pewaukee,1673,2347,674,0.402869097
+135,city of phillips,218,209,-9,-0.041284404
+136,city of pittsville,109,118,9,0.082568807
+137,city of platteville,2157,1509,-648,-0.300417246
+138,city of plymouth,1133,1193,60,0.052956752
+139,city of port washington,1885,2140,255,0.135278515
+140,city of portage,1643,1419,-224,-0.136335971
+141,city of prairie du chien,868,748,-120,-0.138248848
+142,city of prescott,490,444,-46,-0.093877551
+143,city of princeton,143,143,0,0
+144,city of racine,12415,10330,-2085,-0.167942006
+145,city of reedsburg,1311,1232,-79,-0.060259344
+146,city of rhinelander,1258,1071,-187,-0.148648649
+147,city of rice lake,1064,995,-69,-0.064849624
+148,city of richland center,868,730,-138,-0.158986175
+149,city of ripon,1213,994,-219,-0.180544106
+150,city of river falls,2291,2319,28,0.012221737
+151,city of schofield,336,273,-63,-0.1875
+152,city of seymour,426,401,-25,-0.058685446
+153,city of shawano,1178,897,-281,-0.238539898
+154,city of sheboygan,7399,6142,-1257,-0.169887823
+155,city of sheboygan falls,1244,1326,82,0.065916399
+156,city of shell lake,242,274,32,0.132231405
+157,city of shullsburg,197,239,42,0.21319797
+158,city of south milwaukee,3633,3322,-311,-0.085604184
+159,city of sparta,1284,1091,-193,-0.150311526
+160,city of spooner,377,261,-116,-0.307692308
+161,city of st. croix falls,291,364,73,0.250859107
+162,city of st. francis,2078,2044,-34,-0.016361886
+163,city of stanley,257,229,-28,-0.108949416
+164,city of stevens point,6556,4896,-1660,-0.253203173
+165,city of stoughton,3377,3508,131,0.038791827
+166,city of sturgeon bay,1964,1933,-31,-0.015784114
+167,city of sun prairie,6752,7924,1172,0.173578199
+168,city of superior,4676,4031,-645,-0.137938409
+169,city of thorp,189,158,-31,-0.164021164
+170,city of tomah,1288,988,-300,-0.232919255
+171,city of tomahawk,549,414,-135,-0.245901639
+172,city of two rivers,1779,1455,-324,-0.182124789
+173,city of verona,3352,4198,846,0.252386635
+174,city of viroqua,1025,1017,-8,-0.007804878
+175,city of washburn,669,719,50,0.074738416
+176,city of waterloo,536,540,4,0.007462687
+177,city of watertown,2724,2478,-246,-0.09030837
+178,city of waukesha,9526,10016,490,0.051438169
+179,city of waupaca,833,753,-80,-0.096038415
+180,city of waupun,1002,896,-106,-0.105788423
+181,city of wausau,6480,5909,-571,-0.088117284
+182,city of wautoma,214,158,-56,-0.261682243
+183,city of wauwatosa,11419,13964,2545,0.222874157
+184,city of west allis,9996,8444,-1552,-0.155262105
+185,city of west bend,3558,3819,261,0.073355818
+186,city of westby,479,385,-94,-0.196242171
+187,city of weyauwega,196,147,-49,-0.25
+188,city of whitehall,287,227,-60,-0.209059233
+189,city of whitewater,2725,1415,-1310,-0.480733945
+190,city of wisconsin dells,411,356,-55,-0.133819951
+191,city of wisconsin rapids,2748,2515,-233,-0.084788937
+192,town of abrams,230,221,-9,-0.039130435
+193,town of ackley,80,52,-28,-0.35
+194,town of adams,559,500,-59,-0.105545617
+195,town of addison,309,310,1,0.003236246
+196,town of adrian,90,87,-3,-0.033333333
+197,town of agenda,52,49,-3,-0.057692308
+198,town of ahnapee,159,122,-37,-0.232704403
+199,town of ainsworth,62,44,-18,-0.290322581
+200,town of akan,74,54,-20,-0.27027027
+201,town of alban,170,149,-21,-0.123529412
+202,town of albany,339,296,-43,-0.126843658
+203,town of albion,805,677,-128,-0.159006211
+204,town of alden,231,329,98,0.424242424
+205,town of algoma,1275,1216,-59,-0.04627451
+206,town of alma,203,154,-49,-0.24137931
+207,town of almena,98,83,-15,-0.153061224
+208,town of almon,67,43,-24,-0.358208955
+209,town of almond,109,83,-26,-0.23853211
+210,town of alto,71,53,-18,-0.253521127
+211,town of alvin,21,18,-3,-0.142857143
+212,town of amberg,118,66,-52,-0.440677966
+213,town of amherst,274,267,-7,-0.025547445
+214,town of amnicon,238,199,-39,-0.163865546
+215,town of anderson,51,56,5,0.098039216
+216,town of angelica,187,139,-48,-0.256684492
+217,town of angelo,151,107,-44,-0.291390728
+218,town of aniwa,59,38,-21,-0.355932203
+219,town of anson,344,346,2,0.005813953
+220,town of antigo,169,151,-18,-0.106508876
+221,town of apple river,132,124,-8,-0.060606061
+222,town of arbor vitae,569,541,-28,-0.049209139
+223,town of arcadia,291,203,-88,-0.302405498
+224,town of arena,389,321,-68,-0.174807198
+225,town of argonne,55,56,1,0.018181818
+226,town of argyle,97,70,-27,-0.278350515
+227,town of arland,80,76,-4,-0.05
+228,town of arlington,159,157,-2,-0.012578616
+229,town of armenia,98,77,-21,-0.214285714
+230,town of armstrong creek,66,55,-11,-0.166666667
+231,town of arpin,119,93,-26,-0.218487395
+232,town of arthur,93,70,-23,-0.247311828
+233,town of ashford,175,169,-6,-0.034285714
+234,town of ashippun,282,261,-21,-0.074468085
+235,town of ashland,112,103,-9,-0.080357143
+236,town of athelstane,97,50,-47,-0.484536082
+237,town of atlanta,91,70,-21,-0.230769231
+238,town of auburn,310,303,-7,-0.022580645
+239,town of auburndale,88,56,-32,-0.363636364
+240,town of aurora,239,215,-24,-0.10041841
+241,town of avon,111,92,-19,-0.171171171
+242,town of aztalan,251,205,-46,-0.183266932
+243,town of bagley,41,20,-21,-0.512195122
+244,town of baileys harbor,346,378,32,0.092485549
+245,town of baldwin,98,105,7,0.071428571
+246,town of balsam lake,161,152,-9,-0.055900621
+247,town of bangor,92,91,-1,-0.010869565
+248,town of baraboo,401,401,0,0
+249,town of barksdale,189,191,2,0.010582011
+250,town of barnes,187,173,-14,-0.07486631
+251,town of barre,184,155,-29,-0.157608696
+252,town of barron,74,77,3,0.040540541
+253,town of barronett,61,45,-16,-0.262295082
+254,town of bartelme,202,115,-87,-0.430693069
+255,town of barton,320,324,4,0.0125
+256,town of bashaw,152,131,-21,-0.138157895
+257,town of bass lake,579,439,-140,-0.2417962
+258,town of bayfield,269,276,7,0.026022305
+259,town of bayview,154,146,-8,-0.051948052
+260,town of bear bluff,9,3,-6,-0.666666667
+261,town of bear creek,238,173,-65,-0.273109244
+262,town of bear lake,89,96,7,0.078651685
+263,town of beaver,274,221,-53,-0.193430657
+264,town of beaver brook,105,110,5,0.047619048
+265,town of beaver dam,592,593,1,0.001689189
+266,town of beecher,86,86,0,0
+267,town of beetown,48,39,-9,-0.1875
+268,town of belgium,175,193,18,0.102857143
+269,town of bell,98,130,32,0.326530612
+270,town of belle plaine,233,201,-32,-0.137339056
+271,town of belmont,171,185,14,0.081871345
+272,town of beloit,1328,1065,-263,-0.198042169
+273,town of belvidere,80,60,-20,-0.25
+274,town of bennett,128,108,-20,-0.15625
+275,town of benton,55,51,-4,-0.072727273
+276,town of bergen,391,348,-43,-0.109974425
+277,town of berlin,230,216,-14,-0.060869565
+278,town of bern,63,39,-24,-0.380952381
+279,town of berry,307,324,17,0.055374593
+280,town of bevent,199,154,-45,-0.226130653
+281,town of big bend,72,68,-4,-0.055555556
+282,town of big falls,20,23,3,0.15
+283,town of big flats,145,106,-39,-0.268965517
+284,town of birch,65,56,-9,-0.138461538
+285,town of birch creek,84,78,-6,-0.071428571
+286,town of birchwood,77,65,-12,-0.155844156
+287,town of birnamwood,89,68,-21,-0.235955056
+288,town of black brook,128,133,5,0.0390625
+289,town of black creek,132,113,-19,-0.143939394
+290,town of black earth,149,167,18,0.120805369
+291,town of black wolf,425,438,13,0.030588235
+292,town of blackwell,15,8,-7,-0.466666667
+293,town of blaine,27,19,-8,-0.296296296
+294,town of blanchard,61,69,8,0.131147541
+295,town of bloom,93,72,-21,-0.225806452
+296,town of bloomer,113,100,-13,-0.115044248
+297,town of bloomfield,254,229,-25,-0.098425197
+298,town of blooming grove,561,500,-61,-0.108734403
+299,town of bloomington,41,35,-6,-0.146341463
+300,town of blue mounds,270,270,0,0
+301,town of bone lake,108,108,0,0
+302,town of boscobel,82,50,-32,-0.390243902
+303,town of boulder junction,179,208,29,0.162011173
+304,town of bovina,158,92,-66,-0.417721519
+305,town of bradford,143,145,2,0.013986014
+306,town of bradley,423,396,-27,-0.063829787
+307,town of brazeau,181,131,-50,-0.276243094
+308,town of breed,67,71,4,0.059701493
+309,town of bridge creek,173,157,-16,-0.092485549
+310,town of bridgeport,146,138,-8,-0.054794521
+311,town of brigham,297,298,1,0.003367003
+312,town of brighton,237,226,-11,-0.046413502
+313,town of brillion,191,140,-51,-0.267015707
+314,town of bristol,807,921,114,0.141263941
+315,town of brockway,315,273,-42,-0.133333333
+316,town of brookfield,941,1131,190,0.201912859
+317,town of brooklyn,611,669,58,0.09492635
+318,town of brothertown,165,118,-47,-0.284848485
+319,town of browning,87,56,-31,-0.356321839
+320,town of brule,136,144,8,0.058823529
+321,town of brunswick,353,376,23,0.065155807
+322,town of brussels,190,132,-58,-0.305263158
+323,town of buchanan,989,1093,104,0.105156724
+324,town of buena vista,447,316,-131,-0.293064877
+325,town of buffalo,311,263,-48,-0.154340836
+326,town of burke,842,802,-40,-0.047505938
+327,town of burlington,750,740,-10,-0.013333333
+328,town of burnett,113,95,-18,-0.159292035
+329,town of burns,144,136,-8,-0.055555556
+330,town of burnside,74,54,-20,-0.27027027
+331,town of butler,16,19,3,0.1875
+332,town of byron,348,256,-92,-0.264367816
+333,town of cable,165,189,24,0.145454545
+334,town of cadiz,116,121,5,0.043103448
+335,town of cady,99,92,-7,-0.070707071
+336,town of calamus,150,142,-8,-0.053333333
+337,town of caledonia,665,665,0,0
+338,town of calumet,195,162,-33,-0.169230769
+339,town of cameron,72,66,-6,-0.083333333
+340,town of campbell,824,829,5,0.006067961
+341,town of canton,58,46,-12,-0.206896552
+342,town of carey,19,22,3,0.157894737
+343,town of carlton,141,127,-14,-0.09929078
+344,town of carson,226,196,-30,-0.132743363
+345,town of cary,59,65,6,0.101694915
+346,town of casco,167,119,-48,-0.28742515
+347,town of casey,65,75,10,0.153846154
+348,town of cassel,122,101,-21,-0.172131148
+349,town of cassian,211,195,-16,-0.075829384
+350,town of cassville,43,43,0,0
+351,town of castle rock,49,49,0,0
+352,town of caswell,11,11,0,0
+353,town of catawba,38,46,8,0.210526316
+354,town of cato,197,188,-9,-0.045685279
+355,town of cedar lake,188,162,-26,-0.138297872
+356,town of cedar rapids,7,7,0,0
+357,town of cedarburg,784,1029,245,0.3125
+358,town of center,686,642,-44,-0.064139942
+359,town of centerville,88,87,-1,-0.011363636
+360,town of charlestown,101,82,-19,-0.188118812
+361,town of chase,332,346,14,0.042168675
+362,town of chelsea,81,64,-17,-0.209876543
+363,town of chester,79,62,-17,-0.215189873
+364,town of chetek,236,243,7,0.029661017
+365,town of chicog,59,49,-10,-0.169491525
+366,town of chilton,134,91,-43,-0.320895522
+367,town of chimney rock,47,49,2,0.042553191
+368,town of chippewa,56,52,-4,-0.071428571
+369,town of christiana,454,444,-10,-0.022026432
+370,town of cicero,138,110,-28,-0.202898551
+371,town of city point,34,19,-15,-0.441176471
+372,town of clam falls,61,67,6,0.098360656
+373,town of clarno,187,159,-28,-0.14973262
+374,town of clay banks,94,89,-5,-0.053191489
+375,town of clayton,862,976,114,0.13225058
+376,town of clear creek,135,110,-25,-0.185185185
+377,town of clear lake,76,62,-14,-0.184210526
+378,town of clearfield,85,86,1,0.011764706
+379,town of cleveland,411,310,-101,-0.245742092
+380,town of clifton,403,440,37,0.091811414
+381,town of clinton,249,193,-56,-0.224899598
+382,town of clover,82,83,1,0.012195122
+383,town of cloverland,189,173,-16,-0.084656085
+384,town of clyde,101,94,-7,-0.069306931
+385,town of clyman,74,61,-13,-0.175675676
+386,town of colburn,105,106,1,0.00952381
+387,town of colby,50,45,-5,-0.1
+388,town of cold spring,133,120,-13,-0.097744361
+389,town of colfax,147,144,-3,-0.020408163
+390,town of coloma,108,93,-15,-0.138888889
+391,town of columbus,105,114,9,0.085714286
+392,town of commonwealth,44,43,-1,-0.022727273
+393,town of concord,236,262,26,0.110169492
+394,town of conover,196,193,-3,-0.015306122
+395,town of cooks valley,95,85,-10,-0.105263158
+396,town of coon,178,130,-48,-0.269662921
+397,town of cooperstown,200,148,-52,-0.26
+398,town of corning,99,78,-21,-0.212121212
+399,town of cottage grove,1078,1050,-28,-0.025974026
+400,town of couderay,47,42,-5,-0.106382979
+401,town of courtland,52,46,-6,-0.115384615
+402,town of crandon,92,84,-8,-0.086956522
+403,town of cranmoor,22,31,9,0.409090909
+404,town of crescent,415,372,-43,-0.103614458
+405,town of cross,42,43,1,0.023809524
+406,town of cross plains,409,484,75,0.183374083
+407,town of crystal,41,29,-12,-0.292682927
+408,town of crystal lake,184,151,-33,-0.179347826
+409,town of cumberland,122,85,-37,-0.303278689
+410,town of curran,64,50,-14,-0.21875
+411,town of cutler,53,31,-22,-0.41509434
+412,town of cylon,58,57,-1,-0.017241379
+413,town of dairyland,17,14,-3,-0.176470588
+414,town of dakota,93,113,20,0.215053763
+415,town of dale,315,301,-14,-0.044444444
+416,town of dallas,66,50,-16,-0.242424242
+417,town of dane,181,164,-17,-0.093922652
+418,town of daniels,78,64,-14,-0.179487179
+419,town of darien,191,157,-34,-0.178010471
+420,town of darlington,165,130,-35,-0.212121212
+421,town of day,141,93,-48,-0.340425532
+422,town of dayton,546,503,-43,-0.078754579
+423,town of decatur,290,261,-29,-0.1
+424,town of deer creek,136,61,-75,-0.551470588
+425,town of deerfield,455,482,27,0.059340659
+426,town of dekorra,517,514,-3,-0.005802708
+427,town of delafield,888,1415,527,0.593468468
+428,town of delavan,649,704,55,0.084745763
+429,town of dell prairie,239,197,-42,-0.175732218
+430,town of dellona,260,242,-18,-0.069230769
+431,town of delmar,115,110,-5,-0.043478261
+432,town of delta,70,94,24,0.342857143
+433,town of delton,416,416,0,0
+434,town of dewey,337,274,-63,-0.18694362
+435,town of dewhurst,57,45,-12,-0.210526316
+436,town of dexter,72,60,-12,-0.166666667
+437,town of diamond bluff,72,57,-15,-0.208333333
+438,town of dodge,84,67,-17,-0.202380952
+439,town of dodgeville,407,436,29,0.071253071
+440,town of doty,49,49,0,0
+441,town of douglas,146,126,-20,-0.136986301
+442,town of dover,470,422,-48,-0.10212766
+443,town of dovre,107,95,-12,-0.112149533
+444,town of doyle,56,53,-3,-0.053571429
+445,town of drammen,144,118,-26,-0.180555556
+446,town of draper,43,37,-6,-0.139534884
+447,town of drummond,129,118,-11,-0.085271318
+448,town of dunbar,75,63,-12,-0.16
+449,town of dunkirk,552,513,-39,-0.070652174
+450,town of dunn,1697,1794,97,0.057159694
+451,town of dupont,60,40,-20,-0.333333333
+452,town of durand,69,83,14,0.202898551
+453,town of eagle,474,553,79,0.166666667
+454,town of eagle point,504,492,-12,-0.023809524
+455,town of east troy,492,526,34,0.069105691
+456,town of eastman,82,93,11,0.134146341
+457,town of easton,275,240,-35,-0.127272727
+458,town of eaton,426,335,-91,-0.213615023
+459,town of eau galle,220,231,11,0.05
+460,town of eau pleine,245,241,-4,-0.016326531
+461,town of eden,177,175,-2,-0.011299435
+462,town of edgewater,76,78,2,0.026315789
+463,town of edson,119,80,-39,-0.327731092
+464,town of egg harbor,281,328,47,0.167259786
+465,town of eileen,144,126,-18,-0.125
+466,town of eisenstein,122,98,-24,-0.196721311
+467,town of el paso,92,79,-13,-0.141304348
+468,town of elba,172,196,24,0.139534884
+469,town of elcho,170,159,-11,-0.064705882
+470,town of elderon,88,71,-17,-0.193181818
+471,town of eldorado,162,147,-15,-0.092592593
+472,town of elk,163,224,61,0.374233129
+473,town of elk grove,42,35,-7,-0.166666667
+474,town of elk mound,223,253,30,0.134529148
+475,town of ellenboro,64,25,-39,-0.609375
+476,town of ellington,307,259,-48,-0.156351792
+477,town of ellsworth,171,140,-31,-0.18128655
+478,town of emerald,76,88,12,0.157894737
+479,town of emery,56,64,8,0.142857143
+480,town of emmet,281,239,-42,-0.149466192
+481,town of empire,381,421,40,0.104986877
+482,town of enterprise,66,34,-32,-0.484848485
+483,town of erin,393,474,81,0.20610687
+484,town of erin prairie,87,87,0,0
+485,town of estella,47,38,-9,-0.191489362
+486,town of ettrick,240,206,-34,-0.141666667
+487,town of eureka,159,184,25,0.157232704
+488,town of evergreen,248,233,-15,-0.060483871
+489,town of excelsior,279,309,30,0.107526882
+490,town of exeter,504,527,23,0.045634921
+491,town of fairbanks,53,49,-4,-0.075471698
+492,town of fairchild,33,29,-4,-0.121212121
+493,town of fairfield,274,242,-32,-0.116788321
+494,town of farmington,1612,1642,30,0.018610422
+495,town of fayette,71,36,-35,-0.492957746
+496,town of fence,22,22,0,0
+497,town of fennimore,64,41,-23,-0.359375
+498,town of fern,19,13,-6,-0.315789474
+499,town of fifield,170,143,-27,-0.158823529
+500,town of finley,12,8,-4,-0.333333333
+501,town of flambeau,221,175,-46,-0.208144796
+502,town of florence,223,238,15,0.067264574
+503,town of fond du lac,483,516,33,0.068322981
+504,town of ford,28,21,-7,-0.25
+505,town of forest,333,278,-55,-0.165165165
+506,town of forestville,163,157,-6,-0.036809816
+507,town of fort winnebago,152,125,-27,-0.177631579
+508,town of foster,18,15,-3,-0.166666667
+509,town of fountain,88,73,-15,-0.170454545
+510,town of fountain prairie,161,171,10,0.062111801
+511,town of fox lake,156,130,-26,-0.166666667
+512,town of frankfort,141,94,-47,-0.333333333
+513,town of franklin,714,612,-102,-0.142857143
+514,town of franzen,78,53,-25,-0.320512821
+515,town of fredonia,194,185,-9,-0.046391753
+516,town of freedom,925,802,-123,-0.132972973
+517,town of freeman,148,139,-9,-0.060810811
+518,town of fremont,187,143,-44,-0.235294118
+519,town of friendship,309,266,-43,-0.139158576
+520,town of frog creek,13,17,4,0.307692308
+521,town of fulton,702,704,2,0.002849003
+522,town of gale,269,236,-33,-0.12267658
+523,town of garden valley,58,55,-3,-0.051724138
+524,town of gardner,206,196,-10,-0.048543689
+525,town of garfield,232,256,24,0.103448276
+526,town of genesee,936,1184,248,0.264957265
+527,town of geneva,656,766,110,0.167682927
+528,town of genoa,161,142,-19,-0.118012422
+529,town of georgetown,160,146,-14,-0.0875
+530,town of germania,47,39,-8,-0.170212766
+531,town of germantown,206,244,38,0.184466019
+532,town of gibraltar,323,380,57,0.176470588
+533,town of gibson,199,138,-61,-0.306532663
+534,town of gillett,117,61,-56,-0.478632479
+535,town of gilman,147,154,7,0.047619048
+536,town of gilmanton,63,42,-21,-0.333333333
+537,town of gingles,169,135,-34,-0.201183432
+538,town of glen haven,35,28,-7,-0.2
+539,town of glencoe,59,45,-14,-0.237288136
+540,town of glendale,75,69,-6,-0.08
+541,town of glenmore,136,122,-14,-0.102941176
+542,town of glenwood,69,45,-24,-0.347826087
+543,town of goetz,121,135,14,0.115702479
+544,town of goodman,104,100,-4,-0.038461538
+545,town of goodrich,45,32,-13,-0.288888889
+546,town of gordon,174,137,-37,-0.212643678
+547,town of grafton,639,728,89,0.139280125
+548,town of grand chute,3317,3485,168,0.050648176
+549,town of grand rapids,1302,1255,-47,-0.03609831
+550,town of grand view,112,114,2,0.017857143
+551,town of grant,701,605,-96,-0.136947218
+552,town of grantsburg,104,86,-18,-0.173076923
+553,town of gratiot,71,59,-12,-0.169014085
+554,town of green bay,264,267,3,0.011363636
+555,town of green grove,51,38,-13,-0.254901961
+556,town of green lake,111,105,-6,-0.054054054
+557,town of green valley,214,161,-53,-0.247663551
+558,town of greenbush,217,220,3,0.013824885
+559,town of greenfield,692,733,41,0.059248555
+560,town of greenville,1201,1416,215,0.179017485
+561,town of greenwood,138,118,-20,-0.144927536
+562,town of grover,248,157,-91,-0.366935484
+563,town of grow,31,21,-10,-0.322580645
+564,town of guenther,50,53,3,0.06
+565,town of gull lake,46,32,-14,-0.304347826
+566,town of gurney,36,33,-3,-0.083333333
+567,town of hackett,34,24,-10,-0.294117647
+568,town of hale,189,153,-36,-0.19047619
+569,town of hallie,38,52,14,0.368421053
+570,town of halsey,60,44,-16,-0.266666667
+571,town of hamburg,293,241,-52,-0.177474403
+572,town of hamilton,423,384,-39,-0.092198582
+573,town of hammel,86,59,-27,-0.313953488
+574,town of hammond,166,200,34,0.204819277
+575,town of hampden,125,117,-8,-0.064
+576,town of hancock,59,62,3,0.050847458
+577,town of haney,77,60,-17,-0.220779221
+578,town of hansen,87,88,1,0.011494253
+579,town of harding,58,55,-3,-0.051724138
+580,town of harmony,674,692,18,0.026706231
+581,town of harris,128,120,-8,-0.0625
+582,town of harrison,516,280,-236,-0.457364341
+583,town of hartford,350,363,13,0.037142857
+584,town of hartland,140,105,-35,-0.25
+585,town of hawkins,22,21,-1,-0.045454545
+586,town of hawthorne,169,140,-29,-0.171597633
+587,town of hay river,95,77,-18,-0.189473684
+588,town of hayward,504,490,-14,-0.027777778
+589,town of hazel green,244,255,11,0.045081967
+590,town of hazelhurst,263,250,-13,-0.049429658
+591,town of hebron,158,138,-20,-0.126582278
+592,town of helvetia,80,69,-11,-0.1375
+593,town of hendren,59,52,-7,-0.118644068
+594,town of henrietta,102,90,-12,-0.117647059
+595,town of herman,410,324,-86,-0.209756098
+596,town of hewett,45,43,-2,-0.044444444
+597,town of hewitt,71,50,-21,-0.295774648
+598,town of hickory grove,52,38,-14,-0.269230769
+599,town of highland,193,198,5,0.025906736
+600,town of hiles,78,76,-2,-0.025641026
+601,town of hill,42,42,0,0
+602,town of hillsboro,80,72,-8,-0.1
+603,town of hixon,64,49,-15,-0.234375
+604,town of hixton,80,76,-4,-0.05
+605,town of hoard,64,54,-10,-0.15625
+606,town of holland,1130,1127,-3,-0.002654867
+607,town of holton,75,59,-16,-0.213333333
+608,town of holway,58,44,-14,-0.24137931
+609,town of homestead,38,31,-7,-0.184210526
+610,town of honey creek,152,162,10,0.065789474
+611,town of hortonia,122,138,16,0.131147541
+612,town of how,64,56,-8,-0.125
+613,town of howard,131,120,-11,-0.083969466
+614,town of hubbard,258,251,-7,-0.027131783
+615,town of hudson,1192,1092,-100,-0.083892617
+616,town of hughes,82,88,6,0.073170732
+617,town of hull,1226,1126,-100,-0.081566069
+618,town of humboldt,187,161,-26,-0.139037433
+619,town of hunter,131,107,-24,-0.183206107
+620,town of hustisford,143,134,-9,-0.062937063
+621,town of hutchins,66,53,-13,-0.196969697
+622,town of iola,128,127,-1,-0.0078125
+623,town of iron river,241,211,-30,-0.124481328
+624,town of ironton,77,64,-13,-0.168831169
+625,town of irving,127,92,-35,-0.275590551
+626,town of isabelle,41,26,-15,-0.365853659
+627,town of ithaca,105,88,-17,-0.161904762
+628,town of ixonia,476,585,109,0.228991597
+629,town of jackson,696,780,84,0.120689655
+630,town of jacksonport,175,179,4,0.022857143
+631,town of jacobs,99,66,-33,-0.333333333
+632,town of jamestown,203,266,63,0.310344828
+633,town of janesville,742,791,49,0.066037736
+634,town of jefferson,748,681,-67,-0.089572193
+635,town of johnson,85,66,-19,-0.223529412
+636,town of johnstown,218,186,-32,-0.146788991
+637,town of jordan,113,96,-17,-0.150442478
+638,town of jump river,34,34,0,0
+639,town of kaukauna,152,136,-16,-0.105263158
+640,town of kelly,67,73,6,0.089552239
+641,town of kendall,46,42,-4,-0.086956522
+642,town of kennan,49,38,-11,-0.224489796
+643,town of kewaskum,111,112,1,0.009009009
+644,town of keystone,77,60,-17,-0.220779221
+645,town of kickapoo,118,98,-20,-0.169491525
+646,town of kildare,96,69,-27,-0.28125
+647,town of kimball,71,112,41,0.577464789
+648,town of king,190,178,-12,-0.063157895
+649,town of kingston,58,44,-14,-0.24137931
+650,town of kinnickinnic,272,295,23,0.084558824
+651,town of knapp,47,39,-8,-0.170212766
+652,town of knight,36,37,1,0.027777778
+653,town of knowlton,315,276,-39,-0.123809524
+654,town of knox,62,57,-5,-0.080645161
+655,town of komensky,98,58,-40,-0.408163265
+656,town of koshkonong,536,571,35,0.065298507
+657,town of kossuth,287,220,-67,-0.233449477
+658,town of la follette,76,77,1,0.013157895
+659,town of la grange,575,586,11,0.019130435
+660,town of la pointe,178,179,1,0.005617978
+661,town of la prairie,137,118,-19,-0.138686131
+662,town of la valle,225,232,7,0.031111111
+663,town of lac du flambeau,589,458,-131,-0.222410866
+664,town of lafayette,1257,1424,167,0.132856006
+665,town of lake,367,308,-59,-0.160762943
+666,town of lake holcombe,176,120,-56,-0.318181818
+667,town of lake mills,422,550,128,0.303317536
+668,town of lake tomahawk,169,178,9,0.053254438
+669,town of lakeland,137,112,-25,-0.182481752
+670,town of lakeside,123,107,-16,-0.130081301
+671,town of laketown,110,144,34,0.309090909
+672,town of lakewood,129,124,-5,-0.03875969
+673,town of lamartine,191,179,-12,-0.062827225
+674,town of lamont,56,57,1,0.017857143
+675,town of lanark,311,262,-49,-0.15755627
+676,town of land o-lakes,154,157,3,0.019480519
+677,town of langlade,74,57,-17,-0.22972973
+678,town of laona,173,132,-41,-0.23699422
+679,town of larrabee,159,136,-23,-0.144654088
+680,town of lawrence,685,821,136,0.198540146
+681,town of lebanon,363,349,-14,-0.038567493
+682,town of ledgeview,993,1331,338,0.340382679
+683,town of leeds,167,154,-13,-0.077844311
+684,town of lemonweir,209,191,-18,-0.086124402
+685,town of lena,96,50,-46,-0.479166667
+686,town of lenroot,244,228,-16,-0.06557377
+687,town of leola,19,17,-2,-0.105263158
+688,town of leon,318,253,-65,-0.204402516
+689,town of leroy,92,75,-17,-0.184782609
+690,town of lessor,116,97,-19,-0.163793103
+691,town of levis,50,52,2,0.04
+692,town of lewiston,262,200,-62,-0.236641221
+693,town of liberty,387,345,-42,-0.108527132
+694,town of liberty grove,586,619,33,0.056313993
+695,town of lima,680,714,34,0.05
+696,town of lincoln,1676,1623,-53,-0.031622912
+697,town of lind,163,155,-8,-0.049079755
+698,town of linden,128,104,-24,-0.1875
+699,town of lindina,123,125,2,0.016260163
+700,town of linn,296,334,38,0.128378378
+701,town of linwood,213,189,-24,-0.112676056
+702,town of lisbon,1296,1443,147,0.113425926
+703,town of little black,109,83,-26,-0.23853211
+704,town of little falls,208,158,-50,-0.240384615
+705,town of little grant,34,19,-15,-0.441176471
+706,town of little rice,40,51,11,0.275
+707,town of little river,151,100,-51,-0.337748344
+708,town of little suamico,620,587,-33,-0.053225806
+709,town of little wolf,118,120,2,0.016949153
+710,town of lodi,689,704,15,0.021770682
+711,town of lomira,89,91,2,0.02247191
+712,town of long lake,144,129,-15,-0.104166667
+713,town of longwood,54,39,-15,-0.277777778
+714,town of lorain,28,39,11,0.392857143
+715,town of lowell,129,115,-14,-0.108527132
+716,town of lowville,227,187,-40,-0.176211454
+717,town of loyal,46,38,-8,-0.173913043
+718,town of lucas,111,94,-17,-0.153153153
+719,town of luck,120,125,5,0.041666667
+720,town of ludington,168,144,-24,-0.142857143
+721,town of luxemburg,158,103,-55,-0.348101266
+722,town of lyndon,406,392,-14,-0.034482759
+723,town of lynn,61,38,-23,-0.37704918
+724,town of lynne,19,13,-6,-0.315789474
+725,town of lyons,412,409,-3,-0.007281553
+726,town of mackford,38,27,-11,-0.289473684
+727,town of madge,113,99,-14,-0.123893805
+728,town of madison,1500,1282,-218,-0.145333333
+729,town of magnolia,136,141,5,0.036764706
+730,town of maiden rock,69,63,-6,-0.086956522
+731,town of maine,118,83,-35,-0.296610169
+732,town of manchester,162,148,-14,-0.086419753
+733,town of manitowish waters,93,116,23,0.247311828
+734,town of manitowoc,166,152,-14,-0.084337349
+735,town of manitowoc rapids,344,364,20,0.058139535
+736,town of maple,172,155,-17,-0.098837209
+737,town of maple creek,54,59,5,0.092592593
+738,town of maple grove,275,236,-39,-0.141818182
+739,town of maple plain,144,124,-20,-0.138888889
+740,town of maple valley,81,66,-15,-0.185185185
+741,town of maplehurst,32,30,-2,-0.0625
+742,town of marathon,135,101,-34,-0.251851852
+743,town of marcellon,156,150,-6,-0.038461538
+744,town of marengo,99,87,-12,-0.121212121
+745,town of marietta,85,71,-14,-0.164705882
+746,town of marion,403,350,-53,-0.131513648
+747,town of marquette,58,59,1,0.017241379
+748,town of marshall,134,134,0,0
+749,town of marshfield,218,206,-12,-0.055045872
+750,town of martell,171,182,11,0.064327485
+751,town of mason,60,49,-11,-0.183333333
+752,town of matteson,102,85,-17,-0.166666667
+753,town of maxville,31,32,1,0.032258065
+754,town of mayville,62,58,-4,-0.064516129
+755,town of mazomanie,277,258,-19,-0.068592058
+756,town of mckinley,70,53,-17,-0.242857143
+757,town of mcmillan,301,301,0,0
+758,town of mead,42,25,-17,-0.404761905
+759,town of meadowbrook,15,6,-9,-0.6
+760,town of mecan,113,85,-28,-0.247787611
+761,town of medary,319,355,36,0.112852665
+762,town of medford,250,180,-70,-0.28
+763,town of medina,345,295,-50,-0.144927536
+764,town of meeme,203,188,-15,-0.073891626
+765,town of meenon,87,92,5,0.057471264
+766,town of melrose,65,42,-23,-0.353846154
+767,town of menasha,2947,NA,NA,NA
+768,town of menominee,561,293,-268,-0.47771836
+769,town of menomonie,521,504,-17,-0.032629559
+770,town of mentor,53,46,-7,-0.132075472
+771,town of mercer,257,288,31,0.120622568
+772,town of merrill,426,345,-81,-0.190140845
+773,town of merrimac,209,273,64,0.306220096
+774,town of merton,751,1081,330,0.439414115
+775,town of meteor,22,18,-4,-0.181818182
+776,town of metomen,84,68,-16,-0.19047619
+777,town of middle inlet,126,115,-11,-0.087301587
+778,town of middleton,1579,2039,460,0.291323623
+779,town of mifflin,95,66,-29,-0.305263158
+780,town of milford,156,176,20,0.128205128
+781,town of milladore,104,85,-19,-0.182692308
+782,town of millston,32,25,-7,-0.21875
+783,town of milltown,140,145,5,0.035714286
+784,town of millville,49,23,-26,-0.530612245
+785,town of milton,578,664,86,0.148788927
+786,town of mineral point,158,185,27,0.170886076
+787,town of minocqua,700,800,100,0.142857143
+788,town of minong,115,126,11,0.095652174
+789,town of mishicot,168,131,-37,-0.220238095
+790,town of mitchell,171,152,-19,-0.111111111
+791,town of modena,66,43,-23,-0.348484848
+792,town of molitor,43,36,-7,-0.162790698
+793,town of mondovi,60,54,-6,-0.1
+794,town of monico,28,25,-3,-0.107142857
+795,town of monroe,314,290,-24,-0.076433121
+796,town of montana,31,23,-8,-0.258064516
+797,town of montello,187,142,-45,-0.240641711
+798,town of monticello,4,6,2,0.5
+799,town of montpelier,211,137,-74,-0.3507109
+800,town of montrose,368,342,-26,-0.070652174
+801,town of morgan,121,123,2,0.016528926
+802,town of morris,74,51,-23,-0.310810811
+803,town of morrison,147,127,-20,-0.136054422
+804,town of morse,103,82,-21,-0.203883495
+805,town of moscow,157,155,-2,-0.012738854
+806,town of mosel,121,105,-16,-0.132231405
+807,town of mosinee,332,265,-67,-0.201807229
+808,town of moundville,83,67,-16,-0.192771084
+809,town of mount hope,31,15,-16,-0.516129032
+810,town of mount ida,62,60,-2,-0.032258065
+811,town of mount morris,176,177,1,0.005681818
+812,town of mount pleasant,145,140,-5,-0.034482759
+813,town of mountain,135,132,-3,-0.022222222
+814,town of mukwa,440,373,-67,-0.152272727
+815,town of mukwonago,914,990,76,0.083150985
+816,town of murry,28,27,-1,-0.035714286
+817,town of muscoda,87,33,-54,-0.620689655
+818,town of namakagon,71,79,8,0.112676056
+819,town of naples,81,103,22,0.271604938
+820,town of nasewaupee,372,363,-9,-0.024193548
+821,town of nashville,173,148,-25,-0.144508671
+822,town of navarino,53,43,-10,-0.188679245
+823,town of necedah,227,208,-19,-0.083700441
+824,town of neenah,652,796,144,0.220858896
+825,town of nekimi,180,177,-3,-0.016666667
+826,town of nelson,68,61,-7,-0.102941176
+827,town of nepeuskun,104,88,-16,-0.153846154
+828,town of neshkoro,77,63,-14,-0.181818182
+829,town of neva,132,91,-41,-0.310606061
+830,town of new chester,111,101,-10,-0.09009009
+831,town of new denmark,264,208,-56,-0.212121212
+832,town of new diggings,54,40,-14,-0.259259259
+833,town of new glarus,309,365,56,0.181229773
+834,town of new haven,184,185,1,0.005434783
+835,town of new holstein,164,149,-15,-0.091463415
+836,town of new hope,233,216,-17,-0.072961373
+837,town of new lyme,24,21,-3,-0.125
+838,town of newark,227,220,-7,-0.030837004
+839,town of newbold,508,518,10,0.019685039
+840,town of newport,103,110,7,0.067961165
+841,town of newton,328,310,-18,-0.054878049
+842,town of niagara,110,111,1,0.009090909
+843,town of nokomis,266,238,-28,-0.105263158
+844,town of norrie,137,128,-9,-0.065693431
+845,town of north bend,72,58,-14,-0.194444444
+846,town of north lancaster,53,47,-6,-0.113207547
+847,town of northfield,94,76,-18,-0.191489362
+848,town of norway,842,915,73,0.086698337
+849,town of norwood,134,83,-51,-0.380597015
+850,town of oak grove,483,458,-25,-0.051759834
+851,town of oakdale,88,69,-19,-0.215909091
+852,town of oakfield,80,77,-3,-0.0375
+853,town of oakland,1062,1187,125,0.117702448
+854,town of oasis,57,42,-15,-0.263157895
+855,town of oconomowoc,944,1175,231,0.24470339
+856,town of oconto,198,134,-64,-0.323232323
+857,town of oconto falls,160,136,-24,-0.15
+858,town of ogema,94,80,-14,-0.14893617
+859,town of ojibwa,28,38,10,0.357142857
+860,town of oma,53,75,22,0.41509434
+861,town of omro,344,312,-32,-0.093023256
+862,town of onalaska,1029,946,-83,-0.080660836
+863,town of oneida,610,399,-211,-0.345901639
+864,town of orange,83,48,-35,-0.421686747
+865,town of oregon,982,1078,96,0.097759674
+866,town of orienta,36,39,3,0.083333333
+867,town of orion,95,110,15,0.157894737
+868,town of osborn,145,161,16,0.110344828
+869,town of osceola,494,549,55,0.111336032
+870,town of oshkosh,415,445,30,0.072289157
+871,town of otsego,154,115,-39,-0.253246753
+872,town of ottawa,500,682,182,0.364
+873,town of otter creek,139,132,-7,-0.050359712
+874,town of oulu,130,124,-6,-0.046153846
+875,town of oxford,114,106,-8,-0.070175439
+876,town of pacific,514,535,21,0.040856031
+877,town of packwaukee,218,171,-47,-0.21559633
+878,town of palmyra,178,176,-2,-0.011235955
+879,town of paris,296,275,-21,-0.070945946
+880,town of parkland,242,200,-42,-0.173553719
+881,town of parrish,14,13,-1,-0.071428571
+882,town of patch grove,62,32,-30,-0.483870968
+883,town of peck,49,33,-16,-0.326530612
+884,town of peeksville,32,22,-10,-0.3125
+885,town of pelican,502,393,-109,-0.217131474
+886,town of pella,96,65,-31,-0.322916667
+887,town of pembine,97,94,-3,-0.030927835
+888,town of pence,39,35,-4,-0.102564103
+889,town of pensaukee,183,152,-31,-0.169398907
+890,town of pepin,114,129,15,0.131578947
+891,town of perry,241,225,-16,-0.066390041
+892,town of pershing,28,20,-8,-0.285714286
+893,town of peru,24,33,9,0.375
+894,town of peshtigo,673,551,-122,-0.18127786
+895,town of phelps,186,172,-14,-0.075268817
+896,town of piehl,13,15,2,0.153846154
+897,town of pierce,170,121,-49,-0.288235294
+898,town of pigeon,131,92,-39,-0.297709924
+899,town of pilsen,64,63,-1,-0.015625
+900,town of pine grove,117,76,-41,-0.35042735
+901,town of pine lake,548,490,-58,-0.105839416
+902,town of pine river,269,227,-42,-0.156133829
+903,town of pine valley,149,146,-3,-0.020134228
+904,town of pittsfield,377,351,-26,-0.068965517
+905,town of plainfield,42,40,-2,-0.047619048
+906,town of platteville,243,246,3,0.012345679
+907,town of pleasant springs,859,909,50,0.058207218
+908,town of pleasant valley,726,764,38,0.052341598
+909,town of plover,306,300,-6,-0.019607843
+910,town of plum lake,94,111,17,0.180851064
+911,town of plymouth,727,714,-13,-0.017881706
+912,town of polar,136,126,-10,-0.073529412
+913,town of polk,377,405,28,0.074270557
+914,town of popple river,6,7,1,0.166666667
+915,town of port edwards,215,171,-44,-0.204651163
+916,town of port washington,190,224,34,0.178947368
+917,town of port wing,119,119,0,0
+918,town of porter,268,266,-2,-0.007462687
+919,town of porterfield,238,221,-17,-0.071428571
+920,town of portland,288,236,-52,-0.180555556
+921,town of potosi,89,92,3,0.033707865
+922,town of pound,140,123,-17,-0.121428571
+923,town of poy sippi,93,61,-32,-0.344086022
+924,town of poygan,193,163,-30,-0.155440415
+925,town of prairie du chien,123,135,12,0.097560976
+926,town of prairie du sac,227,223,-4,-0.017621145
+927,town of prairie farm,85,58,-27,-0.317647059
+928,town of prairie lake,191,186,-5,-0.02617801
+929,town of prentice,61,45,-16,-0.262295082
+930,town of presque isle,137,166,29,0.211678832
+931,town of preston,342,299,-43,-0.125730994
+932,town of price,27,31,4,0.148148148
+933,town of primrose,219,231,12,0.054794521
+934,town of princeton,189,189,0,0
+935,town of pulaski,60,44,-16,-0.266666667
+936,town of quincy,192,174,-18,-0.09375
+937,town of radisson,58,22,-36,-0.620689655
+938,town of randall,387,364,-23,-0.059431525
+939,town of randolph,70,55,-15,-0.214285714
+940,town of rantoul,68,58,-10,-0.147058824
+941,town of red cedar,289,314,25,0.08650519
+942,town of red river,205,147,-58,-0.282926829
+943,town of red springs,176,137,-39,-0.221590909
+944,town of reedsburg,189,183,-6,-0.031746032
+945,town of reid,175,123,-52,-0.297142857
+946,town of remington,29,27,-2,-0.068965517
+947,town of reseburg,50,52,2,0.04
+948,town of rhine,367,356,-11,-0.029972752
+949,town of rib falls,86,69,-17,-0.197674419
+950,town of rib lake,81,64,-17,-0.209876543
+951,town of rib mountain,1103,1111,8,0.007252947
+952,town of rice lake,362,380,18,0.049723757
+953,town of richfield,204,171,-33,-0.161764706
+954,town of richford,47,36,-11,-0.234042553
+955,town of richland,237,196,-41,-0.172995781
+956,town of richmond,822,762,-60,-0.072992701
+957,town of richwood,105,85,-20,-0.19047619
+958,town of ridgeville,81,80,-1,-0.012345679
+959,town of ridgeway,159,143,-16,-0.100628931
+960,town of rietbrock,101,78,-23,-0.227722772
+961,town of ringle,252,233,-19,-0.075396825
+962,town of ripon,165,182,17,0.103030303
+963,town of river falls,395,444,49,0.124050633
+964,town of riverview,150,131,-19,-0.126666667
+965,town of rock,615,478,-137,-0.222764228
+966,town of rock creek,146,136,-10,-0.068493151
+967,town of rock elm,64,56,-8,-0.125
+968,town of rock falls,85,81,-4,-0.047058824
+969,town of rockbridge,154,134,-20,-0.12987013
+970,town of rockland,353,356,3,0.008498584
+971,town of rolling,194,143,-51,-0.262886598
+972,town of rome,536,569,33,0.061567164
+973,town of roosevelt,70,49,-21,-0.3
+974,town of rose,118,113,-5,-0.042372881
+975,town of rosendale,89,80,-9,-0.101123596
+976,town of ross,12,6,-6,-0.5
+977,town of round lake,163,199,36,0.220858896
+978,town of roxbury,405,470,65,0.160493827
+979,town of royalton,158,122,-36,-0.227848101
+980,town of rubicon,199,200,1,0.005025126
+981,town of ruby,65,34,-31,-0.476923077
+982,town of rudolph,170,152,-18,-0.105882353
+983,town of rush river,75,75,0,0
+984,town of rushford,235,175,-60,-0.255319149
+985,town of rusk,151,122,-29,-0.19205298
+986,town of russell,460,361,-99,-0.215217391
+987,town of rutland,600,571,-29,-0.048333333
+988,town of saint lawrence,79,81,2,0.025316456
+989,town of salem,1443,45,-1398,-0.968814969
+990,town of sampson,101,115,14,0.138613861
+991,town of sanborn,233,148,-85,-0.364806867
+992,town of sand creek,92,72,-20,-0.217391304
+993,town of sand lake,231,218,-13,-0.056277056
+994,town of saratoga,735,664,-71,-0.096598639
+995,town of sarona,40,48,8,0.2
+996,town of saukville,201,223,22,0.109452736
+997,town of saxeville,133,141,8,0.060150376
+998,town of saxon,59,55,-4,-0.06779661
+999,town of scandinavia,186,183,-3,-0.016129032
+1000,town of schleswig,291,272,-19,-0.065292096
+1001,town of schley,99,73,-26,-0.262626263
+1002,town of schoepke,55,66,11,0.2
+1003,town of scott,1305,1240,-65,-0.049808429
+1004,town of seif,35,32,-3,-0.085714286
+1005,town of seneca,420,389,-31,-0.073809524
+1006,town of sevastopol,600,672,72,0.12
+1007,town of seven mile creek,40,40,0,0
+1008,town of seymour,801,750,-51,-0.063670412
+1009,town of shanagolden,22,27,5,0.227272727
+1010,town of sharon,525,425,-100,-0.19047619
+1011,town of sheboygan,1188,1250,62,0.052188552
+1012,town of sheboygan falls,188,216,28,0.14893617
+1013,town of shelby,1105,1098,-7,-0.006334842
+1014,town of sheldon,49,38,-11,-0.224489796
+1015,town of sheridan,54,50,-4,-0.074074074
+1016,town of sherman,392,354,-38,-0.096938776
+1017,town of sherry,115,82,-33,-0.286956522
+1018,town of sherwood,47,58,11,0.234042553
+1019,town of shields,177,140,-37,-0.209039548
+1020,town of shullsburg,42,35,-7,-0.166666667
+1021,town of sigel,324,285,-39,-0.12037037
+1022,town of silver cliff,74,91,17,0.22972973
+1023,town of sioux creek,66,84,18,0.272727273
+1024,town of siren,105,123,18,0.171428571
+1025,town of skanawan,65,76,11,0.169230769
+1026,town of smelser,101,104,3,0.02970297
+1027,town of solon springs,210,141,-69,-0.328571429
+1028,town of somers,180,142,-38,-0.211111111
+1029,town of somerset,421,461,40,0.095011876
+1030,town of somo,21,23,2,0.095238095
+1031,town of south fork,21,13,-8,-0.380952381
+1032,town of south lancaster,76,86,10,0.131578947
+1033,town of sparta,464,429,-35,-0.075431034
+1034,town of spencer,180,156,-24,-0.133333333
+1035,town of spider lake,54,109,55,1.018518519
+1036,town of spirit,38,49,11,0.289473684
+1037,town of spooner,132,108,-24,-0.181818182
+1038,town of spring brook,208,237,29,0.139423077
+1039,town of spring green,382,420,38,0.09947644
+1040,town of spring grove,140,99,-41,-0.292857143
+1041,town of spring lake,67,61,-6,-0.089552239
+1042,town of spring prairie,261,283,22,0.084291188
+1043,town of spring valley,142,114,-28,-0.197183099
+1044,town of springbrook,64,61,-3,-0.046875
+1045,town of springdale,542,619,77,0.142066421
+1046,town of springfield,905,949,44,0.048618785
+1047,town of springvale,186,177,-9,-0.048387097
+1048,town of springville,172,141,-31,-0.180232558
+1049,town of springwater,206,196,-10,-0.048543689
+1050,town of spruce,113,65,-48,-0.424778761
+1051,town of st. croix falls,121,127,6,0.049586777
+1052,town of st. germain,319,324,5,0.015673981
+1053,town of st. joseph,603,479,-124,-0.205638474
+1054,town of st. marie,45,46,1,0.022222222
+1055,town of stanfold,75,80,5,0.066666667
+1056,town of stanley,271,249,-22,-0.081180812
+1057,town of stanton,183,204,21,0.114754098
+1058,town of star prairie,292,315,23,0.078767123
+1059,town of stark,83,84,1,0.012048193
+1060,town of stella,139,104,-35,-0.251798561
+1061,town of stephenson,441,413,-28,-0.063492063
+1062,town of sterling,131,145,14,0.106870229
+1063,town of stettin,349,343,-6,-0.017191977
+1064,town of stiles,181,157,-24,-0.132596685
+1065,town of stinnett,27,19,-8,-0.296296296
+1066,town of stockbridge,200,170,-30,-0.15
+1067,town of stockholm,46,62,16,0.347826087
+1068,town of stockton,575,499,-76,-0.132173913
+1069,town of stone lake,75,55,-20,-0.266666667
+1070,town of strickland,46,44,-2,-0.043478261
+1071,town of strongs prairie,170,148,-22,-0.129411765
+1072,town of stubbs,92,66,-26,-0.282608696
+1073,town of sturgeon bay,162,144,-18,-0.111111111
+1074,town of sugar camp,269,274,5,0.018587361
+1075,town of sugar creek,541,521,-20,-0.036968577
+1076,town of sullivan,285,269,-16,-0.056140351
+1077,town of summit,383,331,-52,-0.135770235
+1078,town of sumner,386,379,-7,-0.018134715
+1079,town of sumpter,123,117,-6,-0.048780488
+1080,town of sun prairie,569,568,-1,-0.001757469
+1081,town of superior,439,393,-46,-0.104783599
+1082,town of swiss,116,91,-25,-0.215517241
+1083,town of sylvan,71,56,-15,-0.211267606
+1084,town of sylvester,171,161,-10,-0.058479532
+1085,town of taft,36,30,-6,-0.166666667
+1086,town of tainter,383,409,26,0.067885117
+1087,town of taycheedah,567,616,49,0.086419753
+1088,town of texas,271,213,-58,-0.21402214
+1089,town of theresa,92,92,0,0
+1090,town of thornapple,100,49,-51,-0.51
+1091,town of thorp,73,55,-18,-0.246575342
+1092,town of three lakes,348,294,-54,-0.155172414
+1093,town of tiffany,61,62,1,0.016393443
+1094,town of tilden,233,250,17,0.072961373
+1095,town of tipler,8,10,2,0.25
+1096,town of tomah,198,184,-14,-0.070707071
+1097,town of tomahawk,72,65,-7,-0.097222222
+1098,town of townsend,190,167,-23,-0.121052632
+1099,town of trade lake,83,100,17,0.204819277
+1100,town of trego,162,151,-11,-0.067901235
+1101,town of trempealeau,289,299,10,0.034602076
+1102,town of trenton,861,826,-35,-0.040650407
+1103,town of trimbelle,207,162,-45,-0.217391304
+1104,town of tripp,45,43,-2,-0.044444444
+1105,town of troy,1179,1273,94,0.079728584
+1106,town of true,41,35,-6,-0.146341463
+1107,town of turtle,382,346,-36,-0.094240838
+1108,town of turtle lake,66,45,-21,-0.318181818
+1109,town of two creeks,74,57,-17,-0.22972973
+1110,town of two rivers,275,219,-56,-0.203636364
+1111,town of underhill,121,88,-33,-0.272727273
+1112,town of union,1399,1272,-127,-0.090779128
+1113,town of unity,159,136,-23,-0.144654088
+1114,town of upham,101,108,7,0.069306931
+1115,town of utica,346,315,-31,-0.089595376
+1116,town of vance creek,89,70,-19,-0.213483146
+1117,town of vandenbroek,194,146,-48,-0.24742268
+1118,town of vermont,312,340,28,0.08974359
+1119,town of vernon,879,1023,144,0.163822526
+1120,town of verona,553,625,72,0.130198915
+1121,town of vienna,333,334,1,0.003003003
+1122,town of vilas,22,6,-16,-0.727272727
+1123,town of vinland,348,340,-8,-0.022988506
+1124,town of viroqua,361,273,-88,-0.243767313
+1125,town of wabeno,174,102,-72,-0.413793103
+1126,town of wagner,84,75,-9,-0.107142857
+1127,town of waldwick,120,109,-11,-0.091666667
+1128,town of walworth,166,162,-4,-0.024096386
+1129,town of warner,55,50,-5,-0.090909091
+1130,town of warren,254,250,-4,-0.015748031
+1131,town of wascott,133,138,5,0.037593985
+1132,town of washburn,205,221,16,0.07804878
+1133,town of washington,2591,2561,-30,-0.011578541
+1134,town of waterford,630,834,204,0.323809524
+1135,town of waterloo,202,196,-6,-0.02970297
+1136,town of watertown,266,232,-34,-0.127819549
+1137,town of waterville,93,63,-30,-0.322580645
+1138,town of watterstown,56,44,-12,-0.214285714
+1139,town of waubeek,40,48,8,0.2
+1140,town of waukechon,109,80,-29,-0.266055046
+1141,town of waukesha,1112,1307,195,0.175359712
+1142,town of waumandee,64,90,26,0.40625
+1143,town of waupaca,163,131,-32,-0.196319018
+1144,town of waupun,172,140,-32,-0.186046512
+1145,town of wausau,318,299,-19,-0.059748428
+1146,town of wausaukee,153,131,-22,-0.14379085
+1147,town of wautoma,184,179,-5,-0.027173913
+1148,town of wauzeka,65,71,6,0.092307692
+1149,town of wayne,206,218,12,0.058252427
+1150,town of webb lake,58,68,10,0.172413793
+1151,town of webster,167,141,-26,-0.155688623
+1152,town of weirgor,36,34,-2,-0.055555556
+1153,town of wellington,86,93,7,0.081395349
+1154,town of wells,88,82,-6,-0.068181818
+1155,town of wescott,421,364,-57,-0.135391924
+1156,town of west bend,514,704,190,0.369649805
+1157,town of west kewaunee,187,123,-64,-0.342245989
+1158,town of west marshland,29,31,2,0.068965517
+1159,town of west point,440,537,97,0.220454545
+1160,town of west sweden,91,88,-3,-0.032967033
+1161,town of westboro,69,50,-19,-0.275362319
+1162,town of westfield,184,186,2,0.010869565
+1163,town of westford,314,300,-14,-0.044585987
+1164,town of weston,230,201,-29,-0.126086957
+1165,town of westport,1194,1300,106,0.088777219
+1166,town of weyauwega,57,49,-8,-0.140350877
+1167,town of wheatland,502,520,18,0.035856574
+1168,town of wheaton,454,435,-19,-0.04185022
+1169,town of white oak springs,14,13,-1,-0.071428571
+1170,town of white river,129,91,-38,-0.294573643
+1171,town of whitestown,68,82,14,0.205882353
+1172,town of whitewater,252,270,18,0.071428571
+1173,town of wien,101,78,-23,-0.227722772
+1174,town of wilkinson,5,5,0,0
+1175,town of willard,58,52,-6,-0.103448276
+1176,town of williamstown,92,NA,NA,NA
+1177,town of willow,79,74,-5,-0.063291139
+1178,town of willow springs,117,80,-37,-0.316239316
+1179,town of wilson,821,791,-30,-0.036540804
+1180,town of wilton,64,51,-13,-0.203125
+1181,town of winchester,351,348,-3,-0.008547009
+1182,town of winfield,151,136,-15,-0.099337748
+1183,town of wingville,48,52,4,0.083333333
+1184,town of winneconne,402,370,-32,-0.07960199
+1185,town of winter,160,138,-22,-0.1375
+1186,town of wiota,138,114,-24,-0.173913043
+1187,town of withee,69,46,-23,-0.333333333
+1188,town of wittenberg,97,77,-20,-0.206185567
+1189,town of wolf river,266,234,-32,-0.120300752
+1190,town of wonewoc,110,87,-23,-0.209090909
+1191,town of wood,121,124,3,0.024793388
+1192,town of wood river,88,83,-5,-0.056818182
+1193,town of woodboro,151,154,3,0.01986755
+1194,town of woodland,104,132,28,0.269230769
+1195,town of woodman,21,16,-5,-0.238095238
+1196,town of woodmohr,149,137,-12,-0.080536913
+1197,town of woodruff,377,333,-44,-0.116710875
+1198,town of woodville,111,82,-29,-0.261261261
+1199,town of worcester,254,293,39,0.153543307
+1200,town of worden,45,43,-2,-0.044444444
+1201,town of wrightstown,289,299,10,0.034602076
+1202,town of wyalusing,85,66,-19,-0.223529412
+1203,town of wyocena,334,311,-23,-0.068862275
+1204,town of wyoming,146,154,8,0.054794521
+1205,town of york,494,523,29,0.058704453
+1206,village of adell,46,42,-4,-0.086956522
+1207,village of albany,248,165,-83,-0.334677419
+1208,village of allouez,2757,2693,-64,-0.023213638
+1209,village of alma center,97,71,-26,-0.268041237
+1210,village of almena,59,40,-19,-0.322033898
+1211,village of almond,58,39,-19,-0.327586207
+1212,village of amherst,227,232,5,0.022026432
+1213,village of amherst junction,56,58,2,0.035714286
+1214,village of aniwa,28,20,-8,-0.285714286
+1215,village of arena,190,147,-43,-0.226315789
+1216,village of argyle,172,119,-53,-0.308139535
+1217,village of arlington,137,157,20,0.145985401
+1218,village of arpin,43,19,-24,-0.558139535
+1219,village of ashwaubenon,2880,2743,-137,-0.047569444
+1220,village of athens,119,117,-2,-0.016806723
+1221,village of auburndale,93,66,-27,-0.290322581
+1222,village of avoca,101,64,-37,-0.366336634
+1223,village of bagley,64,42,-22,-0.34375
+1224,village of baldwin,372,489,117,0.314516129
+1225,village of balsam lake,106,81,-25,-0.235849057
+1226,village of bangor,287,243,-44,-0.153310105
+1227,village of barneveld,253,232,-21,-0.083003953
+1228,village of bay city,59,39,-20,-0.338983051
+1229,village of bayside,1334,1663,329,0.246626687
+1230,village of bear creek,36,35,-1,-0.027777778
+1231,village of belgium,244,272,28,0.114754098
+1232,village of bell center,28,22,-6,-0.214285714
+1233,village of belleville,624,679,55,0.088141026
+1234,village of bellevue,2205,2204,-1,-0.000453515
+1235,village of belmont,129,165,36,0.279069767
+1236,village of benton,159,152,-7,-0.044025157
+1237,village of big bend,145,155,10,0.068965517
+1238,village of big falls,11,4,-7,-0.636363636
+1239,village of birchwood,55,46,-9,-0.163636364
+1240,village of birnamwood,103,63,-40,-0.388349515
+1241,village of biron,149,138,-11,-0.073825503
+1242,village of black creek,152,132,-20,-0.131578947
+1243,village of black earth,401,393,-8,-0.019950125
+1244,village of blanchardville,177,183,6,0.033898305
+1245,village of bloomfield,477,344,-133,-0.278825996
+1246,village of bloomington,120,82,-38,-0.316666667
+1247,village of blue mounds,267,270,3,0.011235955
+1248,village of blue river,68,61,-7,-0.102941176
+1249,village of boaz,30,20,-10,-0.333333333
+1250,village of bonduel,150,100,-50,-0.333333333
+1251,village of bowler,50,25,-25,-0.5
+1252,village of boyceville,106,98,-8,-0.075471698
+1253,village of boyd,83,63,-20,-0.240963855
+1254,village of brandon,82,80,-2,-0.024390244
+1255,village of bristol,601,654,53,0.088186356
+1256,village of brokaw,59,NA,NA,NA
+1257,village of brooklyn,343,339,-4,-0.011661808
+1258,village of brown deer,3107,2908,-199,-0.064048922
+1259,village of brownsville,55,54,-1,-0.018181818
+1260,village of browntown,36,26,-10,-0.277777778
+1261,village of bruce,92,77,-15,-0.163043478
+1262,village of butler,241,267,26,0.107883817
+1263,village of butternut,65,53,-12,-0.184615385
+1264,village of cadott,180,177,-3,-0.016666667
+1265,village of caledonia,4099,4276,177,0.043181264
+1266,village of cambria,124,112,-12,-0.096774194
+1267,village of cambridge,401,521,120,0.29925187
+1268,village of cameron,172,143,-29,-0.168604651
+1269,village of camp douglas,67,59,-8,-0.119402985
+1270,village of campbellsport,209,154,-55,-0.263157895
+1271,village of cascade,81,88,7,0.086419753
+1272,village of casco,68,66,-2,-0.029411765
+1273,village of cashton,137,124,-13,-0.094890511
+1274,village of cassville,129,120,-9,-0.069767442
+1275,village of catawba,29,23,-6,-0.206896552
+1276,village of cazenovia,82,49,-33,-0.402439024
+1277,village of cecil,62,67,5,0.080645161
+1278,village of cedar grove,108,174,66,0.611111111
+1279,village of centuria,61,50,-11,-0.180327869
+1280,village of chaseburg,60,37,-23,-0.383333333
+1281,village of chenequa,36,72,36,1
+1282,village of clayton,41,27,-14,-0.341463415
+1283,village of clear lake,116,99,-17,-0.146551724
+1284,village of cleveland,233,213,-20,-0.08583691
+1285,village of clinton,243,233,-10,-0.041152263
+1286,village of clyman,54,32,-22,-0.407407407
+1287,village of cobb,86,97,11,0.127906977
+1288,village of cochrane,41,43,2,0.048780488
+1289,village of coleman,90,80,-10,-0.111111111
+1290,village of colfax,176,177,1,0.005681818
+1291,village of coloma,60,54,-6,-0.1
+1292,village of combined locks,560,584,24,0.042857143
+1293,village of conrath,16,12,-4,-0.25
+1294,village of coon valley,145,128,-17,-0.117241379
+1295,village of cottage grove,1730,1839,109,0.06300578
+1296,village of couderay,23,18,-5,-0.217391304
+1297,village of crivitz,120,89,-31,-0.258333333
+1298,village of cross plains,1006,1144,138,0.137176938
+1299,village of curtiss,8,5,-3,-0.375
+1300,village of dallas,36,32,-4,-0.111111111
+1301,village of dane,209,205,-4,-0.019138756
+1302,village of darien,193,169,-24,-0.124352332
+1303,village of de soto,52,55,3,0.057692308
+1304,village of deer park,18,21,3,0.166666667
+1305,village of deerfield,571,538,-33,-0.057793345
+1306,village of deforest,2008,2487,479,0.238545817
+1307,village of denmark,292,267,-25,-0.085616438
+1308,village of dickeyville,132,123,-9,-0.068181818
+1309,village of dorchester,68,54,-14,-0.205882353
+1310,village of dousman,222,374,152,0.684684685
+1311,village of downing,24,11,-13,-0.541666667
+1312,village of doylestown,56,38,-18,-0.321428571
+1313,village of dresser,86,83,-3,-0.034883721
+1314,village of eagle,210,208,-2,-0.00952381
+1315,village of east troy,565,643,78,0.138053097
+1316,village of eastman,63,38,-25,-0.396825397
+1317,village of eden,68,60,-8,-0.117647059
+1318,village of edgar,215,173,-42,-0.195348837
+1319,village of egg harbor,88,127,39,0.443181818
+1320,village of eland,72,54,-18,-0.25
+1321,village of elderon,21,15,-6,-0.285714286
+1322,village of eleva,98,95,-3,-0.030612245
+1323,village of elk mound,126,114,-12,-0.095238095
+1324,village of elkhart lake,235,248,13,0.055319149
+1325,village of ellsworth,397,305,-92,-0.231738035
+1326,village of elm grove,1034,1488,454,0.439071567
+1327,village of elmwood,91,112,21,0.230769231
+1328,village of elmwood park,109,104,-5,-0.04587156
+1329,village of embarrass,36,23,-13,-0.361111111
+1330,village of endeavor,54,48,-6,-0.111111111
+1331,village of ephraim,116,103,-13,-0.112068966
+1332,village of ettrick,86,74,-12,-0.139534884
+1333,village of exeland,26,26,0,0
+1334,village of fairchild,56,39,-17,-0.303571429
+1335,village of fairwater,40,30,-10,-0.25
+1336,village of fall creek,246,258,12,0.048780488
+1337,village of fall river,256,271,15,0.05859375
+1338,village of fenwood,22,13,-9,-0.409090909
+1339,village of ferryville,49,44,-5,-0.102040816
+1340,village of fontana,247,326,79,0.319838057
+1341,village of footville,175,150,-25,-0.142857143
+1342,village of forestville,91,59,-32,-0.351648352
+1343,village of fox crossing,NA,2994,NA,NA
+1344,village of fox point,1888,2311,423,0.22404661
+1345,village of francis creek,95,79,-16,-0.168421053
+1346,village of frederic,115,123,8,0.069565217
+1347,village of fredonia,227,229,2,0.008810573
+1348,village of fremont,87,80,-7,-0.08045977
+1349,village of friendship,89,86,-3,-0.033707865
+1350,village of friesland,25,32,7,0.28
+1351,village of gays mills,104,77,-27,-0.259615385
+1352,village of genoa,66,57,-9,-0.136363636
+1353,village of genoa city,302,228,-74,-0.245033113
+1354,village of germantown,2465,3147,682,0.276673428
+1355,village of gilman,44,41,-3,-0.068181818
+1356,village of glen flora,9,5,-4,-0.444444444
+1357,village of glenbeulah,93,89,-4,-0.043010753
+1358,village of grafton,1862,1954,92,0.049409237
+1359,village of granton,57,41,-16,-0.280701754
+1360,village of grantsburg,132,119,-13,-0.098484848
+1361,village of gratiot,39,26,-13,-0.333333333
+1362,village of greendale,2712,2953,241,0.088864307
+1363,village of gresham,96,50,-46,-0.479166667
+1364,village of hales corners,1266,1358,92,0.072669826
+1365,village of hammond,221,252,31,0.140271493
+1366,village of hancock,42,47,5,0.119047619
+1367,village of harrison,1251,1641,390,0.3117506
+1368,village of hartland,1009,1333,324,0.32111001
+1369,village of hatley,75,64,-11,-0.146666667
+1370,village of haugen,56,29,-27,-0.482142857
+1371,village of hawkins,54,38,-16,-0.296296296
+1372,village of hazel green,196,208,12,0.06122449
+1373,village of hewitt,142,128,-14,-0.098591549
+1374,village of highland,138,120,-18,-0.130434783
+1375,village of hilbert,97,71,-26,-0.268041237
+1376,village of hixton,73,58,-15,-0.205479452
+1377,village of hobart,1038,1238,200,0.192678227
+1378,village of hollandale,77,67,-10,-0.12987013
+1379,village of holmen,1461,1579,118,0.080766598
+1380,village of hortonville,363,339,-24,-0.066115702
+1381,village of howard,2711,2775,64,0.023607525
+1382,village of howards grove,493,432,-61,-0.123732252
+1383,village of hustisford,126,115,-11,-0.087301587
+1384,village of hustler,39,38,-1,-0.025641026
+1385,village of ingram,12,9,-3,-0.25
+1386,village of iola,169,182,13,0.076923077
+1387,village of iron ridge,121,96,-25,-0.20661157
+1388,village of ironton,33,17,-16,-0.484848485
+1389,village of jackson,641,724,83,0.129485179
+1390,village of johnson creek,367,433,66,0.179836512
+1391,village of junction city,59,53,-6,-0.101694915
+1392,village of kekoskee,16,76,60,3.75
+1393,village of kellnersville,45,46,1,0.022222222
+1394,village of kendall,60,58,-2,-0.033333333
+1395,village of kennan,19,24,5,0.263157895
+1396,village of kewaskum,439,459,20,0.045558087
+1397,village of kimberly,1145,1107,-38,-0.033187773
+1398,village of kingston,40,34,-6,-0.15
+1399,village of knapp,51,46,-5,-0.098039216
+1400,village of kohler,352,454,102,0.289772727
+1401,village of kronenwetter,1066,1009,-57,-0.053470919
+1402,village of la farge,149,106,-43,-0.288590604
+1403,village of lac la belle,29,65,36,1.24137931
+1404,village of lake delton,402,326,-76,-0.189054726
+1405,village of lake hallie,954,923,-31,-0.032494759
+1406,village of lake nebagamon,204,216,12,0.058823529
+1407,village of lannon,169,166,-3,-0.017751479
+1408,village of lavalle,52,41,-11,-0.211538462
+1409,village of lena,86,47,-39,-0.453488372
+1410,village of lime ridge,43,29,-14,-0.325581395
+1411,village of linden,101,68,-33,-0.326732673
+1412,village of little chute,1579,1427,-152,-0.096263458
+1413,village of livingston,112,98,-14,-0.125
+1414,village of loganville,51,37,-14,-0.274509804
+1415,village of lohrville,56,22,-34,-0.607142857
+1416,village of lomira,216,185,-31,-0.143518519
+1417,village of lone rock,171,103,-68,-0.397660819
+1418,village of lowell,34,25,-9,-0.264705882
+1419,village of lublin,13,14,1,0.076923077
+1420,village of luck,136,153,17,0.125
+1421,village of luxemburg,310,276,-34,-0.109677419
+1422,village of lyndon station,67,53,-14,-0.208955224
+1423,village of lynxville,20,22,2,0.1
+1424,village of maiden rock,30,19,-11,-0.366666667
+1425,village of maine,378,455,77,0.203703704
+1426,village of maple bluff,510,634,124,0.243137255
+1427,village of marathon city,189,179,-10,-0.052910053
+1428,village of maribel,40,31,-9,-0.225
+1429,village of marquette,26,18,-8,-0.307692308
+1430,village of marshall,755,655,-100,-0.132450331
+1431,village of mason,18,14,-4,-0.222222222
+1432,village of mattoon,46,31,-15,-0.326086957
+1433,village of mazomanie,471,463,-8,-0.016985138
+1434,village of mcfarland,2234,2785,551,0.246642793
+1435,village of melrose,97,88,-9,-0.092783505
+1436,village of melvina,10,9,-1,-0.1
+1437,village of menomonee falls,5447,6394,947,0.173857169
+1438,village of merrillan,95,59,-36,-0.378947368
+1439,village of merrimac,83,126,43,0.518072289
+1440,village of merton,269,431,162,0.602230483
+1441,village of milladore,36,39,3,0.083333333
+1442,village of milltown,79,61,-18,-0.227848101
+1443,village of minong,57,44,-13,-0.228070175
+1444,village of mishicot,230,158,-72,-0.313043478
+1445,village of montfort,136,118,-18,-0.132352941
+1446,village of monticello,277,237,-40,-0.144404332
+1447,village of mount calvary,69,58,-11,-0.15942029
+1448,village of mount hope,33,20,-13,-0.393939394
+1449,village of mount horeb,2060,2136,76,0.036893204
+1450,village of mount pleasant,4539,4711,172,0.037893809
+1451,village of mt. sterling,38,36,-2,-0.052631579
+1452,village of mukwonago,967,979,12,0.012409514
+1453,village of muscoda,183,149,-34,-0.18579235
+1454,village of nashotah,154,230,76,0.493506494
+1455,village of necedah,101,98,-3,-0.02970297
+1456,village of nelson,53,33,-20,-0.377358491
+1457,village of nelsonville,45,65,20,0.444444444
+1458,village of neosho,66,48,-18,-0.272727273
+1459,village of neshkoro,61,45,-16,-0.262295082
+1460,village of new auburn,59,45,-14,-0.237288136
+1461,village of new glarus,617,627,10,0.016207455
+1462,village of newburg,100,88,-12,-0.12
+1463,village of nichols,28,16,-12,-0.428571429
+1464,village of north bay,60,80,20,0.333333333
+1465,village of north fond du lac,691,614,-77,-0.111432706
+1466,village of north freedom,119,96,-23,-0.193277311
+1467,village of north hudson,613,597,-16,-0.026101142
+1468,village of north prairie,236,282,46,0.194915254
+1469,village of norwalk,79,64,-15,-0.189873418
+1470,village of oakdale,31,20,-11,-0.35483871
+1471,village of oakfield,150,119,-31,-0.206666667
+1472,village of oconomowoc lake,55,75,20,0.363636364
+1473,village of ogdensburg,18,13,-5,-0.277777778
+1474,village of oliver,112,89,-23,-0.205357143
+1475,village of ontario,60,40,-20,-0.333333333
+1476,village of oostburg,169,260,91,0.538461538
+1477,village of oregon,2795,3029,234,0.08372093
+1478,village of orfordville,262,234,-28,-0.106870229
+1479,village of osceola,238,386,148,0.621848739
+1480,village of oxford,79,55,-24,-0.303797468
+1481,village of paddock lake,404,318,-86,-0.212871287
+1482,village of palmyra,220,188,-32,-0.145454545
+1483,village of pardeeville,365,279,-86,-0.235616438
+1484,village of park ridge,170,188,18,0.105882353
+1485,village of patch grove,34,26,-8,-0.235294118
+1486,village of pepin,162,128,-34,-0.209876543
+1487,village of pewaukee,1062,1175,113,0.106403013
+1488,village of pigeon falls,71,75,4,0.056338028
+1489,village of plain,123,158,35,0.284552846
+1490,village of plainfield,111,83,-28,-0.252252252
+1491,village of pleasant prairie,3077,2973,-104,-0.033799155
+1492,village of plover,1881,2179,298,0.158426369
+1493,village of plum city,66,49,-17,-0.257575758
+1494,village of poplar,94,87,-7,-0.074468085
+1495,village of port edwards,303,282,-21,-0.069306931
+1496,village of potosi,86,90,4,0.046511628
+1497,village of potter,27,18,-9,-0.333333333
+1498,village of pound,29,22,-7,-0.24137931
+1499,village of poynette,517,442,-75,-0.145067698
+1500,village of prairie du sac,1022,1224,202,0.197651663
+1501,village of prairie farm,46,28,-18,-0.391304348
+1502,village of prentice,84,53,-31,-0.369047619
+1503,village of pulaski,436,345,-91,-0.208715596
+1504,village of radisson,28,21,-7,-0.25
+1505,village of randolph,185,184,-1,-0.005405405
+1506,village of random lake,201,172,-29,-0.144278607
+1507,village of raymond,519,521,2,0.003853565
+1508,village of readstown,60,43,-17,-0.283333333
+1509,village of redgranite,107,69,-38,-0.355140187
+1510,village of reedsville,159,126,-33,-0.20754717
+1511,village of reeseville,99,83,-16,-0.161616162
+1512,village of rewey,39,39,0,0
+1513,village of rib lake,92,63,-29,-0.315217391
+1514,village of richfield,1277,1535,258,0.202036022
+1515,village of ridgeland,44,16,-28,-0.636363636
+1516,village of ridgeway,170,115,-55,-0.323529412
+1517,village of rio,248,201,-47,-0.189516129
+1518,village of river hills,385,486,101,0.262337662
+1519,village of roberts,190,216,26,0.136842105
+1520,village of rochester,438,482,44,0.100456621
+1521,village of rock springs,47,32,-15,-0.319148936
+1522,village of rockdale,60,63,3,0.05
+1523,village of rockland,94,86,-8,-0.085106383
+1524,village of rosendale,111,114,3,0.027027027
+1525,village of rosholt,81,62,-19,-0.234567901
+1526,village of rothschild,911,826,-85,-0.093304061
+1527,village of rudolph,79,71,-8,-0.101265823
+1528,village of salem lakes,NA,1458,NA,NA
+1529,village of sauk city,824,877,53,0.064320388
+1530,village of saukville,558,464,-94,-0.168458781
+1531,village of scandinavia,54,57,3,0.055555556
+1532,village of sharon,211,158,-53,-0.251184834
+1533,village of sheldon,22,20,-2,-0.090909091
+1534,village of sherwood,488,532,44,0.090163934
+1535,village of shiocton,142,81,-61,-0.429577465
+1536,village of shorewood,4876,5439,563,0.115463495
+1537,village of shorewood hills,936,1095,159,0.169871795
+1538,village of silver lake,332,NA,NA,NA
+1539,village of siren,88,86,-2,-0.022727273
+1540,village of sister bay,277,316,39,0.140794224
+1541,village of slinger,500,550,50,0.1
+1542,village of soldiers grove,110,72,-38,-0.345454545
+1543,village of solon springs,168,100,-68,-0.404761905
+1544,village of somers,1385,1206,-179,-0.129241877
+1545,village of somerset,216,204,-12,-0.055555556
+1546,village of south wayne,48,32,-16,-0.333333333
+1547,village of spencer,248,186,-62,-0.25
+1548,village of spring green,461,536,75,0.162689805
+1549,village of spring valley,207,190,-17,-0.082125604
+1550,village of st. cloud,70,66,-4,-0.057142857
+1551,village of st. nazianz,87,53,-34,-0.390804598
+1552,village of star prairie,77,71,-6,-0.077922078
+1553,village of stetsonville,66,54,-12,-0.181818182
+1554,village of steuben,25,22,-3,-0.12
+1555,village of stockbridge,95,74,-21,-0.221052632
+1556,village of stockholm,26,34,8,0.307692308
+1557,village of stoddard,177,138,-39,-0.220338983
+1558,village of stratford,206,137,-69,-0.334951456
+1559,village of strum,221,178,-43,-0.194570136
+1560,village of sturtevant,797,690,-107,-0.13425345
+1561,village of suamico,1589,1696,107,0.067337948
+1562,village of sullivan,88,73,-15,-0.170454545
+1563,village of summit,573,784,211,0.368237347
+1564,village of superior,146,123,-23,-0.157534247
+1565,village of suring,41,52,11,0.268292683
+1566,village of sussex,1213,1591,378,0.311624073
+1567,village of taylor,66,46,-20,-0.303030303
+1568,village of tennyson,48,27,-21,-0.4375
+1569,village of theresa,161,108,-53,-0.329192547
+1570,village of thiensville,604,714,110,0.182119205
+1571,village of tigerton,94,83,-11,-0.117021277
+1572,village of tony,16,7,-9,-0.5625
+1573,village of trempealeau,323,267,-56,-0.173374613
+1574,village of turtle lake,90,74,-16,-0.177777778
+1575,village of twin lakes,590,600,10,0.016949153
+1576,village of union center,31,26,-5,-0.161290323
+1577,village of union grove,519,508,-11,-0.021194605
+1578,village of unity,25,16,-9,-0.36
+1579,village of valders,125,85,-40,-0.32
+1580,village of vesper,75,59,-16,-0.213333333
+1581,village of viola,115,91,-24,-0.208695652
+1582,village of waldo,64,61,-3,-0.046875
+1583,village of wales,433,563,130,0.300230947
+1584,village of walworth,290,328,38,0.131034483
+1585,village of warrens,42,41,-1,-0.023809524
+1586,village of waterford,653,718,65,0.099540582
+1587,village of waunakee,2886,3843,957,0.331600832
+1588,village of wausaukee,56,40,-16,-0.285714286
+1589,village of wauzeka,101,119,18,0.178217822
+1590,village of webster,71,57,-14,-0.197183099
+1591,village of west baraboo,256,243,-13,-0.05078125
+1592,village of west milwaukee,690,481,-209,-0.302898551
+1593,village of west salem,900,752,-148,-0.164444444
+1594,village of westfield,136,114,-22,-0.161764706
+1595,village of weston,1964,1846,-118,-0.060081466
+1596,village of weyerhaeuser,34,32,-2,-0.058823529
+1597,village of wheeler,38,30,-8,-0.210526316
+1598,village of white lake,46,48,2,0.043478261
+1599,village of whitefish bay,3756,5073,1317,0.350638978
+1600,village of whitelaw,114,86,-28,-0.245614035
+1601,village of whiting,388,384,-4,-0.010309278
+1602,village of wild rose,118,114,-4,-0.033898305
+1603,village of williams bay,379,490,111,0.292875989
+1604,village of wilson,23,28,5,0.217391304
+1605,village of wilton,78,66,-12,-0.153846154
+1606,village of wind point,363,507,144,0.396694215
+1607,village of windsor,1574,2030,456,0.289707751
+1608,village of winneconne,367,365,-2,-0.005449591
+1609,village of winter,46,46,0,0
+1610,village of withee,59,50,-9,-0.152542373
+1611,village of wittenberg,112,72,-40,-0.357142857
+1612,village of wonewoc,90,84,-6,-0.066666667
+1613,village of woodman,12,9,-3,-0.25
+1614,village of woodville,121,132,11,0.090909091
+1615,village of wrightstown,358,388,30,0.083798883
+1616,village of wyeville,20,18,-2,-0.1
+1617,village of wyocena,122,91,-31,-0.254098361
+1618,village of yorkville,349,394,45,0.128939828
+1619,village of yuba,20,15,-5,-0.25
