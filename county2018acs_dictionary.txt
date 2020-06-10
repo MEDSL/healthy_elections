@@ -1,0 +1,249 @@
+--------------------------------------------------------------------------------
+Codebook for Social Explorer report ID: R12567447
+--------------------------------------------------------------------------------
+
+Contents
+    - Table Summary
+    - Data Dictionary
+    - Citation and Use
+
+
+--------------------------------------------------------------------------------
+Table Summary
+--------------------------------------------------------------------------------
+ 
+Survey:           ACS 2018 (5-Year Estimates)
+Dataset:          Social Explorer Tables: ACS 2018 (5-Year Estimates)
+Tables:
+
+      1. Population Density (Per Sq. Mile)
+         Universe:  Total Population
+         Name:      A00002
+         Variables:
+            A00002_001:   Total Population
+            A00002_002:   Population Density (Per Sq. Mile)
+            A00002_003:   Area (Land)
+
+
+      2. Sex by Age
+         Universe:  Total Population
+         Name:      A02002
+         Variables:
+            A02002_001:   Total Population:
+            A02002_002:      Male:
+            A02002_003:         Under 5 Years
+            A02002_004:         5 to 9 Years
+            A02002_005:         10 to 14 Years
+            A02002_006:         15 to 17 Years
+            A02002_007:         18 to 24 Years
+            A02002_008:         25 to 34 Years
+            A02002_009:         35 to 44 Years
+            A02002_010:         45 to 54 Years
+            A02002_011:         55 to 64 Years
+            A02002_012:         65 to 74 Years
+            A02002_013:         75 to 84 Years
+            A02002_014:         85 Years and Over
+            A02002_015:      Female:
+            A02002_016:         Under 5 Years
+            A02002_017:         5 to 9 Years
+            A02002_018:         10 to 14 Years
+            A02002_019:         15 to 17 Years
+            A02002_020:         18 to 24 Years
+            A02002_021:         25 to 34 Years
+            A02002_022:         35 to 44 Years
+            A02002_023:         45 to 54 Years
+            A02002_024:         55 to 64 Years
+            A02002_025:         65 to 74 Years
+            A02002_026:         75 to 84 Years
+            A02002_027:         85 Years and Over
+
+
+      3. Hispanic or Latino by Race
+         Universe:  Total Population
+         Name:      A04001
+         Variables:
+            A04001_001:   Total Population
+            A04001_002:      Not Hispanic or Latino:
+            A04001_003:         White Alone
+            A04001_004:         Black or African American Alone
+            A04001_005:         American Indian and Alaska Native Alone
+            A04001_006:         Asian Alone
+            A04001_007:         Native Hawaiian and Other Pacific Islander Alone
+            A04001_008:         Some Other Race Alone
+            A04001_009:         Two or More Races
+            A04001_010:      Hispanic or Latino:
+            A04001_011:         White Alone
+            A04001_012:         Black or African American Alone
+            A04001_013:         American Indian and Alaska Native Alone
+            A04001_014:         Asian Alone
+            A04001_015:         Native Hawaiian and Other Pacific Islander Alone
+            A04001_016:         Some Other Race Alone
+            A04001_017:         Two or More Races
+
+
+      4. Educational Attainment for Population 25 Years and Over
+         Universe:  Population 25 Years and Over
+         Name:      A12001
+         Variables:
+            A12001_001:   Population 25 Years and Over:
+            A12001_002:      Less than High School
+            A12001_003:      High School Graduate (Includes Equivalency)
+            A12001_004:      Some College
+            A12001_005:      Bachelor's Degree
+            A12001_006:      Master's Degree
+            A12001_007:      Professional School Degree
+            A12001_008:      Doctorate Degree
+
+
+      5. Gini Index of Income Inequality
+         Universe:  Households
+         Name:      A14028
+         Variables:
+            A14028_001:   Gini Index
+
+
+
+
+
+ 
+ 
+ 
+--------------------------------------------------------------------------------
+Data Dictionary
+--------------------------------------------------------------------------------
+ 
+Variables 
+      FIPS:           FIPS
+      GEOID:          Geographic Identifier
+      NAME:           Name of Area
+      QName:          Qualifying Name
+      STUSAB:         State/U.S.-Abbreviation (USPS)
+      SUMLEV:         Summary Level
+      GEOCOMP:        Geographic Component
+      FILEID:         File Identification
+      LOGRECNO:       Logical Record Number
+      US:             US
+      REGION:         Region
+      DIVISION:       Division
+      STATECE:        State (Census Code)
+      STATE:          State (FIPS)
+      COUNTY:         County
+      COUSUB:         County Subdivision (FIPS)
+      PLACE:          Place (FIPS Code)
+      PLACESE:        Place (State FIPS + Place FIPS)
+      TRACT:          Census Tract
+      BLKGRP:         Block Group
+      CONCIT:         Consolidated City
+      AIANHH:         American Indian Area/Alaska Native Area/Hawaiian Home Land (Census)
+      AIANHHFP:       American Indian Area/Alaska Native Area/Hawaiian Home Land (FIPS)
+      AIHHTLI:        American Indian Trust Land/Hawaiian Home Land Indicator
+      AITSCE:         American Indian Tribal Subdivision (Census)
+      AITS:           American Indian Tribal Subdivision (FIPS)
+      ANRC:           Alaska Native Regional Corporation (FIPS)
+      CBSA:           Metropolitan and Micropolitan Statistical Area
+      CSA:            Combined Statistical Area
+      METDIV:         Metropolitan Division
+      MACC:           Metropolitan Area Central City
+      MEMI:           Metropolitan/Micropolitan Indicator Flag
+      NECTA:          New England City and Town Combined Statistical Area
+      CNECTA:         New England City and Town Area
+      NECTADIV:       New England City and Town Area Division
+      UA:             Urban Area
+      UACP:           Urban Area Central Place
+      CDCURR:         Current Congressional District ***
+      SLDU:           State Legislative District Upper
+      SLDL:           State Legislative District Lower
+      VTD:            Voting District
+      ZCTA3:          ZIP Code Tabulation Area (3-digit)
+      ZCTA5:          ZIP Code Tabulation Area (5-digit)
+      SUBMCD:         Subbarrio (FIPS)
+      SDELM:          School District (Elementary)
+      SDSEC:          School District (Secondary)
+      SDUNI:          School District (Unified)
+      UR:             Urban/Rural
+      PCI:            Principal City Indicator
+      TAZ:            Traffic Analysis Zone
+      UGA:            Urban Growth Area
+      BTTR:           Tribal Tract
+      BTBG:           Tribal Block Group
+      PUMA5:          Public Use Microdata Area - 5% File
+      PUMA1:          Public Use Microdata Area - 1% File
+      A00002_001:     Total Population
+      A00002_002:     Population Density (Per Sq. Mile)
+      A00002_003:     Area (Land)
+      A02002_001:     Total Population:
+      A02002_002:     Total Population: Male
+      A02002_003:     Total Population: Male: Under 5 Years
+      A02002_004:     Total Population: Male: 5 to 9 Years
+      A02002_005:     Total Population: Male: 10 to 14 Years
+      A02002_006:     Total Population: Male: 15 to 17 Years
+      A02002_007:     Total Population: Male: 18 to 24 Years
+      A02002_008:     Total Population: Male: 25 to 34 Years
+      A02002_009:     Total Population: Male: 35 to 44 Years
+      A02002_010:     Total Population: Male: 45 to 54 Years
+      A02002_011:     Total Population: Male: 55 to 64 Years
+      A02002_012:     Total Population: Male: 65 to 74 Years
+      A02002_013:     Total Population: Male: 75 to 84 Years
+      A02002_014:     Total Population: Male: 85 Years and Over
+      A02002_015:     Total Population: Female
+      A02002_016:     Total Population: Female: Under 5 Years
+      A02002_017:     Total Population: Female: 5 to 9 Years
+      A02002_018:     Total Population: Female: 10 to 14 Years
+      A02002_019:     Total Population: Female: 15 to 17 Years
+      A02002_020:     Total Population: Female: 18 to 24 Years
+      A02002_021:     Total Population: Female: 25 to 34 Years
+      A02002_022:     Total Population: Female: 35 to 44 Years
+      A02002_023:     Total Population: Female: 45 to 54 Years
+      A02002_024:     Total Population: Female: 55 to 64 Years
+      A02002_025:     Total Population: Female: 65 to 74 Years
+      A02002_026:     Total Population: Female: 75 to 84 Years
+      A02002_027:     Total Population: Female: 85 Years and Over
+      A04001_001:     Total Population
+      A04001_002:     Total Population: Not Hispanic or Latino
+      A04001_003:     Total Population: Not Hispanic or Latino: White Alone
+      A04001_004:     Total Population: Not Hispanic or Latino: Black or African American Alone
+      A04001_005:     Total Population: Not Hispanic or Latino: American Indian and Alaska Native Alone
+      A04001_006:     Total Population: Not Hispanic or Latino: Asian Alone
+      A04001_007:     Total Population: Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander Alone
+      A04001_008:     Total Population: Not Hispanic or Latino: Some Other Race Alone
+      A04001_009:     Total Population: Not Hispanic or Latino: Two or More Races
+      A04001_010:     Total Population: Hispanic or Latino
+      A04001_011:     Total Population: Hispanic or Latino: White Alone
+      A04001_012:     Total Population: Hispanic or Latino: Black or African American Alone
+      A04001_013:     Total Population: Hispanic or Latino: American Indian and Alaska Native Alone
+      A04001_014:     Total Population: Hispanic or Latino: Asian Alone
+      A04001_015:     Total Population: Hispanic or Latino: Native Hawaiian and Other Pacific Islander Alone
+      A04001_016:     Total Population: Hispanic or Latino: Some Other Race Alone
+      A04001_017:     Total Population: Hispanic or Latino: Two or More Races
+      A12001_001:     Population 25 Years and Over:
+      A12001_002:     Population 25 Years and Over: Less than High School
+      A12001_003:     Population 25 Years and Over: High School Graduate (Includes Equivalency)
+      A12001_004:     Population 25 Years and Over: Some College
+      A12001_005:     Population 25 Years and Over: Bachelor's Degree
+      A12001_006:     Population 25 Years and Over: Master's Degree
+      A12001_007:     Population 25 Years and Over: Professional School Degree
+      A12001_008:     Population 25 Years and Over: Doctorate Degree
+      A14028_001:     Gini Index
+
+
+
+
+--------------------------------------------------------------------------------
+Citation and Use of Data
+--------------------------------------------------------------------------------
+ 
+All persons are granted a limited license to use this documentation and the
+accompanying data, subject to the following conditions:
+
+* Publications and research reports employing the data
+  must cite it appropriately. The citation should include the following:
+
+	  www.socialexplorer.com
+	  New York City, NY: Social Explorer 2020
+
+
+* Citations should also include the URL for this report:
+
+    http://www.socialexplorer.com/pub/reportdata/HtmlResults.aspx?reportid=R12567447
+
+If you have any questions contact info@socialexplorer.com
