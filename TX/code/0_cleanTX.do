@@ -5,7 +5,7 @@ Kevin DeLuca
 
 MEDSL - Healthy Elections
 Clean up the available TX county-level data
-last updated: 6/15/20
+last updated: 6/16/20
 */
 /////////////////////////////////////
 
@@ -142,6 +142,36 @@ save "$mainPath/code/dta/earlyvote_county_primary2016.dta", replace
 *********
 
 
+
+STOP
+
+
+*********
+
+*put the county-level polling places into one big spreadsheet
+
+clear
+local files: dir "$mainPath/2020/pollplaces" files "*.csv"
+di `files'
+
+foreach file in `files'{
+	import delimited "$mainPath/2020/pollplaces/`file'", clear
+	//split precinct, p(,)
+	gen year=2020
+	save "$mainPath/code/dta/temp/`file'.dta", replace
+}
+
+
+use "$mainPath/code/dta/temp/anderson.csv.dta", clear
+foreach file in `files'{
+	append using "$mainPath/code/dta/temp/`file'.dta", force
+}
+duplicates drop
+export delimited "$mainPath/2020/allpollplaces.csv", replace
+
+
+*/
+*********
 
 
 
