@@ -5,7 +5,7 @@ Kevin DeLuca
 
 MEDSL - Healthy Elections
 Clean up the available TX county-level data
-last updated: 6/16/20
+last updated: 6/17/20
 */
 /////////////////////////////////////
 
@@ -61,13 +61,14 @@ duplicates drop //some true duplicates here, probably mistakes in the system
 gen electiontype="primary"
 gen year=2020
 gen date2=date
+drop datestr
 
 compress
 //save "$mainPath/code/dta/early_mailin_voters.dta", replace
 
 *collapse down to county-level, for merging later
 gen n_earlyvotes = 1
-collapse (sum) n_earlyvotes, by(county mode date date2 datestr party electiontype year)
+collapse (sum) n_earlyvotes, by(county mode date date2 party electiontype year)
 
 *ts set for functions
 egen ids = group(county mode party)
@@ -83,7 +84,6 @@ local N = _N
 forval x=2(1)`N'{
 	qui replace n_early_cumulative = n_early_cumulative[`x']+n_early_cumulative[`x'-1] in `x' if ids[`x']==ids[`x'-1]
 	qui replace county=county[`x'-1] in `x' if ids[`x']==ids[`x'-1]
-	qui replace datestr=datestr[`x'-1] in `x' if ids[`x']==ids[`x'-1]
 	qui replace mode=mode[`x'-1] in `x' if ids[`x']==ids[`x'-1]
 	qui replace party=party[`x'-1] in `x' if ids[`x']==ids[`x'-1]
 }
@@ -173,43 +173,5 @@ export delimited "$mainPath/2020/allpollplaces.csv", replace
 */
 *********
 
-
-
-STOP
-
-*********
-
-*get county level final results, by county for 2020
-
-clear 
-import excel "$mainPath/2020/countybycountycanvassresultsrep.xlsx", firstrow
-gen party="republican"
-rename OFFICENAME office
-rename TOTALVOTESPEROFFICEPERCOUNT votes
-replace votes = subinstr(votes,",","",.)
-destring votes, replace
-drop ELECTIONDATENAME
-rename COUNTYNAME county
-
-*collapse by office, for now - keep presidential primary results, by county
-collapse (sum) votes, by(party county office)
-keep if office=="PRESIDENT/VICE-PRESIDENT"
-tempfile repcanvas
-save `repcanvas', replace
-
-clear 
-import excel "$mainPath/2020/countybycountycanvassresultsdem.xlsx", firstrow
-gen party="democratic"
-rename OFFICENAME office
-rename TOTALVOTESPEROFFICEPERCOUNT votes
-replace votes = subinstr(votes,",","",.)
-destring votes, replace
-drop ELECTIONDATENAME
-rename COUNTYNAME county
-
-*collapse by office, for now - keep presidential primary results, by county
-collapse (sum) votes, by(party county office)
-keep if office=="PRESIDENT/VICE-PRESIDENT"
-append using `repcanvas'
 
 
