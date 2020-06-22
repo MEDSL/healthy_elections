@@ -88,6 +88,16 @@ for(i in 1:nrow(addr_df)){
   )} 
 setwd(wd1)
 saveRDS(addr_df, "oh_google_geocoded_addrs.Rdata")
+colnames(addr_df)[1:2] <- c("lon","lat")
 addr_df <- readRDS("oh_google_geocoded_addrs.Rdata")
 
 ###here will be the overlay section 
+library(rgdal)
+
+temp_coor <- subset(addr_df, select = c(lon,lat))
+
+addr_df_temp <- SpatialPointsDataFrame(coords = temp_coor, data = addr_df,
+                                    proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
+cbgs <- readOGR(wd, "CB2010") #the general file name 
+addr_df_temp$tract_fips <- over(addr_df_temp,cbg2010)$id
+
