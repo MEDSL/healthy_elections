@@ -36,7 +36,8 @@ ts_covid_all <- covid_cases %>% group_by(date) %>% dplyr::summarize(total_cases 
 ts_covid_all$Date <- as.Date(ts_covid_all$date)
 ts_covid_all <- ts_covid_all %>% mutate(lag_cases=lag(total_cases))
 ts_covid_all$new_cases <- ts_covid_all$total_cases - ts_covid_all$lag_cases
-
+###subset data to be two weeks after primary 
+ts_covid_all <- ts_covid_all[1:79,] #entry 65 is the 2 week after primary, so 14 days later is 4 weeks after primary
 sort(unique(ts_covid_all$date))
 
 ##get dates 
@@ -48,14 +49,15 @@ cases_plot_all <- ggplot(ts_covid_all, aes(x = Date, y = new_cases)) +
   geom_line(color="#156DD0", size=1)+  
   geom_vline(aes(xintercept=18394, color="#4E4A81" ), linetype=3, show.legend = F, lwd=1.4) + 
   geom_vline(aes(xintercept=18380, color="#37C256" ), linetype=2, show.legend = F, lwd=1.4) + 
-  geom_vline(aes(xintercept=18338, color="#F6573E" ), linetype=1, show.legend = F, lwd=1.4)
+  geom_vline(aes(xintercept=18338, color="#F6573E" ), linetype=1, show.legend = F, lwd=1.4) 
+  
 cases_plot_all
 #cases_plot_all
 grob_prim_o <- grobTree(textGrob("Original \nPrimary Date", x=0.01,  y=0.7, hjust=0,
                                gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob_prim <- grobTree(textGrob("Primary", x=0.5,  y=0.7, hjust=0,
+grob_prim <- grobTree(textGrob("Primary", x=0.65,  y=0.7, hjust=0,
                                gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob2weeks <-   grobTree(textGrob("2 Weeks \npost-primary", x=0.65,  y=0.8, hjust=0,
+grob2weeks <-   grobTree(textGrob("2 Weeks \npost-primary", x=0.8,  y=0.8, hjust=0,
                                   gp=gpar(col="black", fontsize=12, fontface="bold")))
 cases_plot_all <- cases_plot_all +  annotation_custom(grob_prim_o) +   annotation_custom(grob_prim) +  annotation_custom(grob2weeks) +
   labs( title= "COVID-19 Cases", y="New Cases") + theme_minimal()
