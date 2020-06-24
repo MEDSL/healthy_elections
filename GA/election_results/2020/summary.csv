@@ -1,0 +1,826 @@
+line number,contest name,choice name,party name,total votes,percent of votes,num Precinct total,num Precinct rptg,over votes,under votes
+1,REP - President of the United States,Donald J. Trump (I),REP,946944,100,159,159,0,0
+2,DEM - President of the United States,Michael Bennet,DEM,5139,0.47,159,159,0,0
+3,DEM - President of the United States,Joseph R. Biden,DEM,918739,84.86,159,159,0,0
+4,DEM - President of the United States,Michael R. Bloomberg,DEM,7641,0.71,159,159,0,0
+5,DEM - President of the United States,Pete Buttigieg,DEM,6329,0.58,159,159,0,0
+6,DEM - President of the United States,John K. Delaney,DEM,1475,0.14,159,159,0,0
+7,DEM - President of the United States,Tulsi Gabbard,DEM,4102,0.38,159,159,0,0
+8,DEM - President of the United States,Amy Klobuchar,DEM,4305,0.4,159,159,0,0
+9,DEM - President of the United States,Deval Patrick,DEM,1037,0.1,159,159,0,0
+10,DEM - President of the United States,Bernie Sanders,DEM,101241,9.35,159,159,0,0
+11,DEM - President of the United States,Tom Steyer,DEM,1748,0.16,159,159,0,0
+12,DEM - President of the United States,Elizabeth Warren,DEM,21795,2.01,159,159,0,0
+13,DEM - President of the United States,Andrew Yang,DEM,9089,0.84,159,159,0,0
+14,REP - US Senate,David A. Perdue (I),REP,992105,100,159,159,0,0
+15,DEM - US Senate,Sarah Riggs Amico,DEM,139120,11.77,159,159,0,0
+16,DEM - US Senate,Marckeith DeJesus,DEM,45783,3.87,159,159,0,0
+17,DEM - US Senate,James Knox,DEM,49301,4.17,159,159,0,0
+18,DEM - US Senate,Tricia Carpenter McCracken,DEM,32350,2.74,159,159,0,0
+19,DEM - US Senate,Jon Ossoff,DEM,624142,52.81,159,159,0,0
+20,DEM - US Senate,Maya Dillard Smith,DEM,104593,8.85,159,159,0,0
+21,DEM - US Senate,Teresa Pike Tomlinson,DEM,186673,15.79,159,159,0,0
+22,REP - Public Service Commission Dist 4,"Lauren Bubba McDonald, Jr. (I)",REP,929538,100,159,159,0,0
+23,DEM - Public Service Commission Dist 4,Daniel Blackman,DEM,759931,71.64,159,159,0,0
+24,DEM - Public Service Commission Dist 4,John Noel,DEM,300856,28.36,159,159,0,0
+25,REP - Public Service Commission Dist 1,Jason Shaw (I),REP,941662,100,159,159,0,0
+26,DEM - Public Service Commission Dist 1,Robert G. Bryant,DEM,922521,100,159,159,0,0
+27,REP - US House Dist 1,"Earl L. """"Buddy"""" Carter (I)",REP,65903,82.16,17,17,0,0
+28,REP - US House Dist 1,Danny Merritt,REP,13154,16.4,17,17,0,0
+29,REP - US House Dist 1,Ken Yasger,REP,1152,1.44,17,17,0,0
+30,DEM - US House Dist 1,Joyce Marie Griggs,DEM,25592,40.72,17,17,0,0
+31,DEM - US House Dist 1,Lisa M. Ring,DEM,28915,46.01,17,17,0,0
+32,DEM - US House Dist 1,Barbara Seidman,DEM,8337,13.27,17,17,0,0
+33,REP - US House Dist 2,Vivian L. Childs,REP,20521,46.59,29,29,0,0
+34,REP - US House Dist 2,Don Cole,REP,23527,53.41,29,29,0,0
+35,DEM - US House Dist 2,Sanford Bishop (I),DEM,82962,100,29,29,0,0
+36,REP - US House Dist 3,Drew Ferguson (I),REP,94166,100,13,13,0,0
+37,DEM - US House Dist 3,Val Almonord,DEM,56239,100,13,13,0,0
+38,REP - US House Dist 4,Johsie Cruz Ezammudeen,REP,22983,100,4,4,0,0
+39,DEM - US House Dist 4,William Haston,DEM,19490,13.28,4,4,0,0
+40,DEM - US House Dist 4,"Henry C. ""Hank"" Johnson, Jr. (I)",DEM,100412,68.42,4,4,0,0
+41,DEM - US House Dist 4,Elaine Amankwah Nietmann,DEM,26865,18.3,4,4,0,0
+42,REP - US House Dist 5,Angela Stanton-King,REP,8542,100,3,3,0,0
+43,DEM - US House Dist 5,John R. Lewis (I),DEM,141651,87.65,3,3,0,0
+44,DEM - US House Dist 5,"Barrington D. Martin, II",DEM,19961,12.35,3,3,0,0
+45,REP - US House Dist 6,Mykel Lynn Barthelemy,REP,2771,4.31,3,3,0,0
+46,REP - US House Dist 6,Karen Handel,REP,47797,74.34,3,3,0,0
+47,REP - US House Dist 6,Blake Harbin,REP,3126,4.86,3,3,0,0
+48,REP - US House Dist 6,Joe Profit,REP,9503,14.78,3,3,0,0
+49,REP - US House Dist 6,Paulette Smith,REP,1098,1.71,3,3,0,0
+50,DEM - US House Dist 6,Lucy McBath (I),DEM,90015,100,3,3,0,0
+51,REP - US House Dist 7,Lisa Noel Babbage,REP,3336,5.21,2,2,0,0
+52,REP - US House Dist 7,Mark Gonsalves,REP,4640,7.25,2,2,0,0
+53,REP - US House Dist 7,Lynne Homrich,REP,4567,7.13,2,2,0,0
+54,REP - US House Dist 7,Zachary H. Kennemore,REP,1195,1.87,2,2,0,0
+55,REP - US House Dist 7,Rich McCormick,REP,35280,55.11,2,2,0,0
+56,REP - US House Dist 7,Renee S. Unterman,REP,11143,17.41,2,2,0,0
+57,REP - US House Dist 7,Eugene Yu,REP,3856,6.02,2,2,0,0
+58,DEM - US House Dist 7,Carolyn Bourdeaux,DEM,44710,52.78,2,2,0,0
+59,DEM - US House Dist 7,John Eaves,DEM,6548,7.73,2,2,0,0
+60,DEM - US House Dist 7,Nabilah Aishah Islam,DEM,10447,12.33,2,2,0,0
+61,DEM - US House Dist 7,Zahra S. Karinshak,DEM,5729,6.76,2,2,0,0
+62,DEM - US House Dist 7,Brenda Lopez Romero,DEM,10497,12.39,2,2,0,0
+63,DEM - US House Dist 7,Rashid Malik,DEM,6780,8,2,2,0,0
+64,REP - US House Dist 8,Vance Dean,REP,4692,5.72,24,24,0,0
+65,REP - US House Dist 8,Danny Ellyson,REP,3668,4.47,24,24,0,0
+66,REP - US House Dist 8,Austin Scott (I),REP,73671,89.81,24,24,0,0
+67,DEM - US House Dist 8,Lindsay Holliday,DEM,44493,100,24,24,0,0
+68,REP - US House Dist 9,Michael Boggus,REP,4497,3.2,20,20,0,0
+69,REP - US House Dist 9,Paul Broun,REP,18627,13.27,20,20,0,0
+70,REP - US House Dist 9,Andrew Clyde,REP,25914,18.46,20,20,0,0
+71,REP - US House Dist 9,Matt Gurtler,REP,29426,20.96,20,20,0,0
+72,REP - US House Dist 9,Maria Strickland,REP,4871,3.47,20,20,0,0
+73,REP - US House Dist 9,Kevin Tanner,REP,22187,15.81,20,20,0,0
+74,REP - US House Dist 9,Ethan Underwood,REP,12117,8.63,20,20,0,0
+75,REP - US House Dist 9,Kellie Weeks,REP,6422,4.57,20,20,0,0
+76,REP - US House Dist 9,John K. Wilkinson,REP,16314,11.62,20,20,0,0
+77,DEM - US House Dist 9,Devin Pandy,DEM,10476,33.57,20,20,0,0
+78,DEM - US House Dist 9,Brooke Siskin,DEM,12859,41.2,20,20,0,0
+79,DEM - US House Dist 9,Dan Wilson,DEM,7874,25.23,20,20,0,0
+80,REP - US House Dist 10,Jody Hice (I),REP,93506,100,25,25,0,0
+81,DEM - US House Dist 10,Andrew Ferguson,DEM,25048,34.26,25,25,0,0
+82,DEM - US House Dist 10,Tabitha Johnson-Green,DEM,48069,65.74,25,25,0,0
+83,REP - US House Dist 11,Barry Loudermilk (I),REP,86050,100,4,4,0,0
+84,DEM - US House Dist 11,Dana Barrett,DEM,65559,100,4,4,0,0
+85,REP - US House Dist 12,Rick W. Allen (I),REP,74520,100,19,19,0,0
+86,DEM - US House Dist 12,Liz Johnson,DEM,48685,83.64,19,19,0,0
+87,DEM - US House Dist 12,Dan Steiner,DEM,9525,16.36,19,19,0,0
+88,REP - US House Dist 13,Caesar Gonzales,REP,9170,31.35,6,6,0,0
+89,REP - US House Dist 13,Becky E. Hites,REP,20076,68.65,6,6,0,0
+90,DEM - US House Dist 13,Michael Owens,DEM,19415,13.22,6,6,0,0
+91,DEM - US House Dist 13,Jannquell Peters,DEM,12308,8.38,6,6,0,0
+92,DEM - US House Dist 13,David Scott (I),DEM,77734,52.91,6,6,0,0
+93,DEM - US House Dist 13,Keisha Sean Waites,DEM,37447,25.49,6,6,0,0
+94,REP - US House Dist 14,John D. Barge,REP,9618,8.84,12,12,0,0
+95,REP - US House Dist 14,Ben Bullock,REP,3883,3.57,12,12,0,0
+96,REP - US House Dist 14,Kevin Cooke,REP,6699,6.16,12,12,0,0
+97,REP - US House Dist 14,John Cowan,REP,22862,21.01,12,12,0,0
+98,REP - US House Dist 14,Clayton Fuller,REP,7433,6.83,12,12,0,0
+99,REP - US House Dist 14,Marjorie Taylor Greene,REP,43889,40.34,12,12,0,0
+100,REP - US House Dist 14,Andy Gunther,REP,1220,1.12,12,12,0,0
+101,REP - US House Dist 14,Bill Hembree,REP,6988,6.42,12,12,0,0
+102,REP - US House Dist 14,Matt Laughridge,REP,6219,5.72,12,12,0,0
+103,DEM - US House Dist 14,Kevin Van Ausdal,DEM,26615,100,12,12,0,0
+104,REP - State Senate Dist 1,Ben Watson (I),REP,18078,100,2,2,0,0
+105,DEM - State Senate Dist 1,Kerri Wilkins McGinty,DEM,10801,100,2,2,0,0
+106,DEM - State Senate Dist 2,"Lester G. Jackson, III (I)",DEM,24026,100,1,1,0,0
+107,REP - State Senate Dist 3,Sheila McNeill,REP,9219,41.24,5,5,0,0
+108,REP - State Senate Dist 3,David Sharpe,REP,9757,43.65,5,5,0,0
+109,REP - State Senate Dist 3,Cody Smith,REP,3379,15.12,5,5,0,0
+110,Special - State Senate District 4,Scott Bohlke,NP,11493,31.95,6,6,0,0
+111,Special - State Senate District 4,Billy Hickman,NP,12038,33.46,6,6,0,0
+112,Special - State Senate District 4,Kathy Palmer,NP,5490,15.26,6,6,0,0
+113,Special - State Senate District 4,Stephen Jared Sammons,NP,5892,16.38,6,6,0,0
+114,Special - State Senate District 4,Neil Singleton,NP,1064,2.96,6,6,0,0
+115,REP - State Senate Dist 4,Scott Bohlke,REP,9683,37.34,6,6,0,0
+116,REP - State Senate Dist 4,Billy Hickman,REP,11190,43.15,6,6,0,0
+117,REP - State Senate Dist 4,Kathy Palmer,REP,4234,16.33,6,6,0,0
+118,REP - State Senate Dist 4,Neil Singleton,REP,823,3.17,6,6,0,0
+119,DEM - State Senate Dist 5/Senador Estatal Dist 5,Sheikh Rahman (I),DEM,14904,100,1,1,0,0
+120,REP - State Senate Dist 6,Harrison Lance,REP,9859,100,2,2,0,0
+121,DEM - State Senate Dist 6,"Jennifer """"Jen"""" Jordan (I)",DEM,25625,100,2,2,0,0
+122,REP - State Senate Dist 7,Tyler Harper (I),REP,25504,100,10,10,0,0
+123,REP - State Senate Dist 8,Russ Goodman,REP,14866,100,7,7,0,0
+124,DEM - State Senate Dist 8,Treva Gear,DEM,9103,100,7,7,0,0
+125,REP - STATE SENATE DIST 9,"P. K. Martin, IV (I)",REP,18277,100,1,1,0,0
+126,DEM - STATE SENATE DIST 9,Nikki Merritt,DEM,12535,47.73,1,1,0,0
+127,DEM - STATE SENATE DIST 9,Cheryle Renee Moses,DEM,6534,24.88,1,1,0,0
+128,DEM - STATE SENATE DIST 9,Gabe Okoye,DEM,7193,27.39,1,1,0,0
+129,DEM - State Senate Dist 10,Emanuel Jones (I),DEM,32586,76.15,2,2,0,0
+130,DEM - State Senate Dist 10,Maurice Raeford,DEM,10205,23.85,2,2,0,0
+131,REP - State Senate Dist 11,Dean Burke (I),REP,17355,100,8,8,0,0
+132,REP - State Senate Dist 12,Tracy Taylor,REP,7050,100,11,11,0,0
+133,DEM - State Senate Dist 12,Edward Ford Ball,DEM,5398,23.23,11,11,0,0
+134,DEM - State Senate Dist 12,Freddie Powell Sims (I),DEM,17835,76.77,11,11,0,0
+135,REP - State Senate Dist 13,Spud Bowen,REP,10886,43.31,9,9,0,0
+136,REP - State Senate Dist 13,Carden H. Summers (I),REP,14248,56.69,9,9,0,0
+137,DEM - State Senate Dist 13,Mary Egler,DEM,5428,58.52,9,9,0,0
+138,DEM - State Senate Dist 13,Ruenett Melton,DEM,3848,41.48,9,9,0,0
+139,REP - State Senate Dist 14,Bruce Thompson (I),REP,23306,100,3,3,0,0
+140,DEM - State Senate Dist 14,Travis Johnson,DEM,9303,100,3,3,0,0
+141,DEM - State Senate Dist 15,Ed Harbison (I),DEM,11957,53.11,7,7,0,0
+142,DEM - State Senate Dist 15,Teddy Reese,DEM,10556,46.89,7,7,0,0
+143,REP - State Senate Dist 16,Marty Harbin (I),REP,26013,100,4,4,0,0
+144,DEM - State Senate Dist 16,Cinquez Jester,DEM,13472,100,4,4,0,0
+145,REP - State Senate Dist 17,Brian Strickland (I),REP,20262,100,3,3,0,0
+146,DEM - State Senate Dist 17,Kelly Rose,DEM,23589,100,3,3,0,0
+147,REP - State Senate Dist 18,John F. Kennedy (I),REP,22976,100,6,6,0,0
+148,REP - State Senate Dist 19,Blake Tillery (I),REP,22672,100,11,11,0,0
+149,REP - State Senate Dist 20,Larry Walker (I),REP,20071,93.14,4,4,0,0
+150,REP - State Senate Dist 20,Franklin E. Wetmore,REP,1478,6.86,4,4,0,0
+151,DEM - State Senate Dist 20,Julius Newberry Johnson,DEM,11991,100,4,4,0,0
+152,REP - State Senate Dist 21,Brandon Beach (I),REP,16822,59.11,2,2,0,0
+153,REP - State Senate Dist 21,Michael Caldwell,REP,11639,40.89,2,2,0,0
+154,DEM - State Senate Dist 22,"Harold V. Jones, II (I)",DEM,25009,100,1,1,0,0
+155,REP - State Senate Dist 23,Trey Allen,REP,8090,45.63,11,11,0,0
+156,REP - State Senate Dist 23,Max Burns,REP,9640,54.37,11,11,0,0
+157,DEM - State Senate Dist 23,Ceretta Smith,DEM,16041,100,11,11,0,0
+158,REP - State Senate Dist 24,Lee Anderson (I),REP,26831,100,8,8,0,0
+159,REP - State Senate Dist 25,Burt Jones (I),REP,26118,100,9,9,0,0
+160,DEM - State Senate Dist 25,Veronica Brinson,DEM,13559,100,9,9,0,0
+161,DEM - State Senate Dist 26,"David E. Lucas, Sr. (I)",DEM,23207,83.19,7,7,0,0
+162,DEM - State Senate Dist 26,Verbin Weaver,DEM,4688,16.81,7,7,0,0
+163,REP - State Senate Dist 27,Greg Dolezal (I),REP,27628,100,1,1,0,0
+164,DEM - State Senate Dist 27,Brooke Griffiths,DEM,13259,100,1,1,0,0
+165,REP - State Senate Dist 28,Matt Brass (I),REP,25985,100,5,5,0,0
+166,REP - State Senate Dist 29,Randy Robertson (I),REP,20241,100,4,4,0,0
+167,REP - State Senate Dist 30,Mike Dugan (I),REP,21627,100,3,3,0,0
+168,DEM - State Senate Dist 30,Montenia Edwards,DEM,5157,37.66,3,3,0,0
+169,DEM - State Senate Dist 30,Afoma Eguh-Okafor,DEM,2836,20.71,3,3,0,0
+170,DEM - State Senate Dist 30,Triana Arnold James,DEM,5700,41.63,3,3,0,0
+171,REP - State Senate Dist 31,Jason Anavitarte,REP,10639,35.99,3,3,0,0
+172,REP - State Senate Dist 31,Boyd Austin,REP,11915,40.3,3,3,0,0
+173,REP - State Senate Dist 31,"Robert """"Bobby"""" Mehan",REP,4706,15.92,3,3,0,0
+174,REP - State Senate Dist 31,Bobby Wilson,REP,2305,7.8,3,3,0,0
+175,DEM - State Senate Dist 31,Tianna Smith,DEM,10414,100,3,3,0,0
+176,REP - State Senate Dist 32,Kay Kirkpatrick (I),REP,24337,100,2,2,0,0
+177,DEM - State Senate Dist 32,Christine Triebsch,DEM,22892,100,2,2,0,0
+178,DEM - State Senate Dist 33,Michael Rhett (I),DEM,23573,100,1,1,0,0
+179,DEM - State Senate Dist 34,Valencia M. Seay (I),DEM,28197,100,2,2,0,0
+180,DEM - State Senate Dist 35,Karen W. Ashley,DEM,7688,19.16,2,2,0,0
+181,DEM - State Senate Dist 35,Donzella James (I),DEM,25430,63.37,2,2,0,0
+182,DEM - State Senate Dist 35,Kelly Johnson,DEM,7012,17.47,2,2,0,0
+183,DEM - State Senate Dist 36,Nan Orrock (I),DEM,32775,100,1,1,0,0
+184,REP - State Senate Dist 37,Lindsey Tippins (I),REP,20605,100,1,1,0,0
+185,DEM - State Senate Dist 37,Vanessa Parker,DEM,16597,79.29,1,1,0,0
+186,DEM - State Senate Dist 37,"Turner Rentz, III",DEM,4334,20.71,1,1,0,0
+187,DEM - State Senate Dist 38,Devin Barrington-Ward,DEM,4469,11.24,2,2,0,0
+188,DEM - State Senate Dist 38,Michael Carson,DEM,4090,10.29,2,2,0,0
+189,DEM - State Senate Dist 38,Tania Robinson,DEM,10160,25.56,2,2,0,0
+190,DEM - State Senate Dist 38,Horacena Tate (I),DEM,21024,52.9,2,2,0,0
+191,DEM - State Senate Dist 39,Linda Pritchett,DEM,8662,23.47,1,1,0,0
+192,DEM - State Senate Dist 39,Nikema Williams (I),DEM,28246,76.53,1,1,0,0
+193,REP - State Senate Dist 40,Garry Guan,REP,10962,100,3,3,0,0
+194,DEM - State Senate Dist 40,Sally Harrell (I),DEM,23037,100,3,3,0,0
+195,REP - State Senate Dist 41,William Park Freeman,REP,4360,100,2,2,0,0
+196,DEM - State Senate Dist 41,Gil Freeman,DEM,3416,12.88,2,2,0,0
+197,DEM - State Senate Dist 41,Mohammed Jahangir Hossain,DEM,4049,15.27,2,2,0,0
+198,DEM - State Senate Dist 41,Kim Jackson,DEM,14311,53.96,2,2,0,0
+199,DEM - State Senate Dist 41,Beverly R. Jones,DEM,4745,17.89,2,2,0,0
+200,DEM - State Senate Dist 42,Elena Parent (I),DEM,38289,100,1,1,0,0
+201,REP - State Senate Dist 43,Melanie Williams,REP,7127,100,3,3,0,0
+202,DEM - State Senate Dist 43,Tonya P. Anderson (I),DEM,34268,100,3,3,0,0
+203,REP - State Senate Dist 44,Benjamin Brooks,REP,3054,100,2,2,0,0
+204,DEM - State Senate Dist 44,Gail Davenport (I),DEM,27766,67.54,2,2,0,0
+205,DEM - State Senate Dist 44,Myah Johnson,DEM,13347,32.46,2,2,0,0
+206,REP - State Senate Dist 45/Senador Estatal Dist 45,Sammy Baker,REP,6058,31.75,1,1,0,0
+207,REP - State Senate Dist 45/Senador Estatal Dist 45,Clint Dixon,REP,11156,58.47,1,1,0,0
+208,REP - State Senate Dist 45/Senador Estatal Dist 45,Noemi Puntier,REP,1865,9.78,1,1,0,0
+209,DEM - State Senate Dist 45/Senador Estatal Dist 45,Ernie Anaya,DEM,4451,22.56,1,1,0,0
+210,DEM - State Senate Dist 45/Senador Estatal Dist 45,Matielyn Jones,DEM,12826,65.01,1,1,0,0
+211,DEM - State Senate Dist 45/Senador Estatal Dist 45,Richard Smith,DEM,2451,12.42,1,1,0,0
+212,REP - State Senate Dist 46,Bill Cowsert (I),REP,24456,100,3,3,0,0
+213,DEM - State Senate Dist 46,Zachary Perry,DEM,16364,100,3,3,0,0
+214,REP - State Senate Dist 47,Frank Ginn (I),REP,21322,100,4,4,0,0
+215,DEM - State Senate Dist 47,Dawn Johnson,DEM,12578,100,4,4,0,0
+216,REP - State Senate Dist 48,Matt Reeves,REP,11255,100,2,2,0,0
+217,DEM - State Senate Dist 48,Michelle Au,DEM,16238,77.64,2,2,0,0
+218,DEM - State Senate Dist 48,Josh Uddin,DEM,4677,22.36,2,2,0,0
+219,REP - State Senate Dist 49,"Cecil T. """"Butch"""" Miller (I)",REP,24748,100,1,1,0,0
+220,REP - State Senate Dist 50,Andy Garrison,REP,5549,14.34,8,8,0,0
+221,REP - State Senate Dist 50,Dan Gasaway,REP,2796,7.23,8,8,0,0
+222,REP - State Senate Dist 50,Stacy Hall,REP,9443,24.41,8,8,0,0
+223,REP - State Senate Dist 50,Bo Hatchett,REP,9073,23.45,8,8,0,0
+224,REP - State Senate Dist 50,Tricia Lynne Hise,REP,6972,18.02,8,8,0,0
+225,REP - State Senate Dist 50,Lee Moore,REP,4850,12.54,8,8,0,0
+226,DEM - State Senate Dist 50,Dee Daley,DEM,5229,100,8,8,0,0
+227,REP - State Senate Dist 51,Steve Gooch (I),REP,37496,100,8,8,0,0
+228,DEM - State Senate Dist 51,June Krise,DEM,6786,100,8,8,0,0
+229,REP - State Senate Dist 52,Chuck Hufstetler (I),REP,22385,100,4,4,0,0
+230,DEM - State Senate Dist 52,Charles DeYoung,DEM,6763,100,4,4,0,0
+231,REP - State Senate Dist 53,Colton Moore,REP,10274,34.61,4,4,0,0
+232,REP - State Senate Dist 53,Jeff Mullis (I),REP,16262,54.78,4,4,0,0
+233,REP - State Senate Dist 53,Todd Noblitt,REP,3149,10.61,4,4,0,0
+234,REP - State Senate Dist 54,Dan L. McEntire,REP,9597,37.72,4,4,0,0
+235,REP - State Senate Dist 54,Chuck Payne (I),REP,15843,62.28,4,4,0,0
+236,DEM - State Senate Dist 55,Gloria S. Butler (I),DEM,37594,100,2,2,0,0
+237,REP - State Senate Dist 56,John Albers (I),REP,13639,100,2,2,0,0
+238,DEM - State Senate Dist 56,Sarah Beeson,DEM,19339,100,2,2,0,0
+239,REP - State House Dist 1,Mike Cameron,REP,3166,37.07,2,2,0,0
+240,REP - State House Dist 1,John Deffenbaugh,REP,3565,41.74,2,2,0,0
+241,REP - State House Dist 1,Vikki Mills,REP,1810,21.19,2,2,0,0
+242,REP - State House Dist 2,Steve Tarvin (I),REP,8976,100,3,3,0,0
+243,REP - State House Dist 3,Dewayne Hill (I),REP,5349,61.8,1,1,0,0
+244,REP - State House Dist 3,Jeff Holcomb,REP,3307,38.2,1,1,0,0
+245,REP - State House Dist 4,Kasey Carpenter (I),REP,4649,100,1,1,0,0
+246,REP - State House Dist 5,Matt Barton (I),REP,6941,100,2,2,0,0
+247,REP - State House Dist 6,Jason T. Ridley (I),REP,7369,100,2,2,0,0
+248,REP - State House Dist 7,David Ralston (I),REP,12916,100,3,3,0,0
+249,DEM - State House Dist 7,Rick D. Day,DEM,2193,100,3,3,0,0
+250,REP - State House Dist 8,Stan Gunter,REP,9917,65.29,4,4,0,0
+251,REP - State House Dist 8,Steve Townsend,REP,5273,34.71,4,4,0,0
+252,DEM - State House Dist 8,Dave Cooper,DEM,2780,100,4,4,0,0
+253,REP - State House Dist 9,Steve Leibel,REP,2748,20.45,3,3,0,0
+254,REP - State House Dist 9,Doug Sherrill,REP,2385,17.75,3,3,0,0
+255,REP - State House Dist 9,Clint Smith,REP,1107,8.24,3,3,0,0
+256,REP - State House Dist 9,Tyler Tolin,REP,954,7.1,3,3,0,0
+257,REP - State House Dist 9,Zack Tumlin,REP,1626,12.1,3,3,0,0
+258,REP - State House Dist 9,Will Wade,REP,4617,34.36,3,3,0,0
+259,DEM - State House Dist 9,Sharon L. Ravert,DEM,1833,100,3,3,0,0
+260,REP - State House Dist 10,Victor E. Anderson,REP,5113,42.47,2,2,0,0
+261,REP - State House Dist 10,Robert A. Crumley,REP,3637,30.21,2,2,0,0
+262,REP - State House Dist 10,Jimmy Dean,REP,3288,27.31,2,2,0,0
+263,DEM - State House Dist 10,Nick Mitchell,DEM,1581,100,2,2,0,0
+264,REP - State House Dist 11,Rick Jasperse (I),REP,10017,82.51,3,3,0,0
+265,REP - State House Dist 11,Charlotte L. Williamson,REP,2123,17.49,3,3,0,0
+266,DEM - State House Dist 11,Kayla Hollifield,DEM,1379,100,3,3,0,0
+267,REP - State House Dist 12,Eddie Lumsden (I),REP,8413,100,2,2,0,0
+268,DEM - State House Dist 12,Jonathan Gilreath-Harvey,DEM,1580,100,2,2,0,0
+269,REP - State House Dist 13,Brad Barnes,REP,1284,18.64,1,1,0,0
+270,REP - State House Dist 13,Katie Dempsey (I),REP,5606,81.36,1,1,0,0
+271,REP - State House Dist 14,Mitchell Scoggins (I),REP,8549,100,2,2,0,0
+272,REP - State House Dist 15,Matthew Gambill (I),REP,7411,100,1,1,0,0
+273,REP - State House Dist 16,Jennifer Lankford Hulsey,REP,3574,36.19,3,3,0,0
+274,REP - State House Dist 16,Trey Kelley (I),REP,6302,63.81,3,3,0,0
+275,DEM - State House Dist 16,Lyndsay Arrendale,DEM,1567,100,3,3,0,0
+276,REP - State House Dist 17,Martin Momtahan (I),REP,8714,100,1,1,0,0
+277,DEM - State House Dist 17,Q. Dailey,DEM,3392,100,1,1,0,0
+278,REP - State House Dist 18,Lane Daniel,REP,1695,18.18,2,2,0,0
+279,REP - State House Dist 18,Cason Hightower,REP,4374,46.91,2,2,0,0
+280,REP - State House Dist 18,Tyler Paul Smith,REP,3255,34.91,2,2,0,0
+281,DEM - State House Dist 18,Pat Rhudy,DEM,2346,100,2,2,0,0
+282,REP - State House Dist 19,Joseph Gullett (I),REP,7157,100,1,1,0,0
+283,DEM - State House Dist 19,Alison Feliciano,DEM,4866,100,1,1,0,0
+284,REP - State House Dist 20,Rick Ballew,REP,1220,15.22,1,1,0,0
+285,REP - State House Dist 20,Charlice Byrd,REP,3948,49.25,1,1,0,0
+286,REP - State House Dist 20,Jessica L. Long,REP,789,9.84,1,1,0,0
+287,REP - State House Dist 20,Jordan Ridley,REP,757,9.44,1,1,0,0
+288,REP - State House Dist 20,Katrina Singletary,REP,1302,16.24,1,1,0,0
+289,DEM - State House Dist 20,Ginny Lennox,DEM,4138,100,1,1,0,0
+290,REP - State House Dist 21,Bill Fincher,REP,4475,48.69,1,1,0,0
+291,REP - State House Dist 21,"Rajpal """"Raj' Sagoo",REP,1309,14.24,1,1,0,0
+292,REP - State House Dist 21,Brad Thomas,REP,3407,37.07,1,1,0,0
+293,DEM - State House Dist 21,William D. Hughes,DEM,3320,100,1,1,0,0
+294,REP - State House Dist 22,Wes Cantrell (I),REP,11042,100,3,3,0,0
+295,DEM - State House Dist 22,Charles Ravenscraft,DEM,2204,53.26,3,3,0,0
+296,DEM - State House Dist 22,Bobbi L. Simpson,DEM,1934,46.74,3,3,0,0
+297,REP - State House Dist 23,Mandi L. Ballinger (I),REP,8465,100,1,1,0,0
+298,REP - State House Dist 24,Sheri Smallwood Gilligan (I),REP,9015,100,1,1,0,0
+299,DEM - State House Dist 24,Natalie Bucsko,DEM,3675,100,1,1,0,0
+300,REP - State House Dist 25,Todd Jones (I),REP,7289,100,2,2,0,0
+301,DEM - State House Dist 25,Christa Olenczak,DEM,5298,100,2,2,0,0
+302,REP - State House Dist 26,"Lauren W. McDonald, III",REP,10020,100,1,1,0,0
+303,DEM - State House Dist 26,Jason Boskey,DEM,3087,100,1,1,0,0
+304,REP - State House Dist 27,Lee Hawkins (I),REP,9602,100,2,2,0,0
+305,REP - State House Dist 28,Chris Erwin (I),REP,9540,100,3,3,0,0
+306,REP - State House Dist 29,Matt Dubnik (I),REP,5555,100,1,1,0,0
+307,DEM - State House Dist 29,Pat Calmes,DEM,2481,100,1,1,0,0
+308,REP - State House Dist 30,"Emory Dunahoo, Jr. (I)",REP,7425,100,1,1,0,0
+309,DEM - State House Dist 30,Leigh Miller,DEM,2413,100,1,1,0,0
+310,REP - State House Dist 31,Tommy Benton (I),REP,10424,100,1,1,0,0
+311,DEM - State House Dist 31,Pete Fuller,DEM,2158,100,1,1,0,0
+312,REP - State House Dist 32,Alan Powell (I),REP,11406,100,3,3,0,0
+313,DEM - State House Dist 32,Alisha Allen,DEM,1727,100,3,3,0,0
+314,REP - State House Dist 33,Bruce Azevedo,REP,1402,14.78,5,5,0,0
+315,REP - State House Dist 33,Rob Leverett,REP,3601,37.97,5,5,0,0
+316,REP - State House Dist 33,Tripp Strickland,REP,4480,47.24,5,5,0,0
+317,DEM - State House Dist 33,Kerry Dornell Hamm,DEM,3089,100,5,5,0,0
+318,REP - State House Dist 34,Bert Reeves (I),REP,6046,100,1,1,0,0
+319,DEM - State House Dist 34,Priscilla G. Smith,DEM,5600,100,1,1,0,0
+320,REP - State House Dist 35,Ed Setzler (I),REP,4977,100,1,1,0,0
+321,DEM - State House Dist 35,Lisa Campbell,DEM,2751,40.47,1,1,0,0
+322,DEM - State House Dist 35,Kyle Rinaudo,DEM,2033,29.91,1,1,0,0
+323,DEM - State House Dist 35,Elizabeth Webster,DEM,2014,29.63,1,1,0,0
+324,REP - State House Dist 36,Ginny Ehrhart (I),REP,8385,100,1,1,0,0
+325,DEM - State House Dist 36,James Francis Ryner,DEM,5809,100,1,1,0,0
+326,REP - State House Dist 37,Rose Wing,REP,5176,100,1,1,0,0
+327,DEM - State House Dist 37,Mary Frances Williams (I),DEM,6738,100,1,1,0,0
+328,DEM - State House Dist 38,David Wilkerson (I),DEM,9857,100,1,1,0,0
+329,REP - State House Dist 39,Jim Hickey,REP,1272,100,1,1,0,0
+330,DEM - State House Dist 39,Terry Alexis Cummings,DEM,3687,34.82,1,1,0,0
+331,DEM - State House Dist 39,Erica Thomas (I),DEM,6901,65.18,1,1,0,0
+332,REP - State House Dist 40,Taryn Chilivis Bowman,REP,4815,100,2,2,0,0
+333,DEM - State House Dist 40,Erick Eugene Allen (I),DEM,9072,100,2,2,0,0
+334,REP - State House Dist 41,"Stephen M. George, Jr.",REP,2089,100,1,1,0,0
+335,DEM - State House Dist 41,Michael Smith (I),DEM,6222,100,1,1,0,0
+336,DEM - State House Dist 42,Teri Anulewicz (I),DEM,3520,58.81,1,1,0,0
+337,DEM - State House Dist 42,Asher Nuckolls,DEM,2465,41.19,1,1,0,0
+338,REP - State House Dist 43,Sharon Cooper (I),REP,6095,100,1,1,0,0
+339,DEM - State House Dist 43,Luisa Wakeman,DEM,6767,100,1,1,0,0
+340,REP - State House Dist 44,Don L. Parsons (I),REP,6375,100,1,1,0,0
+341,DEM - State House Dist 44,Connie DiCicco,DEM,6492,100,1,1,0,0
+342,REP - State House Dist 45,Matt Dollar (I),REP,7593,100,2,2,0,0
+343,DEM - State House Dist 45,Sara Tindall Ghazal,DEM,6872,100,2,2,0,0
+344,REP - State House Dist 46,John Carson (I),REP,8011,100,2,2,0,0
+345,DEM - State House Dist 46,Caroline L. Holko,DEM,3437,54.84,2,2,0,0
+346,DEM - State House Dist 46,Shirley Ritchie,DEM,2830,45.16,2,2,0,0
+347,REP - State House Dist 47,Jan Jones (I),REP,5227,100,1,1,0,0
+348,DEM - State House Dist 47,Anthia Owens Carter,DEM,5276,100,1,1,0,0
+349,REP - State House Dist 48,Betty Price,REP,3641,100,1,1,0,0
+350,DEM - State House Dist 48,Mary Robichaux (I),DEM,5443,100,1,1,0,0
+351,REP - State House Dist 49,"Charles E. """"Chuck"""" Martin (I)",REP,4422,100,1,1,0,0
+352,DEM - State House Dist 49,Jason T. Hayes,DEM,3215,54.04,1,1,0,0
+353,DEM - State House Dist 49,Ken Lawler,DEM,2734,45.96,1,1,0,0
+354,REP - State House Dist 50,Jay Lin,REP,3206,100,1,1,0,0
+355,DEM - State House Dist 50,Angelika Kausche (I),DEM,5594,100,1,1,0,0
+356,REP - State House Dist 51,Alex B. Kaufman,REP,3425,100,1,1,0,0
+357,DEM - State House Dist 51,Josh McLaurin (I),DEM,6258,100,1,1,0,0
+358,REP - State House Dist 52,Deborah Silcox (I),REP,4071,100,1,1,0,0
+359,DEM - State House Dist 52,Shea Roberts,DEM,7382,100,1,1,0,0
+360,DEM - State House Dist 53,Sheila Jones (I),DEM,9918,100,2,2,0,0
+361,REP - State House Dist 54,Lyndsey Rudder,REP,3011,100,1,1,0,0
+362,DEM - State House Dist 54,Betsy Holland (I),DEM,8618,100,1,1,0,0
+363,DEM - State House Dist 55,Marie Metze (I),DEM,8219,60.84,1,1,0,0
+364,DEM - State House Dist 55,Fred Quinn Jr,DEM,5291,39.16,1,1,0,0
+365,DEM - State House Dist 56,Mesha Mainor,DEM,4571,53.95,1,1,0,0
+366,DEM - State House Dist 56,Josh McNair,DEM,2852,33.66,1,1,0,0
+367,DEM - State House Dist 56,"Darryl J. Terry, II",DEM,1049,12.38,1,1,0,0
+368,DEM - State House Dist 57,Stacey Evans,DEM,7891,56.78,1,1,0,0
+369,DEM - State House Dist 57,Kyle Lamont,DEM,1029,7.4,1,1,0,0
+370,DEM - State House Dist 57,Jenne Shepherd,DEM,477,3.43,1,1,0,0
+371,DEM - State House Dist 57,Alex Wan,DEM,4500,32.38,1,1,0,0
+372,DEM - State House Dist 58,Park Cannon (I),DEM,11161,100,1,1,0,0
+373,DEM - State House Dist 59,David Dreyer (I),DEM,10155,100,1,1,0,0
+374,DEM - State House Dist 60,Kim Schofield (I),DEM,7977,100,2,2,0,0
+375,DEM - State House Dist 61,Roger Bruce (I),DEM,10911,100,3,3,0,0
+376,DEM - State House Dist 62,"William K. Boddie, Jr. (I)",DEM,13902,100,2,2,0,0
+377,REP - State House Dist 63,David Callahan,REP,2463,100,3,3,0,0
+378,DEM - State House Dist 63,Debra Bazemore (I),DEM,9175,74.68,3,3,0,0
+379,DEM - State House Dist 63,"Kenneth """"Ken"""" Kincaid",DEM,3110,25.32,3,3,0,0
+380,DEM - State House Dist 64,Derrick L. Jackson (I),DEM,11259,100,2,2,0,0
+381,DEM - State House Dist 65,Sharon Beasley-Teague (I),DEM,6141,49.2,2,2,0,0
+382,DEM - State House Dist 65,Amber Doss-Hunter,DEM,1779,14.25,2,2,0,0
+383,DEM - State House Dist 65,Mandisha A. Thomas,DEM,4562,36.55,2,2,0,0
+384,REP - State House Dist 66,Jason C. Jones,REP,3252,100,2,2,0,0
+385,DEM - State House Dist 66,Kimberly Alexander (I),DEM,9398,100,2,2,0,0
+386,REP - State House Dist 67,Micah Gravley (I),REP,5981,100,2,2,0,0
+387,DEM - State House Dist 67,Angela Mayfield,DEM,5230,100,2,2,0,0
+388,REP - State House Dist 68,J. Collins (I),REP,7364,100,2,2,0,0
+389,REP - State House Dist 69,Randy Nix (I),REP,9983,100,3,3,0,0
+390,DEM - State House Dist 69,Herbert Giles,DEM,2268,100,3,3,0,0
+391,REP - State House Dist 70,Lynn Smith (I),REP,6589,100,2,2,0,0
+392,REP - State House Dist 71,Marcy Westmoreland Sakrison,REP,3916,40.3,2,2,0,0
+393,REP - State House Dist 71,Philip Singleton (I),REP,5800,59.7,2,2,0,0
+394,DEM - State House Dist 71,Jill  Prouty,DEM,3803,100,2,2,0,0
+395,REP - State House Dist 72,Josh Bonner (I),REP,9358,100,2,2,0,0
+396,DEM - State House Dist 72,Fred Rovner,DEM,3895,100,2,2,0,0
+397,REP - State House Dist 73,Karen Mathiak (I),REP,6557,100,3,3,0,0
+398,DEM - State House Dist 73,William Harris,DEM,5784,100,3,3,0,0
+399,DEM - State House Dist 74,Angel Massey,DEM,3691,44.01,1,1,0,0
+400,DEM - State House Dist 74,Yasmin Neal,DEM,4696,55.99,1,1,0,0
+401,DEM - State House Dist 75,Mike Glanton (I),DEM,9672,100,1,1,0,0
+402,DEM - State House Dist 76,Sandra Givens Scott (I),DEM,12107,100,2,2,0,0
+403,DEM - State House Dist 77,Rhonda Burnough (I),DEM,8029,100,1,1,0,0
+404,DEM - State House Dist 78,Demetrius Douglas (I),DEM,7564,64.96,2,2,0,0
+405,DEM - State House Dist 78,Attania Jean-Funny,DEM,3008,25.83,2,2,0,0
+406,DEM - State House Dist 78,Ron Walker,DEM,1072,9.21,2,2,0,0
+407,REP - State House Dist 79,Andrea Johnson,REP,3596,100,1,1,0,0
+408,DEM - State House Dist 79,Michael S. Wilensky (I),DEM,7097,100,1,1,0,0
+409,REP - State House Dist 80,Alan Cole,REP,2918,100,2,2,0,0
+410,DEM - State House Dist 80,Matthew Wilson (I),DEM,6949,100,2,2,0,0
+411,DEM - State House Dist 81,Scott Holcomb (I),DEM,5984,100,2,2,0,0
+412,DEM - State House Dist 82,Mary Margaret Oliver (I),DEM,8999,100,1,1,0,0
+413,DEM - State House Dist 83,Becky Evans (I),DEM,10645,69.4,1,1,0,0
+414,DEM - State House Dist 83,Audrey Maloof,DEM,4693,30.6,1,1,0,0
+415,DEM - State House Dist 84,"Harmel """"Mel"""" Codi",DEM,4793,30.66,1,1,0,0
+416,DEM - State House Dist 84,Renitta Shannon (I),DEM,10841,69.34,1,1,0,0
+417,DEM - State House Dist 85,Karla Drenner (I),DEM,9378,100,1,1,0,0
+418,DEM - State House Dist 86,Ladena Bolton,DEM,2011,18.42,1,1,0,0
+419,DEM - State House Dist 86,Michele Henson (I),DEM,4529,41.47,1,1,0,0
+420,DEM - State House Dist 86,Zulma Lopez,DEM,3270,29.95,1,1,0,0
+421,DEM - State House Dist 86,Joscelyn C. O'Neil,DEM,1110,10.16,1,1,0,0
+422,DEM - State House Dist 87,Viola Davis (I),DEM,11503,100,1,1,0,0
+423,DEM - State House Dist 88,Billy Mitchell (I),DEM,9488,100,1,1,0,0
+424,DEM - State House Dist 89,Bee Nguyen (I),DEM,15066,83.35,1,1,0,0
+425,DEM - State House Dist 89,Marcia Ridley,DEM,3010,16.65,1,1,0,0
+426,DEM - State House Dist 90,Greg Shealey,DEM,2000,14.09,3,3,0,0
+427,DEM - State House Dist 90,Pam Stephenson (I),DEM,8510,59.96,3,3,0,0
+428,DEM - State House Dist 90,Stan Watson,DEM,3683,25.95,3,3,0,0
+429,DEM - State House Dist 91,Rhonda S. Taylor,DEM,9785,100,2,2,0,0
+430,DEM - State House Dist 92,Doreen Carter (I),DEM,9040,100,2,2,0,0
+431,REP - State House Dist 93,"Hubert Owens, Jr.",REP,1700,100,2,2,0,0
+432,DEM - State House Dist 93,Dar'Shun Kendrick (I),DEM,10725,79.06,2,2,0,0
+433,DEM - State House Dist 93,Alfred Reynolds,DEM,2841,20.94,2,2,0,0
+434,DEM - State House Dist 94,Karen Bennett (I),DEM,11413,100,2,2,0,0
+435,REP - State House Dist 95,Erica McCurdy,REP,4609,100,2,2,0,0
+436,DEM - State House Dist 95,Beth Moore (I),DEM,6806,100,2,2,0,0
+437,DEM - State House Dist 96/Estatal ante la Asamblea General Dist 96,"Pedro """"Pete"""" Marin (I)",DEM,4514,100,1,1,0,0
+438,REP - State House Dist 97/Estatal ante la Asamblea General Dist 97,Bonnie Rich (I),REP,5652,100,1,1,0,0
+439,DEM - State House Dist 97/Estatal ante la Asamblea General Dist 97,Mary Blackmon Campbell,DEM,6387,100,1,1,0,0
+440,REP - State House Dist 98/Estatal ante la Asamblea General Dist 98,David Clark (I),REP,5830,100,1,1,0,0
+441,DEM - State House Dist 98/Estatal ante la Asamblea General Dist 98,Taeho Cho,DEM,5110,100,1,1,0,0
+442,DEM - State House Dist 99/Estatal ante la Asamblea General Dist 99,Jorge Granados,DEM,1361,38.51,1,1,0,0
+443,DEM - State House Dist 99/Estatal ante la Asamblea General Dist 99,Marvin Lim,DEM,2173,61.49,1,1,0,0
+444,DEM - State House Dist 100/Estatal ante la Asamblea General Dist 100,Dewey L. McClain (I),DEM,4564,100,1,1,0,0
+445,REP - State House Dist 101/Estatal ante la Asamblea General Dist 101,Carol Field,REP,3484,100,1,1,0,0
+446,DEM - State House Dist 101/Estatal ante la Asamblea General Dist 101,Sam Park (I),DEM,6267,100,1,1,0,0
+447,REP - State House Dist 102/Estatal ante la Asamblea General Dist 102,Soo Hong,REP,3852,100,1,1,0,0
+448,DEM - State House Dist 102/Estatal ante la Asamblea General Dist 102,Gregg Kennard (I),DEM,5825,100,1,1,0,0
+449,REP - State House Dist 103/Estatal ante la Asamblea General Dist 103,Timothy Barr (I),REP,5699,62.65,2,2,0,0
+450,REP - State House Dist 103/Estatal ante la Asamblea General Dist 103,Derrick McCollum,REP,2897,31.85,2,2,0,0
+451,REP - State House Dist 103/Estatal ante la Asamblea General Dist 103,Donald Schmidt,REP,501,5.51,2,2,0,0
+452,DEM - State House Dist 103/Estatal ante la Asamblea General Dist 103,Clifton  Marshall,DEM,4263,100,2,2,0,0
+453,REP - State House Dist 104/Estatal ante la Asamblea General Dist 104,Chuck Efstration (I),REP,5245,100,1,1,0,0
+454,DEM - State House Dist 104/Estatal ante la Asamblea General Dist 104,Nakita Hemingway,DEM,4723,65.15,1,1,0,0
+455,DEM - State House Dist 104/Estatal ante la Asamblea General Dist 104,Andrea Stephenson,DEM,2526,34.85,1,1,0,0
+456,REP - State House Dist 105/Estatal ante la Asamblea General Dist 105,Eric Dierks,REP,4342,100,1,1,0,0
+457,DEM - State House Dist 105/Estatal ante la Asamblea General Dist 105,Donna McLeod (I),DEM,8735,100,1,1,0,0
+458,REP - State House Dist 106/Estatal ante la Asamblea General Dist 106,Brett Harrell (I),REP,4745,100,1,1,0,0
+459,DEM - State House Dist 106/Estatal ante la Asamblea General Dist 106,Emily Leslie,DEM,3479,40.79,1,1,0,0
+460,DEM - State House Dist 106/Estatal ante la Asamblea General Dist 106,Rebecca Mitchell,DEM,5051,59.21,1,1,0,0
+461,REP - State House Dist 107/Estatal ante la Asamblea General Dist 107,Michael McConnell,REP,3728,100,1,1,0,0
+462,DEM - State House Dist 107/Estatal ante la Asamblea General Dist 107,Shelly Hutchinson (I),DEM,6962,100,1,1,0,0
+463,REP - State House Dist 108/Estatal ante la Asamblea General Dist 108,Johnny Crist,REP,4453,100,1,1,0,0
+464,DEM - State House Dist 108/Estatal ante la Asamblea General Dist 108,Jasmine Clark (I),DEM,6252,100,1,1,0,0
+465,REP - State House Dist 109,Dale Rutledge (I),REP,6109,100,3,3,0,0
+466,DEM - State House Dist 109,Regina Lewis-Ward,DEM,8566,100,3,3,0,0
+467,REP - State House Dist 110,Clint Crowe,REP,5812,100,3,3,0,0
+468,DEM - State House Dist 110,Ebony Carter,DEM,5604,100,3,3,0,0
+469,DEM - State House Dist 111,Tarji Leonard Dunn,DEM,5419,49.09,1,1,0,0
+470,DEM - State House Dist 111,El-Mahdi Holly (I),DEM,5619,50.91,1,1,0,0
+471,REP - State House Dist 112,Dave Belton (I),REP,10622,100,2,2,0,0
+472,DEM - State House Dist 113,Pam Dickerson (I),DEM,5532,49.27,2,2,0,0
+473,DEM - State House Dist 113,Sharon Henderson,DEM,5696,50.73,2,2,0,0
+474,REP - State House Dist 114,Tom Kirby (I),REP,7762,100,4,4,0,0
+475,REP - State House Dist 115,Bruce Williamson (I),REP,9766,100,1,1,0,0
+476,DEM - State House Dist 115,Debbie Reed,DEM,2787,100,1,1,0,0
+477,REP - State House Dist 116,Terry England (I),REP,7111,100,1,1,0,0
+478,REP - State House Dist 117,Houston Gaines (I),REP,6382,100,4,4,0,0
+479,DEM - State House Dist 117,"""""Mokah"""" Jasmine Johnson",DEM,6493,100,4,4,0,0
+480,DEM - State House Dist 118,Spencer Frye (I),DEM,7474,100,1,1,0,0
+481,REP - State House Dist 119,Marcus A Wiedower (I),REP,7570,100,2,2,0,0
+482,DEM - State House Dist 119,Jonathan Wallace,DEM,6321,100,2,2,0,0
+483,REP - State House Dist 120,Trey Rhodes (I),REP,9874,100,5,5,0,0
+484,REP - State House Dist 121,Barry Fleming (I),REP,6711,100,2,2,0,0
+485,REP - State House Dist 122,Jodi Lott (I),REP,9021,100,1,1,0,0
+486,DEM - State House Dist 122,Doris O. Crutchfield,DEM,4216,100,1,1,0,0
+487,REP - State House Dist 123,Mark Newton (I),REP,7625,100,2,2,0,0
+488,DEM - State House Dist 124,"Henry """"Wayne"""" Howard (I)",DEM,5871,100,1,1,0,0
+489,DEM - State House Dist 125,Sheila Clark Nelson (I),DEM,6171,100,1,1,0,0
+490,DEM - State House Dist 126,Gloria Frazier (I),DEM,10196,100,2,2,0,0
+491,DEM - State House Dist 127,Brian L. Prince (I),DEM,8199,100,2,2,0,0
+492,DEM - State House Dist 128,Mack Jackson (I),DEM,7847,75.79,7,7,0,0
+493,DEM - State House Dist 128,"Daniel ""Danny"" Thomas, Jr.",DEM,2507,24.21,7,7,0,0
+494,REP - State House Dist 129,Susan Holmes (I),REP,7979,100,4,4,0,0
+495,DEM - State House Dist 129,Sharonda Bell,DEM,3683,100,4,4,0,0
+496,REP - State House Dist 130,David Knight (I),REP,6281,100,3,3,0,0
+497,DEM - State House Dist 130,Sheila Henley,DEM,4898,100,3,3,0,0
+498,REP - State House Dist 131,Beth Camp,REP,5369,51.38,3,3,0,0
+499,REP - State House Dist 131,Kenny Coggins,REP,5080,48.62,3,3,0,0
+500,DEM - State House Dist 131,Chris Benton,DEM,3187,100,3,3,0,0
+501,REP - State House Dist 132,David Jenkins,REP,3437,74.44,3,3,0,0
+502,REP - State House Dist 132,Gene King,REP,1180,25.56,3,3,0,0
+503,DEM - State House Dist 132,Frederick Manley,DEM,2009,40.41,3,3,0,0
+504,DEM - State House Dist 132,"Bob Trammell, Jr. (I)",DEM,2962,59.59,3,3,0,0
+505,REP - State House Dist 133,"Vance Smith, Jr. (I)",REP,8554,100,3,3,0,0
+506,REP - State House Dist 134,Richard H. Smith (I),REP,5741,100,2,2,0,0
+507,DEM - State House Dist 134,Carl Sprayberry,DEM,2968,62.99,2,2,0,0
+508,DEM - State House Dist 134,William Tauxe,DEM,1744,37.01,2,2,0,0
+509,DEM - State House Dist 135,Calvin Smyre (I),DEM,4838,100,1,1,0,0
+510,DEM - State House Dist 136,Carolyn Hugley (I),DEM,8768,100,1,1,0,0
+511,DEM - State House Dist 137,Debbie G. Buckner (I),DEM,8638,100,4,4,0,0
+512,REP - State House Dist 138,Mike Cheokas (I),REP,4393,100,4,4,0,0
+513,DEM - State House Dist 138,Marc Arnett,DEM,4276,100,4,4,0,0
+514,DEM - State House Dist 139,Patty Bentley (I),DEM,5274,100,4,4,0,0
+515,REP - State House Dist 140,Robert Dickey (I),REP,5678,100,5,5,0,0
+516,REP - State House Dist 141,Dale Washburn (I),REP,8293,100,2,2,0,0
+517,DEM - State House Dist 142,Miriam Paris (I),DEM,8188,100,1,1,0,0
+518,DEM - State House Dist 143,James Beverly (I),DEM,8315,100,1,1,0,0
+519,REP - State House Dist 144,Danny Mathis (I),REP,6233,100,7,7,0,0
+520,DEM - State House Dist 144,Mary  Whipple-Lue,DEM,4517,100,7,7,0,0
+521,REP - State House Dist 145,"Ricky """"Rick"""" Williams (I)",REP,5155,100,2,2,0,0
+522,DEM - State House Dist 145,Nincoe Byrd,DEM,1428,26.59,2,2,0,0
+523,DEM - State House Dist 145,Quentin T. Howell,DEM,3942,73.41,2,2,0,0
+524,REP - State House Dist 146,Shaw Blackmon (I),REP,6716,100,1,1,0,0
+525,REP - State House Dist 147,Miranda  Britt,REP,489,11.26,1,1,0,0
+526,REP - State House Dist 147,Heath Clark (I),REP,3853,88.74,1,1,0,0
+527,DEM - State House Dist 147,Stephen Baughier,DEM,4109,100,1,1,0,0
+528,REP - State House Dist 148,"Noel Williams, Jr. (I)",REP,7615,100,4,4,0,0
+529,DEM - State House Dist 148,Regina Awung,DEM,2142,100,4,4,0,0
+530,REP - State House Dist 149,Robert Pruitt,REP,3847,50.96,5,5,0,0
+531,REP - State House Dist 149,Chris Steverson,REP,3702,49.04,5,5,0,0
+532,REP - State House Dist 150,Matt Hatchett (I),REP,6194,100,3,3,0,0
+533,REP - State House Dist 151,Gerald E. Greene (I),REP,3628,100,9,9,0,0
+534,DEM - State House Dist 151,Joyce Barlow,DEM,7060,100,9,9,0,0
+535,REP - State House Dist 152,Dennis Roland,REP,1914,20.28,3,3,0,0
+536,REP - State House Dist 152,Bill Yearta (I),REP,7523,79.72,3,3,0,0
+537,DEM - State House Dist 153,Camia Whitaker Hopson (I),DEM,3636,58.79,1,1,0,0
+538,DEM - State House Dist 153,"Henry Mathis, Jr.",DEM,2549,41.21,1,1,0,0
+539,DEM - State House Dist 154,Winfred Dukes (I),DEM,7209,100,4,4,0,0
+540,REP - State House Dist 155,Clay Pirkle (I),REP,7731,100,5,5,0,0
+541,DEM - State House Dist 155,Lethia Jones Kittrell,DEM,2733,100,5,5,0,0
+542,REP - State House Dist 156,Greg Morris (I),REP,8880,100,4,4,0,0
+543,REP - State House Dist 157,"William """"Bill"""" Werkheiser (I)",REP,6985,100,3,3,0,0
+544,REP - State House Dist 158,Butch Parrish (I),REP,7762,100,4,4,0,0
+545,DEM - State House Dist 158,Ann P.D. Gleason,DEM,3257,100,4,4,0,0
+546,REP - State House Dist 159,Jon G. Burns (I),REP,7022,100,3,3,0,0
+547,REP - State House Dist 160,Jan Tankersley (I),REP,7010,100,2,2,0,0
+548,REP - State House Dist 161,Bill Hitchens (I),REP,6876,100,2,2,0,0
+549,DEM - State House Dist 162,Carl Wayne Gilliard (I),DEM,6595,100,1,1,0,0
+550,DEM - State House Dist 163,Derek J. Mallow,DEM,2138,26.54,1,1,0,0
+551,DEM - State House Dist 163,Mac Sims,DEM,1409,17.49,1,1,0,0
+552,DEM - State House Dist 163,Marc Smith,DEM,498,6.18,1,1,0,0
+553,DEM - State House Dist 163,Matthew J. Swanson,DEM,1069,13.27,1,1,0,0
+554,DEM - State House Dist 163,Anne Allen Westbrook,DEM,2943,36.53,1,1,0,0
+555,REP - State House Dist 164,Ron Stephens (I),REP,4240,100,2,2,0,0
+556,DEM - State House Dist 164,Jeffrey D. Rayno,DEM,1174,23.92,3,3,0,0
+557,DEM - State House Dist 164,Marcus Thompson,DEM,3734,76.08,3,3,0,0
+558,DEM - State House Dist 165,Mickey Stephens (I),DEM,5159,62.73,1,1,0,0
+559,DEM - State House Dist 165,Clinton Young,DEM,3065,37.27,1,1,0,0
+560,REP - State House Dist 166,Jesse Petrea (I),REP,9637,100,2,2,0,0
+561,DEM - State House Dist 166,Michael Mack,DEM,4686,100,2,2,0,0
+562,REP - State House Dist 167,Buddy Deloach,REP,4237,51.85,3,3,0,0
+563,REP - State House Dist 167,Jeff Jones (I),REP,3935,48.15,3,3,0,0
+564,DEM - State House Dist 168,Al Williams (I),DEM,6641,100,1,1,0,0
+565,REP - State House Dist 169,Dominic LaRiccia (I),REP,6816,100,3,3,0,0
+566,DEM - State House Dist 169,"Michael """"Buckle"""" Moore",DEM,1167,100,3,3,0,0
+567,REP - State House Dist 170,Penny Houston (I),REP,6954,100,3,3,0,0
+568,DEM - State House Dist 170,Andre Oliver,DEM,1837,100,3,3,0,0
+569,REP - State House Dist 171,Joe Campbell (I),REP,4879,100,3,3,0,0
+570,REP - State House Dist 172,Sam Watson (I),REP,5270,100,3,3,0,0
+571,REP - State House Dist 173,Darlene Taylor (I),REP,5596,100,3,3,0,0
+572,DEM - State House Dist 173,Booker T. Gainor,DEM,3731,100,3,3,0,0
+573,REP - State House Dist 174,John L. Corbett (I),REP,6549,100,6,6,0,0
+574,REP - State House Dist 175,John LaHood (I),REP,5937,100,3,3,0,0
+575,REP - State House Dist 176,James Burchett (I),REP,6338,100,4,4,0,0
+576,DEM - State House Dist 176,"Evans Primus, Jr.",DEM,2265,100,4,4,0,0
+577,DEM - State House Dist 177,"Alvin Payton, Jr.",DEM,1972,45.81,1,1,0,0
+578,DEM - State House Dist 177,Dexter L. Sharper (I),DEM,2333,54.19,1,1,0,0
+579,REP - State House Dist 178,Steven Meeks (I),REP,10869,100,4,4,0,0
+580,REP - State House Dist 179,Don Hogan (I),REP,6155,100,1,1,0,0
+581,DEM - State House Dist 179,Julie Jordan,DEM,4528,100,1,1,0,0
+582,REP - State House Dist 180,Steven Sainz (I),REP,6064,100,3,3,0,0
+583,REP - District Attorney - Alapaha,Dick Perryman (I),REP,8782,100,5,5,0,0
+584,REP - District Attorney - Alcovy,Randy McGinley,REP,11016,100,2,2,0,0
+585,DEM - District Attorney - Alcovy,Destiny Bryant,DEM,19330,100,2,2,0,0
+586,REP - District Attorney - Appalachian,B. Alison Sosebee (I),REP,19196,100,3,3,0,0
+587,DEM - District Attorney - Atlanta,Paul Howard (I),DEM,60197,34.78,1,1,0,0
+588,DEM - District Attorney - Atlanta,Christian Wise Smith,DEM,39714,22.95,1,1,0,0
+589,DEM - District Attorney - Atlanta,Fani Willis,DEM,73145,42.27,1,1,0,0
+590,REP - District Attorney - Augusta,Jason Roy Hasty,REP,7088,22.8,3,3,0,0
+591,REP - District Attorney - Augusta,Natalie Paine (I),REP,23993,77.2,3,3,0,0
+592,DEM - District Attorney - Augusta,Jared T. Williams,DEM,38838,100,3,3,0,0
+593,REP - District Attorney - Blue Ridge,Shannon Wallace (I),REP,35433,100,1,1,0,0
+594,REP - District Attorney - Brunswick,Jackie Johnson (I),REP,19184,100,5,5,0,0
+595,DEM - District Attorney - Chattahoochee,Mark P. Jones,DEM,16910,53.14,6,6,0,0
+596,DEM - District Attorney - Chattahoochee,Julia Fessenden Slater (I),DEM,14909,46.86,6,6,0,0
+597,REP - District Attorney - Cherokee,Rosemary M. Greene (I),REP,21527,100,2,2,0,0
+598,REP - District Attorney - Conasauga,Bert Poston (I),REP,17140,100,2,2,0,0
+599,REP - District Attorney - Coweta,Herb Cranford (I),REP,46240,100,5,5,0,0
+600,DEM - District Attorney - Dougherty,Gregory W. Edwards (I),DEM,12185,100,1,1,0,0
+601,REP - District Attorney - Dublin,Craig Fraser (I),REP,5482,61.42,4,4,0,0
+602,REP - District Attorney - Dublin,Trey Taylor,REP,3443,38.58,4,4,0,0
+603,DEM - District Attorney - Dublin,Adriane Latrell Love,DEM,4163,100,4,4,0,0
+604,REP - District Attorney - Eastern,Meg Daly Heap (I),REP,19215,100,1,1,0,0
+605,DEM - District Attorney - Eastern,Shalena Cook Jones,DEM,23339,67.57,1,1,0,0
+606,DEM - District Attorney - Eastern,Zena  McClain,DEM,11202,32.43,1,1,0,0
+607,DEM - District Attorney - Flint,Darius Pattillo (I),DEM,34259,100,1,1,0,0
+608,REP - District Attorney - Gwinnett/Fiscal del Distrito - Gwinnett,"Daniel J. """"Danny"""" Porter (I)",REP,58543,100,1,1,0,0
+609,DEM - District Attorney - Gwinnett/Fiscal del Distrito - Gwinnett,Patsy Austin-Gatson,DEM,61534,59.39,1,1,0,0
+610,DEM - District Attorney - Gwinnett/Fiscal del Distrito - Gwinnett,"Wesley """"Wes"""" Person",DEM,42082,40.61,1,1,0,0
+611,REP - District Attorney - Houston,Arthur J. Creque,REP,3503,23.41,1,1,0,0
+612,REP - District Attorney - Houston,George Hartwig (I),REP,11463,76.59,1,1,0,0
+613,DEM - District Attorney - Houston,Erikka B. Williams,DEM,12844,100,1,1,0,0
+614,REP - District Attorney - Lookout Mountain,Chris A. Arnt,REP,26127,100,4,4,0,0
+615,DEM - District Attorney - Macon,David Cooke (I),DEM,9185,29.99,3,3,0,0
+616,DEM - District Attorney - Macon,Anita Reynolds Howard,DEM,21440,70.01,3,3,0,0
+617,REP - District Attorney - Middle,Tripp Fitzner,REP,6499,54.77,5,5,0,0
+618,REP - District Attorney - Middle,Tony May,REP,5368,45.23,5,5,0,0
+619,REP - District Attorney - Mountain,George R. Christian (I),REP,17087,100,3,3,0,0
+620,REP - District Attorney - Northern,Parks White (I),REP,21357,100,5,5,0,0
+621,REP - District Attorney - Ocmulgee,T. Wright Barksdale,REP,18877,81.74,8,8,0,0
+622,REP - District Attorney - Ocmulgee,Carl Cansino,REP,4216,18.26,8,8,0,0
+623,REP - District Attorney - Oconee,Timothy G. Vaughn (I),REP,10179,100,6,6,0,0
+624,REP - District Attorney - Ogeechee,Daphne Jarriel Totten,REP,17586,100,4,4,0,0
+625,REP - District Attorney - Piedmont,Brad Smith (I),REP,23954,100,3,3,0,0
+626,REP - District Attorney - Rome,Leigh E. Patterson (I),REP,13074,100,1,1,0,0
+627,REP - District Attorney - South Georgia,Joe Mulholland (I),REP,7405,100,5,5,0,0
+628,REP - District Attorney - Southern,Brad Shealy (I),REP,17825,100,5,5,0,0
+629,DEM - District Attorney - Stone Mountain,Sherry Boston (I),DEM,140564,100,1,1,0,0
+630,REP - District Attorney - Tallapoosa,Jack Browning (I),REP,12926,100,2,2,0,0
+631,REP - District Attorney - Tifton,Kevin Hutto,REP,2874,23.91,4,4,0,0
+632,REP - District Attorney - Tifton,Bryce A. Johnson,REP,9148,76.09,4,4,0,0
+633,DEM - District Attorney - Toombs,Bill Doupe (I),DEM,5083,100,6,6,0,0
+634,REP - District Attorney - Bell-Forsyth,Penny A. Penn (I),REP,28745,100,1,1,0,0
+635,REP - District Attorney - Towaliga,Jonathan L. Adams (I),REP,10754,100,3,3,0,0
+636,Supreme Court - Bethel,"Elizabeth """"Beth""""  Beskin",NP,1003205,47.78,159,159,0,0
+637,Supreme Court - Bethel,Charlie Bethel (I),NP,1096505,52.22,159,159,0,0
+638,Supreme Court - Warren,Hal Moroz,NP,445079,21.26,159,159,0,0
+639,Supreme Court - Warren,Sarah Hawkins Warren (I),NP,1648846,78.74,159,159,0,0
+640,Court of Appeals - McMillian,Carla McMillian (I),NP,1916575,100,159,159,0,0
+641,Court of Appeals - Gobeil,Elizabeth Dallas Gobeil (I),NP,1913958,100,159,159,0,0
+642,Court of Appeals - Doyle,Sara Doyle (I),NP,1936903,100,159,159,0,0
+643,Court of Appeals - Markle,David Todd Markle (I),NP,1903933,100,159,159,0,0
+644,Court of Appeals - Coomer,Christian Coomer (I),NP,1912685,100,159,159,0,0
+645,Court of Appeals - Brown,"Trenton ""Trent"" Brown, III (I)",NP,1931532,100,159,159,0,0
+646,Superior Court - Alapaha - Tomlinson,"Clayton """"Clay"""" Tomlinson (I)",NP,11063,100,5,5,0,0
+647,Superior Court - Alcovy - Ott,John M. Ott (I),NP,43242,100,2,2,0,0
+648,Superior Court - Alcovy - Benton,Jeffrey L.  Foster,NP,17279,37.32,2,2,0,0
+649,Superior Court - Alcovy - Benton,Cheveda McCamy,NP,14251,30.78,2,2,0,0
+650,Superior Court - Alcovy - Benton,Robert H. Stansfield,NP,14765,31.89,2,2,0,0
+651,Superior Court - Alcovy - Johnson,"Horace J. Johnson, Jr. (I)",NP,44262,100,2,2,0,0
+652,Superior Court - Alcovy - Wynne,Ken Wynne (I),NP,42980,100,2,2,0,0
+653,Superior Court - Appalachian - Weaver,Brenda S. Weaver (I),NP,21639,100,3,3,0,0
+654,Superior Court - Atlanta - Cox,"Thomas A. Cox, Jr. (I)",NP,180358,100,1,1,0,0
+655,Superior Court - Atlanta - Krause,Rachel Krause (I),NP,178312,100,1,1,0,0
+656,Superior Court - Atlanta - Dunaway,Eric Kernard Dunaway (I),NP,178897,100,1,1,0,0
+657,Superior Court - Atlanta - Adams,Kimberly Esmond Adams (I),NP,181881,100,1,1,0,0
+658,Superior Court - Atlanta - Glanville,Ural Glanville (I),NP,178444,100,1,1,0,0
+659,Superior Court - Atlanta - Russell,Melynee Leftridge Harris,NP,64245,32.3,1,1,0,0
+660,Superior Court - Atlanta - Russell,Tamika Hrobowski-Houston,NP,66569,33.47,1,1,0,0
+661,Superior Court - Atlanta - Russell,Lizz Kuhn,NP,27878,14.02,1,1,0,0
+662,Superior Court - Atlanta - Russell,Ashley Baker Osby,NP,40217,20.22,1,1,0,0
+663,Superior Court - Atlanta - Rieder,Rebecca Crumrine Rieder (I),NP,96100,47.5,1,1,0,0
+664,Superior Court - Atlanta - Rieder,Shermela Williams,NP,106236,52.5,1,1,0,0
+665,Superior Court - Atlanta - Edwards,Belinda E. Edwards (I),NP,180995,100,1,1,0,0
+666,Superior Court - Atlanta - Carnesale,Rachelle Carnesale (I),NP,106979,53.32,1,1,0,0
+667,Superior Court - Atlanta - Carnesale,Tiffany Carter Sellers,NP,93662,46.68,1,1,0,0
+668,Superior Court - Atlanta - Millender,Shukura Ingram Millender (I),NP,178938,100,1,1,0,0
+669,Superior Court - Atlanta - Newkirk,Henry M. Newkirk (I),NP,176864,100,1,1,0,0
+670,Superior Court - Atlanta - Richardson,Emily K. Richardson (I),NP,177992,100,1,1,0,0
+671,Superior Court - Atlanta - LaGrua,Shawn Ellen LaGrua (I),NP,178311,100,1,1,0,0
+672,Superior Court - Atlantic - Rose,"Charles Paul Rose, Jr. (I)",NP,27084,100,6,6,0,0
+673,Superior Court - Atlantic - Russell,Robert L. Russell (I),NP,27076,100,6,6,0,0
+674,Superior Court - Augusta - Brown,"Carl C. Brown, Jr. (I)",NP,70789,100,3,3,0,0
+675,Superior Court - Augusta - Flythe,John Flythe (I),NP,68962,100,3,3,0,0
+676,Superior Court - Augusta - Jolly,Sheryl B. Jolly-Turner (I),NP,69917,100,3,3,0,0
+677,Superior Court - Augusta - Craig,Danny Craig (I),NP,70571,100,3,3,0,0
+678,Superior Court - Blue Ridge - Cannon,"David Cannon, Jr. (I)",NP,48149,100,1,1,0,0
+679,Superior Court - Blue Ridge - McElyea,Martha Ellen McElyea (I),NP,48302,100,1,1,0,0
+680,Superior Court - Brunswick - Harrison,Anthony L. Harrison (I),NP,33438,100,5,5,0,0
+681,Superior Court - Brunswick - Scarlett,Stephen G. Scarlett (I),NP,34045,100,5,5,0,0
+682,Superior Court - Brunswick - Guy,Bert Guy (I),NP,33504,100,5,5,0,0
+683,Superior Court - Brunswick - Kelley,Stephen D. Kelley (I),NP,34202,100,5,5,0,0
+684,Superior Court - Chattahoochee - Smith,Art Smith (I),NP,45585,100,6,6,0,0
+685,Superior Court - Chattahoochee - McBride,Gil McBride (I),NP,46155,100,6,6,0,0
+686,Superior Court - Chattahoochee - Peters,Bobby G. Peters (I),NP,47253,100,6,6,0,0
+687,Superior Court - Chattahoochee - Mullins,Ron Mullins (I),NP,45606,100,6,6,0,0
+688,Superior Court - Chattahoochee - Rumer,William C. Rumer (I),NP,45649,100,6,6,0,0
+689,Superior Court - Chattahoochee - Land,Ben Land (I),NP,45894,100,6,6,0,0
+690,Superior Court - Chattahoochee - Gottfried,Maureen C. Gottfried (I),NP,45591,100,6,6,0,0
+691,Superior Court - Cherokee - Watkins,Jeffrey A. Watkins (I),NP,26256,100,2,2,0,0
+692,Superior Court - Cherokee - Smith,Suzanne H. Smith (I),NP,26448,100,2,2,0,0
+693,Superior Court - Clayton - Mack,Robert Mack (I),NP,49639,100,1,1,0,0
+694,Superior Court - Clayton - Rooks,Shana Rooks Malone (I),NP,50188,100,1,1,0,0
+695,Superior Court - Clayton - Powers,Kathryn Katie Powers (I),NP,22183,40.74,1,1,0,0
+696,Superior Court - Clayton - Powers,Jewel Scott,NP,32269,59.26,1,1,0,0
+697,Superior Court - Cobb - Childs,Kimberly Childs (I),NP,147928,100,1,1,0,0
+698,Superior Court - Cobb - Staley,Mary E. Staley (I),NP,147287,100,1,1,0,0
+699,Superior Court - Cobb - Poole,Greg Poole (I),NP,144794,100,1,1,0,0
+700,Superior Court - Cobb - Schuster,John Robert Greco,NP,43400,28.44,1,1,0,0
+701,Superior Court - Cobb - Schuster,Jason Marbutt,NP,59569,39.04,1,1,0,0
+702,Superior Court - Cobb - Schuster,"Gregory """"Greg"""" Shenton",NP,49632,32.52,1,1,0,0
+703,Superior Court - Cobb - Ingram,Kellie Hill,NP,100324,63.27,1,1,0,0
+704,Superior Court - Cobb - Ingram,Daniele C. Johnson,NP,58236,36.73,1,1,0,0
+705,Superior Court - Cobb - Green,Angela Brown,NP,96776,57.91,1,1,0,0
+706,Superior Court - Cobb - Green,Reuben Green (I),NP,70352,42.09,1,1,0,0
+707,Superior Court - Cobb - Kell,Tain Kell (I),NP,145063,100,1,1,0,0
+708,Superior Court - Conasauga - Minter,B. Scott Minter (I),NP,20646,100,2,2,0,0
+709,Superior Court - Cordele - Fachini,Denise D. Fachini (I),NP,9502,100,4,4,0,0
+710,Superior Court - Cordele - Chasteen,Bobby Chasteen (I),NP,9584,100,4,4,0,0
+711,Superior Court - Cordele - Hughes,Chris Hughes (I),NP,9718,100,4,4,0,0
+712,Superior Court - Coweta - Palmer,Emory L. Palmer (I),NP,67327,100,5,5,0,0
+713,Superior Court - Coweta - Simpson,John Simpson (I),NP,67360,100,5,5,0,0
+714,Superior Court - Coweta - Blackmon,Dennis Blackmon (I),NP,67946,100,5,5,0,0
+715,Superior Court - Coweta - Baker,Nina Markette Baker (I),NP,67602,100,5,5,0,0
+716,Superior Court - Coweta - Sakrison,Travis Sakrison (I),NP,66716,100,5,5,0,0
+717,Superior Court - Dougherty - Marshall,Denise Marshall (I),NP,15516,100,1,1,0,0
+718,Superior Court - Dougherty - Lockette,Willie E. Lockette (I),NP,15864,100,1,1,0,0
+719,Superior Court - Dougherty - Darrisaw,Victoria S. Darrisaw (I),NP,15330,100,1,1,0,0
+720,Superior Court - Douglas - McClain,Beau McClain (I),NP,29471,100,1,1,0,0
+721,Superior Court - Dublin - Helton,Jon Franklin Helton (I),NP,12282,100,4,4,0,0
+722,Superior Court - Dublin - Green,Jud Green (I),NP,12447,100,4,4,0,0
+723,Superior Court - Dublin - Gillis,"Donald W. """"Donny"""" Gillis (I)",NP,12453,100,4,4,0,0
+724,Superior Court - Eastern - Freesemann,Penny Haas Freesemann (I),NP,49401,100,1,1,0,0
+725,Superior Court - Eastern - Morse,"John E. ""Pancho"" Morse, Jr. (I)",NP,49342,100,1,1,0,0
+726,Superior Court - Eastern - Bass,Lisa Colbert,NP,34891,64.85,1,1,0,0
+727,Superior Court - Eastern - Bass,Tracy O'Connell,NP,18912,35.15,1,1,0,0
+728,Superior Court - Enotah - Parks,Joy R. Parks (I),NP,25123,100,4,4,0,0
+729,Superior Court - Flint - Veal,Loletha Hale,NP,19977,36.27,1,1,0,0
+730,Superior Court - Flint - Veal,Holly Veal (I),NP,35097,63.73,1,1,0,0
+731,Superior Court - Flint - Pipkin,Trea Pipkin (I),NP,50619,100,1,1,0,0
+732,Superior Court - Griffin - Ballard,Scott L. Ballard (I),NP,51441,100,4,4,0,0
+733,Superior Court - Griffin - Sams,W. Fletcher Sams (I),NP,51433,100,4,4,0,0
+734,Superior Court - Gwinnett - Rich/Tribunal Superior del Circuito Judicial- Gwinnett - Rich,Tamela Adkins,NP,93385,57.32,1,1,0,0
+735,Superior Court - Gwinnett - Rich/Tribunal Superior del Circuito Judicial- Gwinnett - Rich,Randy Rich (I),NP,69534,42.68,1,1,0,0
+736,Superior Court - Gwinnett - Schrader/Tribunal Superior del Circuito Judicial- Gwinnett - Schrader,Deborah R. Fluker,NP,32793,20.22,1,1,0,0
+737,Superior Court - Gwinnett - Schrader/Tribunal Superior del Circuito Judicial- Gwinnett - Schrader,Kelly Kautz,NP,17029,10.5,1,1,0,0
+738,Superior Court - Gwinnett - Schrader/Tribunal Superior del Circuito Judicial- Gwinnett - Schrader,Christa Kirk,NP,20474,12.62,1,1,0,0
+739,Superior Court - Gwinnett - Schrader/Tribunal Superior del Circuito Judicial- Gwinnett - Schrader,B. T. Parker,NP,31552,19.45,1,1,0,0
+740,Superior Court - Gwinnett - Schrader/Tribunal Superior del Circuito Judicial- Gwinnett - Schrader,"Kathryn """"Kathy"""" Schrader (I)",NP,60371,37.22,1,1,0,0
+741,Superior Court - Gwinnett - Beyers/Tribunal Superior del Circuito Judicial- Gwinnett - Beyers,Karen E. Beyers (I),NP,147982,100,1,1,0,0
+742,Superior Court - Gwinnett - Batchelor/Tribunal Superior del Circuito Judicial- Gwinnett - Batchelor,Ronnie K. Batchelor (I),NP,146818,100,1,1,0,0
+743,Superior Court - Gwinnett - Whitner/Tribunal Superior del Circuito Judicial- Gwinnett - Whitner,Tadia Whitner (I),NP,147827,100,1,1,0,0
+744,Superior Court - Gwinnett - Davis/Tribunal Superior del Circuito Judicial- Gwinnett - Davis,Warren Davis (I),NP,147514,100,1,1,0,0
+745,Superior Court - Houston - Lukemire,Edward D. Lukemire (I),NP,26144,100,1,1,0,0
+746,Superior Court - Houston - Adams,G.E. Bo Adams (I),NP,26004,100,1,1,0,0
+747,Superior Court - Houston - Lumsden,Katherine K. Lumsden (I),NP,26083,100,1,1,0,0
+748,Superior Court - Lookout Mountain - Graham,Kristina Cook Graham (I),NP,30775,100,4,4,0,0
+749,Superior Court - Lookout Mountain - House,Brian House (I),NP,30982,100,4,4,0,0
+750,Superior Court - Macon - Monroe,Jeffery O. Monroe (I),NP,40220,100,3,3,0,0
+751,Superior Court - Macon - Colvin,Verda M. Colvin (I),NP,40782,100,3,3,0,0
+752,Superior Court - Middle - Palmer,Tobe C. Karrh,NP,6533,29.29,5,5,0,0
+753,Superior Court - Middle - Palmer,Tommy J. Smith,NP,15769,70.71,5,5,0,0
+754,Superior Court - Mountain - Caudell,B. Chan Caudell (I),NP,19957,100,3,3,0,0
+755,Superior Court - Northeastern - Gosselin,Kathlene F. Gosselin (I),NP,41023,100,2,2,0,0
+756,Superior Court - Northeastern - Oliver,Bonnie Chessher Oliver (I),NP,40772,100,2,2,0,0
+757,Superior Court - Northeastern - Bearden,Clint Garry Bearden (I),NP,40583,100,2,2,0,0
+758,Superior Court - Northern - Watson,Harvey Wasserman,NP,25393,100,5,5,0,0
+759,Superior Court - Northern - Malcom,Jeffery S. Malcom (I),NP,26268,100,5,5,0,0
+760,Superior Court - Northern - Phelps,Chris Phelps (I),NP,26161,100,5,5,0,0
+761,Superior Court - Ocmulgee - Burleson,Alison Teresa Burleson (I),NP,35952,100,8,8,0,0
+762,Superior Court - Ocmulgee - Prior,Stephen A. Bradley,NP,36128,100,8,8,0,0
+763,Superior Court - Ocmulgee - Massey,Terry N. Massey (I),NP,36052,100,8,8,0,0
+764,Superior Court - Ocmulgee - Trammell,Brenda Holbert Trammell (I),NP,36164,100,8,8,0,0
+765,Superior Court - Ocmulgee - Petty,Amanda S. Petty (I),NP,36311,100,8,8,0,0
+766,Superior Court - Oconee - Kaufold,"Howard C. Kaufold, Jr. (I)",NP,12873,100,6,6,0,0
+767,Superior Court - Oconee - Wall,Sarah F. Wall (I),NP,13501,100,6,6,0,0
+768,Superior Court - Oconee - Johnson,C. Michael Johnson (I),NP,13149,100,6,6,0,0
+769,Superior Court - Ogeechee - Peed,F. Gates Peed (I),NP,27484,100,4,4,0,0
+770,Superior Court - Ogeechee - Muldrew,Michael Muldrew (I),NP,27218,100,4,4,0,0
+771,Superior Court - Ogeechee - Bennett,"Lovett Bennett, Jr. (I)",NP,27526,100,4,4,0,0
+772,Superior Court - Pataula - Earnest,T. Craig Earnest (I),NP,10400,100,7,7,0,0
+773,Superior Court - Piedmont - Booth,Joseph H. Booth (I),NP,29726,100,3,3,0,0
+774,Superior Court - Piedmont - Mingledorff,Currie Mingledorff (I),NP,29607,100,3,3,0,0
+775,Superior Court - Piedmont - Primm,Nicholas Primm (I),NP,29472,100,3,3,0,0
+776,Superior Court - Rockdale - Mumford,Robert F. Mumford (I),NP,20967,100,1,1,0,0
+777,Superior Court - Rome - Niedrach,"John E. """"Jack"""" Niedrach (I)",NP,17674,100,1,1,0,0
+778,Superior Court - Rome - Durham,Bryan Johnson,NP,17224,100,1,1,0,0
+779,Superior Court - South Georgia - Lanier,Heather Hendricks Lanier (I),NP,14831,100,5,5,0,0
+780,Superior Court - South Georgia - Chason,J. Kevin Chason (I),NP,14930,100,5,5,0,0
+781,Superior Court - Southern - Cowart,Richard M. Cowart (I),NP,28932,100,5,5,0,0
+782,Superior Court - Southwestern - Smith,R. Rucker Smith (I),NP,16791,100,6,6,0,0
+783,Superior Court - Southwestern - Brown,Jimmie Brown (I),NP,16643,100,6,6,0,0
+784,Superior Court - Stone Mountain - Adams,Gregory A. Adams (I),NP,150832,100,1,1,0,0
+785,Superior Court - Stone Mountain - Seeliger,Roderick Bridges,NP,22010,13.6,1,1,0,0
+786,Superior Court - Stone Mountain - Seeliger,Aaron Chausmer,NP,10523,6.5,1,1,0,0
+787,Superior Court - Stone Mountain - Seeliger,Vincent C. Crawford,NP,24922,15.4,1,1,0,0
+788,Superior Court - Stone Mountain - Seeliger,Yolanda C. Parker-Smith,NP,73500,45.41,1,1,0,0
+789,Superior Court - Stone Mountain - Seeliger,"Melinda """"Mindy"""" Pillow",NP,30905,19.09,1,1,0,0
+790,Superior Court - Stone Mountain - Hydrick,Stacey K. Hydrick (I),NP,148485,100,1,1,0,0
+791,Superior Court - Stone Mountain - Morris,Shondeana C. Morris (I),NP,149484,100,1,1,0,0
+792,Superior Court - Stone Mountain - Hunter,Linda Warren Hunter (I),NP,149687,100,1,1,0,0
+793,Superior Court - Stone Mountain - Scott,Mark Anthony Scott (I),NP,148474,100,1,1,0,0
+794,Superior Court - Stone Mountain - Barrie,Tangela M. Barrie (I),NP,150555,100,1,1,0,0
+795,Superior Court - Tallapoosa - Murphy,Mark H.  Murphy (I),NP,15170,100,2,2,0,0
+796,Superior Court - Tifton - Cross,Melanie B. Cross (I),NP,15696,100,4,4,0,0
+797,Superior Court - Toombs - Hammond,Britt Hammond (I),NP,11467,100,6,6,0,0
+798,Superior Court - Toombs - Hinesley,Hal Hinesley (I),NP,11402,100,6,6,0,0
+799,Superior Court - Waycross - Brooks,J. Kelly Brooks (I),NP,24512,100,6,6,0,0
+800,Superior Court - Waycross - Spivey,Andrew C. Spivey (I),NP,24633,100,6,6,0,0
+801,Superior Court - Western - Stephens,Lawton Evans Stephens (I),NP,32214,100,2,2,0,0
+802,Superior Court - Western - Haggard,H. Patrick Haggard (I),NP,31429,100,2,2,0,0
+803,Superior Court - Bell-Forsyth - Dickinson,David L. Dickinson (I),NP,40214,100,1,1,0,0
+804,Superior Court - Towaliga - Fears,Bill Fears (I),NP,15288,100,3,3,0,0
+805,Superior Court - Paulding - Bucci,Dean Bucci (I),NP,29923,100,1,1,0,0
+806,Superior Court - Paulding - Beavers,Tonny S. Beavers (I),NP,29727,100,1,1,0,0
+807,Superior Court - Paulding - Lyles,David Lyles (I),NP,29811,100,1,1,0,0
+808,Rep Party Question 1,YES,REP,755189,73.13,159,159,0,0
+809,Rep Party Question 1,NO,REP,277427,26.87,159,159,0,0
+810,Dem Party Question 1,YES,DEM,1096554,91.38,159,159,0,0
+811,Dem Party Question 1,NO,DEM,103461,8.62,159,159,0,0
+812,Rep Party Question 2,YES,REP,498728,48.22,159,159,0,0
+813,Rep Party Question 2,NO,REP,535560,51.78,159,159,0,0
+814,Dem Party Question 2,YES,DEM,1163179,96.62,159,159,0,0
+815,Dem Party Question 2,NO,DEM,40670,3.38,159,159,0,0
+816,Rep Party Question 3,YES,REP,681617,65.76,159,159,0,0
+817,Rep Party Question 3,NO,REP,354926,34.24,159,159,0,0
+818,Dem Party Question 3,YES,DEM,1139459,94.32,159,159,0,0
+819,Dem Party Question 3,NO,DEM,68622,5.68,159,159,0,0
+820,Dem Party Question 4,YES,DEM,1037144,87.64,159,159,0,0
+821,Dem Party Question 4,NO,DEM,146300,12.36,159,159,0,0
+822,Dem Party Question 5,YES,DEM,1021322,85.42,159,159,0,0
+823,Dem Party Question 5,NO,DEM,174389,14.58,159,159,0,0
+824,Dem Party Question 6,YES,DEM,1119103,93.14,159,159,0,0
+825,Dem Party Question 6,NO,DEM,82441,6.86,159,159,0,0
