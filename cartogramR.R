@@ -49,6 +49,13 @@ carto_plot <- function(spat_obj, pop_vec, color_vec, weight_mod = 5, title=""){
   plot(spat_obj)
   points(cents_coords$V1,cents_coords$V2, add=TRUE,pch=21,bg=cents_coords$color,cex=cents_coords$weight)
 }
+round(getJenksBreaks(state_obj2$white_pct,5),2) # grabbing the values for the breaks 
+ 
 carto_plot(state_obj2,state_obj2$total_pop,state_obj2$color)
+##add legend after as appropriate 
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< 59.22%", "59.22 -< 71.05%", "71.05 -< 84.67%", "84.67 -< 91.59%", "91.59% +"), 
+       title=" ",
+       bty="n", horiz=FALSE, cex=0.8, ncol=1)
 
 
