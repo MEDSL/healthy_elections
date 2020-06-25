@@ -15,10 +15,10 @@ library(showtext)
 font_import("F:/MEDSL/blogs/styrene_b")  #specify font path here 
 windowsFonts(A = windowsFont("styrene_b"))
 options(stringsAsFactors = F)
-wd <- "" # set working directory 
+wd <- "F:/MEDSL/healthy_elections/FL" # set working directory 
 setwd(wd)
 covid_cases <- read.csv("F:/MEDSL/healthy_elections/us-counties-nyt.csv") # read in the COVID data from the NYT 
-covid_cases <- subset(covid_cases, state=="Wisconsin") ###subset the data to equal the state of interest 
+covid_cases <- subset(covid_cases, state=="Florida") ###subset the data to equal the state of interest 
 #The fields are : date, county (title case), state (title case), fips (st_fips+county_fips), cases, and deaths.
 #note that the deaths are excess deaths above the distribution of deaths given a model that the NYT has  
 
@@ -30,36 +30,44 @@ covid_primary_date <- subset(covid_cases, date=="") # set the date to the day of
 #the elections data of interest. 
 
 #path to medsl colors: http://www.mit.edu/~medsl/brand/charts/index.html ; use this to choose colors of interest 
-
+# March 31 is 2 weeks post primary 
+# MArch 9 is executive order on COVID 
+# March 17 is primary 
+# Apr 14 is 4 weeks after primary 
 ####general non-grouped plot 
 ts_covid_all <- covid_cases %>% group_by(date) %>% dplyr::summarize(total_cases = sum(cases,na.rm=T),total_deaths=sum(deaths,na.rm=T))
 ts_covid_all$Date <- as.Date(ts_covid_all$date)
 ts_covid_all <- ts_covid_all %>% mutate(lag_cases=lag(total_cases))
 ts_covid_all$new_cases <- ts_covid_all$total_cases - ts_covid_all$lag_cases
-
+###subset data to be two weeks after primary 
 sort(unique(ts_covid_all$date))
-as.numeric(sort(unique(ts_covid_all$Date))[38])
-as.numeric(sort(unique(ts_covid_all$Date))[64])
-as.numeric(sort(unique(ts_covid_all$Date))[77])
-ts_covid_all <- ts_covid_all[1:91,]
+ts_covid_all <- ts_covid_all[1:45,] #entry 65 is the 2 week after primary, so 14 days later is 4 weeks after primary
+sort(unique(ts_covid_all$date))
+
+##get dates 
+as.numeric(sort(unique(ts_covid_all$Date))[9])
+as.numeric(sort(unique(ts_covid_all$Date))[17])
+as.numeric(sort(unique(ts_covid_all$Date))[31])
+
 cases_plot_all <- ggplot(ts_covid_all, aes(x = Date, y = new_cases)) + 
   geom_line(color="#156DD0", size=1)+  
-  geom_vline(aes(xintercept=18360, color="#37C256" ), linetype=4, show.legend = F,lwd=1.4) + 
-  geom_vline(aes(xintercept=18373, color="#C0BA79" ), linetype=5, show.legend = F,lwd=1.4) + 
-  geom_vline(aes(xintercept=18334, color="#F6573E" ), linetype=2, show.legend = F,lwd=1.4)
+  geom_vline(aes(xintercept=18330, color="#4E4A81" ), linetype=1, show.legend = F, lwd=1.4) + 
+  geom_vline(aes(xintercept=18338, color="#C72654" ), linetype=2, show.legend = F, lwd=1.4) + 
+  geom_vline(aes(xintercept=18352, color="#37C256" ), linetype=3, show.legend = F, lwd=1.4) 
 
 cases_plot_all
-grob_start <- grobTree(textGrob("Public VBM \nNotice", x=0.25,  y=0.6, hjust=0,
-                                gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob_prim <- grobTree(textGrob("Primary", x=0.57,  y=0.7, hjust=0,
+#cases_plot_all
+grob_prim_e <- grobTree(textGrob("Exec. order", x=0.03,  y=0.7, hjust=0,
                                gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob2weeks <-   grobTree(textGrob("2 Weeks \npost \nprimary", x=0.72,  y=0.8, hjust=0,
+grob_prim <- grobTree(textGrob("Primary", x=0.25,  y=0.7, hjust=0,
+                               gp=gpar(col="black", fontsize=12, fontface="bold")))
+grob2weeks <-   grobTree(textGrob("2 Weeks \npost-primary", x=0.49,  y=0.9, hjust=0,
                                   gp=gpar(col="black", fontsize=12, fontface="bold")))
-cases_plot_all <- cases_plot_all +  annotation_custom(grob_start) +  annotation_custom(grob_prim) + annotation_custom(grob2weeks) +
+cases_plot_all <- cases_plot_all + annotation_custom(grob_prim_e) +   annotation_custom(grob_prim) +  annotation_custom(grob2weeks) +
   labs( title= "COVID-19 Cases", y="New Cases") + theme_minimal()
 cases_plot_all <- cases_plot_all + theme(title = element_text(size = rel(1.4), family="Styrene B")) #example plot of new cases 
 cases_plot_all
-ggsave("covid_wi_plot_example.jpg", plot = cases_plot_all, scale = 1,
+ggsave("covid_fl_plot.jpg", plot = cases_plot_all, scale = 1,
        width = 9, height = 6, units = c("in"), dpi = 600)
 
 
