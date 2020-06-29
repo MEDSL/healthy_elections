@@ -1,0 +1,674 @@
+"vre602","cd","ss","sh","cc","ed","mu","ext","address","white_a","white_i","black_a","black_i","hispanic_a","hispanic_i","asian_a","asian_i","other_a","other_i","total_a","total_i"
+"01A",5,36,59,5,1,"01",813,"Parkside Elem School 685 Mercer St Se",1806,171,916,53,107,7,66,8,514,48,3409,287
+"01B",5,36,59,5,1,"01",813,"Ormewood Park Presby. Church 1071 Delaware Avenue",2348,180,842,53,127,10,73,7,650,39,4040,289
+"01C",5,36,59,5,1,"01",813,"Dobbs Elementary School 2025 Jonesboro Rd Se
+Split (01C, 01S, 12F)",184,3,1282,57,28,1,9,1,209,13,1712,75
+"01D",5,36,58,5,1,"01",817,"FanPlex
+768 Hank Aaron Dr SE
+Split (01D, 01E, 01F, 01G)",142,18,351,17,12,4,12,1,103,5,620,45
+"01E",5,36,59,5,1,"01",813,"FanPlex
+768 Hank Aaron Dr SE
+Split (01D, 01E, 01F, 01G)",1885,169,908,46,72,3,48,5,505,56,3418,279
+"01F",5,36,58,5,1,"01",817,"FanPlex
+768 Hank Aaron Dr SE
+Split (01D, 01E, 01F, 01G)",101,10,1183,55,23,1,13,0,212,13,1532,79
+"01G",5,36,59,5,1,"01",813,"FanPlex
+768 Hank Aaron Dr SE
+Split (01D, 01E, 01F, 01G)",496,35,1276,57,37,5,29,2,337,18,2175,117
+"01H",5,36,58,4,1,"01",818,"Liberty Baptist Church 395 Chamberlain St Se
+Split (01H, 02B, 02L2, 05B, 05C, 05D)",75,7,622,28,16,0,5,1,114,8,832,44
+"01J",5,36,59,5,1,"01",813,"Louise Watley Library at Southeast Atlanta 1463 Pryor Road Sw
+Split (01J, 12S)",213,13,2013,89,37,1,11,2,414,25,2688,130
+"01P",5,36,59,5,1,"01",813,"Bible Way Ministries 894 Constitution Rd",43,0,1128,41,17,0,0,0,174,9,1362,50
+"01R",5,36,59,5,1,"01",813,"Thomasville Recreation Center 1835 Henry Thomas Dr",44,0,1301,52,22,0,6,0,149,8,1522,60
+"01S",5,36,60,5,1,"01",816,"Dobbs Elementary School 2025 Jonesboro Rd Se
+Split (01C, 01S, 12F)",84,5,1587,57,39,1,7,0,278,5,1995,68
+"01T",5,36,59,5,1,"01",813,"Benteen Elem School 200 Cassanova St",388,32,919,47,94,4,16,0,266,12,1683,95
+"02A",5,39,57,3,1,"02",819,"Park Tavern 500 10th St NE
+Split (02A, 02J, 02K, 02L1, 06G)",3171,363,593,64,187,22,269,27,796,146,5016,622
+"02B",5,36,57,4,1,"02",820,"Liberty Baptist Church 395 Chamberlain St Se
+Split (01H, 02B, 02L2, 05B, 05C, 05D)",836,70,2181,144,86,5,88,9,715,47,3906,275
+"02C",5,36,58,4,1,"02",821,"Central Park Recreation Center 400 Merritts Ave NE
+Split (02C, 02F1, 02F2, 05F)",745,127,719,61,82,12,60,9,333,55,1939,264
+"02D",5,36,58,4,1,"02",821,"Butler Street Baptist Church 315 Ralph Mcgill Blvd
+Split (02D, 05J, 06F)",2273,270,1527,83,154,18,189,21,733,119,4876,511
+"02E",5,36,59,5,1,"02",822,"Little 5 Points Comm Center 1083 Austin Ave",1392,106,111,7,48,8,45,8,281,47,1877,176
+"02F1",5,36,59,5,1,"02",822,"Central Park Recreation Center 400 Merritts Ave NE
+Split (02C, 02F1, 02F2, 05F)",2059,285,262,17,106,13,110,13,453,92,2990,420
+"02F2",5,36,58,4,1,"02",821,"Central Park Recreation Center 400 Merritts Ave NE
+Split (02C, 02F1, 02F2, 05F)",360,60,293,21,15,1,31,2,119,18,818,102
+"02G",5,36,58,4,1,"02",821,"Helene S. Mills Senior Center 515 John Wesley Dobbs Ave NE
+Split (02G, 02S, 05K)",2249,283,513,40,104,10,118,15,578,94,3562,442
+"02J",5,36,58,4,1,"02",821,"Park Tavern 500 10th St NE
+Split (02A, 02J, 02K, 02L1, 06G)",1468,169,216,12,74,5,59,7,343,61,2160,254
+"02K",5,36,58,4,1,"02",821,"Park Tavern 500 10th St NE
+Split (02A, 02J, 02K, 02L1, 06G)",924,119,130,17,50,5,51,10,228,45,1383,196
+"02L1",5,39,57,4,1,"02",823,"Park Tavern 500 10th St NE
+Split (02A, 02J, 02K, 02L1, 06G)",3853,526,912,91,276,34,333,38,1029,187,6403,876
+"02L2",5,39,56,4,1,"02",824,"Liberty Baptist Church 395 Chamberlain St Se
+Split (01H, 02B, 02L2, 05B, 05C, 05D)",1038,101,249,14,100,9,198,10,298,30,1883,164
+"02S",5,36,58,4,1,"02",821,"Helene S. Mills Senior Center 515 John Wesley Dobbs Ave NE
+Split (02G, 02S, 05K)",326,30,251,12,22,5,16,2,127,11,742,60
+"02W",5,39,56,3,1,"02",825,"Peachtree Christian Church 1580 Peachtree Street Nw
+Split (02W, 03F, 06L1, 06L2)",406,32,242,19,48,5,50,7,149,15,895,78
+"03A",5,39,56,4,2,"03",826,"Allen Temple AME Church 1625 Joseph E. Boone Blvd Nw",89,3,1751,89,14,1,3,2,288,16,2145,111
+"03B",5,38,56,4,2,"03",827,"Grove Park Recreation Center 750 Francis Pl Nw
+Split (03B, 03H, 09I)",21,1,547,39,6,1,3,0,98,8,675,49
+"03C",5,38,56,4,2,"03",827,"Atlanta Police Athletic League 120 Anderson Ave Nw",47,3,1430,51,17,0,4,0,244,8,1742,62
+"03D",5,39,56,4,2,"03",826,"Washington Park Library 1116 M L King Jr Dr Sw
+Split (03D, 04A)",77,7,927,42,9,1,4,0,173,5,1190,55
+"03E",5,39,56,4,2,"03",826,"Greater Bethany Baptist Church 786 Thurmond Street",119,3,2179,94,17,1,7,0,363,29,2685,127
+"03F",5,39,56,3,2,"03",828,"Peachtree Christian Church 1580 Peachtree Street Nw
+Split (02W, 03F, 06L1, 06L2)",769,108,579,52,91,16,175,16,397,50,2011,242
+"03G",5,39,56,4,2,"03",826,"Simpson Street Church Of Christ 800 Joseph E. Boone Blvd Nw
+Split (03G, 03L)",31,2,813,23,10,0,5,0,105,2,964,27
+"03H",5,38,55,4,2,"03",829,"Grove Park Recreation Center 750 Francis Pl Nw
+Split (03B, 03H, 09I)",31,2,845,50,6,0,3,0,152,6,1037,58
+"03I",5,39,56,4,2,"03",826,"Antioch Baptist Ch Family Cntr
+540 Cameron M Alexander Blvd Nw
+Split (03I, 03P1A, 03P2, 04F)",669,64,258,31,81,7,260,9,187,26,1455,137
+"03L",5,39,56,4,2,"03",826,"Simpson Street Church Of Christ 800 Joseph E. Boone Blvd Nw
+Split (03G, 03L)",25,0,584,26,5,0,0,0,101,5,715,31
+"03M",5,38,55,4,2,"03",829,"M28 Church
+1150 Niles Avenue",380,35,249,12,15,2,17,1,122,6,783,56
+"03N",5,39,56,4,2,"03",826,"Lindsay Street Baptist Church 550 Lindsay St",232,20,1997,113,40,3,20,1,373,31,2662,168
+"03P1A",5,39,56,3,2,"03",828,"Antioch Baptist Ch Family Cntr
+540 Cameron M Alexander Blvd Nw
+Split (03I, 03P1A, 03P2, 04F)",1624,239,1215,125,180,19,282,39,725,135,4026,557
+"03P2",5,36,56,4,2,"03",830,"Antioch Baptist Ch Family Cntr
+540 Cameron M Alexander Blvd Nw
+Split (03I, 03P1A, 03P2, 04F)",1,0,17,0,0,0,0,0,3,0,21,0
+"03S",5,38,55,4,2,"03",829,"Berean Seventh Day Advent. Church 291 Hamilton E Holmes Dr
+Split (03S, 10F)",30,3,708,16,7,0,1,0,97,7,843,26
+"03T",5,36,56,4,2,"03",830,"Central United Methodist Ch 501 Mitchell St
+Split (03T, 04J)",108,10,1229,93,17,2,12,0,240,25,1606,130
+"04A",5,39,56,4,2,"04",831,"Washington Park Library 1116 M L King Jr Dr Sw
+Split (03D, 04A)",73,1,1162,48,10,0,3,0,191,4,1439,53
+"04B",5,36,57,4,2,"04",832,"Flipper Temple AME Church
+580 Atlanta Student Movement Blvd",122,11,2390,75,20,1,10,0,269,18,2811,105
+"04C",5,39,56,4,2,"04",831,"C. A. Scott Recreation Bldg 1565 M L King Jr Dr Sw
+Split (04C, 04D)",0,1,128,4,0,0,0,0,17,0,145,5
+"04D",5,39,56,4,2,"04",831,"C. A. Scott Recreation Bldg 1565 M L King Jr Dr Sw
+Split (04C, 04D)",106,4,1337,48,14,0,5,1,195,12,1657,65
+"04F",5,36,56,4,2,"04",833,"Antioch Baptist Ch Family Cntr
+540 Cameron M Alexander Blvd Nw
+Split (03I, 03P1A, 03P2, 04F)",460,39,1507,106,59,2,86,6,356,26,2468,179
+"04G",5,36,57,4,2,"04",832,"James Orange Park 1305 Oakland Ln
+Split (04G, 04M)",52,3,761,33,11,0,3,0,123,6,950,42
+"04I",5,36,57,4,2,"04",832,"Paul L. Dunbar School 500 Whitehall Terrace Sw
+Split (04I, 04V)",865,35,2749,106,67,4,53,2,713,28,4447,175
+"04J",5,36,56,4,2,"04",833,"Central United Methodist Ch 501 Mitchell St
+Split (03T, 04J)",20,2,1397,100,18,0,3,0,132,7,1570,109
+"04K",5,36,57,4,2,"04",832,"West Hunter Street Baptist Church 1040 Ralph David Abernathy Blvd Sw
+Split (04K, 04L)",184,21,1973,81,24,3,11,1,347,14,2539,120
+"04L",5,39,56,4,2,"04",831,"West Hunter Street Baptist Church 1040 Ralph David Abernathy Blvd Sw
+Split (04K, 04L)",218,11,1326,65,24,1,22,2,288,14,1878,93
+"04M",5,36,58,4,2,"04",834,"James Orange Park 1305 Oakland Ln
+Split (04G, 04M)",55,4,731,28,3,1,3,0,124,7,916,40
+"04S",5,36,57,4,2,"04",832,"St Peters Bapt Church Rec Bldg 1558 Venetian Dr",97,2,1964,52,20,0,6,0,339,5,2426,59
+"04T",5,36,57,4,2,"04",832,"W Oakland Missionary Bapt Ch 1025 Violet St",71,4,941,30,14,0,5,1,164,7,1195,42
+"04V",5,36,57,5,2,"04",508,"Paul L. Dunbar School 500 Whitehall Terrace Sw
+Split (04I, 04V)",122,10,2782,115,22,1,10,0,475,28,3411,154
+"04W",5,36,57,4,2,"04",832,"Morehouse College-Archer Hall
+876 Atlanta Student Movement Blvd",19,2,3181,115,31,1,14,0,174,12,3419,130
+"04X1",5,39,57,4,2,"04",835,"Tuskegee Airmen Academy 1626 Westhaven Dr SW
+Split (04X1, 04X2)",151,4,1617,59,23,0,6,0,298,15,2095,78
+"04X2",5,39,56,4,2,"04",831,"Tuskegee Airmen Academy 1626 Westhaven Dr SW
+Split (04X1, 04X2)",69,6,605,34,8,0,3,1,120,9,805,50
+"05A1",5,36,58,5,3,"05",956,"Lang-Carson Recreation Center 100 Flat Shoals Ave
+Split (05A1, 05A2)",1642,176,416,29,79,9,45,6,417,53,2599,273
+"05A2",5,36,59,5,3,"05",836,"Lang-Carson Recreation Center 100 Flat Shoals Ave
+Split (05A1, 05A2)",1553,147,827,57,89,5,87,9,490,53,3046,271
+"05B",5,36,58,4,3,"05",837,"Liberty Baptist Church 395 Chamberlain St Se
+Split (01H, 02B, 02L2, 05B, 05C, 05D)",381,35,1306,64,53,1,36,5,296,24,2072,129
+"05C",5,36,58,4,3,"05",837,"Liberty Baptist Church 395 Chamberlain St Se
+Split (01H, 02B, 02L2, 05B, 05C, 05D)",24,2,113,1,4,0,2,0,18,0,161,3
+"05D",5,36,57,4,3,"05",838,"Liberty Baptist Church 395 Chamberlain St Se
+Split (01H, 02B, 02L2, 05B, 05C, 05D)",70,3,376,9,7,0,9,0,53,6,515,18
+"05F",5,36,58,4,3,"05",837,"Central Park Recreation Center 400 Merritts Ave NE
+Split (02C, 02F1, 02F2, 05F)",75,9,99,14,8,2,5,1,40,3,227,29
+"05J",5,36,58,4,3,"05",837,"Butler Street Baptist Church 315 Ralph Mcgill Blvd
+Split (02D, 05J, 06F)",262,28,224,12,19,3,30,2,100,7,635,52
+"05K",5,36,58,4,3,"05",837,"Helene S. Mills Senior Center 515 John Wesley Dobbs Ave NE
+Split (02G, 02S, 05K)",698,82,1545,67,110,6,87,5,414,37,2854,197
+"06B",5,36,58,4,3,"06",839,"Inman Middle School 774 Virginia Ave
+Split (06B, 06J)",1363,159,70,9,41,6,59,6,235,48,1768,228
+"06D",5,36,57,3,3,"06",840,"Morningside Baptist Church Gym 1700 Piedmont Road
+Split (06D, 06E)",5856,481,1229,105,316,14,296,33,1287,156,8984,789
+"06E",5,39,56,3,3,"06",841,"Morningside Baptist Church Gym 1700 Piedmont Road
+Split (06D, 06E)",1450,155,321,25,77,9,71,14,344,42,2263,245
+"06F",5,36,58,5,3,"06",961,"Butler Street Baptist Church 315 Ralph Mcgill Blvd
+Split (02D, 05J, 06F)",1888,215,290,21,55,8,49,5,371,53,2653,302
+"06G",5,36,58,4,3,"06",839,"Park Tavern 500 10th St NE
+Split (02A, 02J, 02K, 02L1, 06G)",341,25,107,9,12,1,10,2,89,17,559,54
+"06I",5,39,54,3,3,"06",843,"Peachtree Hills Recreation 308 Peachtree Hills Ave Ne
+Split (06I, 07E, 07J, 07N)",1378,240,1296,118,193,26,199,31,599,94,3665,509
+"06J",5,36,57,3,3,"06",840,"Inman Middle School 774 Virginia Ave
+Split (06B, 06J)",1991,165,82,2,67,4,67,17,376,46,2583,234
+"06L1",5,39,56,3,3,"06",841,"Peachtree Christian Church 1580 Peachtree Street Nw
+Split (02W, 03F, 06L1, 06L2)",686,52,79,3,11,0,10,2,109,16,895,73
+"06L2",5,39,55,3,3,"06",844,"Peachtree Christian Church 1580 Peachtree Street Nw
+Split (02W, 03F, 06L1, 06L2)",511,26,52,4,15,1,12,0,95,7,685,38
+"06N",5,39,55,3,3,"06",844,"2nd Ponce De Leon Bapt Church
+2715 Peachtree Rd Ne - Fam Life Center
+Split (06N, 06Q, 07H)",998,77,382,72,37,4,33,0,265,37,1715,190
+"06Q",5,39,54,3,3,"06",843,"2nd Ponce De Leon Bapt Church
+2715 Peachtree Rd Ne - Fam Life Center
+Split (06N, 06Q, 07H)",179,30,224,27,20,0,8,4,93,19,524,80
+"06R",5,39,56,3,3,"06",841,"First Presbyterian Church 1328 Peachtree Street",1224,105,325,17,38,5,39,4,267,28,1893,159
+"07A",11,6,54,3,4,"07",846,"Sarah Rawson Smith Elem School 370 Old Ivy Rd Ne",4380,377,1034,62,215,20,326,31,1146,158,7101,648
+"07B",11,6,54,3,4,"07",846,"St James Methodist Ch
+4400 Peachtree Dunwoody Rd
+Split (07B, 07C)",2363,94,63,2,32,1,57,2,293,25,2808,124
+"07C",5,6,54,3,4,"07",847,"St James Methodist Ch
+4400 Peachtree Dunwoody Rd
+Split (07B, 07C)",2801,225,526,30,129,14,133,14,613,71,4202,354
+"07D",5,6,54,3,4,"07",847,"Ptree Presbyterian Church 3434 Roswell Rd
+Split (07D, 08M)",2863,327,633,58,166,17,133,14,658,94,4453,510
+"07E",5,39,54,3,4,"07",848,"Peachtree Hills Recreation 308 Peachtree Hills Ave Ne
+Split (06I, 07E, 07J, 07N)",1212,115,381,32,79,2,96,6,331,35,2099,190
+"07F",5,39,54,3,4,"07",848,"Cathedral Of Saint Philip 2744 Peachtree Rd Nw
+Split (07F, 07M, 08G, 08L)",2390,208,312,12,105,3,96,4,494,43,3397,270
+"07H",5,39,54,3,4,"07",848,"2nd Ponce De Leon Bapt Church
+2715 Peachtree Rd Ne - Fam Life Center
+Split (06N, 06Q, 07H)",1511,92,116,15,48,3,33,1,270,29,1978,140
+"07J",5,39,55,3,4,"07",849,"Peachtree Hills Recreation 308 Peachtree Hills Ave Ne
+Split (06I, 07E, 07J, 07N)",1848,206,349,22,75,8,63,3,401,64,2736,303
+"07M",5,39,54,3,4,"07",848,"Cathedral Of Saint Philip 2744 Peachtree Rd Nw
+Split (07F, 07M, 08G, 08L)",1178,135,452,29,96,8,116,10,388,65,2230,247
+"07N",5,39,54,3,4,"07",848,"Peachtree Hills Recreation 308 Peachtree Hills Ave Ne
+Split (06I, 07E, 07J, 07N)",696,95,707,64,108,8,135,18,361,42,2007,227
+"08A",11,6,40,3,4,"08",851,"Jackson, Warren T School 1325 Mt Paran Rd",1927,169,392,35,63,3,92,9,433,50,2907,266
+"08B",11,6,52,3,4,"08",852,"Chastain Park Gymnasium 140 W Wieuca Rd
+Split (08B, 08C)",2591,157,157,9,62,8,88,6,365,44,3263,224
+"08C",11,6,52,3,4,"08",852,"Chastain Park Gymnasium 140 W Wieuca Rd
+Split (08B, 08C)",1168,52,27,1,24,7,28,3,161,15,1408,78
+"08D",11,6,52,3,4,"08",852,"Brandon, Morris School 2741 Howell Mill Rd Nw
+Split (08D, 08F1, 08N1, 08N2)",877,36,11,0,10,0,20,2,117,10,1035,48
+"08E",11,6,53,3,4,"08",853,"Morris Brandon Primary Ctr. School 2845 Margaret Mitchell Dr
+Split (08E, 09F)",1994,96,86,6,30,1,80,7,276,18,2466,128
+"08F1",5,6,54,3,4,"08",854,"Brandon, Morris School 2741 Howell Mill Rd Nw
+Split (08D, 08F1, 08N1, 08N2)",1792,64,35,3,34,0,28,2,209,16,2098,85
+"08G",5,39,54,3,4,"08",850,"Cathedral Of Saint Philip 2744 Peachtree Rd Nw
+Split (07F, 07M, 08G, 08L)",1715,155,594,31,71,5,72,7,475,56,2927,254
+"08H",5,39,54,3,4,"08",850,"Sutton Middle School 2875 Northside Dr
+Split (08H, 08J)",2033,111,109,7,33,4,31,1,301,32,2507,155
+"08J",5,38,54,3,4,"08",855,"Sutton Middle School 2875 Northside Dr
+Split (08H, 08J)",2204,153,390,34,74,9,52,6,433,39,3153,241
+"08K",5,38,55,3,4,"08",856,"Grant, Bitsy Tennis Center 2125 Northside Dr",700,81,114,7,28,5,18,0,135,27,995,120
+"08L",5,38,55,3,4,"08",856,"Cathedral Of Saint Philip 2744 Peachtree Rd Nw
+Split (07F, 07M, 08G, 08L)",2761,297,636,49,114,16,106,13,641,92,4258,467
+"08M",5,6,54,3,4,"08",854,"Ptree Presbyterian Church 3434 Roswell Rd
+Split (07D, 08M)",1644,85,96,11,38,3,27,1,241,30,2046,130
+"08N1",11,6,52,3,4,"08",852,"Brandon, Morris School 2741 Howell Mill Rd Nw
+Split (08D, 08F1, 08N1, 08N2)",634,22,32,0,8,0,16,1,110,6,800,29
+"08N2",11,6,54,3,4,"08",857,"Brandon, Morris School 2741 Howell Mill Rd Nw
+Split (08D, 08F1, 08N1, 08N2)",983,53,227,14,33,4,63,6,216,23,1522,100
+"08P",5,38,55,3,4,"08",856,"The Fairmont
+1429 Fairmont Ave NW
+Split (08P, 09G, 09H)",779,76,600,57,73,6,47,4,254,32,1753,175
+"09A",5,38,53,4,5,"09",858,"Northwest Library at Scotts Crossing 2489 Perry Blvd Nw
+Split (09A, 09K, 09M)",1649,148,1144,86,192,11,90,4,518,53,3593,302
+"09B",5,38,53,4,5,"09",858,"Coretta Scott King Young Women's Academy 1190 Northwest Dr NW",15,0,382,13,3,0,0,0,49,3,449,16
+"09C",5,38,53,4,5,"09",858,"Jackson Memorial Baptist Church 534 Fairburn Rd
+Split (09C, 10E)",79,1,2679,97,9,1,8,0,424,9,3199,108
+"09D",5,38,53,4,5,"09",858,"Salem Baptist Church 2283 Baker Road",55,2,1807,52,15,1,2,0,264,19,2143,74
+"09E",5,38,53,4,5,"09",858,"Dogwood Senior Center
+1953 Donald L. Hollowell Pkwy Nw",391,33,2159,109,44,4,47,1,434,32,3075,179
+"09F",5,6,53,4,5,"09",859,"Morris Brandon Primary Ctr. School 2845 Margaret Mitchell Dr
+Split (08E, 09F)",2530,205,521,52,94,10,88,9,509,71,3742,347
+"09G",5,38,55,4,5,"09",970,"The Fairmont
+1429 Fairmont Ave NW
+Split (08P, 09G, 09H)",2028,246,835,78,133,13,132,14,532,82,3660,433
+"09H",5,38,55,3,5,"09",861,"The Fairmont
+1429 Fairmont Ave NW
+Split (08P, 09G, 09H)",477,56,402,31,51,5,31,4,184,16,1145,112
+"09I",5,38,55,4,5,"09",970,"Grove Park Recreation Center 750 Francis Pl Nw
+Split (03B, 03H, 09I)",90,4,1031,50,11,1,2,0,175,12,1309,67
+"09K",5,38,53,4,5,"09",858,"Northwest Library at Scotts Crossing 2489 Perry Blvd Nw
+Split (09A, 09K, 09M)",218,14,4232,172,52,4,13,4,662,33,5177,227
+"09M",5,38,53,4,5,"09",858,"Northwest Library at Scotts Crossing 2489 Perry Blvd Nw
+Split (09A, 09K, 09M)",1108,77,768,43,74,7,46,5,390,37,2386,169
+"10A",5,38,61,6,5,"10",864,"The Kindezi School - West 286 Wilson Mill Road",39,2,2611,45,16,0,4,0,376,5,3046,52
+"10B",5,38,55,6,5,"10",865,"West Manor Park 3240 West Manor Cir
+Split (10B, 10I)",67,4,3164,120,11,2,10,0,460,25,3712,151
+"10C",5,38,61,6,5,"10",864,"C.T. Martin Natatorium & Recreation Center 3201 M L King Jr Dr SW
+Split (10C, 10D)",39,1,2228,106,7,2,1,0,288,18,2563,127
+"10D",5,38,53,4,5,"10",866,"C.T. Martin Natatorium & Recreation Center 3201 M L King Jr Dr SW
+Split (10C, 10D)",73,5,4057,114,43,2,5,0,551,20,4729,141
+"10E",5,38,53,4,5,"10",866,"Jackson Memorial Baptist Church 534 Fairburn Rd
+Split (09C, 10E)",32,1,845,23,5,0,2,0,138,1,1022,25
+"10F",5,38,53,4,5,"10",866,"Berean Seventh Day Advent. Church 291 Hamilton E Holmes Dr
+Split (03S, 10F)",19,1,964,22,8,0,2,0,133,7,1126,30
+"10G",5,38,56,6,5,"10",867,"St Paul's Episcopal Church 306 Peyton Rd
+Split (10G, 10H1, 10H2)",28,3,1069,23,4,0,2,0,152,4,1255,30
+"10H1",5,38,53,6,5,"10",873,"St Paul's Episcopal Church 306 Peyton Rd
+Split (10G, 10H1, 10H2)",6,4,357,12,7,0,0,0,48,4,418,20
+"10H2",5,38,55,6,5,"10",865,"St Paul's Episcopal Church 306 Peyton Rd
+Split (10G, 10H1, 10H2)",44,1,2112,81,28,0,8,0,294,13,2486,95
+"10I",5,38,57,6,5,"10",868,"West Manor Park 3240 West Manor Cir
+Split (10B, 10I)",5,0,271,9,4,0,0,0,42,2,322,11
+"10J",5,38,56,4,5,"10",869,"Westside Community Church 2114 Martin Luther King Jr Dr",31,2,944,32,12,1,1,0,179,6,1167,41
+"10K",5,39,57,4,5,"10",870,"Beecher Hills Elementary School 2257 Bollingbrook Dr SW
+Split (10K, 11H)",82,2,1212,41,15,0,6,0,199,10,1514,53
+"10M",5,39,57,4,5,"10",870,"Mcghee, Joseph Tennis Center 820 Beecher Ct",288,22,2031,72,16,4,11,1,376,13,2722,112
+"10P",5,38,53,4,5,"10",866,"Collier Park Recreation Center 3691 Collier Dr NW",28,3,1297,36,7,1,6,0,182,4,1520,44
+"10R",5,38,53,6,5,"10",873,"Concord Baptist Church 3270 Boulder Park Dr SW",12,0,711,18,8,0,2,0,91,1,824,19
+"11B",5,38,55,5,6,"11",520,"Ralph Bunche Middle School 1925 Niskey Lake Rd Sw",83,1,4380,175,22,0,9,0,588,33,5082,209
+"11C",5,38,55,6,6,"11",874,"Fickett School 3935 Rux Rd",50,3,2572,77,10,2,7,0,363,22,3002,104
+"11E1",5,38,61,5,6,"11",962,"William Walker Recreation Center 2405 Fairburn Rd Sw
+Split (11E1, 11E2, 11E3, 11P)",18,0,1092,50,9,0,1,0,143,14,1263,64
+"11E2",5,39,55,5,6,"11",877,"William Walker Recreation Center 2405 Fairburn Rd Sw
+Split (11E1, 11E2, 11E3, 11P)",22,2,785,20,7,0,2,0,99,5,915,27
+"11E3",5,39,61,5,6,"11",875,"William Walker Recreation Center 2405 Fairburn Rd Sw
+Split (11E1, 11E2, 11E3, 11P)",73,12,2772,164,53,3,24,2,486,25,3408,206
+"11G",5,39,58,5,6,"11",529,"Adams Park Library
+2231 Campbellton Rd SW
+Split (11G, 12I, 12L)",74,4,2062,97,16,0,3,0,258,31,2413,132
+"11H",5,39,57,4,6,"11",878,"Beecher Hills Elementary School 2257 Bollingbrook Dr SW
+Split (10K, 11H)",24,1,580,16,9,0,1,0,102,4,716,21
+"11J",5,39,60,5,6,"11",974,"Continental Colony Elementary School 3181 Hogan Rd",36,0,1727,58,8,1,3,1,227,6,2001,66
+"11K",5,39,58,4,6,"11",880,"Cascade Elementary School 2326 Venetian Dr Sw",95,4,1587,37,6,0,2,0,248,12,1938,53
+"11M",5,39,55,4,6,"11",881,"Therrell, D.M. High School 3099 Panther Trail Sw
+Split (11M, 11N, 11R)",66,6,2812,114,22,2,8,0,415,16,3323,138
+"11N",5,39,55,5,6,"11",877,"Therrell, D.M. High School 3099 Panther Trail Sw
+Split (11M, 11N, 11R)",28,1,1985,52,7,0,4,0,289,12,2313,65
+"11P",5,39,55,5,6,"11",877,"William Walker Recreation Center 2405 Fairburn Rd Sw
+Split (11E1, 11E2, 11E3, 11P)",39,2,1708,77,10,0,1,0,255,17,2013,96
+"11R",5,39,58,4,6,"11",880,"Therrell, D.M. High School 3099 Panther Trail Sw
+Split (11M, 11N, 11R)",41,0,1703,86,7,1,3,0,248,9,2002,96
+"12A",5,36,58,5,6,"12",531,"Metropolitan Library
+1332 Metropolitan Pkway Sw",813,47,3615,165,72,2,39,0,721,59,5260,273
+"12D",5,36,60,5,6,"12",885,"Perkerson Park Rec Center 770 Deckner Ave
+Split (12D, 12G)",65,4,1086,72,12,2,3,0,183,16,1349,94
+"12E1",5,36,59,5,6,"12",882,"Cleveland Avenue School 2672 Old Hapeville Rd
+Split (12E1, 12H1, 12H2, 12J)",100,4,1371,78,36,1,19,0,218,14,1744,97
+"12F",5,36,59,5,6,"12",882,"Dobbs Elementary School 2025 Jonesboro Rd Se
+Split (01C, 01S, 12F)",75,4,884,25,27,0,6,0,164,9,1156,38
+"12G",5,36,59,5,6,"12",882,"Perkerson Park Rec Center 770 Deckner Ave
+Split (12D, 12G)",41,5,671,28,12,0,5,0,115,5,844,38
+"12H1",5,36,59,5,6,"12",882,"Cleveland Avenue School 2672 Old Hapeville Rd
+Split (12E1, 12H1, 12H2, 12J)",55,3,905,56,16,0,8,2,118,9,1102,70
+"12H2",5,36,60,5,6,"12",885,"Cleveland Avenue School 2672 Old Hapeville Rd
+Split (12E1, 12H1, 12H2, 12J)",78,1,2401,102,22,1,3,0,361,13,2865,117
+"12I",5,39,58,5,6,"12",886,"Adams Park Library
+2231 Campbellton Rd SW
+Split (11G, 12I, 12L)",15,1,872,44,4,0,2,0,122,9,1015,54
+"12J",5,36,60,5,6,"12",885,"Cleveland Avenue School 2672 Old Hapeville Rd
+Split (12E1, 12H1, 12H2, 12J)",68,3,2417,127,20,0,8,1,349,20,2862,151
+"12K",5,36,57,5,6,"12",887,"Pittman Park Rec Center 950 Garibaldi St
+Split (12K, 12N)",420,40,2398,121,47,5,33,2,488,30,3386,198
+"12L",5,36,58,5,6,"12",531,"Adams Park Library
+2231 Campbellton Rd SW
+Split (11G, 12I, 12L)",21,3,601,39,4,0,0,0,93,3,719,45
+"12M",5,36,60,5,6,"12",885,"South Atlanta High School 800 Hutchens Rd",75,7,2365,96,25,0,4,0,327,12,2796,115
+"12N",5,36,58,5,6,"12",531,"Pittman Park Rec Center 950 Garibaldi St
+Split (12K, 12N)",58,3,838,30,11,1,3,0,127,7,1037,41
+"12S",5,36,58,5,6,"12",531,"Louise Watley Library at Southeast Atlanta 1463 Pryor Road Sw
+Split (01J, 12S)",68,7,1569,129,15,0,7,1,257,30,1916,167
+"AP01A",6,56,49,1,2,"LRG",745,"New Prospect Elementary 3055 Kimball Bridge Rd
+Split (AP01A, AP01B)",2903,213,418,47,115,11,660,31,856,52,4952,354
+"AP01B",6,56,49,1,1,"LRG",730,"New Prospect Elementary 3055 Kimball Bridge Rd
+Split (AP01A, AP01B)",663,74,163,26,48,4,60,11,168,33,1102,148
+"AP01C",6,56,49,1,5,"LRG",731,"Haynes Bridge Middle School 10665 Haynes Bridge Rd
+Split (AP01C, AP01D)",1441,92,198,11,107,2,172,5,336,32,2254,142
+"AP01D",6,56,49,1,7,"LRG",732,"Haynes Bridge Middle School 10665 Haynes Bridge Rd
+Split (AP01C, AP01D)",551,73,165,24,36,8,35,5,140,34,927,144
+"AP021",6,56,49,2,2,"LRG",734,"Wills Recreation Center 11925 Wills Rd
+Split (AP021, AP022, AP02B)",2156,112,381,32,76,4,141,7,464,30,3218,185
+"AP022",6,56,49,2,1,"LRG",737,"Wills Recreation Center 11925 Wills Rd
+Split (AP021, AP022, AP02B)",1367,98,315,15,140,6,150,5,372,31,2344,155
+"AP02B",6,56,48,2,1,"LRG",735,"Wills Recreation Center 11925 Wills Rd
+Split (AP021, AP022, AP02B)",370,22,59,1,21,3,35,0,109,3,594,29
+"AP03",6,56,48,2,1,"LRG",735,"Mimosa Elementary School 1550 Warsaw Rd
+Split (AP03, RW07A, RW07B)",189,37,297,39,91,7,5,1,148,19,730,103
+"AP04A",6,56,47,2,1,"LRG",736,"Alpharetta Crabapple Government Center 12624 Broadwell Rd
+Split (AP04A, AP04B, AP06)",1177,72,89,3,44,2,99,0,250,16,1659,93
+"AP04B",6,56,47,2,2,"LRG",738,"Alpharetta Crabapple Government Center 12624 Broadwell Rd
+Split (AP04A, AP04B, AP06)",292,13,18,1,10,0,53,0,66,3,439,17
+"AP05",6,21,49,1,2,"LRG",739,"Windward Fire Station 3070 Market Place",2878,192,362,16,137,5,461,13,682,38,4520,264
+"AP06",6,21,49,2,2,"LRG",740,"Alpharetta Crabapple Government Center 12624 Broadwell Rd
+Split (AP04A, AP04B, AP06)",1415,70,55,8,55,1,86,1,246,10,1857,90
+"AP07A",6,21,49,2,2,"LRG",740,"Manning Oaks Elementary School 405 Cumming St
+Split (AP07A, AP07B, ML06A)",2325,146,419,29,138,4,172,8,616,58,3670,245
+"AP07B",6,21,47,2,2,"LRG",741,"Manning Oaks Elementary School 405 Cumming St
+Split (AP07A, AP07B, ML06A)",1077,55,129,3,67,3,202,1,291,17,1766,79
+"AP09A",6,21,49,1,2,"LRG",739,"Webb Bridge Middle School 4455 Webb Bridge Rd
+Split (AP09A, AP09B)",2395,189,393,40,139,8,509,19,696,68,4132,324
+"AP09B",6,48,49,1,2,"LRG",743,"Webb Bridge Middle School 4455 Webb Bridge Rd
+Split (AP09A, AP09B)",369,17,106,4,29,0,170,6,183,9,857,36
+"AP10",6,21,49,2,2,"LRG",740,"Alpharetta Library 10 Park Plaza",805,36,25,2,13,0,26,0,99,12,968,50
+"AP12A",6,21,49,1,2,"LRG",739,"Alpharetta High School 3595 Webb Bridge Rd
+Split (AP12A, AP12B, AP12C)",331,37,123,17,57,6,39,4,128,23,678,87
+"AP12B",6,21,47,1,2,"LRG",744,"Alpharetta High School 3595 Webb Bridge Rd
+Split (AP12A, AP12B, AP12C)",304,37,193,28,45,2,111,9,174,24,827,100
+"AP12C",6,21,49,2,2,"LRG",740,"Alpharetta High School 3595 Webb Bridge Rd
+Split (AP12A, AP12B, AP12C)",1403,116,192,17,63,7,57,2,282,42,1997,184
+"AP14",6,56,49,1,5,"LRG",731,"Messiah Lutheran Church 4765 Kimball Bridge Road
+Split (AP14, JC04A, JC04B, JC04C, JC10, JC15)",2029,129,206,8,65,2,298,5,467,29,3065,173
+"CH01",13,28,65,6,4,"01",950,"Chattahoochee Hills City Hall 6505 Rico Rd
+Split (CH01, CH02, CH02, CH03, CH04A, CH05)",71,8,208,7,12,0,0,0,54,2,345,17
+"CH02",13,28,65,6,4,"02",951,"Chattahoochee Hills City Hall 6505 Rico Rd
+Split (CH01, CH02, CH02, CH03, CH04A, CH05)",181,2,77,0,4,0,0,0,45,2,320,4
+"CH03",13,28,65,6,4,"03",952,"Chattahoochee Hills City Hall 6505 Rico Rd
+Split (CH01, CH02, CH02, CH03, CH04A, CH05)",271,6,75,2,5,0,1,0,46,1,398,9
+"CH04A",13,28,65,6,4,"04",954,"Chattahoochee Hills City Hall 6505 Rico Rd
+Split (CH01, CH02, CH02, CH03, CH04A, CH05)",569,35,36,0,10,0,1,1,111,6,727,42
+"CH05",13,28,65,6,4,"05",955,"Chattahoochee Hills City Hall 6505 Rico Rd
+Split (CH01, CH02, CH02, CH03, CH04A, CH05)",334,13,29,2,2,0,0,1,51,1,416,17
+"CP011",5,36,62,6,3,"1",742,"College Park Auditorium 3631 Main Street
+Split (CP011, CP012, CP01B, CP02, CP04A, CP04B)",350,16,716,26,33,3,7,0,167,10,1273,55
+"CP012",5,36,62,6,6,"1",749,"College Park Auditorium 3631 Main Street
+Split (CP011, CP012, CP01B, CP02, CP04A, CP04B)",371,14,789,19,22,0,20,1,212,12,1414,46
+"CP01B",5,36,60,6,3,"1",747,"College Park Auditorium 3631 Main Street
+Split (CP011, CP012, CP01B, CP02, CP04A, CP04B)",144,8,192,10,13,0,10,0,48,2,407,20
+"CP02",5,36,60,6,3,"3",942,"College Park Auditorium 3631 Main Street
+Split (CP011, CP012, CP01B, CP02, CP04A, CP04B)",205,10,716,32,21,3,14,0,179,7,1135,52
+"CP04A",5,36,60,6,6,"1",1025,"College Park Auditorium 3631 Main Street
+Split (CP011, CP012, CP01B, CP02, CP04A, CP04B)",1,0,7,0,0,0,0,0,4,0,12,0
+"CP04B",5,36,60,6,6,"2",751,"College Park Auditorium 3631 Main Street
+Split (CP011, CP012, CP01B, CP02, CP04A, CP04B)",2,0,32,1,0,0,0,0,1,1,35,2
+"CP051",5,36,64,6,6,"4",753,"Camp Truitt Senior Center 4320 Herschel Rd Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",69,7,1388,50,33,1,8,0,206,15,1704,73
+"CP05B",5,36,63,6,6,"4",752,"Camp Truitt Senior Center 4320 Herschel Rd Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",4,0,130,7,1,0,0,0,21,0,156,7
+"CP06A",5,36,63,6,6,"2",754,"Camp Truitt Senior Center 4320 Herschel Rd Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",22,1,561,28,9,0,3,1,90,4,685,34
+"CP07B",5,36,63,6,6,"2",943,"Camp Truitt Senior Center 4320 Herschel Rd, Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",0,0,2,1,0,0,0,0,5,0,7,1
+"CP07C",5,36,64,5,6,"4",889,"Camp Truitt Senior Center 4320 Herschel Rd, Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",4,1,230,14,0,0,NA,1,36,3,271,18
+"CP07D",5,36,64,6,6,"4",753,"Camp Truitt Senior Center 4320 Herschel Rd, Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",22,4,660,44,8,0,1,0,91,7,782,55
+"CP07E",5,36,64,5,6,"4",889,"Camp Truitt Senior Center 4320 Herschel Rd, Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",6,0,88,9,0,0,0,0,18,0,112,9
+"CP07F",5,36,64,6,6,"4",753,"Camp Truitt Senior Center 4320 Herschel Rd, Split (CP051, CP05B, CP06A, CP07B, CP07C, CP07D, CP07E, CP07F)",9,0,191,13,5,2,0,0,30,1,235,16
+"CP081",13,39,63,6,6,"2",1024,"Tracey Wyatt Recreation Center 2300 Godby Rd
+Split (CP081, CP083, CP084, CP08A, SC10)",7,1,298,28,0,0,4,0,45,4,354,33
+"CP083",13,39,63,6,6,"3",965,"Tracey Wyatt Recreation Center 2300 Godby Rd
+Split (CP081, CP083, CP084, CP08A, SC10)",4,0,178,20,2,0,0,0,25,5,209,25
+"CP084",13,39,63,6,6,"2",1024,"Tracey Wyatt Recreation Center 2300 Godby Rd
+Split (CP081, CP083, CP084, CP08A, SC10)",0,0,2,0,0,0,0,0,0,0,2,0
+"CP08A",13,39,63,6,6,"3",965,"Tracey Wyatt Recreation Center 2300 Godby Rd
+Split (CP081, CP083, CP084, CP08A, SC10)",15,2,615,49,3,0,3,0,82,4,718,55
+"EP01A",5,39,60,5,6,"A",978,"East Point First Mallalieu UMC 2651 Church St
+Split (EP01A, EP01B)",585,40,1689,84,98,1,12,0,436,21,2820,146
+"EP01B",5,39,60,5,3,"A",979,"East Point First Mallalieu UMC 2651 Church St
+Split (EP01A, EP01B)",372,22,2343,105,115,4,9,1,447,26,3286,158
+"EP02A",5,36,59,6,3,"B",760,"Jefferson Recreation Center 1431 Norman Berry Drive
+Split (EP02A, EP02B, EP02C, EP02D, EP02E)",163,8,1698,81,72,4,7,5,278,21,2218,119
+"EP02B",5,36,59,5,3,"B",929,"Jefferson Recreation Center 1431 Norman Berry Drive
+Split (EP02A, EP02B, EP02C, EP02D, EP02E)",590,40,666,31,49,1,16,3,224,17,1545,92
+"EP02C",5,36,60,6,3,"B",971,"Jefferson Recreation Center 1431 Norman Berry Drive
+Split (EP02A, EP02B, EP02C, EP02D, EP02E)",143,15,217,13,17,1,4,0,78,8,459,37
+"EP02D",5,39,60,5,3,"B",986,"Jefferson Recreation Center 1431 Norman Berry Drive
+Split (EP02A, EP02B, EP02C, EP02D, EP02E)",16,1,272,22,2,0,0,0,49,5,339,28
+"EP02E",5,36,60,5,3,"B",987,"Jefferson Recreation Center 1431 Norman Berry Drive
+Split (EP02A, EP02B, EP02C, EP02D, EP02E)",180,12,1122,62,37,2,3,0,213,15,1555,91
+"EP03A",5,39,60,5,6,"C",980,"St. Stephens Miss. Baptist Church 2670 Hogan Rd
+Split (EP03A, EP03B)",320,21,3569,118,194,5,18,3,543,27,4644,174
+"EP03B",5,39,62,5,6,"C",897,"St. Stephens Miss. Baptist Church 2670 Hogan Rd
+Split (EP03A, EP03B)",82,8,1206,31,37,0,5,0,169,3,1499,42
+"EP04A",5,39,62,5,6,"D",765,"Brookview Elememtary Sch 3250 Hammarskjold Dr
+Split (EP04A, EP04B)",176,9,4910,278,83,6,25,3,776,68,5970,364
+"EP04B",13,39,62,5,6,"D",766,"Brookview Elememtary Sch 3250 Hammarskjold Dr
+Split (EP04A, EP04B)",77,4,1941,94,36,1,9,0,332,15,2395,114
+"FA01A",13,35,65,6,4,"LRG",767,"First Baptist Church of Fairburn 23 Malone St SE
+Split (FA01A, FA01B)",350,22,2798,120,139,8,21,0,516,25,3824,175
+"FA01B",13,35,65,6,4,"LRG",767,"First Baptist Church of Fairburn 23 Malone St SE
+Split (FA01A, FA01B)",643,60,3831,162,185,13,42,5,883,43,5584,283
+"FA01C",13,35,64,6,4,"LRG",768,"Harvest Rain Church 8567 Bohannon Rd",27,1,518,18,22,0,11,0,108,3,686,22
+"FC01",5,38,61,6,4,"",784,"Wolf Creek Library 3100 Enon Rd Sw
+Split (FC01, SC01A, SC01B, SC01C, SC20)",6,1,268,30,4,0,0,0,37,7,315,38
+"FC02",5,38,61,6,4,"",784,"Aviation Community Cultural Center 3900 Aviation Cir Nw",64,4,367,23,11,0,7,0,130,7,579,34
+"FC03",5,38,61,6,4,"",784,"Sandtown Park Recreation Center 5320 Campbellton Rd
+Split (FC03, SC16A)",0,0,12,1,0,0,0,0,2,0,14,1
+"HP01",5,36,59,6,3,"LRG",975,"Hoyt Smith Center 3444 N Fulton Ave",1112,67,1572,83,221,6,116,1,516,24,3537,181
+"JC01",6,48,50,1,5,"LRG",770,"Shakerag Elementary School 10885 Rogers Circle",2089,131,482,26,128,6,1786,53,993,59,5478,275
+"JC02",6,48,50,1,5,"LRG",770,"Northview High School 10625 Parsons Road
+Split (JC02, JC06)",1098,98,311,34,93,3,720,25,478,45,2700,205
+"JC03A",6,48,25,1,5,"LRG",771,"Findley Oaks Elementary School 5880 Findley Chase Drive
+Split (JC03A, JC03B)",291,17,61,3,22,2,75,6,110,4,559,32
+"JC03B",6,48,50,1,5,"LRG",770,"Findley Oaks Elementary School 5880 Findley Chase Drive
+Split (JC03A, JC03B)",599,54,200,13,62,3,361,9,280,30,1502,109
+"JC04A",6,48,25,1,5,"LRG",771,"Messiah Lutheran Church 4765 Kimball Bridge Road
+Split (AP14, JC04A, JC04B, JC04C, JC10, JC15)",1818,132,218,11,72,2,417,18,436,36,2961,199
+"JC04B",6,48,49,1,2,"LRG",773,"Messiah Lutheran Church 4765 Kimball Bridge Road
+Split (AP14, JC04A, JC04B, JC04C, JC10, JC15)",131,11,40,1,11,1,58,1,58,7,298,21
+"JC04C",6,48,25,1,2,"LRG",1028,"Messiah Lutheran Church 4765 Kimball Bridge Road
+Split (AP14, JC04A, JC04B, JC04C, JC10, JC15)",612,55,152,5,48,1,142,8,195,20,1149,89
+"JC05",6,48,50,1,5,"LRG",770,"Abbotts Hill Elementary School 5575 Abbotts Bridge Road",1212,87,278,16,98,4,293,10,372,21,2253,138
+"JC06",6,48,50,1,5,"LRG",770,"Northview High School 10625 Parsons Road
+Split (JC02, JC06)",1309,143,328,17,72,7,512,25,453,44,2674,236
+"JC07",6,48,50,1,5,"LRG",770,"Wilson Creek Elementary Sch 6115 Wilson Rd",1840,143,476,33,121,9,1162,46,737,61,4336,292
+"JC08",6,48,50,1,5,"LRG",770,"Taylor Road Middle School 5150 Taylor Road
+Split (JC08, JC09)",1624,101,256,20,117,6,350,14,457,34,2804,175
+"JC09",6,48,50,1,5,"LRG",770,"Taylor Road Middle School 5150 Taylor Road
+Split (JC08, JC09)",1564,117,415,23,175,6,398,17,521,49,3073,212
+"JC10",6,48,50,1,5,"LRG",770,"Messiah Lutheran Church 4765 Kimball Bridge Road
+Split (AP14, JC04A, JC04B, JC04C, JC10, JC15)",1307,112,362,23,156,13,255,15,441,44,2521,207
+"JC11",6,48,50,1,5,"LRG",770,"Johns Creek High School 5575 State Bridge Rd",1984,146,319,15,85,5,373,23,487,32,3248,221
+"JC12",6,48,50,1,5,"LRG",770,"Dolvin Elementary School 10495 Jones Bridge Road
+Split (JC12, JC14)",1679,90,167,6,31,1,343,5,378,20,2598,122
+"JC13A",6,56,95,1,5,"LRG",774,"Autry Mill Middle School 4110 Old Alabama Road
+Split (JC13A, JC13B)",1534,66,101,5,39,1,202,2,313,15,2189,89
+"JC13B",6,48,50,1,5,"LRG",770,"Autry Mill Middle School 4110 Old Alabama Road
+Split (JC13A, JC13B)",203,10,4,0,1,0,15,0,42,0,265,10
+"JC14",6,56,50,1,5,"LRG",776,"Dolvin Elementary School 10495 Jones Bridge Road
+Split (JC12, JC14)",1514,123,152,2,54,2,401,15,383,37,2504,179
+"JC15",6,56,49,1,5,"LRG",777,"Messiah Lutheran Church 4765 Kimball Bridge Road
+Split (AP14, JC04A, JC04B, JC04C, JC10, JC15)",420,24,126,5,91,0,67,4,167,15,871,48
+"JC16",6,56,49,1,5,"LRG",777,"Prince Of Peace Lutheran Church 10250 Haynes Bridge Road",1719,112,200,9,109,3,166,7,378,32,2572,163
+"JC18",6,56,51,1,7,"LRG",778,"Hillside Elem School 9250 Scott Rd
+Split (JC18, RW22A)",2000,81,195,6,57,4,136,8,363,19,2751,118
+"JC19",6,56,51,1,7,"LRG",778,"Johns Creek Environmental Campus 8100 Holcomb Bridge Rd
+Split (JC19, RW21, SS01)",2521,153,476,25,137,8,201,9,590,52,3925,247
+"ML01A",6,56,47,2,2,"LRG",1030,"Milton Library 855 Mayfield Rd
+Split (ML01A, ML01B)",1740,110,104,2,63,3,279,7,385,24,2571,146
+"ML01B",6,56,47,2,1,"LRG",1031,"Milton Library 855 Mayfield Rd
+Split (ML01A, ML01B)",539,25,21,1,24,0,20,4,75,7,679,37
+"ML02A",6,21,22,2,2,"LRG",1032,"Birmingham Falls Elem 14865 Birmingham Hwy
+Split (ML02A, ML02B)",1881,97,83,2,58,3,56,2,330,32,2408,136
+"ML02B",6,21,47,2,2,"LRG",1033,"Birmingham Falls Elem 14865 Birmingham Hwy
+Split (ML02A, ML02B)",1356,43,73,1,31,1,50,0,259,22,1769,67
+"ML03",6,21,47,2,2,"LRG",1033,"Hopewell Baptist Church 15730 Hopewell Rd
+Split (ML03, ML07A, ML07B)",2926,168,149,5,71,0,97,1,570,50,3813,224
+"ML04",6,21,47,2,2,"LRG",1033,"Cogburn Woods Elem School 13080 Cogburn Rd
+Split (ML04, ML05)",2273,115,178,14,65,2,176,9,464,32,3156,172
+"ML05",6,21,47,2,2,"LRG",1033,"Cogburn Woods Elem School 13080 Cogburn Rd
+Split (ML04, ML05)",2775,220,541,26,182,12,273,3,763,63,4534,324
+"ML06A",6,21,47,2,2,"LRG",1033,"Manning Oaks Elementary School 405 Cumming St
+Split (AP07A, AP07B, ML06A)",885,137,495,42,130,16,108,6,374,53,1992,254
+"ML06B",6,21,47,2,2,"LRG",1033,"Cambridge High School 2845 Bethany Bend",1433,142,478,34,204,9,276,15,522,49,2913,249
+"ML07A",6,21,22,2,2,"LRG",1032,"Hopewell Baptist Church 15730 Hopewell Rd
+Split (ML03, ML07A, ML07B)",587,34,23,2,33,3,13,1,95,6,751,46
+"ML07B",6,21,47,2,2,"LRG",1033,"Hopewell Baptist Church 15730 Hopewell Rd
+Split (ML03, ML07A, ML07B)",1056,46,83,3,43,2,87,2,248,18,1517,71
+"MP01",6,56,47,2,1,"LRG",922,"Mountain Park Community Center 100 Lakeshore Dr",369,29,10,1,8,1,2,1,60,6,449,38
+"PA01",13,35,65,6,4,"LRG",924,"Palmetto Library
+9111 Cascade Palmetto Hwy",625,50,1610,92,96,3,15,1,399,25,2745,171
+"RW01",6,56,48,2,1,"LRG",779,"Roswell Library 115 Norcross St
+Split (RW01, RW10, RW11A)",3721,206,249,13,108,4,126,4,569,41,4773,268
+"RW02",6,56,48,2,1,"LRG",779,"Independence High School 791 Mimosa Blvd
+Split (RW02, RW03)",2816,152,235,17,106,1,125,6,576,41,3858,217
+"RW03",6,56,48,2,1,"LRG",779,"Independence High School 791 Mimosa Blvd
+Split (RW02, RW03)",2705,212,819,68,293,17,135,12,730,71,4682,380
+"RW04",6,56,51,1,7,"LRG",780,"River Eves Elementary 9000 Eves Road",1402,83,73,2,49,2,35,2,253,21,1812,110
+"RW05",6,56,48,2,1,"LRG",779,"Elkins Pointe Middle School 11290 Elkins Road",1219,99,600,42,247,9,83,14,462,60,2611,224
+"RW06",6,56,51,1,7,"LRG",780,"Saint Mary's Orthodox Church 1950 Old Alabama Rd
+Split (RW06, RW13)",1959,121,311,38,105,6,73,4,439,46,2887,215
+"RW07A",6,56,48,1,1,"LRG",781,"Mimosa Elementary School 1550 Warsaw Rd
+Split (AP03, RW07A, RW07B)",329,43,742,74,215,10,24,1,365,48,1675,176
+"RW07B",6,56,48,2,1,"LRG",779,"Mimosa Elementary School 1550 Warsaw Rd
+Split (AP03, RW07A, RW07B)",127,18,79,4,132,1,16,0,73,2,427,25
+"RW08",6,56,48,2,1,"LRG",779,"Crosspointe Community Church 77 E Crossville Rd Suite 203",1785,132,103,6,64,5,49,0,301,30,2302,173
+"RW09",6,56,47,2,1,"LRG",782,"North River Baptist Church 12090 Hardscrabble Road
+Split (RW09, RW19)",4721,277,281,7,92,6,138,3,779,50,6011,343
+"RW10",6,56,48,2,1,"LRG",779,"Roswell Library 115 Norcross St
+Split (RW01, RW10, RW11A)",2781,153,119,10,77,0,64,1,418,21,3459,185
+"RW11A",6,56,48,2,1,"LRG",779,"Roswell Library 115 Norcross St
+Split (RW01, RW10, RW11A)",1850,118,385,24,96,6,40,3,386,37,2757,188
+"RW12",6,56,47,2,1,"LRG",782,"Lebanon Church 11250 Crabapple Road
+Split (RW12, RW16)",4515,301,308,15,137,4,258,8,848,51,6066,379
+"RW13",6,56,48,1,7,"LRG",925,"Saint Mary's Orthodox Church 1950 Old Alabama Rd
+Split (RW06, RW13)",2479,173,345,25,171,17,109,10,504,57,3608,282
+"RW16",6,56,48,2,1,"LRG",779,"Lebanon Church 11250 Crabapple Road
+Split (RW12, RW16)",1354,74,171,11,49,3,63,6,281,16,1918,110
+"RW17",6,56,48,1,1,"LRG",781,"Jackson, Esther S Elem School 1400 Martin Rd",1770,152,457,37,155,12,44,2,498,56,2924,259
+"RW19",6,56,47,2,1,"LRG",782,"North River Baptist Church 12090 Hardscrabble Road
+Split (RW09, RW19)",1519,69,117,5,40,3,95,5,275,17,2046,99
+"RW20",6,56,51,1,7,"LRG",780,"East Roswell Library
+2301 Holcomb Bridge Road",1690,123,255,16,57,2,107,2,395,26,2504,169
+"RW21",6,56,51,1,7,"LRG",780,"Johns Creek Environmental Campus 8100 Holcomb Bridge Rd
+Split (JC19, RW21, SS01)",2262,134,317,30,105,5,113,5,389,25,3186,199
+"RW22A",6,56,51,1,7,"LRG",780,"Hillside Elem School 9250 Scott Rd
+Split (JC18, RW22A)",2208,230,1133,111,237,21,135,14,818,73,4531,449
+"SC01A",5,38,61,6,4,"01",991,"Wolf Creek Library 3100 Enon Rd Sw
+Split (FC01, SC01A, SC01B, SC01C, SC20)",3,0,15,1,0,0,0,0,4,0,22,1
+"SC01B",5,38,61,6,4,"02",1027,"Wolf Creek Library 3100 Enon Rd Sw
+Split (FC01, SC01A, SC01B, SC01C, SC20)",26,3,1575,46,11,0,4,0,266,16,1882,65
+"SC01C",5,38,61,6,4,"01",991,"Wolf Creek Library 3100 Enon Rd Sw
+Split (FC01, SC01A, SC01B, SC01C, SC20)",34,1,1842,42,8,1,6,0,292,12,2182,56
+"SC02",5,38,55,6,4,"01",1004,"Southwest Art Center 915 New Hope Rd",16,2,1203,29,3,0,3,0,168,2,1393,33
+"SC04",13,35,65,6,4,"04",993,"Fire Station No. 17 8675 Ridge Rd",285,14,540,23,20,1,1,1,150,6,996,45
+"SC05A",13,35,65,6,4,"03",996,"Cliftondale Community House 4645 Butner Rd
+Split (SC05A, SC05D, SC05E)",10,0,582,15,5,0,1,1,92,4,690,20
+"SC05B",13,35,62,5,4,"03",997,"Cliftondale Church 4095 Stonewall Tell Rd",88,6,2805,110,26,2,6,2,515,23,3440,143
+"SC05D",13,35,62,6,4,"04",998,"Cliftondale Community House 4645 Butner Rd
+Split (SC05A, SC05D, SC05E)",75,4,2033,60,23,1,5,0,362,16,2498,81
+"SC05E",13,35,62,6,4,"03",1014,"Cliftondale Community House 4645 Butner Rd
+Split (SC05A, SC05D, SC05E)",86,3,475,18,8,0,4,0,87,5,660,26
+"SC07A",13,35,65,6,4,"04",993,"Bear Creek Middle School 7415 Herndon Rd
+Split (SC07A, SC07C)",486,34,4557,167,92,3,21,1,901,45,6057,250
+"SC07C",13,35,65,6,4,"07",1022,"Bear Creek Middle School 7415 Herndon Rd
+Split (SC07A, SC07C)",10,0,18,1,4,1,0,0,3,0,35,2
+"SC08B",13,39,64,6,6,"05",1016,"Banneker High School 6015 Feldwood Rd Split (SC08B, SC08C, SC08D, SC08E, SC08F, SC08G, SC08H)",124,5,3155,99,36,4,14,0,469,24,3798,132
+"SC08C",13,39,62,5,6,"03",999,"Banneker High School 6015 Feldwood Rd Split (SC08B, SC08C, SC08D, SC08E, SC08F, SC08G, SC08H)",1,0,70,2,3,0,1,0,13,1,88,3
+"SC08D",13,39,63,6,6,"05",1011,"Banneker High School 6015 Feldwood Rd Split (SC08B, SC08C, SC08D, SC08E, SC08F, SC08G, SC08H)",7,1,433,18,8,0,1,0,92,2,541,21
+"SC08E",13,35,64,6,6,"05",1010,"Banneker High School 6015 Feldwood Rd Split (SC08B, SC08C, SC08D, SC08E, SC08F, SC08G, SC08H)",9,1,541,20,4,1,3,0,95,6,652,28
+"SC08F",13,39,65,5,6,"03",1001,"Banneker High School 6015 Feldwood Rd Split (SC08B, SC08C, SC08D, SC08E, SC08F, SC08G, SC08H)",24,0,614,20,1,0,1,0,100,3,740,23
+"SC08G",13,39,65,6,6,"05",1015,"Banneker High School 6015 Feldwood Rd Split (SC08B, SC08C, SC08D, SC08E, SC08F, SC08G, SC08H)",2,0,5,0,0,0,0,0,2,0,9,0
+"SC08H",13,39,65,6,6,"03",1019,"Banneker High School 6015 Feldwood Rd Split (SC08B, SC08C, SC08D, SC08E, SC08F, SC08G, SC08H)",0,1,1,0,0,0,0,0,0,1,1,2
+"SC09A",13,39,63,6,6,"05",1011,"Burdett Park Gym 2945 Burdett Rd
+Split (SC09A, SC09B, SC09C, SC27)",28,0,1464,86,18,1,21,0,223,17,1754,104
+"SC09B",13,39,64,6,6,"05",1016,"Burdett Park Gym 2945 Burdett Rd
+Split (SC09A, SC09B, SC09C, SC27)",32,3,1533,53,15,0,7,0,216,7,1803,63
+"SC09C",13,39,63,6,6,"06",1012,"Burdett Park Gym 2945 Burdett Rd
+Split (SC09A, SC09B, SC09C, SC27)",32,1,1471,46,15,1,4,0,212,12,1734,60
+"SC10",13,39,63,6,6,"05",1011,"Tracey Wyatt Recreation Center 2300 Godby Rd
+Split (CP081, CP083, CP084, CP08A, SC10)",48,3,1533,106,21,2,2,0,187,20,1791,131
+"SC11A",13,39,63,6,6,"06",1012,"Creel Park
+2775 Creel Road
+Split (SC11A, SC11B)",27,1,1282,47,6,0,2,0,187,5,1504,53
+"SC11B",13,39,64,6,6,"06",1013,"Creel Park
+2775 Creel Road
+Split (SC11A, SC11B)",25,2,1335,43,13,1,3,0,188,3,1564,49
+"SC13",13,35,65,6,4,"04",993,"Langston Hughes High School 7510 Hall Road",140,5,2138,92,33,3,4,0,380,30,2695,130
+"SC14A",5,38,61,6,4,"01",991,"Southwest Regional Library 3665 Cascade Rd
+Split (SC14A, SC30A, SC30B)",19,2,824,57,9,0,2,1,125,8,979,68
+"SC15",13,35,62,6,4,"02",992,"The Enon Church 3550 Enon Rd",184,20,5392,236,66,5,21,0,911,55,6574,316
+"SC16A",5,38,61,6,4,"01",991,"Sandtown Park Recreation Center 5320 Campbellton Rd
+Split (FC03, SC16A)",81,4,4154,173,23,3,14,1,615,36,4887,217
+"SC17A",13,39,62,5,6,"03",999,"Welcome All Park, Community House 4255 Will Lee Road Split (SC17A, SC17B, SC17C, SC18A, SC18B, SC18C)",1,0,47,6,0,0,0,0,4,1,52,7
+"SC17B",13,39,65,5,6,"03",1001,"Welcome All Park, Community House 4255 Will Lee Road Split (SC17A, SC17B, SC17C, SC18A, SC18B, SC18C)",7,0,2,0,0,0,0,0,2,1,11,1
+"SC17C",13,39,64,5,6,"03",1002,"Welcome All Park, Community House 4255 Will Lee Road Split (SC17A, SC17B, SC17C, SC18A, SC18B, SC18C)",31,5,1009,23,8,0,3,0,126,8,1177,36
+"SC18A",5,35,61,5,4,"02",1003,"Welcome All Park, Community House 4255 Will Lee Road Split (SC17A, SC17B, SC17C, SC18A, SC18B, SC18C)",12,3,444,27,10,0,1,0,78,7,545,37
+"SC18B",13,35,62,5,4,"02",994,"Welcome All Park, Community House 4255 Will Lee Road Split (SC17A, SC17B, SC17C, SC18A, SC18B, SC18C)",28,1,643,8,7,1,3,0,108,3,789,13
+"SC18C",13,35,62,5,4,"03",997,"Welcome All Park, Community House 4255 Will Lee Road Split (SC17A, SC17B, SC17C, SC18A, SC18B, SC18C)",61,3,1627,36,12,0,3,0,245,4,1948,43
+"SC19A",13,39,62,5,6,"03",999,"Solid Rock Pentecostal Church 4707 Washington Rd
+Split (SC19A, SC19B)",7,0,164,3,1,0,0,0,31,1,203,4
+"SC19B",13,39,64,5,6,"03",1002,"Solid Rock Pentecostal Church 4707 Washington Rd
+Split (SC19A, SC19B)",45,0,1208,36,22,1,2,0,179,11,1456,48
+"SC20",13,35,62,5,4,"02",994,"Wolf Creek Library 3100 Enon Rd Sw
+Split (FC01, SC01A, SC01B, SC01C, SC20)",58,5,1950,80,15,1,7,0,329,16,2359,102
+"SC211",13,35,64,6,6,"07",1005,"Christian City Welcome Center 7345 Red Oak Rd
+Split (SC211, SC212, UC031, UC032)",53,2,1287,55,19,1,3,0,225,16,1587,74
+"SC212",13,35,64,6,4,"07",1006,"Christian City Welcome Center 7345 Red Oak Rd
+Split (SC211, SC212, UC031, UC032)",169,17,3065,152,98,2,16,2,566,41,3914,214
+"SC23A",13,39,63,6,6,"06",1012,"New Life Presbyterian Church 6600 Old National Hwy
+Split (SC23A, SC23B, SC23C)",58,5,2966,118,34,4,9,0,436,33,3503,160
+"SC23B",13,39,64,6,6,"07",1008,"New Life Presbyterian Church 6600 Old National Hwy
+Split (SC23A, SC23B, SC23C)",33,1,403,15,14,1,0,0,63,0,513,17
+"SC23C",13,39,63,6,6,"07",1007,"New Life Presbyterian Church 6600 Old National Hwy
+Split (SC23A, SC23B, SC23C)",43,3,2045,70,38,0,11,0,333,9,2470,82
+"SC27",13,39,63,6,6,"06",1012,"Burdett Park Gym 2945 Burdett Rd
+Split (SC09A, SC09B, SC09C, SC27)",51,0,1928,75,16,0,4,1,260,13,2259,89
+"SC29A",13,35,64,6,6,"07",1005,"S L Lewis Elementary School 6201 Connell Road",50,9,2543,83,35,0,3,1,373,13,3004,106
+"SC30A",5,38,55,6,4,"01",1004,"Southwest Regional Library 3665 Cascade Rd
+Split (SC14A, SC30A, SC30B)",4,0,113,4,0,0,3,0,19,3,139,7
+"SC30B",5,38,55,6,3,"01",995,"Southwest Regional Library 3665 Cascade Rd
+Split (SC14A, SC30A, SC30B)",23,0,873,59,1,0,0,0,138,10,1035,69
+"SS01",6,40,51,1,7,"01",898,"Johns Creek Environmental Campus 8100 Holcomb Bridge Rd
+Split (JC19, RW21, SS01)",3509,163,263,23,98,8,110,7,623,39,4603,240
+"SS02A",6,56,52,2,3,"03",899,"North Annex 7741 Roswell Rd
+Split (SS02A, SS02B, SS19A, SS19B)",767,56,160,17,30,3,26,0,157,20,1140,96
+"SS02B",6,32,52,2,3,"03",900,"North Annex 7741 Roswell Rd
+Split (SS02A, SS02B, SS19A, SS19B)",606,42,340,29,68,4,34,1,229,20,1277,96
+"SS03",6,32,52,2,3,"03",900,"Lake Forest Elementary School 5920 Sandy Springs Cir",980,66,155,7,59,2,51,2,264,22,1509,99
+"SS04",6,32,52,2,7,"04",901,"Woodland Elem. School 1130 Spalding Dr
+Split (SS04, SS20, SS26)",1792,142,710,60,150,7,183,17,605,89,3440,315
+"SS05",6,32,52,3,3,"03",902,"Abernathy Arts Center 254 Johnson Ferry Rd
+Split (SS05, SS18A, SS18B)",1442,55,60,0,29,1,30,0,222,15,1783,71
+"SS06",6,6,52,3,3,"03",903,"Sandy Springs Library
+395 Mount Vernon Hwy Ne
+Split (SS06, SS31)",1238,39,61,6,30,1,35,1,207,14,1571,61
+"SS07A",6,6,52,2,3,"04",904,"Hammond Park Gym 705 Hammond Drive Ne Split (SS07A, SS07B, SS07C, SS08A, SS08B, SS08C, SS08D)",859,48,39,3,9,1,37,0,164,8,1108,60
+"SS07B",6,6,52,3,3,"03",903,"Hammond Park Gym 705 Hammond Drive Ne Split (SS07A, SS07B, SS07C, SS08A, SS08B, SS08C, SS08D)",469,35,112,5,16,0,31,1,109,7,737,48
+"SS07C",6,6,80,3,3,"05",905,"Hammond Park Gym 705 Hammond Drive Ne Split (SS07A, SS07B, SS07C, SS08A, SS08B, SS08C, SS08D)",551,43,58,3,33,0,17,0,123,15,782,61
+"SS08A",6,6,80,3,3,"05",905,"Hammond Park Gym 705 Hammond Drive Ne Split (SS07A, SS07B, SS07C, SS08A, SS08B, SS08C, SS08D)",761,88,401,30,80,6,105,5,245,33,1592,162
+"SS08B",6,6,52,3,3,"03",903,"Hammond Park Gym 705 Hammond Drive Ne Split (SS07A, SS07B, SS07C, SS08A, SS08B, SS08C, SS08D)",497,28,47,1,13,1,15,1,74,9,646,40
+"SS08C",6,6,52,2,3,"04",904,"Hammond Park Gym 705 Hammond Drive Ne Split (SS07A, SS07B, SS07C, SS08A, SS08B, SS08C, SS08D)",337,23,121,9,32,0,53,8,118,8,661,48
+"SS08D",6,6,80,3,3,"03",906,"Hammond Park Gym 705 Hammond Drive Ne Split (SS07A, SS07B, SS07C, SS08A, SS08B, SS08C, SS08D)",787,93,321,42,64,7,77,10,245,31,1494,183
+"SS09A",11,32,52,3,3,"06",907,"Mt Vernon Baptist Church 850 Mt Vernon Hwy Nw
+Split (SS09A, SS09B)",2317,104,198,15,56,7,76,1,420,21,3067,148
+"SS09B",11,6,52,3,3,"06",908,"Mt Vernon Baptist Church 850 Mt Vernon Hwy Nw
+Split (SS09A, SS09B)",2682,110,109,2,52,0,106,8,458,23,3407,143
+"SS11A",6,6,52,3,3,"05",909,"Church Of The Redeemer 5185 Peachtree Dunwoody Rd
+Split (SS11A, SS11B, SS11C, SS11D, SS13A, SS13B)",2109,202,740,93,211,21,122,16,575,88,3757,420
+"SS11B",6,6,52,3,3,"06",910,"Church Of The Redeemer 5185 Peachtree Dunwoody Rd
+Split (SS11A, SS11B, SS11C, SS11D, SS13A, SS13B)",629,62,185,25,217,10,41,5,218,32,1290,134
+"SS11C",6,6,80,3,3,"06",911,"Church Of The Redeemer 5185 Peachtree Dunwoody Rd
+Split (SS11A, SS11B, SS11C, SS11D, SS13A, SS13B)",96,7,93,11,46,1,10,0,75,7,320,26
+"SS11D",11,6,52,3,3,"06",908,"Church Of The Redeemer 5185 Peachtree Dunwoody Rd
+Split (SS11A, SS11B, SS11C, SS11D, SS13A, SS13B)",274,25,15,1,9,0,10,1,61,3,369,30
+"SS12",6,6,80,3,3,"05",905,"Ridgeview Middle School 5340 South Trimble Rd
+Split (SS12, SS14)",1863,131,238,9,64,1,100,5,405,48,2670,194
+"SS13A",11,6,52,3,3,"05",912,"Church Of The Redeemer 5185 Peachtree Dunwoody Rd
+Split (SS11A, SS11B, SS11C, SS11D, SS13A, SS13B)",1236,97,245,27,105,6,46,5,282,30,1914,165
+"SS13B",11,6,52,3,3,"06",908,"Church Of The Redeemer 5185 Peachtree Dunwoody Rd
+Split (SS11A, SS11B, SS11C, SS11D, SS13A, SS13B)",647,58,173,15,60,2,33,3,173,23,1086,101
+"SS14",11,6,80,3,3,"05",913,"Ridgeview Middle School 5340 South Trimble Rd
+Split (SS12, SS14)",1087,53,28,0,30,0,19,0,168,5,1332,58
+"SS15A",6,56,51,2,7,"02",914,"Sandy Springs Middle School 8750 Pride Place
+Split (SS15A, SS15B, SS22)",656,92,1242,121,160,12,36,13,503,63,2597,301
+"SS15B",6,56,51,2,7,"01",915,"Sandy Springs Middle School 8750 Pride Place
+Split (SS15A, SS15B, SS22)",818,95,394,42,71,5,32,2,312,45,1627,189
+"SS16",6,32,52,3,3,"03",902,"Heard Ferry Elementary School 6151 Powers Ferry Rd NW",1674,79,67,0,22,0,32,0,225,12,2020,91
+"SS17",6,40,51,1,7,"01",898,"Temple Emanuel 1580 Spalding Dr",2199,148,594,72,120,8,72,5,518,67,3503,300
+"SS18A",6,32,52,3,3,"03",902,"Abernathy Arts Center 254 Johnson Ferry Rd
+Split (SS05, SS18A, SS18B)",467,31,25,2,9,2,28,0,94,7,623,42
+"SS18B",6,32,52,3,7,"02",916,"Abernathy Arts Center 254 Johnson Ferry Rd
+Split (SS05, SS18A, SS18B)",179,10,8,0,6,2,11,0,24,2,228,14
+"SS19A",6,56,45,2,7,"02",917,"North Annex 7741 Roswell Rd
+Split (SS02A, SS02B, SS19A, SS19B)",1230,162,1110,164,114,15,83,10,543,73,3080,424
+"SS19B",6,56,52,2,7,"02",918,"North Annex 7741 Roswell Rd
+Split (SS02A, SS02B, SS19A, SS19B)",987,80,617,69,99,3,63,4,385,55,2151,211
+"SS20",6,56,51,2,7,"01",915,"Woodland Elem. School 1130 Spalding Dr
+Split (SS04, SS20, SS26)",933,74,678,63,115,12,84,9,413,52,2223,210
+"SS22",6,56,45,2,7,"02",917,"Sandy Springs Middle School 8750 Pride Place
+Split (SS15A, SS15B, SS22)",1411,101,649,70,91,4,71,1,459,54,2681,230
+"SS26",6,56,51,2,7,"04",919,"Woodland Elem. School 1130 Spalding Dr
+Split (SS04, SS20, SS26)",1137,138,1437,224,194,15,97,8,696,126,3561,511
+"SS29A",6,32,80,2,3,"04",920,"1st Baptist Ch. Sandy Springs 650 Mt Vernon Hwy",1617,158,402,36,95,3,127,13,421,61,2662,271
+"SS31",6,6,52,3,3,"03",903,"Sandy Springs Library
+395 Mount Vernon Hwy Ne
+Split (SS06, SS31)",1005,46,250,12,31,1,64,3,223,17,1573,79
+"UC01A",13,35,65,6,6,"LRG",802,"Feldwood Elem School 5790 Feldwood Rd
+Split (UC01A, UC01B, UC01D, UC01E)",114,11,3246,174,45,2,17,0,553,28,3975,215
+"UC01B",13,39,63,6,6,"LRG",923,"Feldwood Elem School 5790 Feldwood Rd
+Split (UC01A, UC01B, UC01D, UC01E)",5,3,345,30,2,0,0,0,55,8,407,41
+"UC01D",13,39,65,5,6,"LRG",945,"Feldwood Elem School 5790 Feldwood Rd
+Split (UC01A, UC01B, UC01D, UC01E)",4,0,0,0,0,0,0,0,2,1,6,1
+"UC01E",13,39,62,5,6,"LRG",968,"Feldwood Elem School 5790 Feldwood Rd
+Split (UC01A, UC01B, UC01D, UC01E)",5,0,334,6,20,0,2,0,60,6,421,12
+"UC02A",13,35,65,6,4,"LRG",804,"Etris Community Center 5285 Lakeside Dr
+Split (UC02A, UC02B)",303,16,6759,300,205,3,34,0,1181,56,8482,375
+"UC02B",13,35,62,6,4,"LRG",805,"Etris Community Center 5285 Lakeside Dr
+Split (UC02A, UC02B)",4,0,29,0,0,0,0,0,1,0,34,0
+"UC031",13,35,64,6,6,"LRG",806,"Christian City Welcome Center 7345 Red Oak Rd
+Split (SC211, SC212, UC031, UC032)",342,29,1791,118,22,2,16,0,357,33,2528,182
+"UC032",13,35,64,6,4,"LRG",807,"Christian City Welcome Center 7345 Red Oak Rd
+Split (SC211, SC212, UC031, UC032)",50,2,267,9,3,0,5,0,41,1,366,12
