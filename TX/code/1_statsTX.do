@@ -5,7 +5,7 @@ Kevin DeLuca
 
 MEDSL - Healthy Elections
 Merge data, do some basic plots, export data to be plotted MEDSL style
-last updated: 6/17/20
+last updated: 6/30/20
 */
 /////////////////////////////////////
 
@@ -83,7 +83,7 @@ tab candidate, summ(voteshare)
 
 *covid cases in TX over time
 
-import delimited "/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/us-counties-nyt.csv", clear
+import delimited "/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/general/outside_data/us-counties-nyt.csv", clear
 keep if state=="Texas"
 
 tab county cases if date=="2020-03-03"
@@ -97,7 +97,8 @@ graph twoway (scatter cases date2 if date3<=21977, c(l)), title("Confirmed COVID
 graph export "$mainPath/code/results/covidcasesTX.pdf", replace
 graph export "$mainPath/code/results/covidcasesTX.png", replace
 //graph twoway (scatter cases date2 if date3<21977, c(l)) (scatter deaths date2 if date3<21977, c(l)), legend(on label(1 "Cases") label(2 "Deaths")) title("Confirmed COVID19 Cases and Death, Texas") xtitle("Date") ylabel(0(20)100)
-
+*export as csv for R code:
+export delimited "$mainPath/code/results/csvs/covidcasesTX.csv", replace
 
 
 
@@ -126,10 +127,10 @@ drop temp
 tab county
 
 sort party county mode date
-collapse (sum) n_earlyvotes n_early_cumulative, by(daysbefore year party mode)
+collapse (sum) n_early_cumulative, by(daysbefore year party mode)
 sort party mode daysbefore year
 
-*some graphs, will recreate in R w/ correct style
+*some graphs, will recreate in R w/ correct style later
 
 *mail in early votes
 graph twoway (scatter n_early_cumulative daysbefore if mode=="MAIL-IN"&year==2020&party=="democratic", c(l)) (scatter n_early_cumulative daysbefore if mode=="MAIL-IN"&year==2016&party=="democratic", c(l)), title("Democratic") subtitle("(Select Counties)") ytitle("Cumulative Mail-In Votes") xtitle("Days Before Early Voting Ends") legend(on label(1 "2020") label(2 "2016")) name(demcomparison)
@@ -149,8 +150,8 @@ graph twoway (scatter n_early_cumulative daysbefore if daysbefore>-11&mode=="IN-
 graph combine demcomparison2 repcomparison2, ycomm name(combinedcomparisoninperson) title("Texas Presidential Primaries")
 graph export "$mainPath/code/results/combinedcomparisoninperson.pdf", replace
 graph export "$mainPath/code/results/combinedcomparisoninperson.png", replace
-
-export delimited "$mainPath/code/results/compareto2016bymode.csv", replace
+*export as csv for R code:
+export delimited "$mainPath/code/results/csvs/combinedcomparisonmode.csv", replace
 
 
 *all early votes (mail in + in person)
@@ -163,8 +164,9 @@ graph twoway (scatter n_early_cumulative daysbefore if daysbefore>-11&year==2020
 graph combine demcomparison3 repcomparison3, ycomm name(combinedcomparisonall) title("Texas Presidential Primaries") subtitle("Early In-Person and Mail-In Votes")
 graph export "$mainPath/code/results/combinedcomparisonall.pdf", replace
 graph export "$mainPath/code/results/combinedcomparisonall.png", replace
+*export as csv for R code:
+export delimited "$mainPath/code/results/csvs/combinedcomparisonall.csv", replace
 
-export delimited "$mainPath/code/results/compareto2016all.csv", replace
 restore
 
 
@@ -177,7 +179,7 @@ preserve
 *early votes, by party and over time, 2020 only
 keep if year==2020
 
-collapse (sum) n_earlyvotes n_early_cumulative, by(daysbefore year party mode)
+collapse (sum) n_early_cumulative, by(daysbefore year party mode)
 
 graph twoway (scatter n_early_cumulative daysbefore if mode=="MAIL-IN"&party=="democratic", c(l)) (scatter n_early_cumulative daysbefore if mode=="MAIL-IN"&party=="republican", c(l)), title("Mail-In Voters in TX") subtitle("2020 Presidential Primaries") ytitle("Cumulative Mail-In Votes") xtitle("Days Before Early Voting Ends") legend(on label(1 "Democrat") label(2 "Republican")) ylabel(0(25000)125000) name(partisan2020mailin)
 graph export "$mainPath/code/results/partisan2020mailin.pdf", replace
@@ -186,14 +188,16 @@ graph export "$mainPath/code/results/partisan2020mailin.png", replace
 graph twoway (scatter n_early_cumulative daysbefore if daysbefore>-11&mode=="IN-PERSON"&party=="democratic", c(l)) (scatter n_early_cumulative daysbefore if daysbefore>-11&mode=="IN-PERSON"&party=="republican", c(l)), title("Early In-Person Voters in TX") subtitle("2020 Presidential Primaries") ytitle("Cumulative Early In-Person Votes") xtitle("Days Before Early Voting Ends") legend(on label(1 "Democrat") label(2 "Republican")) name(partisan2020inperson)
 graph export "$mainPath/code/results/partisan2020inperson.pdf", replace
 graph export "$mainPath/code/results/partisan2020inperson.png", replace
-
-export delimited "$mainPath/code/results/partisan2020.csv", replace
+*export as csv for R code:
+export delimited "$mainPath/code/results/csvs/partisan2020.csv", replace
 
 collapse (sum) n_early_cumulative, by(daysbefore year party)
 
 graph twoway (scatter n_early_cumulative daysbefore if party=="democratic", c(l)) (scatter n_early_cumulative daysbefore if party=="republican", c(l)), title("All Early Votes in TX") subtitle("2020 Presidential Primaries, All Counties") ytitle("Cumulative Early Votes") xtitle("Days Before Early Voting Ends") legend(on label(1 "Democrat") label(2 "Republican")) name(partisan2020all)
 graph export "$mainPath/code/results/partisan2020all.pdf", replace
 graph export "$mainPath/code/results/partisan2020all.png", replace
+*export as csv for R code:
+export delimited "$mainPath/code/results/csvs/partisan2020all.csv", replace
 
 restore
 
