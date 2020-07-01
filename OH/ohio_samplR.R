@@ -101,3 +101,17 @@ addr_df_temp <- SpatialPointsDataFrame(coords = temp_coor, data = addr_df,
 cbgs <- readOGR(wd, "CB2010") #the general file name 
 addr_df_temp$tract_fips <- over(addr_df_temp,cbg2010)$id
 
+####read in the big three county records 
+setwd("F:/MEDSL/healthy_elections/OH") # replace as necessary 
+big3 <- read.csv("bigthreecounties.csv")
+big3 <- big3[2:3]
+foreign::write.dbf(big3, "big3_addr0h.dbf")
+View(big3)
+#####reading in the data for the big 3 geocoded 
+geocoded_big3 <- read.csv("F:/voterfile/ohio_big3_addrs.csv")
+View(geocoded_big3)
+geocoded_big3$off <- 0
+geocoded_big3$off[geocoded_big3$X==0] <- 1
+sum(geocoded_big3$off)/nrow(geocoded_big3)# 3% are off 
+write.csv(geocoded_big3, "ohio_big3_addrs.csv",row.names = F)
+length(which(geocoded_big3$X==0))
