@@ -101,3 +101,9 @@ addr_df_temp <- SpatialPointsDataFrame(coords = temp_coor, data = addr_df,
 cbgs <- readOGR(wd, "CB2010") #the general file name 
 addr_df_temp$tract_fips <- over(addr_df_temp,cbg2010)$id
 
+####read in the big three county records 
+setwd("F:/MEDSL/healthy_elections/OH") # replace as necessary 
+big3 <- read.csv("bigthreecounties.csv")
+big3 <- big3[2:3]
+foreign::write.dbf(big3, "big3_addr0h.dbf")
+View(big3)
