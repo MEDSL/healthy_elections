@@ -117,7 +117,9 @@
           <li>Estimate how many voters wait too long</li>
         </ul>
         <br>
-        See below for detailed assumptions and instructions
+        <button class = "btn btn-primary btn-xs" onClick="document.getElementById('instructions').scrollIntoView();">
+    		Detailed Instructions and Tutorials
+    	</button>
       </div>
       <div class ="col-12 col-sm-8 text-center">
         <h3 class="image-title">Example Maximum Queue Size Calculation</h3>
@@ -257,9 +259,9 @@
     </div> <!--Column Div  -->
   </div><!--Row Div  -->
   <div class="row">
-  	<div class="col-sm-11 col-11 col-md-11">
+  	<div class="col-sm-11 col-11 col-md-11" id="instructions">
   		<br>
-      	<h2 align="left" class="section-title-noline">Detailed Directions</h2>
+      	<h2 align="left" class="section-title-noline">Detailed Directions and Tutorials</h2>
 	    <h3>When to use this tool:</h3>
 	    <p>This tool is designed for election officials hoping to understand line lengths and wait times with simple social distancing measures in place. This tool is meant to answer questions like: </p>
 	    <ul>
@@ -287,6 +289,19 @@
 	    	<li>Target Wait Time: The tool can report a fraction of people who wait longer than a set target. Use this input to set that target. By default it is 30 minutes.</li>
 	    </ul>
   	</div>
+  	<div class="row">
+  		<h2>Video Tutorials</h2>
+  		<div class="col-1"></div>
+  		<div class="col-11">
+  			<br>
+  			<h3>The Web-Based tool</h3>
+  			<iframe width="100%" class = "myIframe" src="https://www.youtube.com/embed/lEKB5dv0Q24" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  			<br><br><br>
+  			<h3>The Excel-Based tool</h3>
+  			<iframe width="100%" class = "myIframe"src="https://www.youtube.com/embed/FsgKjr0pjEQ" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  		</div>
+  	</div>
+
   </div>
 
 
@@ -386,6 +401,16 @@
 <script src="./HE - Election Toolkit_files/graves.js" type="text/javascript"></script>
 <script src="./HE - Election Toolkit_files/tableMaker.js" type="text/javascript"></script>
 <script type="text/javascript" src="./HE - Election Toolkit_files/smoothscroll.js"></script>
+
+<script type="text/javascript" language="javascript"> 
+	$('.myIframe').css('width', $(window).width()*0.6+'px');
+	$('.myIframe').css('height', $(window).width()*0.6*0.56+'px');
+
+	function scrollFunction() {
+		document.getElementById('instructions').scrollIntoView();
+		return true;
+	}
+</script>
 
 <script>
   var table;
