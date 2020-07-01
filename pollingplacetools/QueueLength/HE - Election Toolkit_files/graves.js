@@ -11,6 +11,7 @@ function graves( lambda, tau, k, capacity, staff, stations, Brate, maxTime) {
 	// Y : percentage
 	// Qmax : finite waiting room size
 	// Brate : balking rate with full waiting room
+	// maxTime: target wait time in minutes
 
 	var validInputs = true;
 	var stable = true;
@@ -217,7 +218,7 @@ function graves( lambda, tau, k, capacity, staff, stations, Brate, maxTime) {
 			expectedQLenOut += inSystemProbability[i] * outside[i];
 			effArrRate += inSystemProbability[i] * arrRate[i];
 			probBlock += inSystemProbability[i] * queueFullFlag[i];
-			shortWaitProb += inSystemProbability[i] * shortWaitFlag[i];
+			//shortWaitProb += inSystemProbability[i] * shortWaitFlag[i];
 
 		}
 
@@ -227,6 +228,9 @@ function graves( lambda, tau, k, capacity, staff, stations, Brate, maxTime) {
 
 		// probability of no wait
 		var probNoWait = probQisZero.reduce((a, b) => a + b, 0)
+
+		// probability of wait shorter than target
+		shortWaitProb = 1-erlang(lambda, tau, k)/ Math.exp((k/tau-lambda)*maxTime/60);
 
 		//Round answers
 		aveW = aveW.toFixed(1);
