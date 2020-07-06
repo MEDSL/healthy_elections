@@ -1,3 +1,31 @@
+### maps######
+
+
+library(tidyverse)
+library(osrm)
+library(sf)
+library(jsonlite)
+library(httr)
+
+
+maine_shape<- st_read("/Users/jessesmac/Downloads/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved-shp/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved.shp")
+map <- plot(map)
+shapefile_df <- fortify(maine_shape)
+
+map<- ggplot(data = shapefile_df) +
+  geom_sf()# +ggtitle("Rejected Absentee Votes by Town")
+map + theme_minimal() + ggtitle("Maine")  +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), 
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+
+maine_shape$TOWN<- toupper(maine_shape$TOWN)
+######################
+
 
 install.packages("gtools")
 library(gtools)
@@ -113,5 +141,161 @@ all_counted[is.na(all_counted)] <- 0
 ex_plot<- ggplot(all_counted, aes(x=cast18, y=cast20)) + geom_point() + xlim(0, 4500) + ylim(0,4500) +  theme_minimal() 
 ex_plot <- ex_plot  +  ylab("2020 Absentee Votes") + xlab("2018 Absentee Votes") + ylab("2018 Absentee Votes")+theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
 ex_plot+ggtitle("Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
-  theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.y=element_blank())
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20))
 
+
+
+twenty_uncounted<- p_20 %>% 
+  filter(ACC.OR.REJ == "REJ") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(rejected20 = sum(cast))
+
+
+eighteen_uncounted<- p_18 %>% 
+  filter(ACC.OR.REJ == "REJ") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(rejected18 = sum(cast))
+
+all_counted2<- 
+  merge(twenty_uncounted, eighteen_uncounted, by = "MUNICIPALITY", all = T)
+all_counted<- merge(all_counted, all_counted2, by = "MUNICIPALITY", all = T)
+all_counted[is.na(all_counted)] <- 0
+
+View(all_counted)
+ex_plot2<- ggplot(all_counted, aes(x=rejected18, y=rejected20)) + geom_point() + xlim(0, 100) + ylim(0,500) +  theme_minimal() 
+ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
+ex_plot2 +ggtitle("Rejected Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20))
+
+#### towns that were lower in 2020 than 2018:
+all_counted$MUNICIPALITY[all_counted$rejected20 < all_counted$rejected18 ]
+
+
+### where fewwer were cast in 2018 than 2020
+all_counted$MUNICIPALITY[all_counted$cast20 < all_counted$cast18]
+
+#######
+
+
+###### maine_democrat: 
+
+
+dem_18<- p_18[p_18$P == "D",]
+dem_20<- p_20[p_20$P == "D",]
+
+
+dem_20$cast <- 1
+
+dem_18$cast <- 1
+
+twenty_counted_dem<- dem_20 %>% 
+  filter(ACC.OR.REJ == "ACC") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(cast20_dem = sum(cast))
+View(eighteen_counted)
+
+
+eighteen_counted_dem<- dem_18 %>% 
+  filter(ACC.OR.REJ == "ACC") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(cast18_dem = sum(cast))
+
+all_counted_dem<- 
+  merge(twenty_counted_dem, eighteen_counted_dem, by = "MUNICIPALITY", all = T)
+
+twenty_uncounted_dem<- dem_20 %>% 
+  filter(ACC.OR.REJ == "REJ") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(rejected20_dem = sum(cast))
+
+
+eighteen_uncounted_dem<- dem_18 %>% 
+  filter(ACC.OR.REJ == "REJ") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(rejected18_dem = sum(cast))
+
+all_counted2_dem<- 
+  merge(twenty_uncounted_dem, eighteen_uncounted_dem, by = "MUNICIPALITY", all = T)
+all_counted_dem<- merge(all_counted_dem, all_counted2_dem, by = "MUNICIPALITY", all = T)
+all_counted_dem[is.na(all_counted_dem)] <- 0
+View(all_counted_dem)
+
+
+all_counted<- merge(all_counted_dem, all_counted, by = "MUNICIPALITY", all = T)
+all_counted[is.na(all_counted)] <- 0
+View(all_counted)
+
+#### plot for just dems; cast
+ex_plot2<- ggplot(all_counted, aes(x=rejected18_dem, y=rejected20_dem)) + geom_point()  + theme_minimal() 
+ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
+ex_plot2 +geom_point(aes( size=cast20))+ggtitle("Rejected Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20))
+
+
+View(all_counted)
+##### this works. 
+
+#### percents
+all_counted$perc_rejected18<- all_counted$rejected18/all_counted$cast18
+all_counted$perc_rejected20<- all_counted$rejected20/all_counted$cast20
+
+all_counted$perc_rejected18[is.nan(all_counted$perc_rejected18)] <- 0
+all_counted$perc_rejected20[is.nan(all_counted$perc_rejected20)] <- 0
+
+
+all_counted$perc_rejected20[which(!is.finite(all_counted$perc_rejected20))] <- 0
+all_counted$perc_rejected18[which(!is.finite(all_counted$perc_rejected18))] <- 0
+
+
+ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + ylim(0,1) +theme_minimal() 
+ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
+ex_plot2<- ex_plot2 +geom_point(aes(size=cast20))+ggtitle("Percent Rejected Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20))+ guides(size=FALSE,alpha=FALSE) + labs(color="Municipality")
+ex_plot2
+
+##### make mapes
+
+ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + geom_point()  + ylim(0,1) + theme_minimal() 
+ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Percent") + xlab("2018 Rejected Percent") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
+ex_plot2 +geom_point(aes( size=cast20))+ggtitle("Rejected Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20)) + guides(size=FALSE,alpha=FALSE) + labs(size= "Votes Cast")
+
+colnames(all_counted)
+
+a<- all_counted[order(-all_counted$cast20),]
+
+
+a<- a[c(1:10),]
+
+write.csv(a, "top_tentowns.csv")
+
+
+#### why ballots were rejected 
+
+View(p_20)
+summary(p_20$REJRSN)
+
+g<- p_20 %>%
+  group_by(MUNICIPALITY) %>% 
+  count(REJRSN, sort = TRUE) 
+
+g<- g[g$REJRSN == "BND",]
+g<- g[order(-g$n),]
+View(g)
+
+write.csv(g[c(1:10),], "g.csv")
+
+
+wide_DF <- g %>% spread(key=REJRSN, value=n)
+wide_DF[is.na(wide_DF)]<- 0
+
+ncol(wide_DF)
+
+
+wide_df<- merge(wide_DF, all_counted, by = "MUNICIPALITY")
+View(wide_df)
+colnames(wide_df)
+wide_df<- wide_df %>%  select(MUNICIPALITY, BND, ANC, BRU, DBR, ENS, NEN, OTH, RAD, SBV, SNM, VIP, WNC, rejected20 )
+wide_df<- wide_df[order(-wide_df$rejected20),]
+wide_df<- wide_df[c(1:10),]
+write.csv(wide_df, "wide.csv")
