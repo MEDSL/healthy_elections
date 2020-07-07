@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://live-healthy-elections.pantheonsite.io/ -->
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="js">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <link rel="shortlink" href="http://live-healthy-elections.pantheonsite.io/">
+  <link rel="canonical" href="http://live-healthy-elections.pantheonsite.io/">
+  <meta name="Generator" content="Drupal 8 (https://www.drupal.org)">
+  <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="ie=edge, chrome=1" http-equiv="x-ua-compatible">
+  <meta http-equiv="ImageToolbar" content="false">
+  <link rel="shortcut icon" href="http://live-healthy-elections.pantheonsite.io/profiles/contrib/lightning/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="revision" href="http://live-healthy-elections.pantheonsite.io/home">
+
+  <title>Stanford-MIT Healthy Elections Project</title>
+  <link rel="stylesheet" media="all" href="./HE - Election Toolkit_files/Pantheon_files/css_9m8-tA3IQf8ThlLQYTTZUyEweCvyR908Tg0XCbKYOfY.css">
+  <link rel="stylesheet" media="all" href="./HE - Election Toolkit_files/Pantheon_files/css_lQ4D06JPnsTCqcAl-sJ26Lghvgn02xjMJbRUamKZvBQ.css">
+  <link rel="stylesheet" media="all" href="./HE - Election Toolkit_files/Pantheon_files/css_lQ4D06JPnsTCqcAl-sJ26Lghvgn02xjMJbRUamKZvBQ.css">
+
+  <script async="" src="./HE - Election Toolkit_files/analytics.js"></script>
+  <script src="https://kit.fontawesome.com/6364ea47c0.js" crossorigin="anonymous"></script>
+  <script>
+    function settablemode( mode){
+      var choice = mode.options[mode.selectedIndex].value;
+      console.log(mode);
+      console.log(choice);
+      if(choice==="checkin"){
+        $("#PollingData th").eq(5).text("Number of check-in stations");
+        $("#PollingData th").eq(6).text("Average time for check-in");
+        //$("#resultTable th").eq(3).text("Number of Check-In Stations required to meet the service level");
+      } else if(choice=="voting") {
+        $("#PollingData th").eq(5).text("Number of voting stations");
+        $("#PollingData th").eq(6).text("Average time for voting");
+        //$("#resultTable th").eq(3).text("Number of voting stations required to meet the service level");
+      } else {
+        $("#PollingData th").eq(5).text("Number of ballot scanners");
+        $("#PollingData th").eq(6).text("Average time for ballot scanning");
+      }
+    }
+  </script>
+
+  <script type="text/javascript">
+    function clearTable() {
+      $("#resultTable tbody tr").remove();
+      $('#resultTable > tbody:last-child').append('<tr class="noDataLine"><td colspan="10" class="font-italic text-center">Table has no data</td></tr>');
+    }
+
+    function addDataToTable() {
+      $("#resultTable tbody tr.noDataLine").hide();
+      var $element = $("#resultTable tbody");
+
+      // This part to be replaced with make table
+
+
+
+      $("#calculate").click( function(evt){ makeTable(); } );
+
+    }
+
+  </script>
+
+  <link href="./HE - Election Toolkit_files/bootstrap.css" rel="stylesheet">
+  <link href="./HE - Election Toolkit_files/elections-styles/elections.css" rel="stylesheet">
+  <link href="./HE - Election Toolkit_files/interactiveTable.css" rel="stylesheet">
+
+
+  <!--[if lte IE 8]>
+  <script src="/sites/default/files/js/js_VtafjXmRvoUgAzqzYTA3Wrjkx9wcWhjP0G4ZnnqRamA.js"></script>
+  <![endif]-->
+
+  <meta class="foundation-mq">
+</head>
+<body class="lang-en queuelength-tool">
+<a href="http://live-healthy-elections.pantheonsite.io/#main-content" class="visually-hidden focusable skip-link">
+  Skip to main content
+</a>
+<div>
+  <div class="off-canvas-content" data-off-canvas-content="">
+    <header role="banner" aria-label="Site header">
+      <div class="left large-2">
+        <div id="site-name" class="site-title">
+          <a href="/" title="Stanford-MIT Healthy Elections Project Home"><span class="site-sponsors">Stanford-MIT</span> <span class="site-name">Healthy Elections Project</span></a>
+        </div>
+      </div>
+    </header>
+  </div>
+  <div class="row tool-title">
+    <h1 align="left" class="section-title-noline large-12 medium-12 small-12"> COVID-19 Polling Place Queue Length Model</h1>
+  </div>
+  <!-- Inserted Colin's Code-->
+  <div class="intro-container">
+    <div class="intro-content row">
+      <!--<div class ="col-6 col-lg-6 text-center">
+        <h3 align="left">Input Data Description</h3>
+        <h4 align="left">Polling Place Characteristics</h4>
+        <ol align="left">
+            <li><b>Building Capacity:</b> The total number of people allowed in the polling place at any time</li>
+            <li><b>Election Staff:</b> The maximum number of non-voters expected to be in the building at any time</li>
+            <li><b>Voter Stations:</b> The total number of different places a voter could be while not in line, including bottleneck stations </li>
+            <li><b>Bottleneck Service Statistics:</b> The number of stations and average service time on the slowest step in the voting process (e.g. check in). more information, see  <a href="http://web.mit.edu/vtp/calc1.html#home">the Voting Technology Project's previous voter queue calulator</a></li>
+        </ol>
+        <h4 align="left">Voter Behavior Characteristics</h4>
+        <ol align="left">
+            <li><b>Arrival Rate:</b> The average rate (voters/hour) that arrive at the polling place and consider joining the line</li>
+            <li><b>Outside Line Entry Chance:</b> The chance that an arriving voter will join the unofficial line outside the polling place when the building iscapacity</li>
+        </ol>
+      </div>-->
+      <div class ="col-12 col-sm-4">
+        Polling places will allow fewer people inside with social distancing measures. This will increase both physical line lengths and wait times, which may require finding new places for voters to wait.
+        <br><br>
+        <h3>Use This Tool To:</h3>
+        <ul align="left">
+          <li>Estimate outside queue capacity needs</li>
+          <li>Estimate average wait times</li>
+          <li>Estimate how many voters wait too long</li>
+        </ul>
+        <br>
+        <button class = "btn btn-primary btn-xs" onClick="document.getElementById('instructions').scrollIntoView();">
+    		Detailed Instructions and Tutorials
+    	</button>
+      </div>
+      <div class ="col-12 col-sm-8 text-center">
+        <h3 class="image-title">Example Maximum Queue Size Calculation</h3>
+        <img src="./HE - Election Toolkit_files/Precinct_Capacity_Example_v2.svg" class="img-fluid" alt="Responsive image" width="95%" >
+      </div>
+    </div>
+  </div>
+  <div class="table-container row">
+    <div class="col-12">
+      <br>
+      <div id="PollingData">
+        <h2 align="left" class="section-title-noline">Enter Data</h2>
+        <button class="table-add float-right btn btn-primary btn-xs">
+          Add Polling Place
+        </button>
+        <form name="linetypeform">
+          Select Bottleneck:
+          <!--<i class="far fa-question-circle" data-toggle="tooltip" data-placement = "top" title="To find the bottleneck, calculate the service rate of each step (# of stations / average service time) and choose the step with the lowest service rate"></i>-->
+          <select class="bootstrap-select" style="width: 200px"    id="bottleneckselect" data-toggle="tooltip" data-placement = "top" title="This model assumes a bottleneck at check in as a baseline. For other bottlenecks, see below for a description of the assumptions. Changing the bottleneck does not change the math.">
+            <option value="checkin" selected="selected">Check In</option>
+            <option value="voting" class="text-secondary">Voting Machines/Booths</option>
+            <option value="scanning" class="text-secondary">Ballot Scanners</option>
+          </select>
+        </form>
+        <br>
+        <br>
+        <table id="inputTable">
+          <thead>
+          <tr class="no-border">
+            <th>Polling Place</th>
+            <th>Room Capacity</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Maximum number of total non-voters (election staff, security, observers, etc.) in room during voting">Non-voters in Room</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Number of distinct places a voter can be while in the voting process (e.g. # of Check-in stations + # voting booths + # ballot scanners)">Voter Processing Points</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Calculated based on three previous inputs. The maximum number of voters that could be in line in the polling place waiting to start the vote process">Inside Queue Capacity</th>
+            <th>Number of Check-In Stations</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Average time to check in including all activities between starting a given voter and starting the next voter. Healthy Elections recommends using a weighted average of all voter types (e.g. provisional or not)">Average time for check-in</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Hourly arrival rate of voters. Healthy Elections recommends using an upper limit like the busiest 2 hour period">Arrival rate</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Tool will calculate % of voters with a wait time above the target">Target wait time</th>
+            <th>Alert</th>
+            <!--<th>Outside Line Entry Chance [0,1]</th>-->
+            <th>Delete Row</th>
+          </tr>
+          <tr class = 'small'>
+            <th data-toggle="tooltip" data-placement = "top" title="Any text or number"></th>
+            <th data-toggle="tooltip" data-placement = "top" title="Positive Integer"># of people</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Non-negative Integer"># of people</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Positive Integer"># of people</th>
+            <th># of people</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Positive Integer"># of stations</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Any Positive Number">minutes</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Any Positive Number">voters per hour</th>
+            <th data-toggle="tooltip" data-placement = "top" title="Any Positive Number">minutes</th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <!--
+          <tr>
+              <td><input type = "text" class = "form-control input-sm searchresult"/></td>
+              <td><input class = "form-control input-sm changers" type="number"/></td>
+              <td><input class = "form-control input-sm changers" type="number"/></td>
+              <td><input class = "form-control input-sm changers" type="number"/></td>
+              <td class = "qcap" style="text-align:center" contenteditable="false">HERE</td>
+              <td><input class = "form-control input-sm" type="number"/></td>
+              <td><input class = "form-control input-sm" type="number"/></td>
+              <td><input class = "form-control input-sm" type="number"/></td>
+              <td><input class = "form-control input-sm" type="number"/></td>
+              <td class="controls">
+                  <button class="table-remove btn btn-warning btn-xs"><i class="fas fa-trash-alt"></i></button>
+              </td>
+          </tr>-->
+          <tr class="empty">
+            <td colspan="11" class = "font-italic text-center">
+              Please add rows by pressing the +Add Polling Place button
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <button id="calculate" class="btn btn-large btn-primary">Calculate</button>
+        <button id="clear" class = "btn btn-large btn-clear float-right">Clear Data</button>
+      </div> <!-- End Interactive Table div -->
+    </div><!-- End Column div -->
+  </div><!-- End Row div -->
+  <hr>
+  <div class="table-container row">
+    <div class="col-sm-12 col-12 col-md-12"><br>
+      <h2 align="left" class="section-title-noline"><b>Results</b></h2>
+      <table id="resultTable">
+        <thead>
+        <tr>
+          <th>Precinct</th>
+          <th>Average Total Wait Time (minutes)</th>
+          <!--<th>Average Time in System (minutes)</th>-->
+          <!--<th>Expected Voters in System</th>-->
+          <th>Average Total Queue Length (people)</th>
+          <th>Average Outside Queue Length (people) </th>
+          <!--<th>Probability of no wait</th>-->
+          <th>Percent of time room is full</th>
+          <!--<th>Effective Arrival Rate</th>-->
+          <th>Chance Voter Waits Longer than Target</th>
+          <th>Alert</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="noDataLine">
+          <td colspan="10" class="font-italic text-center">Table has no data</td>
+        </tr>
+        </tbody>
+      </table>
+      <button onclick="clearTable();" class = "btn btn-large btn-clear float-right">Clear Data</button>
+    </div><!-- End Column div -->
+  </div><!-- End Row div -->
+  <br><br>
+  <div class="row">
+
+    <!--<div class="col-sm-12 col-12 col-md-1"></div>-->
+    <div class="col-sm-10 col-10 col-md-10">
+      <br>
+      <h2 align="left" class="section-title-noline">Model Assumptions</h2>
+      <p> This tool uses queueing theory to model a single process step at a polling site for which there are limits on the number of voters that may be present at any one time.
+      <p> The tool relies on a classic queuing model, known as an “M/M/k system.” For this model of a polling site, we assume that voters arrive randomly with a constant arrival rate, and join a single queue that is being served by a set of parallel stations or servers. In a polling site, we assume that we are modeling the bottleneck step in the process; this might be the check in stations, or the voting stations, or possibly the ballot scanning station.
+      <p> When the bottleneck is the check-in station, then the model reports only on the amount of time a voter would wait in line prior to check in; in effect, we assume that there is minimal waiting at the downstream steps in the process of voting and ballot scanning.  When the bottleneck is the voting machines or booths,  then the model reports on the amount of time a voter would wait in line prior to going to a voting station;  in practice due to space limits and regulations at many polling sites, much of this waiting would typically occur in the line for check in so as to allow voters sufficient privacy when casting their ballots.
+      <p> In addition for this model, we assume that the polling site has a maximum occupancy that will limit the number of voters that can be in the site at any time.  We capture this in the model by imposing a limit on the number of voters that can be in line waiting inside the facility at any point in time. As a conservative estimate, we assume that all stations in the vote process (that is, the number of check in stations, plus the number of voting booths, plus the number of scanning machines) always have one voter and thus reduce the number of voters allowed to wait in line.
+      <p> This version of the model assumes that when the facility is full, the waiting line to vote will extend outside the facility.  We then assume that any arriving voter will join this queue and wait.
+      <p> In addition to using the tool on this web page, you can download an Excel spreadsheet that will perform the same calculations. One advantage of the spreadsheet is that it is easier to analyze multiple precincts at one time.
+
+        <br>
+      <h4 style="color:#122336">Developers: Stephen Graves and Colin McIntyre</h4>
+      <br>
+      <form method="get" action="./HE - Election Toolkit_files/FiniteWaitingRoom_CalculationMacro.xlsm">
+        <button id="download" class="btn btn-large btn-primary">Download Excel Macro</button>
+      </form>
+      <br><br>
+      <a href="http://web.mit.edu/vtp/feedback.html" button="" class="btn btn-large btn-clear">Close Calculator and return to main page</a><br><br>
+      <!--<a href="http://web.mit.edu/vtp/calc1.html#videos" button="" class="btn btn-large btn-warning smoothScroll">View Instructional Videos</a><br><br>-->
+    </div> <!--Column Div  -->
+  </div><!--Row Div  -->
+  <div class="row">
+  	<div class="col-sm-11 col-11 col-md-11" id="instructions">
+  		<br>
+      	<h2 align="left" class="section-title-noline">Detailed Directions and Tutorials</h2>
+	    <h3>When to use this tool:</h3>
+	    <p>This tool is designed for election officials hoping to understand line lengths and wait times with simple social distancing measures in place. This tool is meant to answer questions like: </p>
+	    <ul>
+	    	<li>How many people can wait in line inside the polling place?</li>
+	    	<li>How many people will be expected to wait outside the polling place, and how large of a secondary room will be needed for additional waiting?</li>
+	    	<li>How long will voters be expected to wait in total? Inside the main polling place? Outside? </li>
+	    	<li>How many voters will wait too long?</li>
+	    </ul>
+	    <h3>Where to use this tool:</h3>
+	    <p>This tool comes in an online form and an excel-based form. We recommend using the online tool to try a few different polling place setups, understand what the tool outputs represent, and what inputs impact the results most. Once comfortable with these dynamics, the excel-based tool (downloadable online) is best for running tens or hundreds of scenarios, saving results, and seeing more detailed outputs.</p>
+	    <h3>How to use this tool:</h3>
+	    Use a combination of previous election data and new estimates to determine the following inputs:
+	    <ul>
+	    	<li>Room Capacity: How many people can be in the polling place room safely under reasonable social distancing measures? The CDC recommends 6 feet of space between people. Consider the area of the room divided by 36 sq ft. as an absolute maximum number of people, and reduce the capacity from there given areas will be used for supplies, tables, equipment, walking lanes, and dead space must be used to make the voting process more understandable and efficient</li>
+	    	<li>Non-Voters in Room: Some of this capacity will be taken up by election workers, supervisors, security, observers, etc. Count all of them, and the difference between the room capacity and non-voters will be the number of voters allowed in the room</li>
+	    	<li>Voter Processing Points: Of the voters allowed inside by the room capacity, we recommend counting all distinct points in the voting process a voter could be (number of check-in stations, plus number of voting booths, plus any other process steps). We use this number and assume that a voter is always at each of these points to make a conservative estimate of the number of voters allowed to wait inside</li>
+	    	<li>Inside Queue Capacity: The tool will use the inputs and conservative assumptions above to calculate the number of voters allowed to wait inside (Capacity = Room Capacity - Non voters in room - Voter Processing Points)</li>
+	    	<li>Bottleneck Determination: One step in the voting process is always the bottleneck, or the step that can move voters through the slowest. This is very often the check-in process, but could possibly be the voting booth or scanner. To calculate the throughput of each step divide, the number of stations at that step by the average time that step takes for one voter. As a simple example, if there are 4 check-in stations and check in takes two minutes, 4 stations divided by 2 minutes gives 2 voters per minute. We can multiply by 60 to say that the throughput of the check-in step is 120 voters per hour. Perform this calculation for each step in the voting process (e.g. check in, ballot marking, and scanning) and the step with the lowest throughput is your bottleneck.</li>
+	    	<li>Bottleneck Statistics: Once the bottleneck has been determined, input the number of stations and average time spent at that station (like 4 check-in stations and 2 minutes per check-in). The bottleneck statistics will determine the line characteristics. We assume voters will flow through the other steps without significant additional waiting.
+	    		<ul>
+	    			<li>Note: The Healthy Elections project recommends a conservative estimate of these numbers (low number of stations and a long average time) in order to plan for cases where, for example, poll workers do not show up and reduce the number of stations, or voters and workers are unfamiliar with new social-distancing processes and take significantly more time to move through</li>
+	    		</ul>
+	    	</li>
+	    	<li>Voter Arrival Rate: The number of voters who arrive per hour during the busiest time of day. This time will likely be the beginning of the day, but use the peak arrival rate over the busiest time for each polling place.</li>
+	    	<li>Target Wait Time: The tool can report a fraction of people who wait longer than a set target. Use this input to set that target. By default it is 30 minutes.</li>
+	    </ul>
+  	</div>
+  	<div class="row">
+  		<h2>Video Tutorials</h2>
+  		<div class="col-1"></div>
+  		<div class="col-11">
+  			<br>
+  			<h3>The Web-Based tool</h3>
+  			<iframe width="100%" class = "myIframe" src="https://www.youtube.com/embed/lEKB5dv0Q24" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  			<br><br><br>
+  			<h3>The Excel-Based tool</h3>
+  			<iframe width="100%" class = "myIframe"src="https://www.youtube.com/embed/FsgKjr0pjEQ" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  		</div>
+  	</div>
+
+  </div>
+
+
+  <!--
+    <a name="videos"></a>
+
+      <div class="row">
+      <br><br>
+              <div class="col-md-12"><br>
+          <h2 align="center" class="section-title-noline"><b>Instructional Videos</b></h2>
+              </div>
+
+
+        <div class="box center col-sm-12 col-12 col-md-12">
+          <p align="center">Part 1</p>
+              <div id="video1">
+                      <iframe width="1140" height="645" src="./VTP - Election Toolkit_files/KgiYqhHN_gA.html" frameborder="2"></iframe>
+                      <br><br>
+                  </div>
+          <a href="http://web.mit.edu/vtp/calc1.html#top" button="" class="btn btn-large smoothScroll">Back to Top</a><br><br>
+
+                  <p align="center">Part 2</p>
+                <div id="video2">
+                      <iframe width="1140" height="645" src="./VTP - Election Toolkit_files/YkvWzzv_a8A.html" frameborder="1"></iframe>
+              <br><br>
+                  </div>
+          <a href="http://web.mit.edu/vtp/calc1.html#top" button="" class="btn btn-large smoothScroll">Back to Top</a><br><br>
+
+
+          <p align="center">Part 3</p>
+            <div id="video3">
+                      <iframe width="1140" height="645" src="./VTP - Election Toolkit_files/g7vk2DPwfpU.html" frameborder="1"></iframe>
+                      <br><br>
+                  </div>
+          <a href="http://web.mit.edu/vtp/calc1.html#top" button="" class="btn btn-large smoothScroll">Back to Top</a><br><br>
+              </div><-- /.box ->change comment
+      </div><-- /.row ->change comment
+
+  -->
+
+
+
+
+  <!-- End Inserted Code From Colin-->
+  <footer>
+    <div class="row">
+      <div id="footer-first" class="large-6 columns">
+        <div>
+          <section id="block-footercontactinfo" data-block-plugin-id="block_content:c0c24aa9-111b-480c-8a82-0bca655a3abf" class="block-footercontactinfo block      block-block-content block-block-contentc0c24aa9-111b-480c-8a82-0bca655a3abf">
+            <div class="field-wrapper body field field-block-content--body field-name-body field-type-text-with-summary field-label-hidden">
+              <div class="field-items">
+                <div class="field-item">
+                  <h4>Contact</h4>
+                  <p><a href="mailto:mitelectionlab@mit.edu">mitelectionlab@mit.edu</a></p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div id="footer-last" class="large-6 columns">
+        <div>
+          <section id="block-footerlogos" data-block-plugin-id="block_content:e7c31c3a-5613-49d0-8380-8defac987eb5" class="block-footerlogos block block-block-content      block-block-contente7c31c3a-5613-49d0-8380-8defac987eb5">
+            <div class="field-wrapper body field field-block-content--body field-name-body field-type-text-with-summary field-label-hidden">
+              <div class="field-items">
+                <div class="field-item"><p>&nbsp;</p>
+                  <p><img alt="THE STANFORD-MIT HEALTHY ELECTIONS PROJECT" data-entity-type="file" data-entity-uuid="bdd12180-b4fd-46c9-8d33-75654a296598" height="37" src="      ./HE - Election Toolkit_files/Pantheon_files/he-footer-logos_0.png" width="481" class="align-right"></p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div class="bottom-bar callout secondary">
+    <div class="row">
+      <div class="large-12 columns">
+        © 2020 The Stanford-MIT Healthy Elections Project All rights reserved.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/25","currentPathIsAdmin":false,"isFront":true,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxTrustedUrl":{"\/search":true},"ajax":[],"user":{"uid":0,"permissionsHash":"1759c2da286d23900fc4bd7bd8c145360897889ca7b98125e8aeceb7bf065648"}}</script>
+<script src="./HE - Election Toolkit_files/Pantheon_files/js_BJeCZ0MbcFqMP0F1gYhkMYSB6z6TwiHfr-Skf3nT_zs.js"></script>
+
+<script src="./HE - Election Toolkit_files/jquery-3.5.1.min.js"></script>
+<script src="./HE - Election Toolkit_files/dataframe.min.js"></script>
+<script src="./HE - Election Toolkit_files/bootstrap.bundle.min.js"></script>
+<script src="./HE - Election Toolkit_files/popper.min.js"></script>
+<script src="./HE - Election Toolkit_files/InteractiveTable.js"></script>
+<script src="./HE - Election Toolkit_files/graves.js" type="text/javascript"></script>
+<script src="./HE - Election Toolkit_files/tableMaker.js" type="text/javascript"></script>
+<script type="text/javascript" src="./HE - Election Toolkit_files/smoothscroll.js"></script>
+
+<script type="text/javascript" language="javascript"> 
+	$('.myIframe').css('width', $(window).width()*0.6+'px');
+	$('.myIframe').css('height', $(window).width()*0.6*0.56+'px');
+
+	function scrollFunction() {
+		document.getElementById('instructions').scrollIntoView();
+		return true;
+	}
+</script>
+
+<script>
+  var table;
+  $(document).ready( function() {
+    table = InteractiveTable.new($("#PollingData"));
+    //$("#PollingData").change(function(evt){table.update();});
+    $("#clear").click( function(evt){ table.clear(); } );
+    $("#calculate").click( function(evt){ makeTable(); } );
+    $('.dropdown-toggle').dropdown();
+    //$("#download").click(function(){window.open("./FiniteWaitingRoom_CalculationMacro.xlsm");});
+
+    $("#bottleneckselect").on("change", function(){settablemode(document.getElementById("bottleneckselect"));});
+    $("#votingmachine-label").click(function(){settablemode("voting");});
+    $("#scanning-label").click(function(){settablemode("scanner");});
+
+    //settablemode("checkin");
+
+  });
+
+
+</script>
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+
+
+</body>
+</html>
