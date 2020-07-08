@@ -365,7 +365,8 @@ sort(unique(wi_vf_spdf_mil$Voter.Status))
 #####now let's find the nearest polling place. We will want to subset 
 
 names(polls_all2c_df)
-polls_all2c_df_sub <- subset(polls_all2c_df, select = c(Longitude, Latitude,PollingPlaceAddress,PollingPlaceName))
+polls_all2c_df_sub <- subset(polls_all2c_df, select = c(Longitude, Latitude,PollingPlaceAddress,PollingPlaceName,County,closed))
+polls_all2c_df_sub <- subset(polls_all2c_df_sub, County=="MILWAUKEE COUNTY")
 master_df_mil <- data.frame(stringsAsFactors = FALSE)
 for(i in 1:nrow(wi_vf_spdf_mil)){
   temp_cbg <- wi_vf_spdf_mil[i,]
@@ -386,11 +387,16 @@ for(i in 1:nrow(wi_vf_spdf_mil)){
     master_df_mil <- rbind(master_df_mil, temp_sub)
   }
 }
+saveRDS(master_df_mil, "master_df_mil07082020.Rdata")
+nrow(master_df_mil)
+
+polls_all2c_df <- polls_all2c@data
 ###now we will do teh opened data 
-polls_all2c_df_sub <- subset(polls_all2c_df, select = c(Longitude, Latitude,PollingPlaceAddress,PollingPlaceName,closed))
-polls_all2c_df_sub_opened <- subset(polls_all2c_df_sub, closed==0)
+polls_all2c_df_sub <- subset(polls_all2c_df, select = c(Longitude, Latitude,PollingPlaceAddress,PollingPlaceName,closed,County))
+polls_all2c_df_sub_opened <- subset(polls_all2c_df_sub, closed==0 & County=="MILWAUKEE COUNTY")
 master_df_mil_opened <- data.frame(stringsAsFactors = FALSE)
-for(i in 1:nrow(wi_vf_spdf_mil)){
+for(i in nrow(master_df_mil_opened):nrow(wi_vf_spdf_mil)){
+  svMisc::progress((i/nrow(wi_vf_spdf_mil))*100)
   temp_cbg <- wi_vf_spdf_mil[i,]
   temp_cbg$long <- coordinates(temp_cbg)[1]
   temp_cbg$lat <- coordinates(temp_cbg)[2]
@@ -403,13 +409,13 @@ for(i in 1:nrow(wi_vf_spdf_mil)){
     
   }
   temp_sub <- temp_merge %>% slice(which.min(euc_distance))
-  if(nrow(master_df_mil)==0){
-    master_df_mil <- temp_sub
+  if(nrow(master_df_mil_opened)==0){
+    master_df_mil_opened <- temp_sub
   }else{
-    master_df_mil <- rbind(master_df_mil, temp_sub)
+    master_df_mil_opened <- rbind(master_df_mil_opened, temp_sub)
   }
 }
+nrow(master_df_mil_opened) # 25861 as of 2:04 PM
+saveRDS(master_df_mil_opened, "master_df_mil_opened07082020a.Rdata")
+master_df_mil_opened <- readRDS("master_df_mil_opened07082020a.Rdata")
 
-saveRDS(master_df, "cbg_closest_hospital_greatlakes.Rdata")
-write.dbf(master_df, "cbg_closest_hospital_greatlakes.dbf")
-master_df <- readRDS("cbg_closest_hospital_greatlakes.Rdata")

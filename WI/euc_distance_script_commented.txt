@@ -1,0 +1,28 @@
+### polls_all2c_df_sub  is the df of the polling place data, with the associated demos and 
+#status of the polling place being open and such 
+### wi_vf_spdf_mil is a spatial dataframe, with the coordinates of the addresses from the voterfile for 
+#Milwaukee county 
+
+polls_all2c_df_sub <- subset(polls_all2c_df, select = c(Longitude, Latitude,PollingPlaceAddress,PollingPlaceName,County,closed))
+##subsetting fields of interest and county here 
+polls_all2c_df_sub <- subset(polls_all2c_df_sub, County=="MILWAUKEE COUNTY")
+master_df_mil <- data.frame(stringsAsFactors = FALSE) #creation of empty df to store results 
+for(i in 1:nrow(wi_vf_spdf_mil)){
+  temp_cbg <- wi_vf_spdf_mil[i,] #grabbing ith voter 
+  temp_cbg$long <- coordinates(temp_cbg)[1] 
+  temp_cbg$lat <- coordinates(temp_cbg)[2] #extracting long and lat for voter 
+  temp_cbg <- temp_cbg@data #storing in temp df 
+  temp_merge <- merge(temp_cbg,polls_all2c_df_sub,by=NULL) # merging on the data for the polling places
+  temp_merge$euc_distance <- NA #creating new field to store results 
+  for(u in 1:nrow(temp_merge)){ #loop to find euclidean distance between points 
+    temp_merge$euc_distance[u] <- distGeo(c(temp_merge$long[u],temp_merge$lat[u]), 
+                                          c(temp_merge$Longitude[u], temp_merge$Latitude[u]))
+    
+  }
+  temp_sub <- temp_merge %>% slice(which.min(euc_distance)) # grabbing the minimal dist. for dyad 
+  if(nrow(master_df_mil)==0){ # storing into the dataframe of all the results 
+    master_df_mil <- temp_sub
+  }else{
+    master_df_mil <- rbind(master_df_mil, temp_sub)
+  }
+}
