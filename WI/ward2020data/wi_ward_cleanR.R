@@ -388,6 +388,8 @@ for(i in 1:nrow(wi_vf_spdf_mil)){
   }
 }
 saveRDS(master_df_mil, "master_df_mil07082020.Rdata")
+setwd("F:/MEDSL/covid19/cleaned_wi2")
+master_df_mil <- readRDS("master_df_mil07082020.Rdata")
 nrow(master_df_mil)
 
 polls_all2c_df <- polls_all2c@data
@@ -415,7 +417,132 @@ for(i in nrow(master_df_mil_opened):nrow(wi_vf_spdf_mil)){
     master_df_mil_opened <- rbind(master_df_mil_opened, temp_sub)
   }
 }
-nrow(master_df_mil_opened) # 25861 as of 2:04 PM
-saveRDS(master_df_mil_opened, "master_df_mil_opened07082020a.Rdata")
+nrow(master_df_mil_opened) # 25861 as of 2:04 PM ; 122763 as of 9:01 AM on 7/9/2020
+saveRDS(master_df_mil_opened, "master_df_mil_opened07092020a.Rdata")
 master_df_mil_opened <- readRDS("master_df_mil_opened07082020a.Rdata")
+###finding distance of nearest polling places 
+poll_dist_mat <- data.frame(stringsAsFactors = F)
+for(i in 1:nrow(polls_all2c_df_sub)){
+  svMisc::progress((i/nrow(polls_all2c_df_sub))*100)
+  temp_poll <- polls_all2c_df_sub[i,]
+  temp_merge <- merge(temp_poll,polls_all2c_df_sub_opened,by=NULL,suffixes=c("_before","_after"))
+  for(u in 1:length(temp_merge)){
+    temp_merge$poll_distance[u] <- distGeo(c(temp_merge$Longitude_before[u],temp_merge$Latitude_before[u]), 
+                                          c(temp_merge$Longitude_after[u], temp_merge$Latitude_after[u]))
+    
+  }
+  temp_sub_poll <- temp_merge %>% slice_min(poll_distance, n = 3)
+  if(nrow(poll_dist_mat)==0){
+    poll_dist_mat <- temp_sub_poll
+  }else{
+    poll_dist_mat <- rbind(poll_dist_mat, temp_sub_poll)
+  }
+}
+###ok, so now we will want to run a quick loop, finding out the distance between three points and such 
+nrow(master_df_mil_opened) # 122763
+master_df_mil_opened_merge <- merge(master_df_mil_opened, poll_dist_mat, by.x=c("Longitude","Latitude","PollingPlaceAddress"),
+                                    by.y=c("Longitude_before","Latitude_before","PollingPlaceAddress_before"))
+master_df_mil_opened_merge_affected  <- subset(master_df_mil_opened_merge, closed==1)
+master_df_mil_opened_merge_not_affected <- subset(master_df_mil_opened_merge, closed==0)
+nrow(master_df_mil_opened_merge_affected)
+nrow(master_df_mil_opened_merge_not_affected) #need to get unique values 
+######################
+distGeo_mod <- function(lon1,lat1,lon2,lat2){
+  distGeo(c(lon1,lat1),c(lon2,lat2))
+  #return(value)
+}
+distGeo_mod(df_sub[1,1],df_sub[1,2],df_sub[1,3],df_sub[1,4])
+df_sub <- subset(master_df_mil_opened_merge_affected, select=c(Longitude,Latitude,Longitude_after,Latitude_after))
+master_df_mil_opened_merge_affected$new_distance2 <- mapply(distGeo_mod, df_sub[,1],df_sub[,2],df_sub[,3],df_sub[,4] )
+master_df_mil_opened_merge_affected$new_distance2 <- sapply(df_sub,
+                                                            function(w,x,y,z) distGeo_mod(w,x,y,z))
+summary(master_df_mil_opened_merge_affected$new_distance2)
+master_df_mil_opened_merge_affected2 <- master_df_mil_opened_merge_affected %>% group_by(Voter.Reg.Number) %>% slice(which.min(new_distance2))
+nrow(master_df_mil_opened_merge_affected2)
+master_df_mil_opened_merge_not_affected2 <- 
+  master_df_mil_opened_merge_not_affected[!duplicated(master_df_mil_opened_merge_not_affected$Voter.Reg.Number),]
+###now grabbing the fields of interest so as to merge on 
+master_df_mil_opened_merge_not_affected2 <- subset(master_df_mil_opened_merge_not_affected2, select=c(Voter.Reg.Number,euc_distance))
+master_df_mil_opened_merge_not_affected2$new_distance2 <- master_df_mil_opened_merge_not_affected2$euc_distance
+master_df_mil_opened_merge_affected2 <- subset(master_df_mil_opened_merge_affected2, select=c(Voter.Reg.Number,euc_distance,new_distance2))
+summary(master_df_mil_opened_merge_affected2$new_distance2)
+summary(master_df_mil_opened_merge_affected2$euc_distance)
+master_df_mil_opened_merge2 <- rbind(master_df_mil_opened_merge_affected2,master_df_mil_opened_merge_not_affected2)
+master_df_mil_opened_merge2$dist_change <- (master_df_mil_opened_merge2$new_distance2 - master_df_mil_opened_merge2$euc_distance)/1000
+master_df_mil_opened_merge2$dist_change[master_df_mil_opened_merge2$dist_change <0] <- 0
+summary(master_df_mil_opened_merge2$dist_change)
+##excellent! Let's merge now
+master_df_mil_opened2 <- merge(master_df_mil_opened, master_df_mil_opened_merge2,by="Voter.Reg.Number")
+###now we will find out voting history dummies 
+saveRDS(master_df_mil_opened2, "milwaukee_analysis_df07092020.Rdata")
+master_df_mil_opened2$voted2016prim <- 0
+master_df_mil_opened2$voted2016prim[master_df_mil_opened2$April2016!=""] <- 1
+master_df_mil_opened2$voted2018ge <- 0
+master_df_mil_opened2$voted2018ge[master_df_mil_opened2$November2018!=""] <- 1
+###ok, lets merge on the bisg results 
+wi_vf_wd <- "F:/voterfile/wi"
+setwd(wi_vf_wd)
+wi_bisg <- readRDS("wi_bisg_results.Rdata")
+names(wi_bisg)
+wi_bisg <- subset(wi_bisg, select = c(Voter.Reg.Number,pred.whi))
+master_df_mil_opened2 <-merge(master_df_mil_opened2, wi_bisg,by="Voter.Reg.Number")
+nrow(master_df_mil_opened2)###good 
+master_df_mil_opened2$voted2020all <- 0
+master_df_mil_opened2$voted2020all[master_df_mil_opened2$April2020!=""] <- 1
+master_df_mil_opened2$voted2020abs <- 0
+master_df_mil_opened2$voted2020abs[master_df_mil_opened2$April2020=="Absentee"] <- 1
+master_df_mil_opened2$voted2020ip <- 0
+master_df_mil_opened2$voted2020ip[master_df_mil_opened2$April2020=="At Polls"] <- 1
+###ok, good. Now we should be able to run the analysis, though we will first most likely want to create a spatial df 
+master_df_mil_opened2_coords1 <- subset(master_df_mil_opened2, select=c(X,Y))
+sum(is.na(wi_vf_coords1$X))
+master_df_mil_opened2_spdf <- SpatialPointsDataFrame(coords = master_df_mil_opened2_coords1, data = master_df_mil_opened2,
+                                     proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
+###test with a normal logit 
+test_nonspace_logit <- glm(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + as.factor(PollingPlaceAddress),
+                           data=master_df_mil_opened2, family = binomial(link = "logit") )
+test_nonspace_logit <- glm(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + as.factor(PollingPlaceAddress),
+                           data=master_df_mil_opened2, family = binomial(link = "probit") )
+summary(test_nonspace_logit)
 
+
+###good. Now we should be able to do the spatial probit 
+library(spdep)
+library(spatialprobit)
+Sy8_nb <- knn2nb(knearneigh(master_df_mil_opened2_spdf, k = 5), row.names = master_df_mil_opened2_spdf$Voter.Reg.Number)
+nb2_normal <- nb2mat(Sy8_nb, style="W", zero.policy = TRUE)
+lw2 <- nb2listw(Sy8_nb, zero.policy = T)
+##weight mat 
+library(raster)
+
+nb_sparse <- as(nb2_normal, "sparseMatrix")
+poll_sarprob2 <- sarprobit(closed ~ log_pop_sqkm  +  non_white_pct  +  dem_pct18 + dem_pct2   + 
+                             ,data=polls_all2c,W=nb_sparse)
+
+
+
+names(master_df_mil_opened2)
+
+
+
+
+sum(is.na(master_df_mil_opened_merge_affected$new_distance)==F)
+nrow(master_df_mil_opened_merge_affected)
+nrow(master_df_mil_opened_merge)
+
+
+summary(master_df_mil_opened$euc_distance)
+summary(master_df_mil$euc_distance)
+###merging data by voter id 
+master_df_mil_opened_sub <- subset(master_df_mil_opened, select=c(Voter.Reg.Number,euc_distance))
+master_df_mil_merged <- merge(master_df_mil, master_df_mil_opened_sub, by="Voter.Reg.Number",suffixes=c("_before","_after"))
+str(master_df_mil_merged)
+
+###let's look at val for euc distance 
+master_df_mil_merged$dist_diff <- master_df_mil_merged$euc_distance_before - master_df_mil_merged$euc_distance_after
+summary(master_df_mil_merged$dist_diff)
+master_df_mil_merged$euc_distancebefore <- master_df_mil_merged$euc_distancebefore/1000
+master_df_mil_merged$euc_distanceafter <- master_df_mil_merged$euc_distanceafter/1000
+
+summary(master_df_mil_merged$euc_distanceafter)
+summary(master_df_mil_merged$euc_distancebefore)
