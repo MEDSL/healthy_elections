@@ -6,7 +6,19 @@
 */
 
 ///set mem 512m
+clear
 set more off
-infile using "R12580659.dct", using("R12580659_SL050.txt")
+infile using "/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/GA/socialexplorer/R12580659.dct", using("/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/GA/socialexplorer/R12580659_SL050.txt")
 
 
+keep FIPS NAME A00001_001 A00002_002 A04001_010
+
+rename FIPS fips
+destring fips, replace
+rename NAME county_name2
+rename A00001_001 county_totalpop
+rename A00002_002 county_popdensity
+rename A04001_010 county_hispanicpop
+
+compress
+save "/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/GA/socialexplorer/gacountypopulation.dta", replace
