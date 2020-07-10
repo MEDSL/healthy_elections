@@ -12,7 +12,7 @@ library(tidyverse)
 options(stringsAsFactors = FALSE)
 setwd("F:/MEDSL/healthy_elections/WI/ward2020data")
 wiward_files <- list.files()
-wiward_files <- wiward_files[2:4]
+wiward_files <- wiward_files[c(2:3,5)]
 wi2020 <- data.frame()
 for(i in 1:length(wiward_files)){
   temp_xl <- read_xlsx(wiward_files[i])
@@ -59,6 +59,8 @@ wi2020$county <- str_to_upper(wi2020$county)
 wi2020$total_dum[str_detect(wi2020$county,"TOTAL" )] <- 1
 wi2020$total_dum[str_detect(wi2020$ward,"TOTAL" )] <- 1
 wi2020 <- subset(wi2020, total_dum==0)
+sort(unique(wi2020$office))
+wi2020 <- subset(wi2020, office=="PRESIDENT")
 ####
 wi2016$total_dum <- 0
 wi2016$county <- str_to_upper(wi2016$county)
@@ -66,6 +68,15 @@ wi2016$total_dum[str_detect(wi2016$county,"TOTAL" )] <- 1
 wi2016$total_dum[str_detect(wi2016$ward,"TOTAL" )] <- 1
 wi2016 <- subset(wi2016, total_dum==0)
 sum(wi2020$total)
+sum(wi2016$total)
+wi2020$ward_pos <- sapply(wi2020$ward, function(x) str_locate(x," WARD")[1])
+wi2020$town_name <- substr(wi2020$ward, 1, wi2020$ward_pos-1)
+length(unique(wi2020$town_name))
+setwd("F:/MEDSL/healthy_elections/WI/ward2020data")
+saveRDS(wi2020, "ward2020cleaned.Rdata")
+
+sum(wi2020$total)
+
 ####
 wi_ward_all <- merge(wi2020,wi2016,by=c("county","ward","office","party"),all.x=F,all.y=F)
 nrow(wi_ward_all)
@@ -499,12 +510,84 @@ sum(is.na(wi_vf_coords1$X))
 master_df_mil_opened2_spdf <- SpatialPointsDataFrame(coords = master_df_mil_opened2_coords1, data = master_df_mil_opened2,
                                      proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
 ###test with a normal logit 
-test_nonspace_logit <- glm(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + as.factor(PollingPlaceAddress),
+master_df_mil_opened2$dum=1
+master_df_mil_opened2 <- master_df_mil_opened2 %>% group_by(PollingPlaceAddress) %>% mutate(poll_n=sum(dum,na.rm=T))
+master_df_mil_opened2 <- subset(master_df_mil_opened2, poll_n >= 30)
+library(lme4)
+test_nonspace_logit <- glmer(voted2020all ~ pred.whi + closed + dist_change  + voted2016prim + voted2018ge + 
+                               (1|PollingPlaceAddress),
                            data=master_df_mil_opened2, family = binomial(link = "logit") )
-test_nonspace_logit <- glm(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + as.factor(PollingPlaceAddress),
-                           data=master_df_mil_opened2, family = binomial(link = "probit") )
 summary(test_nonspace_logit)
+test_nonspace_logit_fe <- glm(voted2020all ~ pred.whi + closed + dist_change  + voted2016prim + voted2018ge + 
+                               as.factor(PollingPlaceAddress),
+                             data=master_df_mil_opened2, family = binomial(link = "logit") )
+summary(test_nonspace_logit_fe)
 
+##check if we can exclude na 
+library(functional)
+test_vcovlog <- vcov(test_nonspace_logit_fe)
+dim(test_vcovlog)
+test_vcovlog <- test_vcovlog[,-165]
+test_vcovlog <- test_vcovlog[-165,]
+dim(test_vcovlog)# dropped the row and column of na vals 
+sum(is.na(test_vcovlog))
+test_ceof_log <- coef(test_nonspace_logit_fe)
+test_ceof_log <- test_ceof_log[-length(test_ceof_log)]
+###now should be able to do mvrnorm
+
+sum(is.na(test_ceof_log))
+test_nonspace_probit <- glmer(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + (1|Ward),
+                           data=master_df_mil_opened2, family = binomial(link = "probit") )
+summary(test_nonspace_probit)
+test_nonspace_probit_fe <- glm(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + as.factor(PollingPlaceAddress),
+                              data=master_df_mil_opened2, family = binomial(link = "probit") )
+summary(test_nonspace_probit_fe)
+summary(master_df_mil_opened2$dist_change)
+
+### will now run the mvrnorm here: 
+library(MASS)
+set.seed(1337)
+summary(master_df_mil_opened2$dist_change)
+sim.betas_vote <- mvrnorm(10000,mu=test_ceof_log,Sigma = test_vcovlog)
+dist_seq <- seq(0,12.6,by=0.1)
+distan_mat_pred_w <- as.matrix(cbind(1,1,1,dist_seq,0,1,1))
+distan_mat_pred_nw <- as.matrix(cbind(1,0,1,dist_seq,0,1,1))
+
+sim.betas_vote <- sim.betas_vote[,c(1:6,133)]
+xb2_dist_logit_w <- distan_mat_pred_w %*% t(sim.betas_vote)
+xb2_dist_logit_w <- inv.logit(xb2_dist_logit_w)
+xb2_dist_logit_colw <- apply(xb2_dist_logit_w, 1, quantile, probs=c(0.025,.5,0.975))
+xb2_dist_logit_nw <- distan_mat_pred_nw %*% t(sim.betas_vote)
+xb2_dist_logit_nw <- inv.logit(xb2_dist_logit_nw)
+xb2_dist_logit_colnw <- apply(xb2_dist_logit_nw, 1, quantile, probs=c(0.025,.5,0.975))
+
+xb2_dist_logit_colw
+xb2_dist_logit_colnw
+
+###now let's create an awesome plot 
+setwd("F:/MEDSL/covid19/cleaned_wi2")
+jpeg("distance_vote_plot.jpg", res=600, height = 6, width = 9, units = "in")
+par(mfrow=(c(1,1)))
+plot(dist_seq,xb2_dist_logit_colw[2,], type="l",lty=1, col="#3791FF",ylab="Prob. of Voting",ylim=c(0,1),lwd=2,
+     xlab="Change in Polling Place Dist. (km)", main="Effect of Polling Place Distance on Voting", cex.lab=1.2)
+lines(dist_seq,xb2_dist_logit_colw[1,], lty=4, col="#C72654")
+lines(dist_seq,xb2_dist_logit_colw[3,],lty=4, col="#C72654")
+###now for black 
+lines(dist_seq,xb2_dist_logit_colnw[2,], lty=1, col="#C0BA79",lwd=2)
+lines(dist_seq,xb2_dist_logit_colnw[1,], lty=5, col="#FF6878")
+lines(dist_seq,xb2_dist_logit_colnw[3,], lty=5, col="#FF6878")
+###legend
+legend("topright", 
+       c("White","Non-white","95% CI White","95% CI Non-white"), lty=c(1,1,4,5),col=c("#3791FF","#C0BA79", "#C72654","#FF6878"),
+       bty="n", horiz=FALSE, cex=0.7)
+rug(master_df_mil_opened2$dist_change, lwd=0.01)
+dev.off()
+
+white_pred_df <- as.data.frame(cbind(dist_seq,xb2_dist_logit_colw[2,],xb2_dist_logit_colnw[2,]))
+
+#xb2_nonwhite <- nonwhite2stage_mat %*% t(sim.betas_turn_sub)
+#xb2_nonwhite_col <- apply(xb2_nonwhite, 1, quantile, probs=c(0.025,.5,.975))
+###performing matrix algebra for hlit as well 
 
 ###good. Now we should be able to do the spatial probit 
 library(spdep)
