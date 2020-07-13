@@ -1,6 +1,6 @@
 ### maps######
 
-
+setwd("~/Downloads/GitHub-Tutorial-master/healthy_elections/ME")
 library(tidyverse)
 library(osrm)
 library(sf)
@@ -299,3 +299,29 @@ wide_df<- wide_df %>%  select(MUNICIPALITY, BND, ANC, BRU, DBR, ENS, NEN, OTH, R
 wide_df<- wide_df[order(-wide_df$rejected20),]
 wide_df<- wide_df[c(1:10),]
 write.csv(wide_df, "wide.csv")
+
+
+
+View(ME_mailfile)
+
+##### see how many new voters there were
+## first; subset by 2020, before 2020
+### find how many were in before, not in before
+### make tables comparing rejetion rates of new, old voters. 
+
+
+primary2020<- ME_mailfile[ME_mailfile$race == "2020_primary",]
+priorto_2020<- ME_mailfile[!ME_mailfile$race == "2020_primary",]
+
+primary2020$previousvoter<- ifelse(primary2020$VOTER.ID %in% priorto_2020$VOTER.ID, 1, 0)
+sum(primary2020$previousvoter)
+nrow(primary2020)
+
+newvoters<- length(unique(primary2020$VOTER.ID[primary2020$previousvoter == 0]))
+oldvoters<- length(unique(primary2020$VOTER.ID[primary2020$previousvoter == 1]))
+newvoters/ (newvoters+oldvoters)
+
+nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 1,]) / newvoters
+nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,]) / oldvoters
+
+nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 1,])+ nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,])
