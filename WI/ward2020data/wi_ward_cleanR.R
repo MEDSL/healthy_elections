@@ -245,6 +245,7 @@ View(polls_all2c)
 wi_vf_wd <- "F:/voterfile/wi"
 setwd(wi_vf_wd)
 wi_vf <- read.csv("wi_voterfile.csv", header = T, skip=1)
+names(wi_vf)
 head(wi_vf)[1:21]
 ###let's create an address file 
 wi_vf$full_addr <- paste0(wi_vf$Address1, sep=", ", wi_vf$Address2)
@@ -543,6 +544,10 @@ test_nonspace_probit_fe <- glm(voted2020all ~ pred.whi + closed + dist_change + 
                               data=master_df_mil_opened2, family = binomial(link = "probit") )
 summary(test_nonspace_probit_fe)
 summary(master_df_mil_opened2$dist_change)
+write.csv(master_df_mil_opened2, "master_df_mil_opened2geo_distance_df.csv",row.names = F)
+###let's read in the abs file
+wi_abs_file <- read.csv("F:/voterfile/wi/Absentee_file_20200702/wi_abs_file.csv")
+sort(unique(wi_abs_file$applicationsource))
 
 ### will now run the mvrnorm here: 
 library(MASS)

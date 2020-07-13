@@ -64,7 +64,11 @@ nrow(wi2020town2)
 ###let's find mode totals 
 wi2020town2$early <- wi2020town2$early_1829+wi2020town2$early_3044+wi2020town2$early_4559+wi2020town2$early_60plus
 wi2020town2$mail <- wi2020town2$mail2_18to29+wi2020town2$mail2_30to44+wi2020town2$mail2_4559+wi2020town2$mail2_60plus
-
+wi2020town2$off_results <- 0
+wi2020town2$off_results[wi2020town2$total_vote < (wi2020town2$early+wi2020town2$mail)] <- 1
+wi2020town2 <- wi2020town2 %>% replace(is.na(.), 0)
+View(wi2020town2)
+summary(wi2020town2$off_results)
 
 ###########################################################################################3
 library(dplyr)
