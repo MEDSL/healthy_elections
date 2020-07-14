@@ -12,13 +12,13 @@ substrRight <- function(x, n){
 }
 library(extrafont)#these allow you to read in the non-default fonts 
 library(showtext)
-font_import("F:/MEDSL/blogs/styrene_b")  #specify font path here 
+font_import("/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/general/fonts/styrene_b")  #specify font path here 
 windowsFonts(A = windowsFont("styrene_b"))
 options(stringsAsFactors = F)
-wd <- "" # set working directory 
+wd <- "/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/GA" # set working directory 
 setwd(wd)
-covid_cases <- read.csv("us-counties-nyt.csv") # read in the COVID data from the NYT 
-covid_cases <- subset(covid_cases, state=="") ###subset the data to equal the state of interest 
+covid_cases <- read.csv("/Users/cantstopkevin/Documents/HarvardDesktop/MEDSL/github/healthy_elections/general/outside_data/us-counties-nyt.csv") # read in the COVID data from the NYT 
+covid_cases <- subset(covid_cases, state=="Georgia") ###subset the data to equal the state of interest 
 #The fields are : date, county (title case), state (title case), fips (st_fips+county_fips), cases, and deaths.
 #note that the deaths are excess deaths above the distribution of deaths given a model that the NYT has  
 
@@ -26,8 +26,9 @@ covid_cases <- subset(covid_cases, state=="") ###subset the data to equal the st
 #### the covid data set is formatted as %y-%m-%d , i.e. 2020-04-21 . Can subset via the following example 
 #covid_primary_date <- subset(covid_cases, date=="2020-04-03")
 
-covid_primary_date <- subset(covid_cases, date=="") # set the date to the day of the primary to run a scatterplot of some sort , then merge onto
-#the elections data of interest. 
+covid_primary_datePPP <- subset(covid_cases, date=="2020-03-24") # set the date to the day of the primary to run a scatterplot of some sort , then merge onto
+covid_primary_dateGP <- subset(covid_cases, date=="2020-05-19") # set the date to the day of the primary to run a scatterplot of some sort , then merge onto
+covid_primary_dateGP2 <- subset(covid_cases, date=="2020-06-09") # set the date to the day of the primary to run a scatterplot of some sort , then merge onto
 
 #path to medsl colors: http://www.mit.edu/~medsl/brand/charts/index.html ; use this to choose colors of interest 
 
@@ -42,21 +43,23 @@ sort(unique(ts_covid_all$date))
 
 cases_plot_all <- ggplot(ts_covid_all, aes(x = Date, y = new_cases)) + 
   geom_line(color="#156DD0", size=1)+  
-  geom_vline(aes(xintercept=as.numeric(sort(unique(ts_covid_all$Date))[64]), color="#37C256" ), linetype=4, show.legend = F) + 
-  geom_vline(aes(xintercept=as.numeric(sort(unique(ts_covid_all$Date))[77]), color="#C0BA79" ), linetype=5, show.legend = F) + 
-  geom_vline(aes(xintercept=as.numeric(sort(unique(ts_covid_all$Date))[38]), color="#F6573E" ), linetype=2, show.legend = F)
+  geom_vline(aes(xintercept=as.numeric(sort(unique(ts_covid_all$Date))[79]), color="#37C256" ), linetype=4, show.legend = F) + 
+  geom_vline(aes(xintercept=as.numeric(sort(unique(ts_covid_all$Date))[100]), color="#C0BA79" ), linetype=5, show.legend = F) + 
+  geom_vline(aes(xintercept=as.numeric(sort(unique(ts_covid_all$Date))[23]), color="#F6573E" ), linetype=2, show.legend = F)
 
 cases_plot_all
-grob_start <- grobTree(textGrob("Public VBM \nNotice", x=0.2,  y=0.6, hjust=0,
-                                gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob_prim <- grobTree(textGrob("Primary", x=0.5,  y=0.7, hjust=0,
-                               gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob2weeks <-   grobTree(textGrob("2 Weeks \npost-primary", x=0.6,  y=0.8, hjust=0,
-                                  gp=gpar(col="black", fontsize=12, fontface="bold")))
+grob_start <- grobTree(textGrob("Original PPP Date", x=0.1,  y=0.8, hjust=0,
+                                gp=gpar(col="black", fontsize=8, fontface="bold")))
+grob_prim <- grobTree(textGrob("Original General Primary", x=0.6,  y=0.8, hjust=0,
+                               gp=gpar(col="black", fontsize=8, fontface="bold")))
+grob2weeks <-   grobTree(textGrob("Actual Combined \nPrimary Date", x=0.8,  y=0.9, hjust=0,
+                                  gp=gpar(col="black", fontsize=8, fontface="bold")))
 cases_plot_all <- cases_plot_all +  annotation_custom(grob_start) +  annotation_custom(grob_prim) + annotation_custom(grob2weeks) +
-  labs( title= "COVID-19 Cases", y="New Cases") + theme_minimal()
+  labs( title= "COVID-19 Cases, Georgia 2020 Primary Elections", y="New Cases") + theme_minimal()
+cases_plot_all
+
 cases_plot_all <- cases_plot_all + theme(title = element_text(size = rel(1.4), family="Styrene B")) #example plot of new cases 
-ggsave("covid_wi_plot_example.jpg", plot = cases_plot_all, scale = 1,
+ggsave("covid_GA_plot.jpg", plot = cases_plot_all, scale = 1,
        width = 9, height = 6, units = c("in"), dpi = 600)
 
 
