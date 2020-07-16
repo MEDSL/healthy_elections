@@ -8,7 +8,7 @@ library(dplyr)
  fve_files <- list.files(path = "~/Downloads/Statewide/pa_fve_files",full.names = TRUE)
 
 #constant variables
-keep <- data.frame(var = paste0("V",c(1,3,7,8,9,10,12,13,15,16,18,19,20,152)),
+keep <- data.frame(var = paste0("V",c(1,3,7,8,9,10,12,13,15,16,18,19,20,26,27,152)),
                    newvar = c("id","lastname","sex","dob","regdate","voterstat","pid","house_number","street","aptno","city","state","zip","lastelecdate","precinct","county"),
                    stringsAsFactors=F)
 
