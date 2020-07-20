@@ -1,0 +1,1792 @@
+---
+title: "NC Election Analysis"
+author: "Blair Read"
+date: "5/5/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, error = F, tidy = T, 
+                      tidy.opts=list(width.cutoff=60), collapse = T,
+                      warning=FALSE,
+                      error=FALSE,
+                      message = FALSE, comment = "",
+                     fig.align = 'center', cache = TRUE)
+```
+
+# Set Up (Libraries and Functions)
+
+```{r functions, echo = FALSE}
+
+rm(list=ls())
+
+author <- "blair_pc"
+  # Specify the author name so that you can run all the commands to read in the data
+  # Make sure to add in your own file path in the functions
+
+# Load all packages
+library(haven)
+library(foreign)
+library(ggmedsl)
+library(stringr)
+library(data.table)
+library(tidyverse)
+library(ggmap)
+library(lubridate)
+library(formatR)
+
+library(rgdal)
+library(sp)
+library(sf)
+library(raster)
+library(maptools)
+
+library(ggpubr)
+library(viridis)
+
+# Function to read in files without having to change the whole file path each time. 
+# Enter in the file path UP TO the shared folder (i.e. do not include the name of the shared folder)
+
+read_file <- function(filename,...){
+    # given a file name, pick the appropriate library
+    if (stringr::str_sub(filename, -3,-1) == "csv"){
+      return(read.csv(filename, ...))
+    } else if (stringr::str_sub(filename, -3,-1) == "sav") {
+      return(haven::read_sav(filename, ...))
+    } else if (stringr::str_sub(filename, -3,-1) == "dta") {
+      return(haven::read_dta(filename, ...))
+    } else if ((stringr::str_sub(filename, -3,-1) == "xls") | (stringr::str_sub(filename, -4,-1) == "xlsx")){
+      return(readxl::read_excel(filename, ...))
+    } else {
+      print("Unknown file extention! Must be one of csv,sav,dta,xls")
+      }
+}
+
+# Function to read in data. Works for any data file, not just afrobarometer
+read_data <- function(author, file_path, data_file, ...){
+  # Specify the user, the file path (including the tailing "/", and the data file name.)
+
+  if(author == "blair"){
+    filename <- paste("~/Dropbox (MIT)/Grad School/Side Projects/", 
+                           file_path, data_file,
+                           sep = "")
+    data <- read_file(filename, ...)
+  } else if(author == "blair_pc"){
+    filename <- paste("C:/Users/Blair Read/Dropbox (MIT)/Grad School/Side Projects/", 
+                           file_path, data_file,
+                           sep = "")
+    data <- read_file(filename, ...)
+  } 
+  return(data)
+}
+
+read_delim_func <- function(author, file_path, data_file, ...){
+  if(author == "blair"){
+    filename <- paste("~/Dropbox (MIT)/Grad School/Side Projects/", 
+                           file_path, data_file,
+                           sep = "")
+  } else if(author == "blair_pc"){
+    filename <- paste("C:/Users/Blair Read/Dropbox (MIT)/Grad School/Side Projects/", 
+                           file_path, data_file,
+                           sep = "")
+    data <- read.delim(filename, header = TRUE, sep = "\t")
+  }
+  return(data)
+}
+
+# A function to collapse continuous age into brackets 
+# Just input the dataframe and the vector of the age
+# And attach this as a new variable
+# example: absentee$age_bucket <- age_bucket_func(absentee, "age)
+
+age_bucket_func <- function(df, age_vec){
+  age_bucket <- ifelse(df[,age_vec] > 17 & df[,age_vec] < 30, "18 - 29",
+                          ifelse(df[,age_vec] > 29 & df[,age_vec] < 45, "30 - 44",
+                                 ifelse(df[,age_vec] > 44 & df[,age_vec] < 60, "45 - 59", 
+                                                      ifelse(df[,age_vec] > 59, "60 years or older", NA))))
+  
+  return(age_bucket)
+}
+
+# save the graphics path so you don't have to rewrite it every time
+
+graphics_path <- "~/Dropbox (MIT)/Grad School/Side Projects/COVID Election Response/Analysis/"
+
+graphics_path_pc <- "C:/Users/Blair Read/Dropbox (MIT)/Grad School/Side Projects/COVID Election Response/Analysis/"
+
+```
+
+# Set Up (Data)
+
+```{r prepare_data, echo = FALSE}
+
+precinct_results <- read.delim("C:/Users/Blair Read/Dropbox (MIT)/Grad School/Side Projects/COVID Election Response/Healthy_Elections/States/NC/results_pct_20200303.txt", 
+                               header = TRUE, sep = "\t")
+# precinct results from the 2020 primary elections
+
+absentee20 <- read_data(author, "COVID Election Response/Healthy_Elections/States/NC/absentee voter files/",
+                      "absentee_20200303.csv")
+# absentee voter history for the 2020 primary election
+
+
+absentee16 <- read_data(author, "COVID Election Response/Healthy_Elections/States/NC/absentee voter files/",
+                      "absentee_20160315.csv")
+absentee16$ballot_req_type <- absentee16$ballot_req_delivery
+ # absentee voter history for the 2016 primary election
+  
+drop_abs_cols <- colnames(absentee20)[! names(absentee20) %in% names(absentee16)]
+absentee20 <- absentee20[, ! names(absentee20) %in% drop_abs_cols]
+
+absentee <- rbind.data.frame(absentee20, absentee16)
+rm(absentee20); rm(absentee16)
+
+#### Read in the North Carolina voter files ####
+
+voter_history <- read_delim_func(author, "COVID Election Response/Healthy_Elections/States/NC/", "ncvhis_Statewide.txt")
+
+ # voter history file. shows whether (shows which mode people used to vote)
+
+voter_file <- read_delim_func(author, "COVID Election Response/Healthy_Elections/States/NC/", "ncvoter_Statewide.txt")
+
+#snapshot_2016 <- read_delim_func(author, "COVID Election Response/Healthy_Elections/States/NC/", "VR_Snapshot_20160315.txt")
+
+
+ # current voter file. shows everyone who is registered to vote.
+
+county_geo <- st_read("C:/Users/Blair Read/Dropbox (MIT)/Grad School/Side Projects/COVID Election Response/Healthy_Elections/States/NC/geography/counties")
+ # shape file for the North Carolina counties
+
+voter_file$party_collapsed <- ifelse(voter_file$party_cd %in% c("CST", "GRE", "LIB"), "Third Party", 
+                                        voter_file$party_cd)
+
+voter_history$party_collapsed_voted <- ifelse(voter_history$voted_party_cd %in% c("CST", "GRE", "LIB"), "Third Party", 
+                                        voter_history$voted_party_cd)
+
+
+voter_history$voting_method_collapse <- ifelse(voter_history$voting_method %in% c("ABSENTEE", "ABSENTEE BY MAIL"), "ABSENTEE",
+                                      ifelse(voter_history$voting_method %in% c("ABSENTEE CURBSIDE", "ABSENTEE ONESTOP"), "ONE STOP",
+                                             ifelse(voter_history$voting_method %in% c("IN-PERSON", "CURBSIDE", "ELIGIBLE DID NOT VOTE",
+                                                                                          "PROVISIONAL", "TRANSFER"), "ELECTION DAY (IN PERSON)", NA)))
+    # collapse the different types of voting methods so we just have absentee (mail), absentee (one-stop), in-person election
+
+voter_file$age_bucket <- age_bucket_func(voter_file, "birth_age")
+
+# Remove the columns that I never use:
+
+voter_file <- voter_file %>% 
+  dplyr::select(ncid, county_desc, last_name, first_name, voter_status_desc, race_code, gender_code, party_collapsed, age_bucket, 
+                vtd_abbrv, vtd_desc, 
+                registr_dt, precinct_abbrv)
+
+voters_2016 <- filter(voter_history, election_lbl %in% c("03/15/2016"))
+voters_2020 <- filter(voter_history, election_lbl %in% c("03/03/2020"))
+
+voter_file$reg_date <- as.Date(voter_file$registr_dt, format = "%m/%d/%Y")
+
+voter_file_2020 <- voter_file[voter_file$reg_date < as.Date("2020/02/08"), ]
+
+voter_file_2016 <- voter_file[voter_file$reg_date < as.Date("2016-02-20"), ]
+
+```
+
+# Turnout 
+
+```{r}
+
+vhist_merge <- left_join(voters_2020, voter_file, by = c("ncid")); apply(vhist_merge, 2, function(x) sum(is.na(x)))
+vhist_merge <- vhist_merge[! duplicated(vhist_merge$ncid),] # drop people who might be duplicated for some reason
+vhist_merge <- vhist_merge[complete.cases(vhist_merge),]
+
+
+vhist_merge_2016 <- left_join(voters_2016, voter_file, by = c("ncid")); apply(vhist_merge_2016, 2, function(x) sum(is.na(x)))
+vhist_merge_2016 <- vhist_merge_2016[! duplicated(vhist_merge_2016$ncid),] # drop people who might be duplicated for some reason
+vhist_merge_2016 <- vhist_merge_2016[complete.cases(vhist_merge_2016),]
+
+
+breakdown_2020 <- as.data.frame(table(vhist_merge$party_collapsed_voted, vhist_merge$party_collapsed))
+
+breakdown_16 <- as.data.frame(table(vhist_merge_2016$party_collapsed_voted, vhist_merge_2016$party_collapsed))
+# Calculate pooled turnout rates
+
+voter_file_2020$count_2020_regvoters <- nrow(voter_file_2020)
+  # count of the number of registered voters by the 2020 election
+
+voter_file_2016$count_2016_regvoters <- nrow(voter_file_2016)
+  # count of the number of registered voters by the 2016 election
+
+vhist_merge$count_votes_cast <- nrow(vhist_merge)
+  # count of how many people cast votes in the 2020 election
+
+vhist_merge_2016$count_votes_cast <- nrow(vhist_merge_2016)
+  # count of how many people cast votes in the 2016 election
+
+
+```
+## Turnout by Age
+
+```{r}
+
+age_electorate_20 <- voter_file_2020 %>% 
+  dplyr::select(age_bucket, count_2020_regvoters, party_collapsed) %>% 
+  group_by(age_bucket) %>% 
+  mutate(age_registered = n()) %>%  # the number of people registered by age
+  ungroup() %>% group_by(party_collapsed) %>% 
+  mutate(party_registered_voters = n()) %>%   # the number of people registered to vote for each party
+  ungroup() %>% group_by(party_collapsed, age_bucket) %>% 
+  mutate(age_registered_byparty = n()) %>%   # the number of people registered by age for each party 
+  distinct(., .keep_all = TRUE)
+
+age_votescast_20 <- vhist_merge %>% 
+  dplyr::select(age_bucket, count_votes_cast, party_collapsed_voted, party_collapsed) %>% 
+  group_by(age_bucket) %>% 
+  mutate(age_voted = n()) %>%       # the number of people who voted by age 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(votes_cast_for_party = n()) %>%    # the number of people who voted per party (total)
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket) %>%   # the number of people who voted per party by age
+  mutate(party_votes_cast_by_age = n()) %>% 
+  ungroup() %>% group_by(party_collapsed, age_bucket) %>% 
+  mutate(party_registered_cast_by_age = n()) %>%  # the number of people registered 
+  distinct(., .keep_all = TRUE)
+
+# Data frames with output: 
+
+age_electorate_prop_20 <- as.data.frame(age_votescast_20) %>% 
+  dplyr::select(age_bucket, party_collapsed_voted, votes_cast_for_party, party_votes_cast_by_age) %>%
+  distinct(., .keep_all = TRUE) %>% 
+  mutate(electorate_prop_byage = round(party_votes_cast_by_age / votes_cast_for_party, 3) * 100) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+age_turnout <- as.data.frame(age_votescast_20) %>% 
+  dplyr::select(age_bucket, party_collapsed, age_voted, party_registered_cast_by_age) %>% 
+  left_join(., age_electorate_20, by = c("age_bucket", "party_collapsed")) %>% 
+  mutate(turnout_byage = round(age_voted / age_registered, 3) * 100,
+         turnout_byage_party = round(party_registered_cast_by_age / age_registered_byparty, 3) * 100) %>% 
+  dplyr::select(age_bucket, party_collapsed, age_voted, age_registered_byparty, turnout_byage, turnout_byage_party) %>% 
+  filter(party_collapsed %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+electorate_prop_byage <- age_electorate_20 %>% 
+  ungroup() %>% 
+  mutate(prop_electorate_byage = round(age_electorate_20$age_registered / unique(voter_file_2020$count_2020_regvoters), 3) * 100) %>% 
+  dplyr::select(age_bucket, prop_electorate_byage) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+
+
+
+###############
+### 2016 ######
+###############
+
+
+age_electorate_16 <- voter_file_2016 %>% 
+  dplyr::select(age_bucket, count_2016_regvoters, party_collapsed) %>% 
+  group_by(age_bucket) %>% 
+  mutate(age_registered = n()) %>%  # the number of people registered by age
+  ungroup() %>% group_by(party_collapsed) %>% 
+  mutate(party_registered_voters = n()) %>%   # the number of people registered to vote for each party
+  ungroup() %>% group_by(party_collapsed, age_bucket) %>% 
+  mutate(age_registered_byparty = n()) %>%   # the number of people registered by age for each party 
+  distinct(., .keep_all = TRUE)
+
+age_votescast_16 <- vhist_merge_2016 %>% 
+  dplyr::select(age_bucket, count_votes_cast, party_collapsed_voted, party_collapsed) %>% 
+  group_by(age_bucket) %>% 
+  mutate(age_voted = n()) %>%       # the number of people who voted by age 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(votes_cast_for_party = n()) %>%    # the number of people who voted per party (total)
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket) %>%   # the number of people who voted per party by age
+  mutate(party_votes_cast_by_age = n()) %>% 
+  ungroup() %>% group_by(party_collapsed, age_bucket) %>% 
+  mutate(party_registered_cast_by_age = n()) %>%  # the number of people registered 
+  distinct(., .keep_all = TRUE)
+
+# Data frames with output: 
+
+age_electorate_prop_16 <- as.data.frame(age_votescast_16) %>% 
+  dplyr::select(age_bucket, party_collapsed_voted, votes_cast_for_party, party_votes_cast_by_age) %>%
+  distinct(., .keep_all = TRUE) %>% 
+  mutate(electorate_prop_byage = round(party_votes_cast_by_age / votes_cast_for_party, 3) * 100) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+age_turnout_16 <- as.data.frame(age_votescast_16) %>% 
+  dplyr::select(age_bucket, party_collapsed, age_voted, party_registered_cast_by_age) %>% 
+  left_join(., age_electorate_16, by = c("age_bucket", "party_collapsed")) %>% 
+  mutate(turnout_byage = round(age_voted / age_registered, 3) * 100,
+         turnout_byage_party = round(party_registered_cast_by_age / age_registered_byparty, 3) * 100) %>% 
+  dplyr::select(age_bucket, party_collapsed, age_voted, age_registered_byparty, turnout_byage, turnout_byage_party) %>% 
+  filter(party_collapsed %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+electorate_prop_byage_16 <- age_electorate_16 %>% 
+  ungroup() %>% 
+  mutate(prop_electorate_byage = round(age_registered / unique(voter_file_2016$count_2016_regvoters), 3) * 100) %>% 
+  dplyr::select(age_bucket, prop_electorate_byage) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+#### Calculate Percentage Increases over 2016 #### 
+
+votecounts_2016 <- vhist_merge_2016 %>% 
+  mutate(totalvotes_16 = n()) %>% 
+  ungroup() %>% group_by(age_bucket) %>% 
+  mutate(agecount_16 = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket) %>% 
+  mutate(agecount_party16 = n()) %>% 
+  dplyr::select(totalvotes_16, age_bucket, agecount_16, party_collapsed_voted, agecount_party16) %>% 
+  distinct(., .keep_all = TRUE)
+
+votecounts_2020 <- vhist_merge %>% 
+  mutate(totalvotes_20 = n()) %>% 
+  ungroup() %>% group_by(age_bucket) %>% 
+  mutate(agecount_20 = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket) %>% 
+  mutate(agecount_party20 = n()) %>% 
+  dplyr::select(totalvotes_20, age_bucket, agecount_20, party_collapsed_voted, agecount_party20) %>% 
+  distinct(., .keep_all = TRUE)
+
+percent_increase_age <- left_join(votecounts_2016, votecounts_2020, by = c("age_bucket", "party_collapsed_voted")) %>% 
+  mutate(total_perc_change = agecount_20 / agecount_16,
+         total_party_perc_change = agecount_party20 / agecount_party16) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+
+```
+
+
+## Turnout by Gender 
+
+```{r}
+
+
+
+gender_electorate_20 <- voter_file_2020 %>% 
+  filter(gender_code != " ") %>% 
+  dplyr::select(gender_code, count_2020_regvoters, party_collapsed) %>% 
+  group_by(gender_code) %>% 
+  mutate(gender_registered = n()) %>%  # the number of people registered by gender
+  ungroup() %>% group_by(party_collapsed) %>% 
+  mutate(party_registered_voters = n()) %>%   # the number of people registered to vote for each party
+  ungroup() %>% group_by(party_collapsed, gender_code) %>% 
+  mutate(gender_registered_byparty = n()) %>%   # the number of people registered by gender for each party 
+  distinct(., .keep_all = TRUE)
+
+gender_votescast_20 <- vhist_merge %>% 
+  dplyr::select(gender_code, count_votes_cast, party_collapsed_voted, party_collapsed) %>% 
+  group_by(gender_code) %>% 
+  mutate(gender_voted = n()) %>%       # the number of people who voted by gender 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(votes_cast_for_party = n()) %>%    # the number of people who voted per party (total)
+  ungroup() %>% group_by(party_collapsed_voted, gender_code) %>%   # the number of people who voted per party by gender
+  mutate(party_votes_cast_by_gender = n()) %>% 
+  ungroup() %>% group_by(party_collapsed, gender_code) %>% 
+  mutate(party_registered_cast_by_gender = n()) %>%  # the number of people registered 
+  distinct(., .keep_all = TRUE)
+
+
+
+gender_electorate_prop_20 <- as.data.frame(gender_votescast_20) %>% 
+  dplyr::select(gender_code, party_collapsed_voted, votes_cast_for_party, party_votes_cast_by_gender) %>%
+  distinct(., .keep_all = TRUE) %>% 
+  mutate(electorate_prop_bygender = round(party_votes_cast_by_gender / votes_cast_for_party, 3) * 100) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+gender_turnout <- as.data.frame(gender_votescast_20) %>% 
+  dplyr::select(gender_code, party_collapsed, gender_voted, party_registered_cast_by_gender) %>% 
+  left_join(., gender_electorate_20, by = c("gender_code", "party_collapsed")) %>% 
+  mutate(turnout_bygender = round(gender_voted / gender_registered, 3) * 100,
+         turnout_bygender_party = round(party_registered_cast_by_gender / gender_registered_byparty, 3) * 100) %>% 
+  dplyr::select(gender_code, party_collapsed, gender_voted, gender_registered_byparty, turnout_bygender, turnout_bygender_party) %>% 
+  filter(party_collapsed %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+electorate_prop_bygender <- gender_electorate_20 %>% 
+  ungroup() %>% 
+  mutate(prop_electorate_bygender = round(gender_electorate_20$gender_registered / unique(voter_file_2020$count_2020_regvoters), 3) * 100) %>% 
+  dplyr::select(gender_code, prop_electorate_bygender) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+
+
+### 2016 ###
+
+
+gender_electorate_16 <- voter_file_2016 %>% 
+  dplyr::select(gender_code, count_2016_regvoters, party_collapsed) %>% 
+  group_by(gender_code) %>% 
+  mutate(gender_registered = n()) %>%  # the number of people registered by gender
+  ungroup() %>% group_by(party_collapsed) %>% 
+  mutate(party_registered_voters = n()) %>%   # the number of people registered to vote for each party
+  ungroup() %>% group_by(party_collapsed, gender_code) %>% 
+  mutate(gender_registered_byparty = n()) %>%   # the number of people registered by gender for each party 
+  distinct(., .keep_all = TRUE)
+
+gender_votescast_16 <- vhist_merge_2016 %>% 
+  dplyr::select(gender_code, count_votes_cast, party_collapsed_voted, party_collapsed) %>% 
+  group_by(gender_code) %>% 
+  mutate(gender_voted = n()) %>%       # the number of people who voted by gender 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(votes_cast_for_party = n()) %>%    # the number of people who voted per party (total)
+  ungroup() %>% group_by(party_collapsed_voted, gender_code) %>%   # the number of people who voted per party by gender
+  mutate(party_votes_cast_by_gender = n()) %>% 
+  ungroup() %>% group_by(party_collapsed, gender_code) %>% 
+  mutate(party_registered_cast_by_gender = n()) %>%  # the number of people registered 
+  distinct(., .keep_all = TRUE)
+
+# Data frames with output: 
+
+gender_electorate_prop_16 <- as.data.frame(gender_votescast_16) %>% 
+  dplyr::select(gender_code, party_collapsed_voted, votes_cast_for_party, party_votes_cast_by_gender) %>%
+  distinct(., .keep_all = TRUE) %>% 
+  mutate(electorate_prop_bygender = round(party_votes_cast_by_gender / votes_cast_for_party, 3) * 100) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+gender_turnout_16 <- as.data.frame(gender_votescast_16) %>% 
+  dplyr::select(gender_code, party_collapsed, gender_voted, party_registered_cast_by_gender) %>% 
+  left_join(., gender_electorate_16, by = c("gender_code", "party_collapsed")) %>% 
+  mutate(turnout_bygender = round(gender_voted / gender_registered, 3) * 100,
+         turnout_bygender_party = round(party_registered_cast_by_gender / gender_registered_byparty, 3) * 100) %>% 
+  dplyr::select(gender_code, party_collapsed, gender_voted, gender_registered_byparty, turnout_bygender, turnout_bygender_party) %>% 
+  filter(party_collapsed %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+electorate_prop_bygender_16 <- gender_electorate_16 %>% 
+  ungroup() %>% 
+  mutate(prop_electorate_bygender = round(gender_electorate_16$gender_registered / unique(voter_file_2016$count_2016_regvoters), 3) * 100) %>% 
+  dplyr::select(gender_code, prop_electorate_bygender) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+#### Calculate Percentage Increases over 2016 #### 
+
+votecounts_2016 <- vhist_merge_2016 %>% 
+  mutate(totalvotes_16 = n()) %>% 
+  ungroup() %>% group_by(gender_code) %>% 
+  mutate(gendercount_16 = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, gender_code) %>% 
+  mutate(gendercount_party16 = n()) %>% 
+  dplyr::select(totalvotes_16, gender_code, gendercount_16, party_collapsed_voted, gendercount_party16) %>% 
+  distinct(., .keep_all = TRUE)
+
+votecounts_2020 <- vhist_merge %>% 
+  mutate(totalvotes_20 = n()) %>% 
+  ungroup() %>% group_by(gender_code) %>% 
+  mutate(gendercount_20 = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, gender_code) %>% 
+  mutate(gendercount_party20 = n()) %>% 
+  dplyr::select(totalvotes_20, gender_code, gendercount_20, party_collapsed_voted, gendercount_party20) %>% 
+  distinct(., .keep_all = TRUE)
+
+percent_increase_gender <- left_join(votecounts_2016, votecounts_2020, by = c("gender_code", "party_collapsed_voted")) %>% 
+  mutate(total_perc_change = gendercount_20 / gendercount_16,
+         total_party_perc_change = gendercount_party20 / gendercount_party16) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+
+
+
+```
+
+
+
+
+## Turnout by Race 
+
+```{r}
+
+
+
+race_electorate_20 <- voter_file_2020 %>% 
+  dplyr::select(race_code, count_2020_regvoters, party_collapsed) %>% 
+  group_by(race_code) %>% 
+  mutate(race_registered = n()) %>%  # the number of people registered by race
+  ungroup() %>% group_by(party_collapsed) %>% 
+  mutate(party_registered_voters = n()) %>%   # the number of people registered to vote for each party
+  ungroup() %>% group_by(party_collapsed, race_code) %>% 
+  mutate(race_registered_byparty = n()) %>%   # the number of people registered by race for each party 
+  distinct(., .keep_all = TRUE)
+
+race_votescast_20 <- vhist_merge %>% 
+  dplyr::select(race_code, count_votes_cast, party_collapsed_voted, party_collapsed) %>% 
+  group_by(race_code) %>% 
+  mutate(race_voted = n()) %>%       # the number of people who voted by race 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(votes_cast_for_party = n()) %>%    # the number of people who voted per party (total)
+  ungroup() %>% group_by(party_collapsed_voted, race_code) %>%   # the number of people who voted per party by race
+  mutate(party_votes_cast_by_race = n()) %>% 
+  ungroup() %>% group_by(party_collapsed, race_code) %>% 
+  mutate(party_registered_cast_by_race = n()) %>%  # the number of people registered 
+  distinct(., .keep_all = TRUE)
+
+# Data frames with output: 
+
+race_electorate_prop_20 <- as.data.frame(race_votescast_20) %>% 
+  dplyr::select(race_code, party_collapsed_voted, votes_cast_for_party, party_votes_cast_by_race) %>%
+  distinct(., .keep_all = TRUE) %>% 
+  mutate(electorate_prop_byrace = round(party_votes_cast_by_race / votes_cast_for_party, 3) * 100) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+race_turnout <- as.data.frame(race_votescast_20) %>% 
+  dplyr::select(race_code, party_collapsed, race_voted, party_registered_cast_by_race) %>% 
+  left_join(., race_electorate_20, by = c("race_code", "party_collapsed")) %>% 
+  mutate(turnout_byrace = round(race_voted / race_registered, 3) * 100,
+         turnout_byrace_party = round(party_registered_cast_by_race / race_registered_byparty, 3) * 100) %>% 
+  dplyr::select(race_code, party_collapsed, race_voted, race_registered_byparty, turnout_byrace, turnout_byrace_party) %>% 
+  filter(party_collapsed %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+electorate_prop_byrace <- race_electorate_20 %>% 
+  ungroup() %>% 
+  mutate(prop_electorate_byrace = round(race_electorate_20$race_registered / unique(voter_file_2020$count_2020_regvoters), 3) * 100) %>% 
+  dplyr::select(race_code, prop_electorate_byrace) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+
+###############
+### 2016 ######
+###############
+
+race_electorate_16 <- voter_file_2016 %>% 
+  dplyr::select(race_code, count_2016_regvoters, party_collapsed) %>% 
+  group_by(race_code) %>% 
+  mutate(race_registered = n()) %>%  # the number of people registered by race
+  ungroup() %>% group_by(party_collapsed) %>% 
+  mutate(party_registered_voters = n()) %>%   # the number of people registered to vote for each party
+  ungroup() %>% group_by(party_collapsed, race_code) %>% 
+  mutate(race_registered_byparty = n()) %>%   # the number of people registered by race for each party 
+  distinct(., .keep_all = TRUE)
+
+race_votescast_16 <- vhist_merge_2016 %>% 
+  dplyr::select(race_code, count_votes_cast, party_collapsed_voted, party_collapsed) %>% 
+  group_by(race_code) %>% 
+  mutate(race_voted = n()) %>%       # the number of people who voted by race 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(votes_cast_for_party = n()) %>%    # the number of people who voted per party (total)
+  ungroup() %>% group_by(party_collapsed_voted, race_code) %>%   # the number of people who voted per party by race
+  mutate(party_votes_cast_by_race = n()) %>% 
+  ungroup() %>% group_by(party_collapsed, race_code) %>% 
+  mutate(party_registered_cast_by_race = n()) %>%  # the number of people registered 
+  distinct(., .keep_all = TRUE)
+
+# Data frames with output: 
+
+race_electorate_prop_16 <- as.data.frame(race_votescast_16) %>% 
+  dplyr::select(race_code, party_collapsed_voted, votes_cast_for_party, party_votes_cast_by_race) %>%
+  distinct(., .keep_all = TRUE) %>% 
+  mutate(electorate_prop_byrace = round(party_votes_cast_by_race / votes_cast_for_party, 3) * 100) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+race_turnout_16 <- as.data.frame(race_votescast_16) %>% 
+  dplyr::select(race_code, party_collapsed, race_voted, party_registered_cast_by_race) %>% 
+  left_join(., race_electorate_16, by = c("race_code", "party_collapsed")) %>% 
+  mutate(turnout_byrace = round(race_voted / race_registered, 3) * 100,
+         turnout_byrace_party = round(party_registered_cast_by_race / race_registered_byparty, 3) * 100) %>% 
+  dplyr::select(race_code, party_collapsed, race_voted, race_registered_byparty, turnout_byrace, turnout_byrace_party) %>% 
+  filter(party_collapsed %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+electorate_prop_byrace_16 <- race_electorate_16 %>% 
+  ungroup() %>% 
+  mutate(prop_electorate_byrace = round(race_electorate_16$race_registered / unique(voter_file_2016$count_2016_regvoters), 3) * 100) %>% 
+  dplyr::select(race_code, prop_electorate_byrace) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+
+#### Calculate Percentage Increases over 2016 #### 
+
+votecounts_2016 <- vhist_merge_2016 %>% 
+  mutate(totalvotes_16 = n()) %>% 
+  ungroup() %>% group_by(race_code) %>% 
+  mutate(racecount_16 = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, race_code) %>% 
+  mutate(racecount_party16 = n()) %>% 
+  dplyr::select(totalvotes_16, race_code, racecount_16, party_collapsed_voted, racecount_party16) %>% 
+  distinct(., .keep_all = TRUE)
+
+votecounts_2020 <- vhist_merge %>% 
+  mutate(totalvotes_20 = n()) %>% 
+  ungroup() %>% group_by(race_code) %>% 
+  mutate(racecount_20 = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, race_code) %>% 
+  mutate(racecount_party20 = n()) %>% 
+  dplyr::select(totalvotes_20, race_code, racecount_20, party_collapsed_voted, racecount_party20) %>% 
+  distinct(., .keep_all = TRUE)
+
+percent_increase_race <- left_join(votecounts_2016, votecounts_2020, by = c("race_code", "party_collapsed_voted")) %>% 
+  mutate(total_perc_change = racecount_20 / racecount_16,
+         total_party_perc_change = racecount_party20 / racecount_party16) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))
+
+
+
+
+```
+
+
+
+
+
+## Compare Turnout
+
+```{r}
+
+
+county_16 <- nc_vf_2016 %>% 
+  ungroup() %>% 
+  ungroup() %>% group_by(county_desc) %>% 
+    mutate(county_total = n()) %>% 
+  dplyr::select(county_desc, party_collapsed, county_total)
+
+county_agg_2016 <- vf_use_2016 %>% 
+                            group_by(county_desc, party_collapsed) %>% 
+                            mutate(count_county_demo = n()) %>% 
+                            dplyr::select(county_desc,
+                                          party_collapsed, 
+                                          count_county_demo) %>%
+                            distinct(., .keep_all = TRUE)
+# number of people registered to vote in each
+    # party in each county
+                        
+
+county_turnout_2016 <- vhist_merge_2016 %>% 
+                            group_by(party_collapsed, county_desc.x) %>% 
+                            mutate(county_turnout = n()) %>% ungroup() %>% 
+                            dplyr::select(county_desc.x,
+                                          party_collapsed, county_turnout) %>%
+                            distinct(., .keep_all = TRUE)
+# number of people who actually voted in each party in each county
+
+county_calc_turnout_2016 <- full_join(county_agg_2016, county_turnout_2016, by = c("county_desc" = "county_desc.x",
+                                                                              "party_collapsed" = "party_collapsed")) %>% 
+  filter(! is.na(party_collapsed)) 
+
+county_calc_turnout_2016$turnout_rate <- round(county_calc_turnout_2016$county_turnout / county_calc_turnout_2016$count_county_demo, 3) * 100
+colnames(county_calc_turnout_2016) <- c("county_desc", "party_collapsed", "county_total_2016", "county_turnout_2016", "turnout_rate_2016")
+
+
+
+county_16_partycount <- vhist_merge_2016 %>% 
+  ungroup() %>% group_by(party_collapsed_voted, county_desc.x) %>% 
+  mutate(party_count_2016 = n()) %>% 
+  dplyr::select(party_collapsed_voted, county_desc.x, party_count_2016) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+county_20_partycount <- vhist_merge %>% 
+  ungroup() %>% group_by(party_collapsed_voted, county_desc.x) %>% 
+  mutate(party_count_2020 = n()) %>% 
+  dplyr::select(party_collapsed_voted, county_desc.x, party_count_2020) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP"))%>% 
+  distinct(., .keep_all = TRUE)
+
+county_party_out <- left_join(county_16_partycount, county_20_partycount, by = c("party_collapsed_voted", "county_desc.x")) %>% 
+  mutate(prop_increase = party_count_2020 / party_count_2016)
+
+
+county_party_prop <- county_party_out %>% 
+  dplyr::select(party_collapsed_voted, county_desc.x, prop_increase) %>% 
+  pivot_wider(names_from = party_collapsed_voted, values_from = prop_increase) 
+
+  
+map_primary_party_demos <- left_join(county_geo, county_party_prop, by = c("CO_NAME" = "county_desc.x"))
+
+st_geometry(map_primary_party_demos) <- county_geo$geometry
+
+library(viridis)
+
+png_file <- paste(graphics_path_pc, "nc_plots/primarydemsmap.png", sep = "")
+pdf.file <- paste(graphics_path_pc, "nc_plots/primarydemsmap.pdf", sep = "")
+
+install.packages("grid")
+library(grid)
+
+map_primary_party_demosOUT <- ggplot(map_primary_party_demos) + 
+ geom_sf(aes(fill = DEM)) + 
+  labs(subtitle = "Democratic Primary",
+       fill = "Change, \n 2020 as Percent of 2016") +
+ theme_minimal() +  lims(fill = c(.4, 1.5)) +
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        plot.margin = grid::unit(c(0,0,0,0), "mm")) +
+  scale_fill_gradient(low = "#9FDDF3", high = "#0B2E4F",
+                      limits = c(0, 1.5)) 
+
++ scale_fill_gradient(low = "green", high = "blue",
+                            limits = c(0,130000))
+
+
+ggsave(paste(graphics_path_pc, "nc_plots/primarydemsmap.png", sep = ""), map_primary_party_demosOUT)
+
+
+map_primary_party_repsOUT <- ggplot(map_primary_party_demos) + 
+ geom_sf(aes(fill = REP)) + 
+  labs(subtitle = "Republican Primary",
+       fill = "Change, \n 2020 as Percent of 2016") +
+ theme_minimal() +  lims(fill = c(.4, 1.5)) +
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971")) +
+  scale_fill_gradient(low = "#9FDDF3", high = "#0B2E4F",
+                      limits = c(0, 1.5))
+
+ggsave(paste(graphics_path_pc, "nc_plots/primaryrepsmap.png", sep = ""), map_primary_party_repsOUT)
+
+
+map_turnout_reps <- ggplot(map_turnout) + 
+ geom_sf(aes(fill = REP)) + 
+  labs(main = "Turnout Change",
+       fill = "Change, 2020 - 2016") +
+  lims(fill = c(-30, 0)) + theme_minimal() +
+  theme(title = element_text(size = rel(1.4), family="Styrene B"))
+
+library(ggpubr)
+
+map_turnout_fig <- ggarrange(map_turnout_dems,
+                 map_turnout_reps,
+                labels = c("Democrats", "Republicans"),
+                 ncol = 1, nrow = 2)
+
+ggsave(paste(graphics_path_pc, "nc_plots/turnout_change_map.png", sep = ""), map_turnout_fig)
+
+
+
+county_scatplot_df <- county_party_out %>% 
+  pivot_wider(values_from = c(party_count_2016, party_count_2020, prop_increase), names_from = party_collapsed_voted)
+
+colnames(county_scatplot_df)
+
+ggplot(county_scatplot_df, aes(x = party_count_2016_DEM / 1000, y = party_count_2020_DEM / 1000)) + 
+  geom_point()
+
+
+```
+
+# Voting Mode Usage
+
+## Overall
+
+```{r}
+
+mode <- vhist_merge %>% 
+  ungroup() %>% 
+  mutate(state_total_turnout = n()) %>% 
+  ungroup() %>% group_by(voting_method_collapse) %>% 
+  mutate(mode_count = n(),
+         mode_prop = mode_count / state_total_turnout)
+
+m20 <- mode %>% 
+  dplyr::select(voting_method_collapse, mode_count, mode_prop) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+  
+mode16 <- vhist_merge_2016 %>% 
+  mutate(state_total_turnout = n()) %>% 
+  ungroup() %>% 
+  mutate(state_total_votes = n()) %>% 
+  ungroup() %>% group_by(voting_method_collapse) %>% 
+  mutate(mode_count = n(),
+         mode_prop = mode_count / state_total_votes)
+
+m16 <- mode16 %>% 
+  dplyr::select(voting_method_collapse, mode_count, mode_prop) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+```
+
+## Timing
+
+
+## County-Level
+```{r}
+
+m20_county <- vhist_merge %>% 
+  group_by(county_desc.x) %>% 
+  mutate(c_votescast = n()) %>% 
+  ungroup() %>% group_by(county_desc.x, voting_method_collapse) %>% 
+  mutate(county_mode = n(),
+         countymode_prop = county_mode / c_votescast) %>% 
+  dplyr::select(county_desc.x, c_votescast, voting_method_collapse, countymode_prop) %>% 
+  distinct(., .keep_all = TRUE)
+
+m20_county$election <- "2020 Primary"
+
+
+m16_county <- vhist_merge_2016 %>% 
+  group_by(county_desc.x) %>% 
+  mutate(c_votescast = n()) %>% 
+  ungroup() %>% group_by(county_desc.x, voting_method_collapse) %>% 
+  mutate(county_mode = n(),
+         countymode_prop = county_mode / c_votescast)%>% 
+  dplyr::select(county_desc.x, c_votescast, voting_method_collapse, countymode_prop) %>% 
+  distinct(., .keep_all = TRUE)
+
+m16_county$election <- "2016 Primary"
+
+all_cmode_out <- full_join(m20_county, m16_county, by = c("county_desc.x", 
+                                                          "voting_method_collapse")) %>% 
+  dplyr::select(-c(c_votescast.x, c_votescast.y, election.x, election.y))
+
+write.csv(all_cmode_out, "C:/Users/Blair Read/Dropbox (MIT)/Grad School/Side Projects/COVID Election Response/Data/county_votemode.csv")
+
+# county share of one stop voting
+
+names(m20_county)[names(m20_county) == "countymode_prop"] <- "countymode_prop_20"
+names(m16_county)[names(m16_county) == "countymode_prop"] <- "countymode_prop_16"
+
+names(m20_county)[names(m20_county) == "c_votescast"] <- "votescast_20"
+
+all_cmode_early <- full_join(m20_county, m16_county, by = c("county_desc.x", "voting_method_collapse")) %>% 
+  dplyr::select(-c(c_votescast, election.x, election.y)) %>% 
+  filter(voting_method_collapse == "ONE STOP") %>% 
+  ggplot(., aes(x = countymode_prop_16, y = countymode_prop_20)) + geom_point(aes(size = votescast_20)) +
+  labs(x = "2016 Share", y = "2020 Share", title = "County Share of One Stop Voting", size = "Votes Cast, \n 2020") + 
+  geom_abline()  + theme_minimal() + 
+  ylim(0, 0.5) + 
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        legend.text = element_text(color = "#525971")) + 
+  coord_fixed()
+
+all_cmode_mailin <- full_join(m20_county, m16_county, by = c("county_desc.x", "voting_method_collapse")) %>% 
+  dplyr::select(-c(c_votescast, election.x, election.y)) %>% 
+  filter(voting_method_collapse == "ABSENTEE") %>% 
+  ggplot(., aes(x = countymode_prop_16, y = countymode_prop_20)) + geom_point(aes(size = votescast_20)) +
+  labs(x = "2016 Share", y = "2020 Share", title = "County Share of Mail-In Voting", size = "Votes Cast, \n 2020") + 
+  geom_abline() + ylim(0, .07) + xlim(0, .07) + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        legend.text = element_text(color = "#525971")) + 
+  coord_fixed()
+
+all_cmode_dayof <- full_join(m20_county, m16_county, by = c("county_desc.x", "voting_method_collapse")) %>% 
+  dplyr::select(-c(c_votescast, election.x, election.y)) %>% 
+  filter(voting_method_collapse == "ELECTION DAY (IN PERSON)") %>% 
+  ggplot(., aes(x = countymode_prop_16, y = countymode_prop_20)) +
+  geom_point(aes(size = votescast_20)) +
+  labs(x = "2016 Share", y = "2020 Share", title = "County Share of In-Person Voting", size = "Votes Cast, \n 2020") + 
+  coord_fixed() + geom_abline() + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        legend.text = element_text(color = "#525971")) 
+
+ggsave(paste(graphics_path_pc, "nc_plots/all_cmode_early.png", sep = ""), all_cmode_early)
+ggsave(paste(graphics_path_pc, "nc_plots/all_cmode_mailin.png", sep = ""), all_cmode_mailin)
+ggsave(paste(graphics_path_pc, "nc_plots/all_cmode_dayof.png", sep = ""), all_cmode_dayof)
+
+
+f <- ggarrange(all_cmode_early, all_cmode_mailin, all_cmode_dayof, 
+                 labels = c("", "", ""),
+                 ncol = 1, nrow = 3)
+
+###### 
+
+all_cmode <- full_join(m20_county, m16_county, by = c("county_desc.x", "voting_method_collapse")) %>% 
+  dplyr::select(-c(c_votescast.x, c_votescast.y, election.x, election.y)) %>% 
+  pivot_wider(id_cols = county_desc.x, names_from = voting_method_collapse, values_from = c(countymode_prop_20,                                                  countymode_prop_16)) %>% 
+  left_join(., county_geo, by = c("county_desc.x" = "CO_NAME"))
+
+all_cmode[,2:7] <- apply(all_cmode[,2:7], 2, function(x){round(x, 3) * 100})
+
+st_geometry(all_cmode) <- county_geo$geometry
+
+dayof_20 <- ggplot(all_cmode) + 
+ geom_sf(aes(fill = `countymode_prop_20_ELECTION DAY (IN PERSON)`)) + 
+  labs(main = "", subtitle = "Election Day Voting",
+       fill = "Proportion of \n Voters") + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971")) +
+  scale_fill_gradient(low = "#F59181", high = "#8D2115")
+
+mailin_20 <- ggplot(all_cmode) + 
+ geom_sf(aes(fill = `countymode_prop_20_ABSENTEE`)) + 
+  labs(main = "", subtitle = "Mail-In Voting",
+       fill = "Proportion of \n Voters") + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971")) +
+  scale_fill_gradient(low = "#F59181", high = "#8D2115")
+
+onestop_20 <- ggplot(all_cmode) + 
+ geom_sf(aes(fill = `countymode_prop_20_ONE STOP`)) + 
+  labs(main = "", subtitle = "One-Stop Voting",
+       fill = "Proportion of \n Voters") + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971")) +
+  scale_fill_gradient(low = "#F59181", high = "#8D2115")
+
+fig_mode <- ggarrange(dayof_20, mailin_20, onestop_20, 
+                 labels = c("", "", ""),
+                 ncol = 1, nrow = 3)
+
+ggsave(paste(graphics_path_pc, "nc_plots/fig_mode.png", sep = ""), fig_mode)
+
+
+ggsave(paste(graphics_path_pc, "nc_plots/dayof20.png", sep = ""), dayof_20)
+ggsave(paste(graphics_path_pc, "nc_plots/mailin_20.png", sep = ""), mailin_20)
+ggsave(paste(graphics_path_pc, "nc_plots/onestop_20.png", sep = ""), onestop_20)
+
+
+
+```
+
+## Compare Vote Mode
+
+```{r}
+
+## 2016 ##
+
+
+mode_byreg_16 <-  mode16 %>% 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(byparty = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, voting_method_collapse) %>% 
+  mutate(mode_groupcount_party = n(),
+         proportion_mode_party = round(mode_groupcount_party / byparty, 3) * 100) %>% 
+  dplyr::select(voting_method_collapse, 
+                party_collapsed_voted, byparty, mode_groupcount_party, proportion_mode_party) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP", "Third Party")) %>% 
+  distinct(., .keep_all = TRUE)
+
+mode_byreg_20 <-  mode %>% 
+  ungroup() %>% group_by(party_collapsed_voted) %>% 
+  mutate(byparty = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, voting_method_collapse) %>% 
+  mutate(mode_groupcount_party = n(),
+         proportion_mode_party = round(mode_groupcount_party / byparty, 3) * 100) %>% 
+  dplyr::select(voting_method_collapse, 
+                party_collapsed_voted, byparty, mode_groupcount_party, proportion_mode_party) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP", "Third Party")) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+agemode_16 <- mode16 %>% 
+  ungroup() %>% group_by(age_bucket) %>% 
+  mutate(group_count = n()) %>% 
+  ungroup() %>% group_by(age_bucket, voting_method_collapse) %>% 
+  mutate(mode_group_count = n(),
+         proportion_turnout_mode = round(mode_group_count / group_count, 3) * 100) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket) %>% 
+  mutate(age_byparty = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket, voting_method_collapse) %>% 
+  mutate(mode_groupcount_party = n(),
+         proportion_mode_party = round(mode_groupcount_party / age_byparty, 3) * 100) %>% 
+  dplyr::select(age_bucket, voting_method_collapse, 
+                mode_group_count, proportion_turnout_mode,
+                party_collapsed_voted, age_byparty, mode_groupcount_party, proportion_mode_party) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+
+agemode_20 <- mode %>% 
+  ungroup() %>% group_by(age_bucket) %>% 
+  mutate(group_count = n()) %>% 
+  ungroup() %>% group_by(age_bucket, voting_method_collapse) %>% 
+  mutate(mode_group_count = n(),
+         proportion_turnout_mode = round(mode_group_count / group_count, 3) * 100) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket) %>% 
+  mutate(age_byparty = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, age_bucket, voting_method_collapse) %>% 
+  mutate(mode_groupcount_party = n(),
+         proportion_mode_party = round(mode_groupcount_party / age_byparty, 3) * 100) %>% 
+  dplyr::select(age_bucket, voting_method_collapse, 
+                mode_group_count, proportion_turnout_mode,
+                party_collapsed_voted, age_byparty, mode_groupcount_party, proportion_mode_party) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+racemode_16 <- mode16 %>% 
+  ungroup() %>% group_by(race_code) %>% 
+  mutate(group_count = n()) %>% 
+  ungroup() %>% group_by(age_bucket, voting_method_collapse) %>% 
+  mutate(mode_group_count = n(),
+         proportion_turnout_mode = round(mode_group_count / group_count, 3) * 100) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, race_code) %>% 
+  mutate(race_byparty = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, race_code, voting_method_collapse) %>% 
+  mutate(mode_groupcount_party = n(),
+         proportion_mode_party = round(mode_groupcount_party / race_byparty, 3) * 100) %>% 
+  dplyr::select(race_code, voting_method_collapse, 
+                mode_group_count, proportion_turnout_mode,
+                party_collapsed_voted, race_byparty, mode_groupcount_party, proportion_mode_party) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+
+racemode_20 <- mode %>% 
+  ungroup() %>% group_by(race_code) %>% 
+  mutate(group_count = n()) %>% 
+  ungroup() %>% group_by(age_bucket, voting_method_collapse) %>% 
+  mutate(mode_group_count = n(),
+         proportion_turnout_mode = round(mode_group_count / group_count, 3) * 100) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, race_code) %>% 
+  mutate(race_byparty = n()) %>% 
+  ungroup() %>% group_by(party_collapsed_voted, race_code, voting_method_collapse) %>% 
+  mutate(mode_groupcount_party = n(),
+         proportion_mode_party = round(mode_groupcount_party / race_byparty, 3) * 100) %>% 
+  dplyr::select(race_code, voting_method_collapse, 
+                mode_group_count, proportion_turnout_mode,
+                party_collapsed_voted, race_byparty, mode_groupcount_party, proportion_mode_party) %>% 
+  filter(party_collapsed_voted %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+
+
+
+
+
+
+```
+
+# Absentee Analysis
+
+```{r Figure X: Vote Volume by Proximity to Election, echo = FALSE}
+
+# Analysis for Figure X: Vote Volume by Proximity to Election
+
+absentee$election_dt <- parse_datae_time(absentee$election_dt, orders = "mdy")
+absentee$ballot_req_dt <- parse_date_time(absentee$ballot_req_dt, orders = "mdy")
+absentee$ballot_send_dt <- parse_date_time(absentee$ballot_send_dt, orders = "mdy")
+absentee$ballot_rtn_dt <- parse_date_time(absentee$ballot_rtn_dt, orders = "mdy")
+
+absentee_onestop <- filter(absentee, ballot_req_delivery_type == "IN PERSON")
+absentee_onestop <- filter(absentee_onestop, ! site_name %in% c("MAILED", " "))
+absentee_onestop <- filter(absentee_onestop, ! ballot_req_type == "MAIL")
+
+absentee_anlyz <- absentee_onestop %>% 
+  mutate(time_interval = lubridate::interval(ballot_req_dt, election_dt),
+         days_to_elec = (as.period(time_interval)@day)*-1) %>% 
+  filter(! year(ballot_req_dt) == 2015) %>% 
+  group_by(election_dt, days_to_elec) %>% 
+  mutate(pooled_days = n()) %>% 
+  ungroup() %>% group_by(election_dt, days_to_elec, voter_party_code) %>% 
+  mutate(party_days = n()) %>% 
+  dplyr::select(election_dt, ballot_req_dt, days_to_elec, pooled_days, 
+         voter_party_code, party_days) %>% 
+  distinct(., .keep_all = TRUE) %>% 
+  filter(days_to_elec < -1)
+
+absentee_anlyz <- as.data.frame(absentee_anlyz)
+absentee_anlyz$days_of_week <- weekdays(absentee_anlyz$ballot_req_dt)
+
+absentee_anlyz$voter_party_collapse <- ifelse(absentee_anlyz$voter_party_code %in% c("GRE", "LIB", "CST"), "Other", absentee_anlyz$voter_party_code)
+
+
+abs_osv_20 <- absentee_anlyz %>% 
+  filter(voter_party_code %in% c("DEM", "REP")) %>% 
+  filter(year(election_dt) == 2020) 
+
+abs_osv_16 <- absentee_anlyz %>% 
+  filter(voter_party_code %in% c("DEM", "REP")) %>% 
+  filter(year(election_dt) == 2016) %>% 
+  filter(days_to_elec > -13)
+
+
+absentee_anlyz$labels_hand <- paste(absentee_anlyz$days_to_elec, " (", absentee_anlyz$days_of_week, ")", sep = "")
+
+abs_osv_20$ballot_req_dt_2 <- as.Date(abs_osv_20$ballot_req_dt)
+abs_osv_16$ballot_req_dt_2 <- as.Date(abs_osv_16$ballot_req_dt)
+
+cols <- c("DEM" = "#156DD0", "REP" = "#F6573E")
+#p + scale_colour_manual(values = cols)
+
+timing_viz_party_20 <- abs_osv_20 %>% 
+  filter(voter_party_code %in% c("DEM", "REP")) %>% 
+  ggplot(., aes(x = ballot_req_dt_2, y = party_days, color = as.factor(voter_party_collapse))) + 
+  geom_point() + geom_line() + 
+  labs(x = "Voting Date", y = "2020 Early Votes", color = "Party Registration") +
+  scale_x_date(date_breaks = 'day', 
+                 date_labels = '%b %d\n%a') + 
+  ylim(0, 65000)+ theme_minimal() +
+  theme(title = element_text(size = rel(1.4), family="Styrene B", color = "#525971"),
+        axis.text.x = element_text(angle = 90, color = "#525971"),
+        legend.position = "bottom",
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        axis.title.x = element_text(color = "#525971"),
+        axis.title.y = element_text(color = "#525971")) + 
+  scale_color_manual(values = cols)
+
+
+
+start_date <- min(abs_osv_16$ballot_req_dt) - days(7)
+dates_missing_16 <- rep(seq(as.Date(start_date), as.Date("2016-03-02"), "days"), each = 2)
+abs_16_fixed <- abs_osv_16[1:14,]
+abs_16_fixed$ballot_req_dt <- dates_missing_16
+abs_16_fixed$ballot_req_dt_2 <- dates_missing_16
+abs_16_fixed$pooled_days <- NA
+abs_16_fixed$party_days <- NA
+
+abs_16_FINAL <- rbind.data.frame(abs_osv_16,
+                                 abs_16_fixed)
+
+
+timing_viz_party_16 <- abs_16_FINAL %>% 
+  filter(voter_party_code %in% c("DEM", "REP")) %>% 
+  ggplot(., aes(x = ballot_req_dt_2, y = party_days, color = as.factor(voter_party_collapse))) + 
+  geom_point() + geom_line() + 
+  labs(x = "Voting Date", y = "2016 Early Votes", color = "Party Registration") +
+  scale_x_date(date_breaks = 'day', 
+                 date_labels = '%b %d\n%a') + 
+  ylim(0, 65000)+ theme_minimal() +
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        axis.text.x = element_text(angle = 90, color = "#525971"),
+        legend.position = "bottom",
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        axis.title.x = element_text(color = "#525971"),
+        axis.title.y = element_text(color = "#525971")) + 
+  scale_color_manual(values = cols)
+
+
+fig_timing <- ggarrange(timing_viz_party_16,
+                 timing_viz_party_20,
+                 ncol = 1, nrow = 2)
+
+ggsave(paste(graphics_path_pc, "nc_plots/fig_timing.png", sep = ""), fig_timing)
+
+
+```
+
+## All Absentee Rejection Rates
+
+```{r rejected_ballots, echo = FALSE}
+
+# Figure out the difference between the absentee VF and the 
+  # voter history file
+
+absentee_2020 <- absentee_mailin[absentee_mailin$election_dt == as.Date("2020-03-03"),]
+absentee_2016 <- absentee_mailin[absentee_mailin$election_dt == as.Date("2016-03-15"),]
+
+absentee_2020_sub <- dplyr::select(absentee_2020, ncid, race, gender, 
+                                 ballot_req_delivery_type, ballot_rtn_status,
+                                 ballot_rtn_status) 
+apply(absentee_2020_sub, 2, function(x) sum(is.na(x)))
+
+vhist_sub_abs <- filter(vhist_merge, voting_method_collapse =="ABSENTEE") 
+
+apply(merged_absentee, 2, function(x) sum(is.na(x)))
+# only 1 person isn't merged here! 
+
+table(merged_absentee$ballot_rtn_status)
+  # 97% are accepted when you look at it this way
+
+vhist_merge_forabs <- filter(vhist_merge, voting_method_collapse %in% c("ABSENTEE", "ONE STOP")) %>% 
+  dplyr::select(-c(voter_reg_num, election_desc, voting_method,
+                   pct_label, pct_description, voted_county_id, voted_county_desc, vtd_label,
+                   vtd_description, county_desc.y, last_name, first_name, precinct_abbrv, vtd_desc, vtd_abbrv))
+
+merged_absentee_fromabsvf <- left_join(merged_absentee, vhist_merge_forabs, by = "ncid")
+  # but here, it says only one of these didn't merge either, which doesn't make much sense
+
+absentee_2020_sub_2 <- absentee_2020_sub[! absentee_2020_sub$ballot_req_delivery_type == "IN PERSON",]
+diff_absentee <- absentee_2020_sub_2[! absentee_2020_sub_2$ncid %in% vhist_sub_abs$ncid, ]
+  # it seems like it's the people whose ballots were not accepted that are excluded from the voter history data in 2020apply(merged_absentee_fromabsvf, 2, function(x) sum(is.na(x)))
+
+  # so we definitely want to use the absentee data! 
+
+```
+
+
+```{r}
+
+absentee$age_bucket <- age_bucket_func(absentee, "age")
+
+absentee$party_collapsed_voted <- ifelse(absentee$voter_party_code %in% 
+                                           c("CST", "GRE", "LIB"), "Third Party", absentee$voter_party_code)
+
+# Analysis for:
+# Figure X: Baseline Rejection Rates, 2016 - 2020.
+# Figure X: Rate of change in ballot rejection rates (2016 - 2020). 
+# Figure X: Ballot Rejection Reasons
+
+table(absentee$ballot_rtn_status)
+table(absentee$ballot_rtn_status, absentee$election_dt)
+nrow(absentee[absentee$ballot_rtn_status == "ACCEPTED",]) / nrow(absentee)
+  # 97.6 of all absentee ballots were accepted  
+  # but this includes early voting
+
+table(absentee$ballot_req_delivery_type, absentee$ballot_req_type)
+
+absentee_mailin <- absentee %>% 
+  filter(! ballot_req_type %in% c("ONE-STOP", "IN PERSON"))
+
+table(absentee_mailin$election_dt)
+  # 56,237 ballots in 2016 versus 41,428 ballots in 2020
+
+table(absentee_mailin$ballot_req_delivery_type, absentee_mailin$ballot_req_type)
+
+table(absentee_mailin$ballot_rtn_status)
+
+# which ballots were not returned
+absentee_mailin$no_return <- ifelse(is.na(absentee_mailin$ballot_rtn_dt), 1, 0)
+table(absentee_mailin$no_return, absentee_mailin$election_dt)
+
+#                    2016-03-15 2020-03-03
+#  returned          41506      29361
+#  not returned      14731      12067
+
+absentee_mailin$type <- "MAIL"
+
+table(absentee_mailin$ballot_req_delivery_type, absentee_mailin$ballot_req_type)
+table(absentee_2020$ballot_rtn_dt)
+
+absentee_mailin <- absentee_mailin %>% 
+  filter(ballot_rtn_status != "") %>% 
+  filter(no_return == 0)
+
+
+
+absentee_problems <- absentee_mailin %>% 
+  ungroup() %>% 
+  filter(ballot_rtn_status != "") %>% 
+  filter(no_return == 0) %>% 
+  group_by(election_dt, type, ballot_rtn_status) %>% 
+  add_count() %>% 
+  rename(status_by_reqtype = n) %>% 
+  ungroup() %>% group_by(election_dt, type) %>% 
+  add_count() %>% 
+  mutate(prop_status = status_by_reqtype / n) %>% 
+  dplyr::select(election_dt, type, ballot_rtn_status, status_by_reqtype, prop_status, n) %>% 
+  distinct(., .keep_all = TRUE)
+
+absentee_problems$prop_status <- round(absentee_problems$prop_status, 3) * 100
+
+absentee_problems_party_reg <- absentee_mailin %>% 
+  ungroup() %>% 
+  filter(ballot_rtn_status != "") %>% 
+  group_by(election_dt, type, ballot_rtn_status, ballot_request_party) %>% 
+  add_count() %>% 
+  rename(status_by_reqtype = n) %>% 
+  ungroup() %>% group_by(election_dt, type, ballot_request_party) %>% 
+  add_count() %>% 
+  mutate(prop_status = status_by_reqtype / n) %>% 
+  dplyr::select(election_dt, type, ballot_rtn_status, status_by_reqtype, prop_status, n,
+                ballot_request_party) %>% 
+  distinct(., .keep_all = TRUE) %>% 
+  filter(ballot_request_party %in% c("REP", "DEM"))
+
+absentee_problems_party_reg$prop_status <- round(absentee_problems_party_reg$prop_status, 3) * 100
+
+absentee_problems$prop_status <- round(absentee_problems$prop_status, 3) * 100
+
+ggplot(absentee_problems[absentee_problems$ballot_req_type %in% c("E-MAIL", "MAIL"),], aes(x = ballot_rtn_status, y = prop_status, fill = as.factor(election_dt))) + geom_bar(stat = "identity", 
+                                                                                                                                       position = position_dodge()) +
+  theme(axis.text.x = element_text(angle = 90))
+
+absentee_county <- absentee_mailin %>% 
+  ungroup() %>% 
+  filter(ballot_rtn_status != "") %>% 
+  group_by(election_dt, ballot_rtn_status, county_desc) %>%
+  add_count() %>% 
+  rename(status_by_reqtype = n) %>% 
+  ungroup() %>% group_by(election_dt, county_desc) %>% 
+  add_count() %>% 
+  mutate(prop_status = status_by_reqtype / n) %>% 
+  dplyr::select(election_dt, type, ballot_rtn_status, status_by_reqtype, prop_status, n, county_desc) %>% 
+  distinct(., .keep_all = TRUE) %>% 
+  filter(! ballot_rtn_status %in% c("ACCEPTED", "SPOILED")) %>% 
+  group_by(election_dt, county_desc) %>% 
+  mutate(thrownout_prop = round(sum(prop_status), 3) * 100) %>% 
+  dplyr::select(election_dt, type, county_desc, thrownout_prop) %>% 
+  filter(year(election_dt) == 2020) %>% 
+  distinct(., .keep_all = TRUE)
+
+missing_cos <- absentee[! absentee$county_desc %in% unique(absentee_county$county_desc),]
+missing_cos <- as.data.frame(unique(missing_cos$county_desc))
+missing_cos$election_dt <- "2020-03-03"
+missing_cos$type <- "MAIL"
+missing_cos$thrownout_prop <- 0.0
+colnames(missing_cos) <- c("county_desc", "election_dt", "type", "thrownout_prop")
+
+absentee_county_out <- rbind.data.frame(absentee_county, missing_cos)
+absentee_geo <- right_join(county_geo, absentee_county_out, by = c("CO_NAME" = "county_desc"))
+
+st_geometry(absentee_geo) <- county_geo$geometry
+
+plot_county <- ggplot(absentee_geo) + 
+ geom_sf(aes(fill = thrownout_prop)) + 
+  labs(main = "", subtitle = "Proportion of Rejected Absentee Ballots",
+       fill = "% Uncounted \n Ballots") + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971", family="Styrene B"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971")) +
+  scale_fill_gradient(low = "#DDDBFB", 
+                      high = "#4E4A81")
+
+
+ggsave(paste(graphics_path_pc, "nc_plots/plot_county_rejection.png", sep = ""), plot_county)
+
+
+
+
+absentee_county_both_elections <- absentee_mailin %>% 
+  ungroup() %>% 
+  filter(ballot_rtn_status != "") %>% 
+  group_by(election_dt, ballot_rtn_status, county_desc) %>%
+  add_count() %>% 
+  rename(status_by_reqtype = n) %>% 
+  ungroup() %>% group_by(election_dt, county_desc) %>% 
+  add_count() %>% 
+  mutate(prop_status = status_by_reqtype / n) %>% 
+  dplyr::select(election_dt, type, ballot_rtn_status, status_by_reqtype, prop_status, n, county_desc) %>% 
+  distinct(., .keep_all = TRUE) %>% 
+  filter(! ballot_rtn_status %in% c("ACCEPTED", "SPOILED")) %>% 
+  group_by(election_dt, county_desc) %>% 
+  mutate(thrownout_prop = round(sum(prop_status), 3) * 100) %>% 
+  dplyr::select(election_dt, type, county_desc, thrownout_prop, n) %>% 
+  distinct(., .keep_all = TRUE)
+
+abs_cc_20 <- absentee_county_both_elections[absentee_county_both_elections$election_dt == as.Date("2020-03-03"),]
+colnames(abs_cc_20) <- c("election_dt", "type", "county_desc", "toss_20", "count_20")
+
+abs_cc_16 <- absentee_county_both_elections[absentee_county_both_elections$election_dt == as.Date("2016-03-15"),]
+colnames(abs_cc_16) <- c("election_dt", "type", "county_desc", "toss_16", "count_16")
+
+abs_cc <- full_join(abs_cc_20, abs_cc_16, by = c("type", "county_desc"))
+abs_cc$pct_change <- abs_cc$count_20 / abs_cc$count_16
+
+absentee_county_compare <- absentee_county_both_elections %>% 
+  pivot_wider(names_from = election_dt, values_from = thrownout_prop)
+
+absentee_reject_tt <- ggplot(abs_cc, aes(x = toss_16, y = toss_20)) + 
+  geom_point(aes(size = count_20)) + labs(x = "% Rejected Ballots, 2016", y = "% Rejected Ballots, 2020", size = "Volume of 2020 \n VBM") + 
+  coord_fixed() + geom_abline() + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971")) +
+  scale_fill_gradient(low = "#DDDBFB", 
+                      high = "#4E4A81") + 
+  xlim(0, 30) + ylim(0, 30)
+
+
+reject_pctchg <- ggplot(abs_cc, aes(x = pct_change, y = toss_20)) + 
+  geom_point() + labs(x = "2020 Ballot Volume \n (Baseline 2016)", y = "% Rejected Ballots, 2020") + geom_smooth(method = "lm", formula = y~x, color = "#8D2115") + theme_minimal() + 
+  theme(title = element_text(size = rel(1.4), color = "#525971", family="Styrene B"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971")) +
+  scale_fill_gradient(low = "#DDDBFB", 
+                      high = "#4E4A81")
+
+
+
+ggsave(paste(graphics_path_pc, "nc_plots/absentee_rejection_timetrend.png", sep = ""), absentee_reject_tt)
+
+
+ggsave(paste(graphics_path_pc, "nc_plots/reject_percchg.png", sep = ""), reject_pctchg)
+
+
+
+
+```
+
+```{r}
+
+absentee_county_out <- rbind.data.frame(absentee_county, missing_cos)
+absentee_geo <- right_join(county_geo, absentee_county_out, by = c("CO_NAME" = "county_desc"))
+
+st_geometry(absentee_geo) <- county_geo$geometry
+
+plot_county <- ggplot(absentee_geo) + 
+ geom_sf(aes(fill = thrownout_prop)) + 
+  labs(main = "", subtitle = "Proportion of Rejected Absentee Ballots",
+       fill = " ") +  scale_fill_viridis() 
+ggsave(paste(graphics_path_pc, "nc_plots/plot_county_rejection.png", sep = ""), plot_county)
+
+# Group differences in ballots cast
+#x <- "race"
+reject_demo_TEMP <- lapply(as.list(c("age_bucket", "race")), function(x){
+  out <- absentee_mailin %>% 
+    ungroup() %>% 
+  filter(ballot_rtn_status != "") %>% 
+  filter(ballot_rtn_status != "SPOILED") %>% 
+  group_by(election_dt, ballot_rtn_status, ballot_request_party, get(x)) %>%
+  add_count() %>% 
+  rename(status_by_reqtype = n) %>% 
+  ungroup() %>% group_by(election_dt, ballot_request_party, get(x)) %>% 
+  add_count() %>% 
+  mutate(prop_status = status_by_reqtype / n) %>% 
+  dplyr::select(election_dt, ballot_rtn_status, 
+                status_by_reqtype, prop_status, n, ballot_request_party, `get(x)`) %>% 
+  distinct(., .keep_all = TRUE) %>% 
+  filter(ballot_rtn_status %in% c("ACCEPTED")) %>% 
+  mutate(thrownout_prop = round(1 - prop_status, 3) * 100) %>% 
+  dplyr::select(election_dt, `get(x)`, thrownout_prop, ballot_request_party) %>% 
+  filter(ballot_request_party %in% c("DEM", "REP")) %>% 
+  distinct(., .keep_all = TRUE)
+  return(out)
+})
+
+reject_demo <- do.call(rbind, reject_demo_TEMP)
+
+# spot check 
+absentee_mailin20_new_dem <- absentee_mailin[absentee_mailin$election_dt == 
+                                           as.Date("2020-03-03") &
+                                             absentee_mailin$ballot_request_party == "DEM",]
+table(absentee_mailin20_new_dem$race) #2761
+table(absentee_mailin20_new$race, absentee_mailin20_new$ballot_rtn_status)
+
+table(absentee_mailin[absentee_mailin$election_dt == as.Date("2020-03-03"),]$race)
+
+table(absentee_mailin[absentee_mailin$election_dt == as.Date("2020-03-03")&
+                                             absentee_mailin$ballot_request_party == "DEM",]$race,
+      absentee_mailin[absentee_mailin$election_dt == as.Date("2020-03-03")&
+                                             absentee_mailin$ballot_request_party == "DEM",]$ballot_rtn_status)
+  # accepted matches (2383)
+
+table(absentee_mailin[absentee_mailin$election_dt == as.Date("2020-03-03")&
+                                             absentee_mailin$ballot_request_party == "DEM",]$race,
+      absentee_mailin[absentee_mailin$election_dt == as.Date("2020-03-03")&
+                                             absentee_mailin$ballot_request_party == "DEM",]$ballot_request_party)
+
+
+```
+
+
+## FTV Rejection Rates
+
+```{r}
+
+
+count_rows <- voter_history %>% 
+  dplyr::select(ncid) %>% 
+  group_by(ncid) %>% 
+  mutate(voter_election_count = n()) %>% 
+  distinct(., .keep_all = TRUE)
+
+# this will give me the number of elections everyone voted in, including 2020
+
+join_abs <- left_join(absentee_mailin20, count_rows, by = "ncid")
+join_abs$dich_status <- ifelse(join_abs$voter_election_count == 1, "New Voter",
+                               ifelse(is.na(join_abs$voter_election_count), "Huh?", "Has Voted"))
+
+
+absentee_problems_byhis <- join_abs %>%
+  group_by(dich_status) %>% 
+  add_count() %>% 
+  rename(voters_bygroup = n) %>% 
+  ungroup() %>% group_by(ballot_rtn_status, dich_status) %>% 
+  add_count() %>% 
+  mutate(prop_status = n / voters_bygroup) %>% 
+  dplyr::select(ballot_rtn_status, voters_bygroup, prop_status, n, dich_status) %>% 
+  distinct(., .keep_all = TRUE) %>% 
+  filter(! is.na(dich_status))
+
+absentee_problems_byhis$prop_status <- round(absentee_problems_byhis$prop_status, 3) * 100
+
+
+```
+
+# Voting Traffic
+
+```{r early_crowding, echo = FALSE}
+
+# All graphics from early voting crowding section
+
+onestop_sites_TEMP <- read_data(author, "COVID Election Response/Healthy_Elections/States/NC/", "onestop_sites_noaddresses_SAVE.xlsx")
+
+onestop_sites_TEMP <- as.data.frame(apply(onestop_sites_TEMP, 2, function(x){
+  x <- trimws(toupper(as.character(unlist(x))))
+}))
+
+onestop_sites_TEMP <- onestop_sites_TEMP[! is.na(onestop_sites_TEMP$dates),]
+
+onestop_sites_TEMP$county_clean <- while(length(ind <- which(is.na(onestop_sites_TEMP$county))) > 0){
+  onestop_sites_TEMP$county[ind] <- onestop_sites_TEMP$county[ind -1]
+}
+
+colnames(onestop_sites_TEMP) <- c("county", "voting_site", "dates", "open_hours")
+
+onestop_sites_TEMP$site_clean <- while(length(ind <- which(is.na(onestop_sites_TEMP$voting_site))) > 0){
+  onestop_sites_TEMP$voting_site[ind] <- onestop_sites_TEMP$voting_site[ind -1]
+}
+
+onestop_sites_TEMP$site_clean <- while(length(ind <- which(onestop_sites_TEMP$voting_site == "")) > 0){
+   onestop_sites_TEMP$voting_site[ind] <- onestop_sites_TEMP$voting_site[ind -1]
+}
+
+onestop_sites <- onestop_sites_TEMP %>% 
+  separate(open_hours, into = c("open", "close"), sep = "-") %>% 
+  separate(dates, into = c("start_date", "end_date"), sep = "-") %>% 
+  mutate(end_date = ifelse(is.na(end_date), start_date, end_date)) 
+
+onestop_sites$start_date <- as.numeric(unlist(regmatches(onestop_sites$start_date, gregexpr("[[:digit:]]+", onestop_sites$start_date))))
+onestop_sites$end_date <- as.numeric(unlist(regmatches(onestop_sites$end_date, gregexpr("[[:digit:]]+", onestop_sites$end_date))))
+
+onestop_sites_2 <- onestop_sites %>% 
+    rowwise() %>%
+    do(data.frame(voting_site = .$voting_site, county = .$county,
+                  open = .$open, close = .$close,
+                  day = seq(.$start_date, .$end_date, by = 1))) %>% 
+   mutate(day = paste("02/", day, "/2020", sep = "")) %>% 
+  dplyr::select(voting_site, county, open, close, day)
+
+onestop_sites_2$open_time <- mdy_hm(paste(onestop_sites_2$day, onestop_sites_2$open, sep = " "), tz = "US/Eastern")
+
+onestop_sites_2$close_time <- mdy_hm(paste(onestop_sites_2$day, onestop_sites_2$close, sep = " "), tz = "US/Eastern") + hours(12)
+
+os_out <- onestop_sites_2 %>% 
+  mutate(hours_open = close_time - open_time)
+
+os_out$voting_site[os_out$voting_site == "(AUDITORIUM)"] <- "ALAMANCE COUNTY OFFICE ANNEX BUILDING (AUDITORIUM)"
+os_out$voting_site[os_out$voting_site == "ALAMANCE COUNTY OFFICE ANNEX BUILDING"] <- "ALAMANCE COUNTY OFFICE ANNEX BUILDING (AUDITORIUM)"
+
+absentee$date <- as.factor(absentee$election_dt)
+absentee$ballot_req_type[absentee$ballot_req_type == "IN PERSON"] <- "ONE-STOP"
+
+earlyvote_crowd_20 <- absentee %>% 
+  filter(ballot_req_type == "ONE-STOP" & date == "2020-03-03")%>% 
+  group_by(county_desc, precinct_desc, site_name, ballot_req_dt) %>% 
+  add_count() %>% 
+  rename(day_vote_count = n) %>% 
+  dplyr::select(county_desc, precinct_desc, site_name, ballot_req_dt, day_vote_count, date) %>% 
+  distinct(., .keep_all = TRUE) 
+
+
+# prepare to merge
+earlyvote_crowd_20$county_desc <- toupper(trimws(as.character(unlist(earlyvote_crowd_20$county_desc))))
+earlyvote_crowd_20$site_name <- toupper(trimws(as.character(unlist(earlyvote_crowd_20$site_name))))
+earlyvote_crowd_20$date <- as.character(unlist(earlyvote_crowd_20$ballot_req_dt))
+
+
+os_out$county <- toupper(trimws(as.character(unlist(os_out$county))))
+os_out$voting_site <- toupper(trimws(as.character(unlist(os_out$voting_site))))
+os_out$day <- mdy(os_out$day, tz = "US/Eastern")
+os_out$date <- as.character(unlist(os_out$day))
+
+os_out <- os_out[, ! names(os_out) %in% c("open", "close", "open_time", "close_time", "day")]
+os_out$hours_open <- as.numeric(os_out$hours_open / 60 / 60)
+
+#earlyvote_crowd_20$date_m<- mdy(earlyvote_crowd_20$date)
+earlyvote_crowd_20$date_m<- as.Date(earlyvote_crowd_20$date)
+os_out$date_m<- as.Date(os_out$date)
+
+earlyvote_crowd_20$ballot_req_dt_m<- mdy(earlyvote_crowd_20$ballot_req_dt)
+earlyvote_crowd_20$ballot_req_dt_m<- as.Date(earlyvote_crowd_20$ballot_req_dt)
+
+
+early_whr <- left_join(earlyvote_crowd_20, os_out, by = c("county_desc" = "county", 
+                                                          "site_name" = "voting_site",
+                                                          "ballot_req_dt_m" = "date_m"))
+
+early_whr$crowd <- early_whr$day_vote_count / early_whr$hours_open
+
+county_crowd <- early_whr %>% 
+  group_by(county_desc) %>% 
+  mutate(county_mean_crwd = mean(crowd, na.rm=T),
+         county_max_crowd = max(crowd, na.rm=T)) %>% 
+  ungroup() %>% group_by(ballot_req_dt_m) %>% 
+  mutate(day_mean = mean(crowd, na.rm=T),
+         day_max = max(crowd, na.rm=T)) %>% 
+  dplyr::select(county_desc, county_mean_crwd, county_max_crowd, day_mean, day_max, ballot_req_dt_m) %>% 
+  distinct(., .keep_all = TRUE)
+
+county_geo_results <- as.data.frame(county_crowd) %>% 
+  dplyr::select(county_desc, county_mean_crwd, county_max_crowd) %>% 
+  distinct(., .keep_all = TRUE) %>% 
+  left_join(county_geo, ., by = c("CO_NAME" = "county_desc"))
+
+st_geometry(county_geo_results) <- county_geo_results$geometry
+
+plot(county_geo_results["county_mean_crwd"], main = "Average Hourly Early Voting Station Traffic") 
+
+library(viridis)
+
+av_early_traffic <- ggplot(county_geo_results) + 
+ geom_sf(aes(fill = county_mean_crwd)) + 
+  labs(main = "", subtitle = "Average Hourly Traffic, Early Voting",
+       fill = "Crowding ") +
+ theme_minimal() +  lims(fill = c(.4, 1.5)) +
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        plot.margin = grid::unit(c(0,0,0,0), "mm")) +
+  scale_fill_gradient(low = "#EDD0CB", high = "#F6573E", limits = c(0, 3))
+
+ggsave(paste(graphics_path_pc, "nc_plots/av_crowding.png", sep = ""), av_early_traffic)
+
+max_early_traffic <- ggplot(county_geo_results) + 
+ geom_sf(aes(fill = county_max_crowd)) + 
+  labs(main = "", subtitle = "Maximum Hourly Traffic, Early Voting",
+       fill = "Crowding ") +
+ theme_minimal() +  lims(fill = c(.4, 1.5)) +
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        plot.margin = grid::unit(c(0,0,0,0), "mm")) +
+  scale_fill_gradient(low = "#9FDDF3", high = "#0B2E4F") 
+
+
+crwd_elec_prox <- county_crowd %>% 
+  dplyr::select(ballot_req_dt_m, day_mean, day_max) %>% 
+  distinct(., .keep_all = TRUE)
+
+crwd_elec_prox$date <- as.Date(crwd_elec_prox$ballot_req_dt_m)
+crwd_elec_prox$dist_to_elec <- crwd_elec_prox$date - as.Date("2020-03-03")
+
+early_crowd_timing_mean <- ggplot(crwd_elec_prox, aes(x = dist_to_elec, y = day_mean)) + geom_line(lwd = 1) + geom_point() + 
+  labs(main = "Average Hourly Traffic, State-Wide Mean", x = "Days until Election", y = "Average Hourly Traffic") +  
+  geom_vline(xintercept = 0, color = "#8D2115") +
+ theme_minimal() +  lims(fill = c(.4, 1.5)) +
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        plot.margin = grid::unit(c(0,0,0,0), "mm")) 
+
+
+ggsave(paste(graphics_path_pc, "nc_plots/date_av_crowding.png", sep = ""), early_crowd_timing_mean)
+
+early_crowd_timing_max <- ggplot(crwd_elec_prox, aes(x = dist_to_elec, y = day_max)) + geom_line(lwd = 1) + geom_point() + 
+  labs(main = "Maximum Hourly Traffic, State-Wide", x = "Days until Election", y = "Maximum Hourly Traffic") +  
+  geom_vline(xintercept = 0, color = "red4")
+
+early_crowd_timing_max
+ggsave(paste(graphics_path_pc, "nc_plots/date_max_crowding.png", sep = ""), early_crowd_timing_max)
+
+# Plot county vote mode patterns
+
+county_type <- type %>% 
+  group_by(election_date, county_desc, voting_method_collapse) %>% 
+  mutate(county_byt = sum(total_voters)) %>% 
+  ungroup() %>% group_by(election_date, county_desc) %>% 
+  mutate(county_tot = sum(total_voters)) %>% 
+  ungroup %>% 
+  mutate(bygroup_county = county_byt / county_tot) %>% 
+  dplyr::select(election_date, county_desc, voting_method_collapse, county_byt, county_tot,
+                bygroup_county) %>% 
+  filter(election_date == "03/03/2020" & voting_method_collapse == "ONE STOP") %>% 
+  distinct(., .keep_all = TRUE)
+
+county_type_geo <- left_join(county_geo, county_type, by = c("CO_NAME" = "county_desc"))
+st_geometry(county_type_geo) <- county_type_geo$geometry
+
+library(viridis)
+
+ggplot(county_type_geo) + 
+ geom_sf(aes(fill = bygroup_county)) + 
+  labs(main = "", subtitle = "Proportion of Votes Cast through One Stop",
+       fill = "") +  scale_fill_viridis()
+
+ggsave(paste(graphics_path_pc, "nc_plots/av_crowding.png", sep = ""), av_early_traffic)
+
+ggplot(earlyvote_crowd_20, aes(x = day_vote_count)) + geom_histogram() + 
+  theme_bw() + labs(x = "Visit Count per Voting Site", y = "Frequency", main = "Daily Usage of Early Voting Sites")
+
+```
+
+
+```{r crowding, echo = FALSE}
+
+precinct_sub <- precinct_results[grep("PRESIDENTIAL PREFERENCE", precinct_results$Contest.Name),]
+
+# North Carolina had 13 hours of in-person voting on Super Tuesday
+
+precinct_sub <- precinct_sub %>% 
+  group_by(Choice.Party, County, Precinct) %>% 
+  mutate(party_inperson = sum(Election.Day),
+         party_onestop = sum(One.Stop),
+         party_absenteemail = sum(Absentee.by.Mail),
+         party_provisional = sum(Provisional),
+         party_total = sum(Total.Votes)) %>% 
+  ungroup() %>% group_by(County, Precinct) %>% 
+  mutate(inperson = sum(Election.Day),
+         onestop = sum(One.Stop),
+         absenteemail = sum(Absentee.by.Mail),
+         provisional = sum(Provisional),
+         tot_f2f = inperson + provisional,
+         total = sum(Total.Votes),
+         suptues_hrdens = tot_f2f / 13) %>%   # assuming uniform voting time, which is a bad assumption
+  ungroup() %>% group_by(County) %>% 
+  mutate(mean_hourlyav_f2f = mean(suptues_hrdens, na.rm=T),
+         county_votes_f2f = sum(Total.Votes),
+         n_precinct = n_distinct(Precinct),
+         votes_per_prec = county_votes_f2f / n_precinct) %>% 
+  dplyr::select(-c(Contest.Type, Contest.Name, Choice, Vote.For, Election.Day, One.Stop, Absentee.by.Mail, Provisional, Total.Votes)) %>% 
+  distinct(., .keep_all = TRUE)
+
+precinct_agg2cnty <- precinct_sub %>% 
+  dplyr::select(County, Election.Date, mean_hourlyav_f2f, votes_per_prec, n_precinct) %>% 
+  distinct(., .keep_all = TRUE)
+
+ggplot(precinct_agg2cnty, aes(x = mean_hourlyav_f2f, y = n_precinct)) +
+         geom_point() + theme_bw() + labs(x = "Average Hourly Polling Station Crowding", y = "Precincts Per County")
+
+
+```
+
+
+```{r MAPS, echo = FALSE}
+
+# Figure X: In-Person Average Per Hour Traffic at Polling Stations
+
+dayof_traffic_results <- left_join(county_geo, precinct_agg2cnty, by = c("CO_NAME" = "County"))
+st_geometry(dayof_traffic_results) <- county_geo_results$geometry
+
+dayof_traffic_results_map <- ggplot(dayof_traffic_results) + 
+ geom_sf(aes(fill = mean_hourlyav_f2f)) + 
+  labs(main = "", subtitle = "Average Hourly Traffic, Election Day",
+       fill = "Crowding") + theme_minimal() +  lims(fill = c(.4, 1.5)) +
+  theme(title = element_text(size = rel(1.4), color = "#525971"),
+        legend.title = element_text(size = 12, color = "#525971"),
+        axis.text.x = element_text(color = "#525971"),
+        axis.text.y = element_text(color = "#525971"),
+        plot.margin = grid::unit(c(0,0,0,0), "mm")) +
+  scale_fill_gradient(low = "#CCC8FC", high = "#4E4A81", limits = c(0, 60)) 
+
+map_traffic_fig <- ggarrange(av_early_traffic,
+                 max_early_traffic, dayof_traffic_results_map,
+                 ncol = 2, nrow = 2)
+
+ggsave(paste(graphics_path_pc, "nc_plots/av_early_crowding.png", sep = ""), av_early_traffic)
+
+ggsave(paste(graphics_path_pc, "nc_plots/max_early_crowding.png", sep = ""), max_early_traffic)
+
+ggsave(paste(graphics_path_pc, "nc_plots/average_electionday.png", sep = ""), dayof_traffic_results_map)
+
+
+
+
+tplot(county_geo_results["mean_hourlyav_f2f"], main = "Average County (Per Hour) Traffic at Polling Stations") 
+
+```
+
+
+
