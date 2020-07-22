@@ -67,6 +67,9 @@ wi2016$county <- str_to_upper(wi2016$county)
 wi2016$total_dum[str_detect(wi2016$county,"TOTAL" )] <- 1
 wi2016$total_dum[str_detect(wi2016$ward,"TOTAL" )] <- 1
 wi2016 <- subset(wi2016, total_dum==0)
+setwd("F:/MEDSL/healthy_elections/WI/ward2016data")
+saveRDS(wi2016, "ward2016cleaned.Rdata")
+
 sum(wi2020$total)
 sum(wi2016$total)
 wi2020$ward_pos <- sapply(wi2020$ward, function(x) str_locate(x," WARD")[1])
@@ -74,7 +77,7 @@ wi2020$town_name <- substr(wi2020$ward, 1, wi2020$ward_pos-1)
 length(unique(wi2020$town_name))
 setwd("F:/MEDSL/healthy_elections/WI/ward2020data")
 saveRDS(wi2020, "ward2020cleaned.Rdata")
-
+wi2020 <- readRDS("ward2020cleaned.Rdata")
 sum(wi2020$total)
 
 ####
@@ -154,10 +157,13 @@ wi_dems <- subset(wi_dems, select = c(county,votes.x,votes.y,pct_change))
 wi_gop <- subset(wi_gop, select = c(county,votes.x,votes.y,pct_change))
 colnames(wi_dems)[2:4] <- c("vote2020dem","vote2016dem","dem_pct_chg")
 colnames(wi_gop)[2:4] <- c("vote2020gop","vote2016gop","gop_pct_chg")
+wi_dems$county[wi_dems$county=="ST. CROIX"] <- "SAINT CROIX"
+wi_gop$county[wi_gop$county=="ST. CROIX"] <- "SAINT CROIX"
+
 wi_county_shp <- merge(wi_county_shp,wi_dems, by.x="CNTY_NAME", by.y="county" )
 wi_county_shp <- merge(wi_county_shp,wi_gop, by.x="CNTY_NAME", by.y="county" )
 ####now let's run our awesome dot plot pkg 
-wi_county_shp
+names(wi_county_shp@data)
 library(medslcleanR2)
 wi_county_shp <- map_breaks_calc_wi(wi_county_shp, wi_county_shp$dem_pct_chg, color_vec = "heat_rev" )
 #wi_county_shp <- wi_county_shp[, -c(13:14)]
@@ -171,6 +177,7 @@ acs_wi <- subset(acs_data, Geo_STUSAB=="wi")
 acs_wi$county <- str_remove(acs_wi$Geo_NAME, " County")
 acs_wi$county <- str_to_upper(acs_wi$county)
 acs_wi_cty <- acs_wi %>% group_by(county, Geo_FIPS) %>% summarise(total_pop=sum(total_pop,na.rm=T))
+acs_wi_cty$county[acs_wi_cty$county=="ST. CROIX"] <- "SAINT CROIX"
 wi_county_shp <- merge(wi_county_shp, acs_wi_cty, by.x="CNTY_NAME",by.y="county")
 wi_county_shp$log_pop <- log(wi_county_shp$total_pop)
 round(getJenksBreaks(wi_county_shp$dem_pct_chg, 4),2)
@@ -182,21 +189,22 @@ gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$colo
 
 #####Let's just manually assign colors 
 wi_county_shp$color_manual_dem <- "#8D2115"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg.x >= -25 & wi_county_shp$dem_pct_chg.x < -5] <- "#FF715A"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg.x >= -5 & wi_county_shp$dem_pct_chg.x < 0] <- "#EBD600"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg.x >= 0 & wi_county_shp$dem_pct_chg.x < 10] <- "#ADCC18"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg.x >= 10 ] <- "#37C256"
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -25 & wi_county_shp$dem_pct_chg< -5] <- "#FF715A"
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -5 & wi_county_shp$dem_pct_chg< 0] <- "#EBD600"
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 0 & wi_county_shp$dem_pct_chg< 10] <- "#ADCC18"
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 10 ] <- "#37C256"
 ###GOP 
 wi_county_shp$color_manual_gop <- "#8D2115"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg.x >= -40 & wi_county_shp$gop_pct_chg.x < -30] <- "#FF715A"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg.x >= -30 & wi_county_shp$gop_pct_chg.x < -20] <- "#EBD600"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg.x >= -20 & wi_county_shp$gop_pct_chg.x < 10] <- "#ADCC18"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg.x >= 10 ] <- "#37C256"
-
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -25 & wi_county_shp$gop_pct_chg< -5] <- "#FF715A"
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -5 & wi_county_shp$gop_pct_chg< 0] <- "#EBD600"
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 0 & wi_county_shp$gop_pct_chg< 10] <- "#ADCC18"
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 10 ] <- "#37C256"
+setwd("F:/MEDSL/healthy_elections/WI")
+saveRDS(wi_county_shp, "wi_county_turnout_shp.Rdata")
 dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_dem, weight_mod = 4.1, size_correct = F  )
 gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_gop, weight_mod = 4.1, size_correct = F  )
 
-medsl_pal <- c("#8D2115","#FF715A","#EBD600","#ADCC18","#37C256") #red to green 
+medsl_heat <- c("#8D2115","#FF715A","#EBD600","#ADCC18","#37C256") #red to green 
 quantile(wi_county_shp$gop_pct_chg.x, seq(0,1,by=0.05))
 ####plotting the results here 
 jpeg("wi_cty_pct_chgplot_man.jpeg", res=300, height = 6, width = 10, units = "in")
@@ -205,14 +213,14 @@ dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$colo
                         title = "Democratic 2020/2016 Turnout"  )
 op <- par(family = "StyreneB-Regular")
 #par(op)
-legend("bottomleft", fill=medsl_pal,
-       legend = c("< -25%" , "-25 -< -5%", "-5 -< 0%", "0 -< 10%", "10%+"), title="Dem. % Chg.",
+legend("bottomleft", fill=medsl_heat,
+       legend = c("< -25%" , "-25 to -5%", "-5 to 0%", "0 to 10%", "10%+"), title="Dem. % Chg.",
        bty="n", horiz=FALSE, cex=0.7)
 gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_gop, weight_mod = 4.1, size_correct = F,
                         title = "Republican 2020/2016 Turnout")
 op <- par(family = "StyreneB-Regular")
-legend("bottomleft", fill=medsl_pal,
-       legend = c("< -40%" , "-40 -< -30%", "-30 -< -20%", "-20 -< 0%", "0%+"), title="GOP % Chg.",
+legend("bottomleft", fill=medsl_heat,
+       legend = c("< -25%" , "-25 to -5%", "-5 to 0%", "0 to 10%", "10%+"), title="GOP % Chg.",
        bty="n", horiz=FALSE, cex=0.7)
 dev.off()
 mil_county <- subset(polls_all2c, County=="MILWAUKEE COUNTY")

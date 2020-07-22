@@ -26,11 +26,123 @@ wi_bisg <- readRDS("wi_bisg_results.Rdata")
 nrow(wi_bisg) # 6491178
 wi_abs_file <- merge(wi_abs_file, wi_bisg, by.x= "voterregnumber" , by.y="Voter.Reg.Number",all.x=T,all.y=F)
 ### we will now want to sum by race and such for the racial comparison 
+##let's subset by election type 
+wi_abs_file2 <- subset(wi_abs_file, electionname == "2020 Spring Election and Presidential Preference Vote")
+length(which(is.na(wi_abs_file2$pred.whi)==T))
+sum(is.na(wi_abs_file2$pred.whi)==T)/nrow(wi_abs_file2) #  0.2047895 missing race. 
+sort(unique(wi_abs_file2$ballotstatusreason))
+table(wi_abs_file2$ballotstatusreason,wi_abs_file2$ballotstatus)
+###assigning now 
+wi_abs_file2$ballot_rejected <- NA
+wi_abs_file2$ballot_rejected[wi_abs_file2$ballotstatusreason!="" & wi_abs_file2$ballotstatusreason!= "Returned" ] <- 1
+wi_abs_file2$ballot_rejected[wi_abs_file2$ballotstatusreason!="" & wi_abs_file2$ballotstatusreason== "Returned" ] <- 0
+wi_abs_file2$voter_dum <- 0
+wi_abs_file2$voter_dum[is.na(wi_abs_file2$ballot_rejected)==F] <- 1
+sum(wi_abs_file2$ballot_rejected,na.rm=T)/sum(wi_abs_file2$voter_dum)
+wi_abs_file2 <- subset(wi_abs_file2, voter_dum==1)
+###let's find out now 
+table(wi_abs_file2$ballot_rejected,wi_abs_file2$early)
+
+100-(920880/(920880+135842))*100
+(195523/(195523+1033))*100
+sum(wi_abs_file2$early)/nrow(wi_abs_file2)
+
+sum(wi_abs_file2$voter_dum)
+wi_abs_file2$ballot_accepted <- NA
+wi_abs_file2$ballot_accepted[wi_abs_file2$ballotstatusreason==""]
+###we will need to do pred race with surname alone 
+table(wi_abs_file2$ballotstatusreason,wi_abs_file2$early)
+wi_abs_file2nameonly <- subset(wi_abs_file2, is.na(pred.whi)==T)
+colnames(wi_abs_file2nameonly)[colnames(wi_abs_file2nameonly)=="lastname"] <- "surname"
+wi_abs_file2nameonly$surname <- str_to_upper(wi_abs_file2nameonly$surname)
+wi_abs_file2nameonly <- subset(wi_abs_file2nameonly, select=-c(pred.whi,pred.bla,pred.his,pred.asi,pred.oth))
+wi_abs_file2nameonly <- predict_race(wi_abs_file2nameonly, surname.only = T)
+wi_abs_file2 <- subset(wi_abs_file2, is.na(pred.whi)==FALSE)
+wi_abs_file2$geo_impute <- 1
+wi_abs_file2nameonly$geo_impute <- 0
+colnames(wi_abs_file2)[colnames(wi_abs_file2)=="lastname"] <- "surname"
+library(gtools)
+wi_abs_file2 <- smartbind(wi_abs_file2,wi_abs_file2nameonly )
+setwd(wi_vf_wd)
+saveRDS(wi_abs_file2, "wi_abs_file2.Rdata" )
+###now let's find the props by race 
+sum(wi_abs_file2$abs_dum*wi_abs_file2$pred.whi*wi_abs_file2$ballot_rejected)/sum(wi_abs_file2$pred.whi)
+sum(wi_abs_file2$abs_dum*wi_abs_file2$pred.bla*wi_abs_file2$ballot_rejected)/sum(wi_abs_file2$pred.bla)
+sum(wi_abs_file2$abs_dum*wi_abs_file2$pred.his*wi_abs_file2$ballot_rejected)/sum(wi_abs_file2$pred.his)
+sum(wi_abs_file2$abs_dum*wi_abs_file2$pred.asi*wi_abs_file2$ballot_rejected)/sum(wi_abs_file2$pred.asi)
+sum(wi_abs_file2$abs_dum*wi_abs_file2$pred.oth*wi_abs_file2$ballot_rejected)/sum(wi_abs_file2$pred.oth)
+##analyzing reasons for rejection
+reason_reject_df <- wi_abs_file2 %>% group_by(early,ballotstatusreason) %>% tally()
+reason_reject_df <- subset(reason_reject_df, early==0)
+reason_reject_df <- subset(reason_reject_df, ballotstatusreason!="Returned")
+reason_reject_df$rej_pct <- (reason_reject_df$n/sum(reason_reject_df$n))*100
+reason_reject_df$category2 <- reason_reject_df$ballotstatusreason
+reason_reject_df$category2[reason_reject_df$category2=="Voter Refused" | reason_reject_df$category2=="Voter Request"] <- "other"
+reason_reject_df$category2[reason_reject_df$category2=="Ballot Not Received" | reason_reject_df$category2=="Not Returned"] <- 
+  "Ballot Not Received"
+reason_reject_df$category2[reason_reject_df$category2=="Ballot Returned After Deadline" | reason_reject_df$category2=="Ballot Not Returned By Deadline"] <- 
+  "Ballot Returned After Deadline"
+reason_reject_df$category2[reason_reject_df$category2=="Rejected at Polls/MBOC" | reason_reject_df$category2=="Returned, to be Rejected"] <- 
+  "Rejected"
+reason_reject_df$category2[reason_reject_df$category2=="Voter Spoiled" | reason_reject_df$category2=="Ineligible" ] <- "other"
+reason_reject_df2 <- reason_reject_df %>% group_by(category2) %>% summarise(total_votes=sum(n))
+reason_reject_df2$rej_pct <- (reason_reject_df2$total_votes/(sum(reason_reject_df2$total_votes)))*100
+###we'll want to create a new category to analyze by race, by late return, not delivered, and other 
+wi_abs_file2$reason2 <- "Other"
+wi_abs_file2$reason2[wi_abs_file2$ballotstatusreason=="Ballot Returned After Deadline" | wi_abs_file2$ballotstatusreason=="Ballot Not Returned By Deadline"] <-
+  "Ballot Returned After Deadline"
+wi_abs_file2$reason2[wi_abs_file2$ballotstatusreason=="Ballot Not Received" | wi_abs_file2$ballotstatusreason=="Not Returned"] <-
+  "Ballot Not Received"
+wi_abs_file2$reason2[wi_abs_file2$ballotstatusreason=="Returned"] <- "Returned"
+wi_abs_file2vbm_only <- subset(wi_abs_file2, early==0 )
+nrow(wi_abs_file2vbm_only)/nrow(wi_abs_file2)
+wi_abs_file2vbm_only$late_return <- 0
+wi_abs_file2vbm_only$late_return[wi_abs_file2vbm_only$reason2=="Ballot Returned After Deadline"] <- 1
+wi_abs_file2vbm_only$not_return <- 0
+wi_abs_file2vbm_only$not_return[wi_abs_file2vbm_only$reason2=="Ballot Not Received"] <- 1
+wi_abs_file2vbm_only$other_return <- 0
+wi_abs_file2vbm_only$other_return[wi_abs_file2vbm_only$reason2=="Other"] <- 1
+wi_abs_file2vbm_only <- subset(wi_abs_file2vbm_only, reason2!="Returned")
+sum(wi_abs_file2vbm_only$pred.whi*wi_abs_file2vbm_only$late_return)/sum(wi_abs_file2vbm_only$pred.whi)
+sum(wi_abs_file2vbm_only$pred.whi*wi_abs_file2vbm_only$not_return)/sum(wi_abs_file2vbm_only$pred.whi)
+sum(wi_abs_file2vbm_only$pred.whi*wi_abs_file2vbm_only$other_return)/sum(wi_abs_file2vbm_only$pred.whi)
+##blacks
+sum(wi_abs_file2vbm_only$pred.bla*wi_abs_file2vbm_only$late_return)/sum(wi_abs_file2vbm_only$pred.bla)
+sum(wi_abs_file2vbm_only$pred.bla*wi_abs_file2vbm_only$not_return)/sum(wi_abs_file2vbm_only$pred.bla)
+sum(wi_abs_file2vbm_only$pred.bla*wi_abs_file2vbm_only$other_return)/sum(wi_abs_file2vbm_only$pred.bla)
+#hispanics
+sum(wi_abs_file2vbm_only$pred.his*wi_abs_file2vbm_only$late_return)/sum(wi_abs_file2vbm_only$pred.his)
+sum(wi_abs_file2vbm_only$pred.his*wi_abs_file2vbm_only$not_return)/sum(wi_abs_file2vbm_only$pred.his)
+sum(wi_abs_file2vbm_only$pred.his*wi_abs_file2vbm_only$other_return)/sum(wi_abs_file2vbm_only$pred.his)
+#asians
+sum(wi_abs_file2vbm_only$pred.asi*wi_abs_file2vbm_only$late_return)/sum(wi_abs_file2vbm_only$pred.asi)
+sum(wi_abs_file2vbm_only$pred.asi*wi_abs_file2vbm_only$not_return)/sum(wi_abs_file2vbm_only$pred.asi)
+sum(wi_abs_file2vbm_only$pred.asi*wi_abs_file2vbm_only$other_return)/sum(wi_abs_file2vbm_only$pred.asi)
+#others
+sum(wi_abs_file2vbm_only$pred.oth*wi_abs_file2vbm_only$late_return)/sum(wi_abs_file2vbm_only$pred.oth)
+sum(wi_abs_file2vbm_only$pred.oth*wi_abs_file2vbm_only$not_return)/sum(wi_abs_file2vbm_only$pred.oth)
+sum(wi_abs_file2vbm_only$pred.oth*wi_abs_file2vbm_only$other_return)/sum(wi_abs_file2vbm_only$pred.oth)
+57697+22300+26699
+3385+5928+3006
+3810+3186+ 1916
+2570+1092+1098
+1587+782+786
+106696+12319+8912+4760+3155
+sum(wi_abs_file2vbm_only$pred.oth*wi_abs_file2vbm_only$late_return)+sum(wi_abs_file2vbm_only$pred.asi*wi_abs_file2vbm_only$late_return)+
+  sum(wi_abs_file2vbm_only$pred.his*wi_abs_file2vbm_only$late_return)+sum(wi_abs_file2vbm_only$pred.bla*wi_abs_file2vbm_only$late_return)+
+  sum(wi_abs_file2vbm_only$pred.whi*wi_abs_file2vbm_only$late_return)
+sum(wi_abs_file2vbm_only$pred.oth*wi_abs_file2vbm_only$not_return)+sum(wi_abs_file2vbm_only$pred.asi*wi_abs_file2vbm_only$not_return)+
+  sum(wi_abs_file2vbm_only$pred.his*wi_abs_file2vbm_only$not_return)+sum(wi_abs_file2vbm_only$pred.bla*wi_abs_file2vbm_only$not_return)+
+  sum(wi_abs_file2vbm_only$pred.whi*wi_abs_file2vbm_only$not_return)
+sum(wi_abs_file2vbm_only$pred.oth*wi_abs_file2vbm_only$other_return)+sum(wi_abs_file2vbm_only$pred.asi*wi_abs_file2vbm_only$other_return)+
+  sum(wi_abs_file2vbm_only$pred.his*wi_abs_file2vbm_only$other_return)+sum(wi_abs_file2vbm_only$pred.bla*wi_abs_file2vbm_only$other_return)+
+  sum(wi_abs_file2vbm_only$pred.whi*wi_abs_file2vbm_only$other_return)
 
 
-
-
-
+View(reason_reject_df2)
+sort(unique(reason_reject_df$ballotstatusreason))
+107561+12404+8954+4781+3174
+26122+1071227+66838+56950+32141+26122
 sum(is.na(wi_abs_file$pred.whi)) # 517866 after the 10 digit string padding. Far superior. 
 sum(is.na(wi_abs_file$pred.whi))/nrow(wi_abs_file) # 21 % missing after str padding  
 nrow(wi_abs_file) - sum(is.na(wi_abs_file$pred.whi)) # 1892333 matched successfully
@@ -48,6 +160,21 @@ nrow(wi_abs_file) - sum(is.na(wi_abs_file$pred.whi)) # 1892333 matched successfu
 
 wi_vf <- readRDS("wi_voterfile_cleaned.Rdata")
 names(wi_abs_file) ##good, looks like it was read in successfully 
+nrow(wi_abs_file)
+wi_abs_file <- subset(wi_abs_file, electionname=="2020 Spring Election and Presidential Preference Vote" | 
+                        electionname=="2020 Spring Primary")
+length(unique(wi_abs_file$voterregnumber)) - 62537
+length(which(wi_abs_file$electionname=="2020 Spring Primary"))
+#let's do the dplyr cmd we thought of here 
+wi_abs_file$dum_prez <- 1
+wi_abs_file <- wi_abs_file %>% group_by(voterregnumber) %>% mutate(present = sum(dum_prez))
+length(which(wi_abs_file$present>1))
+wi_abs_file_dup <- subset(wi_abs_file, present > 1)
+wi_abs_file <- subset(wi_abs_file, present == 1)
+wi_abs_file_dup <- subset(wi_abs_file_dup, electionname=="2020 Spring Election and Presidential Preference Vote")
+wi_abs_file <- rbind(wi_abs_file,wi_abs_file_dup)
+nrow(wi_abs_file)
+
 names(wi_vf)
 wi_vf <- wi_vf[,c(1:25,28:29,39,41,96)]
 #wi_vf$County[wi_vf$County=="Milwaukee County Supervisory District 14"] <-  "Milwaukee County"
@@ -55,6 +182,7 @@ wi_vf <- subset(wi_vf, County != "" & County != "Milwaukee County Supervisory Di
 wi_vf <- subset(wi_vf, County != "" & County != "At Polls")
 wi_vf <- subset(wi_vf, County != "Town of Delafield")
 wi_vf <- subset(wi_vf, County != "City of Ashland")
+wi_vf$Voter.Reg.Number <- str_pad(wi_vf$Voter.Reg.Number, width=10, side="left",pad="0")
 ###good. Should now be able to do the loop 
 colnames(wi_abs_file)[colnames(wi_abs_file)=="county.x"] <- "County"
 counnty_wi_vec <- sort(unique(wi_abs_file$County))
@@ -70,9 +198,92 @@ for(i in 1:length(counnty_wi_vec)){
     wi_vf_abs_all <- rbind(wi_vf_abs_all, wi_temp2)
   }
 }
-saveRDS(wi_vf_abs_all, "wi_vf_abs_all.Rdata")
+setwd(wi_vf_wd)
 sum(is.na(wi_vf_abs_all$pred.whi))/nrow(wi_vf_abs_all) # not apparently working...hm. 
 table(wi_vf_abs_all$April2020,wi_vf_abs_all$ballotdeliverymethod)
+saveRDS(wi_vf_abs_all, "wi_vf_abs_all07212020.Rdata")
+
+#wi_vf_abs_all <- readRDS("wi_vf_abs_all.Rdata")
+##cleaning up a bit and dropping non obs 
+length(which(wi_vf_abs_all$April2020=="" & is.na(wi_vf_abs_all$ballotstatusreason)==T))
+wi_vf_abs_all <- subset(wi_vf_abs_all, April2020 != "")
+
+nrow(wi_vf_abs_all) # 2361222
+wi_vf_abs_all <- wi_vf_abs_all[,-c(66:77)]
+wi_vf_abs_all <- merge(wi_vf_abs_all, wi_bisg, by="Voter.Reg.Number", all.x=T)
+saveRDS(wi_vf_abs_all, "wi_vf_abs_all07212020.Rdata")
+
+wi_vf_abs_all$priorvoter <- 0
+wi_vf_abs_all$priorvoter[wi_vf_abs_all$February2020!="" | wi_vf_abs_all$November2018!="" | wi_vf_abs_all$October2018!=""|
+                           wi_vf_abs_all$November2016!=""|wi_vf_abs_all$April2016!=""] <- 1
+wi_vf_abs_all$temp_id <- paste0(wi_vf_abs_all$Voter.Reg.Number,sep=" ",wi_vf_abs_all$LastName, sep=" ", wi_vf_abs_all$firstname, sep=" ",
+                                wi_vf_abs_all$Address1)
+wi_vf_abs_all <- wi_vf_abs_all[!duplicated(wi_vf_abs_all$temp_id), ]
+nrow(wi_vf_abs_all)
+
+table(wi_vf_abs_all$applicationsource, wi_vf_abs_all$priorvoter)
+table(wi_vf_abs_all$April2020, wi_vf_abs_all$priorvoter)
+table(wi_vf_abs_all$ballotstatusreason, wi_vf_abs_all$priorvoter) # 109    2118 ; not bad given the size of the vf 
+##good, these line up 
+wi_vf_abs_all$problem_return <- NA
+wi_vf_abs_all$problem_return[wi_vf_abs_all$ballotstatusreason=="Returned"] <- 0
+wi_vf_abs_all$problem_return[wi_vf_abs_all$ballotstatusreason!="Returned" & is.na(wi_vf_abs_all$ballotstatusreason)==F] <- 1
+sum(wi_vf_abs_all$problem_return,na.rm=T) # 36758
+43949/length(which(wi_vf_abs_all$priorvoter==0 & wi_vf_abs_all$ballotstatus!="")) # 0.9619164 returned w/out issue for newvoters 
+1064000/length(which(wi_vf_abs_all$priorvoter==1 & wi_vf_abs_all$ballotstatus!="")) #0.9701028 returned w/out issue for old voters 
+table(wi_vf_abs_all$April2020,wi_vf_abs_all$problem_return)
+table(wi_vf_abs_all$ballotstatusreason,wi_vf_abs_all$April2020)
+###let's find results by race 
+sum(wi_vf_abs_all$problem_return*wi_vf_abs_all$pred.whi,na.rm=T)/sum(wi_vf_abs_all$pred.whi,na.rm=T) # 0.01928071
+sum(wi_vf_abs_all$problem_return*wi_vf_abs_all$pred.bla,na.rm=T)/sum(wi_vf_abs_all$pred.bla,na.rm=T) # 0.04074668
+sum(wi_vf_abs_all$problem_return*wi_vf_abs_all$pred.his,na.rm=T)/sum(wi_vf_abs_all$pred.his,na.rm=T) # 0.02794595
+sum(wi_vf_abs_all$problem_return*wi_vf_abs_all$pred.asi,na.rm=T)/sum(wi_vf_abs_all$pred.asi,na.rm=T) # 0.02523697
+sum(wi_vf_abs_all$problem_return*wi_vf_abs_all$pred.oth,na.rm=T)/sum(wi_vf_abs_all$pred.oth,na.rm=T) # 0.02412683
+sum(wi_vf_abs_all$problem_return,na.rm=T)/length(which(is.na(wi_vf_abs_all$problem_return)==F)) # 0.03211127
+###let's check the rate of early voting and such 
+names(wi_vf_abs_all)
+sum(wi_vf_abs_all$early,na.rm=T)
+194254/1555263
+sum(wi_vf_abs_all$abs_dum,na.rm=T)
+1142480/1555263
+unique(wi_vf_abs_all$applicationsource)
+wi_vf_abs_all$early2 <- NA
+wi_vf_abs_all$early2[wi_vf_abs_all$applicationsource=="Voted in Person"] <- 1
+wi_vf_abs_all$early2[wi_vf_abs_all$applicationsource!="Voted in Person" & is.na(wi_vf_abs_all$applicationsource)==F] <- 0
+wi_vf_abs_all$vbm_dum <- NA
+wi_vf_abs_all$vbm_dum[wi_vf_abs_all$early2==1] <- 0
+wi_vf_abs_all$vbm_dum[wi_vf_abs_all$early2==0] <- 1
+length(which(wi_vf_abs_all$vbm_dum==1 & wi_vf_abs_all$problem_return==0))
+914502/1555263
+
+table(wi_vf_abs_all$ballotstatusreason,wi_vf_abs_all$April2020)#looks like some people encountered problems getting ballot in, so 
+#they instead voted in person 
+11904/(11904+2868) # 0.8058489 of those with issues for deadline ended up voting in person 
+750/(750+1468) # 0.3381425 of those who did not return ballot  ended up voting in person 
+
+
+# 878606  voted absentee w/out problem, at polls w/out problem, or at pools w/problem ; 273325 voted abs but had problem 
+878606/table(wi_vf_abs_all$April2020)
+878606/(1169729 + 436267)
+abs_only <- subset(wi_vf_abs_all, April2020=="Absentee")
+table(abs_only$priorvoter,abs_only$problem_return)
+30845/(30845+13782) # new voters 
+815380/(815380 + 259543) # 0.7585474
+846225/length(which(wi_vf_abs_all$April2020=="Absentee"))
+
+odd_sub <- subset(wi_vf_abs_all, April2020=="Absentee" & ballotstatusreason=="")
+View(odd_sub)
+##Application date is a garbage field; way too many people over the age of 100 
+
+###hm, we are definitely not getting the type of matching that we're expecting. Accorindg to these data, we should be seeing 
+#69131 new voters, and of these, 45249 as voting early or by mail. However, we are instead seeing just 3415 in the voterfile. 
+# 1272206 unique IDs in the wi abs file 
+# 1605198 unique IDs in the WI voterfile for those voting in 2020 
+#let's check new voters 
+newvoters_vf <- subset(wi_vf2, newvoter==1)
+nrow(newvoters_vf)
+sort(unique(newvoters_vf$Voter.Reg.Number))[69019:69119]
+
 ##ok, looks like 203,090 voted early from absentee , and 2,188 from in person ,
 sort(unique(wi_vf$April2020))
 length(which(wi_vf$April2020=="Absentee"))/length(which(wi_vf$April2020!=""))
@@ -379,6 +590,7 @@ names(wi_county_shp)
 wi_county_shp$newvoter_pct <- ((wi_county_shp$white_new+wi_county_shp$nonwhite_new)/wi_county_shp$county_total)*100
 wi_county_shp$white_new_pct <- (wi_county_shp$white_new/wi_county_shp$white_cty_pop)*100
 wi_county_shp$nonwhite_new <- (wi_county_shp$nonwhite_new/wi_county_shp$nonwhite_cty_pop)*100
+wi_county_shp$nonwhite_new_num <- (wi_county_shp$nonwhite_new*wi_county_shp$nonwhite_cty_pop)/100 
 ###now let's create the colors for new voters 
 quantile(wi_county_shp$newvoter_pct,seq(0,1,by=0.05)) 2.7 - 7.4 
 #2.7 - 3.5 , 3.5 - 4 , 4 - 5.5 , 5.5 - 7, 7 + 
@@ -410,13 +622,54 @@ legend("bottomleft", fill=medsl_reds,
        legend = c("< 3.5%" , "3.5 - 4%", "4 - 5.5%", "5.5 - 7%", "7%+"), title="New voter %.",
        bty="n", horiz=FALSE, cex=0.9)
 dev.off()
+setwd("F:/MEDSL/healthy_elections/WI")
+jpeg("wi_cty_newvotes_white_map.jpeg", res=500, height = 6, width = 9, units = "in")
+par(mfrow=(c(1,1)))
+wi_abs_carto <- carto_plot(wi_county_shp, log(wi_county_shp$white_cty_pop), wi_county_shp$color_new_white, weight_mod=4, size_correct=F)
+legend("bottomleft", fill=medsl_reds,
+       legend = c("< 3.5%" , "3.5 - 4%", "4 - 5.5%", "5.5 - 7%", "7%+"), title="New voter %.",
+       bty="n", horiz=FALSE, cex=0.9)
+dev.off()
+setwd("F:/MEDSL/healthy_elections/WI")
+jpeg("wi_cty_newvotes_nonwhite_map.jpeg", res=500, height = 6, width = 9, units = "in")
+par(mfrow=(c(1,1)))
+wi_abs_carto <- carto_plot(wi_county_shp, log(wi_county_shp$nonwhite_cty_pop), wi_county_shp$color_new_nonwhite, weight_mod=4, size_correct=F)
+legend("bottomleft", fill=medsl_reds,
+       legend = c("< 3.5%" , "3.5 - 4%", "4 - 5.5%", "5.5 - 7%", "7%+"), title="New voter %.",
+       bty="n", horiz=FALSE, cex=0.9)
+dev.off()
 
+sum(wi_county_shp$white_new)/sum(wi_county_shp$white_cty_pop) # 0.04140706
+sum(wi_county_shp$nonwhite_new_num)/sum(wi_county_shp$nonwhite_cty_pop) # 0.05376849
+wi_county_shp$new_race_diff <- wi_county_shp$white_new_pct - wi_county_shp$nonwhite_new
+###let's do tables by race 
+wi_vf2$vbm_dum <- 0
+wi_vf2$vbm_dum[wi_vf2$April2020== "Absentee" ] <- 1
+wi_vf2$newvoter <- 0
+wi_vf2$newvoter[wi_vf2$prior_voter==0] <- 1
+1-sum(wi_vf2$prior_voter*wi_vf2$pred.whi,na.rm=T)/sum(wi_vf2$pred.whi,na.rm=T)
+1-sum(wi_vf2$prior_voter*wi_vf2$pred.bla,na.rm=T)/sum(wi_vf2$pred.bla,na.rm=T)
+1-sum(wi_vf2$prior_voter*wi_vf2$pred.his,na.rm=T)/sum(wi_vf2$pred.his,na.rm=T)
+1-sum(wi_vf2$prior_voter*wi_vf2$pred.asi,na.rm=T)/sum(wi_vf2$pred.asi,na.rm=T)
+1-sum(wi_vf2$prior_voter*wi_vf2$pred.oth,na.rm=T)/sum(wi_vf2$pred.oth,na.rm=T)
+###now let's do by mode 
+(sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.whi,na.rm=T)/sum(wi_vf2$pred.whi,na.rm=T))/(sum(wi_vf2$pred.whi*wi_vf2$newvoter,na.rm=T))
+sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.bla,na.rm=T)/sum(wi_vf2$pred.bla,na.rm=T)
+sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.his,na.rm=T)/sum(wi_vf2$pred.his,na.rm=T)
+sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.asi,na.rm=T)/sum(wi_vf2$pred.asi,na.rm=T)
+sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.oth,na.rm=T)/sum(wi_vf2$pred.oth,na.rm=T)
+###by new voters 
+(sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.whi,na.rm=T))/(sum(wi_vf2$pred.whi*wi_vf2$newvoter,na.rm=T))
+(sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.bla,na.rm=T))/(sum(wi_vf2$pred.bla*wi_vf2$newvoter,na.rm=T))
+(sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.his,na.rm=T))/(sum(wi_vf2$pred.his*wi_vf2$newvoter,na.rm=T))
+(sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.asi,na.rm=T))/(sum(wi_vf2$pred.asi*wi_vf2$newvoter,na.rm=T))
+(sum(wi_vf2$vbm_dum*wi_vf2$newvoter*wi_vf2$pred.oth,na.rm=T))/(sum(wi_vf2$pred.oth*wi_vf2$newvoter,na.rm=T))
 
+wi_county_shp2 <- wi_county_shp
 
-
-
-
-
+100-65.9
+100-63.7
+100-62.6
 newvoter_vbm_df <- wi_vf2 %>% group_by(County,prior_vbm) %>% tally() 
 newvoter_df$county_tot
 newvoter_df <- as.data.frame.matrix(newvoter_df) 
@@ -462,6 +715,17 @@ legend("bottomleft", fill=medsl_red,
 dev.off()
 
 saveRDS(wi_county_shp, "wi_county_voterfile_collapsed_shp.Rdata")
+
+
+####let's check the new voter data 
+View(wi_vf2)
+newvoter_vf <- subset(wi_vf2, select=c(Voter.Reg.Number,newvoter))
+###let's try to merge now 
+wi_abs_file2vbm_onlyB <- merge(wi_abs_file2vbm_only,newvoter_vf,by.x="voterregnumber", by.y="Voter.Reg.Number",all.x=T)
+sum(wi_abs_file2vbm_onlyB$newvoter,na.rm=T)
+sum(is.na(wi_abs_file2vbm_onlyB$newvoter)) # 108139 missing 
+length(which(wi_vf2$newvoter==1 & wi_vf2$April2020=="Absentee")) # 45243 were new and voted absentee 
+
 
 sum(is.na(wi_county_shp$total_early))
 
