@@ -7,23 +7,61 @@ library(sf)
 library(jsonlite)
 library(httr)
 
+View(all_counted)
+
 
 maine_shape<- st_read("/Users/jessesmac/Downloads/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved-shp/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved.shp")
-map <- plot(map)
+maine_shape$TOWN<- toupper(as.character(maine_shape$TOWN))
+all_counted$TOWN<- as.character(all_counted$MUNICIPALITY)
+maine_shape<- merge(maine_shape, all_counted, by = "TOWN", all.x = T)
 shapefile_df <- fortify(maine_shape)
+sort(unique(maine_shape$TOWN))
+sort(unique(all_counted$TOWN))
+
+
+all_counted$TOWN
+
 
 map<- ggplot(data = shapefile_df) +
-  geom_sf()# +ggtitle("Rejected Absentee Votes by Town")
-map + theme_minimal() + ggtitle("Maine")  +
+  geom_sf(aes(fill = perc_rejected20))+
+  scale_fill_viridis_c(option = "plasma", trans = "sqrt")# +ggtitle("Rejected Absentee Votes by Town")
+map<- map + theme_minimal() + ggtitle("2020 Maine Absentee  Ballot \n Rejection Rate")  +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(), 
         axis.title.y=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank())
+map <- map + guides(fill=guide_legend(title="Rejection Rate 2020"))
+map
+
+
+map2<- ggplot(data = shapefile_df) +
+  geom_sf(aes(fill = perc_rejected18))+
+  scale_fill_viridis_c(option = "plasma", trans = "sqrt")# +ggtitle("Rejected Absentee Votes by Town")
+map<- map + theme_minimal() + ggtitle("2018 Maine Absentee  \n Ballot Rejection Rate")  +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), 
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+map2 <- map + guides(fill=guide_legend(title="Rejection Rate 2018"))
+map2
+
+
 
 
 maine_shape$TOWN<- toupper(maine_shape$TOWN)
+
+
+length(which(maine_shape$TOWN %in% ME_mailfile$MUNICIPALITY))
+
+
+
+
+
+
 ######################
 
 
@@ -109,7 +147,7 @@ View(t)
 #### number of absentee ballots between years 
 #### number of rejected ballots between eyars, by municipality
 
-
+View(p_20)
 p_18<- read.table("2018_primary.txt", sep = "|", header = T)
 p_20<- read.csv(file, header = T)
 p_20$cast <- 1
@@ -117,14 +155,14 @@ p_20$cast <- 1
 p_18$cast <- 1
 
 twenty_counted<- p_20 %>% 
-  filter(ACC.OR.REJ == "ACC") %>% 
+
   group_by(MUNICIPALITY) %>% 
   summarise(cast20 = sum(cast))
 View(eighteen_counted)
 
 
 eighteen_counted<- p_18 %>% 
-  filter(ACC.OR.REJ == "ACC") %>% 
+
   group_by(MUNICIPALITY) %>% 
   summarise(cast18 = sum(cast))
 
@@ -189,7 +227,6 @@ dem_20$cast <- 1
 dem_18$cast <- 1
 
 twenty_counted_dem<- dem_20 %>% 
-  filter(ACC.OR.REJ == "ACC") %>% 
   group_by(MUNICIPALITY) %>% 
   summarise(cast20_dem = sum(cast))
 View(eighteen_counted)
@@ -302,7 +339,7 @@ write.csv(wide_df, "wide.csv")
 
 
 
-View(ME_mailfile)
+View(wide_df)
 
 ##### see how many new voters there were
 ## first; subset by 2020, before 2020
@@ -325,3 +362,8 @@ nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 
 nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,]) / oldvoters
 
 nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 1,])+ nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,])
+
+View(all_counted)
+
+
+
