@@ -201,8 +201,29 @@ wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 0 & wi_county_shp$gop
 wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 10 ] <- "#37C256"
 setwd("F:/MEDSL/healthy_elections/WI")
 saveRDS(wi_county_shp, "wi_county_turnout_shp.Rdata")
+wi_county_shp <- readRDS("wi_county_turnout_shp.Rdata")
 dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_dem, weight_mod = 4.1, size_correct = F  )
 gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_gop, weight_mod = 4.1, size_correct = F  )
+#####################3333Color assignment for single color spectrum 
+medsl_purples <- c("#DDDBFB", "#B1AAFB","#7D76C7","#635E99",  "#4E4A81")
+#####Let's just manually assign colors 
+wi_county_shp$color_manual_dem <- medsl_purples[1]
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -25 & wi_county_shp$dem_pct_chg< -5] <-medsl_purples[2]
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -5 & wi_county_shp$dem_pct_chg< 0] <- medsl_purples[3]
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 0 & wi_county_shp$dem_pct_chg< 10] <- medsl_purples[4]
+wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 10 ] <- medsl_purples[5]
+###GOP 
+wi_county_shp$color_manual_gop <- medsl_purples[1]
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -25 & wi_county_shp$gop_pct_chg< -5] <- medsl_purples[2]
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -5 & wi_county_shp$gop_pct_chg< 0] <- medsl_purples[3]
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 0 & wi_county_shp$gop_pct_chg< 10] <- medsl_purples[4]
+wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 10 ] <- medsl_purples[5]
+
+
+
+######################################################################
+
+
 
 medsl_heat <- c("#8D2115","#FF715A","#EBD600","#ADCC18","#37C256") #red to green 
 quantile(wi_county_shp$gop_pct_chg.x, seq(0,1,by=0.05))
@@ -213,13 +234,13 @@ dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$colo
                         title = "Democratic 2020/2016 Turnout"  )
 op <- par(family = "StyreneB-Regular")
 #par(op)
-legend("bottomleft", fill=medsl_heat,
+legend("bottomleft", fill=medsl_purples,
        legend = c("< -25%" , "-25 to -5%", "-5 to 0%", "0 to 10%", "10%+"), title="Dem. % Chg.",
        bty="n", horiz=FALSE, cex=0.7)
 gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_gop, weight_mod = 4.1, size_correct = F,
                         title = "Republican 2020/2016 Turnout")
 op <- par(family = "StyreneB-Regular")
-legend("bottomleft", fill=medsl_heat,
+legend("bottomleft", fill=medsl_purples,
        legend = c("< -25%" , "-25 to -5%", "-5 to 0%", "0 to 10%", "10%+"), title="GOP % Chg.",
        bty="n", horiz=FALSE, cex=0.7)
 dev.off()

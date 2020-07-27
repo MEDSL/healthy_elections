@@ -260,8 +260,58 @@ table(wi_vf_abs_all$ballotstatusreason,wi_vf_abs_all$April2020)#looks like some 
 #they instead voted in person 
 11904/(11904+2868) # 0.8058489 of those with issues for deadline ended up voting in person 
 750/(750+1468) # 0.3381425 of those who did not return ballot  ended up voting in person 
+###let's do surname only preds here 
+names(wi_vf_abs_all)
+wi_vf_abs_all$surname_only <- 0
+wi_vf_abs_all$surname_only[is.na(wi_vf_abs_all$pred.whi)==T] <- 1
+##let;s split here 
+wi_vf_abs_all_surname <- subset(wi_vf_abs_all, surname_only==1 )
+wi_vf_abs_all <- subset(wi_vf_abs_all, surname_only==0 )
+#predict race now after dropping 
+wi_vf_abs_all_surname <- subset(wi_vf_abs_all_surname, select=-c(pred.whi,pred.bla,pred.his,pred.asi,pred.oth))
+wi_vf_abs_all_surname <- predict_race(wi_vf_abs_all_surname, surname.only = T)
+sum(is.na(wi_vf_abs_all_surname$pred.whi)) #goood 
+wi_vf_abs_all <- rbind(wi_vf_abs_all,wi_vf_abs_all_surname )
+rm(wi_vf_abs_all_surname)
+saveRDS(wi_vf_abs_all, "wi_vf_abs_all07222020.Rdata")
 
 
+###let's do mode voting by race here 
+(sum(wi_vf_abs_all$vbm_dum*wi_vf_abs_all$pred.whi,na.rm=T))/(sum(wi_vf_abs_all$pred.whi, na.rm=T))
+(sum(wi_vf_abs_all$early2*wi_vf_abs_all$pred.whi,na.rm=T))/(sum(wi_vf_abs_all$pred.whi, na.rm=T))
+100 - 58.7 - 12.5
+#black
+(sum(wi_vf_abs_all$vbm_dum*wi_vf_abs_all$pred.bla,na.rm=T))/(sum(wi_vf_abs_all$pred.bla, na.rm=T))
+(sum(wi_vf_abs_all$early2*wi_vf_abs_all$pred.bla,na.rm=T))/(sum(wi_vf_abs_all$pred.bla, na.rm=T))
+100 - 60.3 - 11.5
+#hispanic
+(sum(wi_vf_abs_all$vbm_dum*wi_vf_abs_all$pred.his,na.rm=T))/(sum(wi_vf_abs_all$pred.his, na.rm=T))
+(sum(wi_vf_abs_all$early2*wi_vf_abs_all$pred.his,na.rm=T))/(sum(wi_vf_abs_all$pred.his, na.rm=T))
+100-62.6 - 9.1
+#asian
+(sum(wi_vf_abs_all$vbm_dum*wi_vf_abs_all$pred.asi,na.rm=T))/(sum(wi_vf_abs_all$pred.asi, na.rm=T))
+(sum(wi_vf_abs_all$early2*wi_vf_abs_all$pred.asi,na.rm=T))/(sum(wi_vf_abs_all$pred.asi, na.rm=T))
+100 - 64.4-9.2
+#other
+(sum(wi_vf_abs_all$vbm_dum*wi_vf_abs_all$pred.oth,na.rm=T))/(sum(wi_vf_abs_all$pred.oth, na.rm=T))
+(sum(wi_vf_abs_all$early2*wi_vf_abs_all$pred.oth,na.rm=T))/(sum(wi_vf_abs_all$pred.oth, na.rm=T))
+100-59.6-10.3
+##quickly do total by race 
+sum(wi_vf_abs_all$pred.whi,na.rm=T) # 1345038
+sum(wi_vf_abs_all$pred.bla,na.rm=T) # 81255
+sum(wi_vf_abs_all$pred.his,na.rm=T) # 91350
+sum(wi_vf_abs_all$pred.asi,na.rm=T) # 51849
+sum(wi_vf_abs_all$pred.oth,na.rm=T) # 36496
+nrow(wi_vf_abs_all)
+##let's get total pcts 
+sum(wi_vf_abs_all$vbm_dum,na.rm=T)/nrow(wi_vf_abs_all)
+sum(wi_vf_abs_all$early2,na.rm=T)/nrow(wi_vf_abs_all)
+100-59.2-12.1
+
+#not quite getting the total # 
+sum(is.na(wi_vf_abs_all$pred.whi))
+1140137 + 55033+49339+27356+26722 + 307401
+nrow(wi_vf_abs_all)
 # 878606  voted absentee w/out problem, at polls w/out problem, or at pools w/problem ; 273325 voted abs but had problem 
 878606/table(wi_vf_abs_all$April2020)
 878606/(1169729 + 436267)
