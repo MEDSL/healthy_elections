@@ -15,8 +15,6 @@ maine_shape$TOWN<- toupper(as.character(maine_shape$TOWN))
 all_counted$TOWN<- as.character(all_counted$MUNICIPALITY)
 maine_shape<- merge(maine_shape, all_counted, by = "TOWN", all.x = T)
 shapefile_df <- fortify(maine_shape)
-sort(unique(maine_shape$TOWN))
-sort(unique(all_counted$TOWN))
 
 
 all_counted$TOWN
