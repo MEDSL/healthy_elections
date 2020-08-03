@@ -22,6 +22,14 @@ wi_vf_wd <- "F:/voterfile/wi"
 setwd(wi_vf_wd)
 wi_abs_file <- read.csv("F:/voterfile/wi/wi_abs_export.csv")
 wi_abs_file$voterregnumber <- str_pad(wi_abs_file$voterregnumber, width=10,pad="0",side="left")
+###will need to check here before subsetting 
+names(wi_abs_file)
+sort(unique(wi_abs_file$ballotstatus))
+sort(unique(wi_abs_file$ballotreasontype))#this is what we want. 
+length(which(wi_abs_file$ballotreasontype!="")) # 21980 is what's used 
+sort(unique(wi_abs_file$electionname))
+table(wi_abs_file$electionname)
+
 wi_bisg <- readRDS("wi_bisg_results.Rdata")
 nrow(wi_bisg) # 6491178
 ### we will now want to sum by race and such for the racial comparison 
@@ -38,7 +46,8 @@ wi_abs_file2 <- subset(wi_abs_file, electionname == "2020 Spring Election and Pr
 #sort(unique(wi_bisg$Voter.Reg.Number))[1:100] # I see, these look pretty padded compared to the abs file ; 9 digits long ? 
 ###
 #sort(unique(wi_bisg$Voter.Reg.Number))[6491078:6491178] #yep, looks like it should be 9 digits long 
-
+(66477+7292+30153+536)/(length(which(wi_abs_file$electionname=="2020 Spring Election and Presidential Preference Vote"))+
+                               length(which(wi_abs_file$electionname=="2020 Spring Primary"))) 
 
 wi_vf <- readRDS("wi_voterfile_cleaned.Rdata")
 names(wi_abs_file) ##good, looks like it was read in successfully 
@@ -55,8 +64,14 @@ wi_abs_file_dup <- subset(wi_abs_file, present > 1)
 wi_abs_file <- subset(wi_abs_file, present == 1)
 wi_abs_file_dup <- subset(wi_abs_file_dup, electionname=="2020 Spring Election and Presidential Preference Vote")
 wi_abs_file <- rbind(wi_abs_file,wi_abs_file_dup)
-nrow(wi_abs_file)
+length(which(wi_abs_file$ballotstatusreason=="Returned"))/nrow(wi_abs_file)# 0.8868039 were returned . What are other options? 
+#So this equals returned and counted. WE will need to look at the other categories 
+length(which(wi_abs_file$dateballotreturned==""))/nrow(wi_abs_file) # 0.09906817 prop of ballots with blank return address, so not submitted
 
+sort(unique(wi_abs_file$ballotstatusreason))
+
+nrow(wi_abs_file)
+View(wi_abs_file)
 names(wi_vf)
 wi_vf <- wi_vf[,c(1:25,28:29,39,41,96)]
 #wi_vf$County[wi_vf$County=="Milwaukee County Supervisory District 14"] <-  "Milwaukee County"
@@ -855,3 +870,167 @@ sum(mil_vf$pred.nonwhite*mil_vf$voted,na.rm=T)/sum(mil_vf$pred.nonwhite,na.rm=T)
 
 sort(unique(mil_vf))
 (30597 + 136577)/(30597 + 136577 + 224632)
+
+###reading in the absentee file for 2016 
+setwd("F:/voterfile/wi")
+library(readxl)
+wi2016abs <- read_xlsx("Absentee_file_2016.xlsx")
+head(wi2016abs)
+View(wi2016abs)
+sort(unique(wi2016abs$`Election Name`))
+wi2016abs <- subset(wi2016abs, `Election Name` =="2016 Spring Election and Presidential Preference Vote")
+sort(unique(wi2016abs$`Ballot Delivery Method`))
+wi2016abs$early <- 0
+wi2016abs$early[wi2016abs$`Ballot Delivery Method`=="Voted In Person"] <- 1 
+wi2016abs$vbm_dum <- 0
+wi2016abs$vbm_dum[wi2016abs$early==0] <- 1
+#### let's look at the rejection reasons 
+table(wi2016abs$`Ballot Status Reason`)
+#######################
+
+wi2016abs$reason1 <- NA
+wi2016abs$reason1[wi2016abs$`Ballot Status Reason`=="Ballot Returned After Deadline" | 
+                        wi2016abs$`Ballot Status Reason`=="Ballot Not Returned By Deadline"] <-
+  "Ballot Returned After Deadline"
+wi2016abs$reason1[wi2016abs$`Ballot Status Reason`=="Ballot Not Received" | wi2016abs$`Ballot Status Reason`=="Not Returned"] <-
+  "Ballot Not Received"
+wi2016abs$reason1[wi2016abs$`Ballot Status Reason`=="Returned"] <- "Returned"
+wi2016abs$reason1[wi2016abs$`Ballot Status Reason`=="Rejected at Polls/MBOC" | wi2016abs$`Ballot Status Reason`=="Returned, to be Rejected"|
+                        wi2016abs$`Ballot Status Reason`=="Ineligible"] <- "Rejected"
+wi2016abs$reason1[wi2016abs$`Ballot Status Reason`=="Undeliverable" | wi2016abs$`Ballot Status Reason`=="Voter Moved"] <-
+  "Delivery Issue"
+wi2016abs$reason1[is.na(wi2016abs$`Ballot Status Reason`)==F & is.na(wi2016abs$reason1)==T ] <- "Other"
+#### reason simplified 
+wi2016abs$reason2 <- NA
+wi2016abs$reason2[wi2016abs$`Ballot Status Reason`=="Ballot Returned After Deadline" | 
+                        wi2016abs$`Ballot Status Reason`=="Ballot Not Returned By Deadline"] <-
+  "Ballot Returned After Deadline"
+wi2016abs$reason2[wi2016abs$`Ballot Status Reason`=="Ballot Not Received" | wi2016abs$`Ballot Status Reason`=="Not Returned"] <-
+  "Ballot Not Received"
+wi2016abs$reason2[wi2016abs$`Ballot Status Reason`=="Returned"] <- "Returned"
+wi2016abs$reason2[is.na(wi2016abs$`Ballot Status Reason`)==F & is.na(wi2016abs$reason2)==T ] <- "Other"
+table(wi2016abs$reason1)
+table(wi2016abs$reason2)
+wi2016abs$counted <- 0
+wi2016abs$counted[wi2016abs$reason2=="Returned"] <- 1
+table(wi2016abs$reason1,wi2016abs$early)
+
+###let's get the results by county 
+wi2016county_abs <- wi2016abs %>% group_by(County) %>% summarise(counted_votes = sum(counted), counted_vbm=sum(counted*vbm_dum),
+                                                                 counted_early=sum(counted*early),rejected=sum(1-counted))
+wi2016county_abs$CNTY_NAME <- str_to_upper(wi2016county_abs$County)
+wi2016county_abs$CNTY_NAME <- str_remove_all(wi2016county_abs$CNTY_NAME, " COUNTY")
+wi2016county_abs$CNTY_NAME[wi2016county_abs$CNTY_NAME=="ST. CROIX"] <- "SAINT CROIX"
+View(wi2016county_abs)
+###let's read in the county data 
+setwd("F:/MEDSL/healthy_elections/WI")
+wi_county_shp <- readRDS("wi_county_turnout_shp.Rdata")
+wi_county_shp <- merge(wi_county_shp, wi2016county_abs, by="CNTY_NAME")
+wi_county_shp$ed2016 <- (wi_county_shp$vote2016dem+wi_county_shp$vote2016gop) - (wi_county_shp$counted_vbm+wi_county_shp$counted_early)
+View(wi_county_shp)
+137328/2131109
+76125/2131109
+###let's do percents now 
+wi_county_shp$ed_pct <- (wi_county_shp$ed2016/(wi_county_shp$vote2016dem+wi_county_shp$vote2016gop))*100
+wi_county_shp$vbm_pct <- (wi_county_shp$counted_vbm/(wi_county_shp$vote2016dem+wi_county_shp$vote2016gop))*100
+wi_county_shp$early_pct <- (wi_county_shp$counted_early/(wi_county_shp$vote2016dem+wi_county_shp$vote2016gop))*100
+library(reldist)
+gini(wi_county_shp$total_pop)
+gini(wi_county_shp$vote2016dem)
+gini(wi_county_shp$vote2016gop)
+####mapping and assigning colors now 
+medsl_blues <- c("#9FDDF3","#00BAFF","#3791FF","#04448B","#0B2E4F")
+wi_county_shp$color2016ed <- medsl_blues[1]
+wi_county_shp$color2016ed[wi_county_shp$ed_pct >= 20 & wi_county_shp$ed_pct < 30] <- medsl_blues[2]
+wi_county_shp$color2016ed[wi_county_shp$ed_pct >= 30 & wi_county_shp$ed_pct < 40] <- medsl_blues[3]
+wi_county_shp$color2016ed[wi_county_shp$ed_pct >= 40 & wi_county_shp$ed_pct < 50] <- medsl_blues[4]
+wi_county_shp$color2016ed[wi_county_shp$ed_pct >= 50] <- medsl_blues[5]
+
+jpeg("wi_electionday2016.jpeg", res=300, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+ed_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color2016ed, weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< 20%" , "20 to 30%", "30 to 40%", "40 to 50%", "50%+"), title="Elec. Day %",
+       bty="n", horiz=FALSE, cex=0.7)
+dev.off()
+###let's do a scatterplot here 
+wi_county_shp_vf <- readRDS("wi_county_mod_Shpfile.Rdata")
+#for now, let's get the results just by county, not race 
+wi_county_shp_vf$county_early <- wi_county_shp_vf$white_early + wi_county_shp_vf$nonwhite_early
+wi_county_shp_vf$vbm_pct <- (wi_county_shp_vf$total_absballots/wi_county_shp_vf$county_total)*100
+wi_county_shp_vf <- subset(wi_county_shp_vf, select=c(CNTY_NAME,county_total,total_absballots,ip_ballots,county_early,ip_pct,
+                                                      county_early_pct,vbm_pct))
+wi_county_shp_vf <- wi_county_shp_vf@data
+colnames(wi_county_shp_vf) <- c("CNTY_NAME","total_ballots2020","total_absballots2020","ip_ballots2020","earlyballots2020","ip_pct2020",
+                                "early_pct2020","vbm_pct2020")
+wi_county_shp <- merge(wi_county_shp, wi_county_shp_vf , by="CNTY_NAME")
+
+###now let's do a Geom plot, except let's do it by county name 
+library(ggplot2)
+gg_ed_plot<-ggplot(wi_county_shp@data, aes(x=ed_pct, y=ip_pct2020)) +
+  geom_point(size=-1) + 
+  geom_text(label=(wi_county_shp$CNTY_NAME)) + xlab("2016 ED %") + ylab("2020 ED %") + theme_bw() + ylim(0,100) + xlim(80,100) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B"))
+gg_ed_plot
+ggsave("electionday_scatter.jpeg", plot = gg_ed_plot, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+cor(wi_county_shp$ip_pct2020,wi_county_shp$ed_pct)
+###create new maps for vbm
+medsl_purple <- c("#DDDBFB", "#B1AAFB","#7D76C7","#635E99",  "#4E4A81")
+wi_county_shp$color2020vbm <- medsl_purple[1]
+wi_county_shp$color2020vbm[wi_county_shp$vbm_pct2020 > 50 & wi_county_shp$vbm_pct2020 <= 60] <- medsl_purple[2]
+wi_county_shp$color2020vbm[wi_county_shp$vbm_pct2020 > 60 & wi_county_shp$vbm_pct2020 <= 70] <- medsl_purple[3]
+wi_county_shp$color2020vbm[wi_county_shp$vbm_pct2020 > 70 & wi_county_shp$vbm_pct2020 <= 80] <- medsl_purple[4]
+wi_county_shp$color2020vbm[wi_county_shp$vbm_pct2020 > 80 ] <- medsl_purple[5]
+###create map here 
+jpeg("wi_vbm2020.jpeg", res=600, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+vbm_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color2020vbm, weight_mod = 4.1, size_correct = F,
+                       title = ""  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_purple,
+       legend = c("< 50%" , "50 - 60%", "60 - 70%", "70 - 80%", "80%+"), title="VBM %",
+       bty="n", horiz=FALSE, cex=0.7)
+dev.off()
+###scatterplot 
+gg_vbm_plot<-ggplot(wi_county_shp@data, aes(x=vbm_pct, y=vbm_pct2020)) +
+  geom_point(size=-1) + 
+  geom_text(label=(wi_county_shp$CNTY_NAME)) + xlab("2016 VBM %") + ylab("2020 VBM %") + theme_bw() + ylim(0,100) + xlim(-1,20) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B"))
+gg_vbm_plot
+ggsave("vbm_scatter.jpeg", plot = gg_vbm_plot, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+cor(wi_county_shp$vbm_pct,wi_county_shp$vbm_pct2020)
+
+###now let's do early ballots 
+quantile(wi_county_shp$early_pct,seq(0,1,by=0.05))
+wi_county_shp$color2016early <- medsl_blues[1]
+wi_county_shp$color2016early[wi_county_shp$early_pct > 5 & wi_county_shp$early_pct <= 10] <- medsl_blues[2]
+wi_county_shp$color2016early[wi_county_shp$early_pct > 10 & wi_county_shp$early_pct <= 15] <- medsl_blues[3]
+wi_county_shp$color2016early[wi_county_shp$early_pct > 15 & wi_county_shp$early_pct <= 20] <- medsl_blues[4]
+wi_county_shp$color2016early[wi_county_shp$early_pct > 20] <- medsl_blues[5]
+###let's plot here 
+jpeg("wi2016early.jpeg", res=600, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+vbm_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color2016early, weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< 5%" , "5 - 10%", "10 - 15%", "15 - 20%", "20%+"), title="Early %",
+       bty="n", horiz=FALSE, cex=0.7)
+dev.off()
+###scatterplot here 
+gg_early_plot<-ggplot(wi_county_shp@data, aes(x=early_pct, y=early_pct2020)) +
+  geom_point(size=-1) + 
+  geom_text(label=(wi_county_shp$CNTY_NAME)) + xlab("2016 Early %") + ylab("2020 Earlyl %") + theme_bw()  + xlim(-1,25) + ylim(0,25) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B"))
+gg_early_plot
+ggsave("early_scatter.jpeg", plot = gg_early_plot, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+cor(wi_county_shp$early_pct,wi_county_shp$early_pct2020)
+saveRDS(wi_county_shp, "wi_county_turnout_shp.Rdata")
+
+View(wi_county_shp_vf)
+names(wi_county_shp)
