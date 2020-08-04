@@ -57,6 +57,48 @@ wi_abs_file$mail_counted <- 0
 wi_abs_file$mail_counted[wi_abs_file$vbm_dum==1 & wi_abs_file$counted==1] <- 1
 wi_abs_file$early_counted <- 0
 wi_abs_file$early_counted[wi_abs_file$early_dum==1 & wi_abs_file$counted==1] <- 1
+
+wi_abs_file$ballotreasontype <- str_to_lower(wi_abs_file$ballotreasontype)
+###let's get reasons down 
+wi_abs_file$rejection_reason <- "other"
+wi_abs_file$rejection_reason[wi_abs_file$ballotreasontype=="absentee ballot received after deadline"] <- "received late"
+wi_abs_file$rejection_reason[wi_abs_file$ballotreasontype=="absentee ballot postmarked after election day" | 
+                               wi_abs_file$ballotreasontype == "post marked after election day"] <- "postmarked late"
+wi_abs_file$rejection_reason[str_detect(wi_abs_file$ballotreasontype, "certification")] <- "certification issue"
+wi_abs_file$rejection_reason[str_detect(wi_abs_file$ballotreasontype, " poi ") | str_detect(wi_abs_file$ballotreasontype, " por ")] <-
+  "proof of identity/residence issue"
+wi_abs_file$rejection_reason[wi_abs_file$ballotreasontype=="superseding ballot accepted" | 
+                               wi_abs_file$ballotreasontype=="superseding ballot returned" | 
+                               wi_abs_file$ballotreasontype=="vote already recorded for this voter"] <- "superseding ballot"
+wi_abs_file$rejection_reason[wi_abs_file$ballotreasontype==""] <- "accepted"
+
+table(wi_abs_file$rejection_reason)
+###looking at not returned specifically and rekected 
+wi_notcounted <- subset(wi_abs_file, rejection_reason!= "accepted" | not_returned == 1 )
+wi_notcounted$full_addrs <- paste0(wi_notcounted$address1, sep=" ", wi_notcounted$address2)
+wi_notcounted_addrs <- subset(wi_notcounted, select = c(full_addrs, county))
+wi_notcounted_addrs <- wi_notcounted_addrs[!duplicated(wi_notcounted_addrs$full_addrs), ]
+nrow(wi_notcounted_addrs)
+wi_notcounted_addrs <- as.data.frame(wi_notcounted)
+write.dbf(wi_notcounted_addrs, "wi_notcounted2020addrs.dbf")
+write.csv(wi_notcounted_addrs, "wi_notcounted2020vf.csv",row.names = FALSE)
+
+write.csv(wi2016abs, "wi2016abs_vf.csv",row.names = FALSE)
+nrow(wi_notcounted)
+View(wi_notcounted)
+
+
+##let's save the work so far 
+saveRDS(wi_abs_file, "wi_abs_file08032020.Rdata")
+
+sort(unique(wi_abs_file$ballotreasontype)) # is the field for rejection 
+table(wi_abs_file$rejection_reason)
+length(which(wi_abs_file$rejection_reason!="accepted"))
+
+###let's check to make sure the results line up 
+length(which(wi_abs_file$ballotstatusreason=="Ballot Not Returned By Deadline" | 
+               wi_abs_file$ballotstatusreason=="Ballot Returned After Deadline" & wi_abs_file$not_returned==0))/938411
+
 ###now we will summarize by county
 wi_notreturned <- wi_abs_file %>% group_by(county) %>% summarize(total_requests=sum(dum_prez,na.rm=T), early_returned=sum(early_returned),
                                                                  mail_returned=sum(mail_returned),mail_counted=sum(mail_counted),
@@ -826,6 +868,11 @@ wi2016abs$early_counted[wi2016abs$early==1 & wi2016abs$counted==1] <- 1
 wi2016abs$county <- str_to_upper(wi2016abs$County)
 wi2016abs$county <- str_remove_all(wi2016abs$county, " COUNTY")
 wi2016abs$dum_prez = 1
+###calculating late ballots rejected in 2016
+length(which(wi2016abs$`Ballot Status Reason`=="Ballot Not Returned By Deadline" | wi2016abs$`Ballot Status Reason`=="Returned - Late" |
+               wi2016abs$`Ballot Status Reason`=="Ballot Returned After Deadline" & wi2016abs$not_returned==0))
+10903/(nrow(wi2016abs)- sum(wi2016abs$not_returned))
+
 ###now let's bring down the coding from 2020 
 wi2016notreturned <- wi2016abs %>% group_by(county) %>% summarize(total_requests=sum(dum_prez,na.rm=T), early_returned=sum(early_returned),
                                                                  mail_returned=sum(mail_returned),mail_counted=sum(mail_counted),
@@ -895,9 +942,31 @@ wi2016abs$reason2[wi2016abs$`Ballot Status Reason`=="Returned"] <- "Returned"
 wi2016abs$reason2[is.na(wi2016abs$`Ballot Status Reason`)==F & is.na(wi2016abs$reason2)==T ] <- "Other"
 table(wi2016abs$reason1)
 table(wi2016abs$reason2)
+###now let's look at the reasons for 2020 
+table(wi_abs_file$ballotstatusreason)
+66701+2647 # 69348 returned too late 
+sum(wi_notreturned_all$mail_returned2020)
+69348/938411 # these are the rejected ballots for returning too late 
+
+
 wi2016abs$counted <- 0
 wi2016abs$counted[wi2016abs$reason2=="Returned"] <- 1
 table(wi2016abs$reason1,wi2016abs$early)
+wi2016abs$full_addrs <- paste0(wi2016abs$Address1, sep=" ", wi2016abs$Address2)
+wi2016addrs <- subset(wi2016abs, select=c(county, full_addrs))
+wi2016addrs <- wi2016addrs[!duplicated(wi2016addrs$full_addrs), ]
+nrow(wi2016addrs)
+str(wi2016addrs)
+wi2016addrs <- as.data.frame(wi2016addrs)
+write.dbf(wi2016addrs, "wi2016addrs.dbf")
+##let's look at the address field and geocode for 2016 
+sort(unique(wi_abs_file$ballotreasontype)) # is the field for rejection 
+table(wi_abs_file$ballotreasontype)
+
+
+
+sum(wi_notreturned_all$mail_returned2020+wi_notreturned_all$early_returned2020) # 1137967 ballots returned 
+
 
 ###let's get the results by county 
 wi2016county_abs <- wi2016abs %>% group_by(County) %>% summarise(counted_votes = sum(counted), counted_vbm=sum(counted*vbm_dum),
@@ -1037,10 +1106,60 @@ wi2020data$CNTY_NAME[wi2020data$CNTY_NAME=="ST. CROIX"] <- "SAINT CROIX"
 #exclude voter request, NAs, and not returned to get articles numbers 
 saveRDS(wi2020data, "wi_rej2020.Rdata")
 
+sort(unique(wi_notreturned_all$county))
+wi_notreturned_all$county[wi_notreturned_all$county=="ST. CROIX"] <- "SAINT CROIX"
+
+
 
 summary(wi2020data$rejected_pct)
 sum(wi2020data$rejected)
 View(wi2020data)
+wi_county_shp <- merge(wi_county_shp, wi_notreturned_all, by.x="CNTY_NAME", by.y="county")
+names(wi_county_shp)
+###let's create the cartogram plots now 
+quantile(wi_notreturned_all$returned_pct2020, seq(0,1,by=0.05))
+#breaks by 80, 85, 90, 95
+
+wi_county_shp$color_returned <- medsl_blues[1]
+wi_county_shp$color_returned[wi_county_shp$returned_pct2020 > 80 & wi_county_shp$returned_pct2020 <= 85 ] <- medsl_blues[2]
+wi_county_shp$color_returned[wi_county_shp$returned_pct2020 > 85 & wi_county_shp$returned_pct2020 <= 90 ] <- medsl_blues[3]
+wi_county_shp$color_returned[wi_county_shp$returned_pct2020 > 90 & wi_county_shp$returned_pct2020 <= 95 ] <- medsl_blues[4]
+wi_county_shp$color_returned[wi_county_shp$returned_pct2020 > 95 ] <- medsl_blues[5]
+##now let's dow this for 2016
+wi_county_shp$color2016returned <- medsl_blues[1]
+wi_county_shp$color2016returned[wi_county_shp$returned_pct2016 > 80 & wi_county_shp$returned_pct2016 <= 85 ] <- medsl_blues[2]
+wi_county_shp$color2016returned[wi_county_shp$returned_pct2016 > 85 & wi_county_shp$returned_pct2016 <= 90 ] <- medsl_blues[3]
+wi_county_shp$color2016returned[wi_county_shp$returned_pct2016 > 90 & wi_county_shp$returned_pct2016 <= 95 ] <- medsl_blues[4]
+wi_county_shp$color2016returned[wi_county_shp$returned_pct2016 > 95 ] <- medsl_blues[5]
+###now let's do the carto plots 
+jpeg("wi2016returned.jpeg", res=600, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+vbm_carto <- carto_plot(wi_county_shp, log(wi_county_shp$total_requests2016), wi_county_shp$color2016returned, 
+                        weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< 80%" , "80 - 85%", "85 - 90%", "90 - 95%", "95%+"), title="Returned %",
+       bty="n", horiz=FALSE, cex=0.7)
+dev.off()
+jpeg("wi2020returned.jpeg", res=600, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+vbm_carto <- carto_plot(wi_county_shp, log(wi_county_shp$total_requests2020), wi_county_shp$color_returned, 
+                        weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< 80%" , "80 - 85%", "85 - 90%", "90 - 95%", "95%+"), title="Returned %",
+       bty="n", horiz=FALSE, cex=0.7)
+dev.off()
+
+
+sum(wi_notreturned_all$mail_returned2020)/sum(wi_notreturned_all$total_requests2020)
+
+
+
+
+wi_notreturned_all
 saveRDS(wi_county_shp, "wi_county_turnout_shp.Rdata")
 
 
