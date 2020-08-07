@@ -2,6 +2,7 @@
 ################## Template for finding poll distances ###########
 library(rgdal)
 library(sp)
+library(dplyr)
 library(foreign)
 library(geosphere) #this has the distgeo fxn
 distGeo_mod <- function(lon1,lat1,lon2,lat2){
@@ -83,4 +84,4 @@ wi_polls <- subset(wi_polls, County=="MILWAUKEE COUNTY")
 ###now let's do the test 
 smple_vf <- wi_voterfile[1:100,]
 test_obj <- poll_dist_fxn2(smple_vf,wi_polls,smple_vf$X,smple_vf$Y,wi_polls$Longitude,wi_polls$Latitude )
-
+View(test_obj)

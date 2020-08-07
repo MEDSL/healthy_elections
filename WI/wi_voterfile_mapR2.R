@@ -171,7 +171,8 @@ sum(is.na(wi_vf_abs_all_surname$pred.whi)) #goood
 wi_vf_abs_all <- rbind(wi_vf_abs_all,wi_vf_abs_all_surname )
 rm(wi_vf_abs_all_surname)
 saveRDS(wi_vf_abs_all, "wi_vf_abs_all07222020.Rdata")
-
+setwd("F:/voterfile/wi")
+wi_vf_abs_all <- readRDS("wi_vf_abs_all07222020.Rdata")
 
 ###let's do mode voting by race here 
 (sum(wi_vf_abs_all$vbm_dum*wi_vf_abs_all$pred.whi,na.rm=T))/(sum(wi_vf_abs_all$pred.whi, na.rm=T))

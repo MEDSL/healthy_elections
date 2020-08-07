@@ -1026,6 +1026,12 @@ gg_ed_plot<-ggplot(wi_county_shp@data, aes(x=ed_pct, y=ip_pct2020)) +
   geom_point(size=-1) + 
   geom_text(label=(wi_county_shp$CNTY_NAME)) + xlab("2016 ED %") + ylab("2020 ED %") + theme_bw() + ylim(0,100) + xlim(80,100) +
   theme(title = element_text(size = rel(1.4), family="Styrene B"))
+###lets create a new plot by points 
+gg_ed_plot<-ggplot(wi_county_shp@data, aes(x=ed_pct, y=ip_pct2020)) +
+  geom_point(aes(size=ip_ballots2020),color=medsl_blues[4]) + 
+   xlab("2016 ED %") + ylab("2020 ED %") + theme_bw() + ylim(0,100) + xlim(0,100) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+
 gg_ed_plot
 ggsave("electionday_scatter.jpeg", plot = gg_ed_plot, scale = 1, 
        width = 5, height = 4, units = c("in"), dpi = 600)
@@ -1049,13 +1055,14 @@ legend("bottomleft", fill=medsl_purple,
 dev.off()
 ###scatterplot 
 gg_vbm_plot<-ggplot(wi_county_shp@data, aes(x=vbm_pct, y=vbm_pct2020)) +
-  geom_point(size=-1) + 
-  geom_text(label=(wi_county_shp$CNTY_NAME)) + xlab("2016 VBM %") + ylab("2020 VBM %") + theme_bw() + ylim(0,100) + xlim(-1,20) +
-  theme(title = element_text(size = rel(1.4), family="Styrene B"))
+  geom_point(aes(size=mail_returned2020),color=medsl_purple[4]) + 
+  xlab("2016 VBM %") + ylab("2020 VBM %") + theme_bw() + ylim(0,100) + xlim(0,100) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
 gg_vbm_plot
 ggsave("vbm_scatter.jpeg", plot = gg_vbm_plot, scale = 1, 
        width = 5, height = 4, units = c("in"), dpi = 600)
 cor(wi_county_shp$vbm_pct,wi_county_shp$vbm_pct2020)
+
 
 ###now let's do early ballots 
 quantile(wi_county_shp$early_pct,seq(0,1,by=0.05))
@@ -1076,9 +1083,9 @@ legend("bottomleft", fill=medsl_blues,
 dev.off()
 ###scatterplot here 
 gg_early_plot<-ggplot(wi_county_shp@data, aes(x=early_pct, y=early_pct2020)) +
-  geom_point(size=-1) + 
-  geom_text(label=(wi_county_shp$CNTY_NAME)) + xlab("2016 Early %") + ylab("2020 Earlyl %") + theme_bw()  + xlim(-1,25) + ylim(0,25) +
-  theme(title = element_text(size = rel(1.4), family="Styrene B"))
+  geom_point(aes(size=early_counted2020), color=medsl_blues[4]) + 
+   xlab("2016 Early %") + ylab("2020 Early %") + theme_bw()  + xlim(0,100) + ylim(0,100) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
 gg_early_plot
 ggsave("early_scatter.jpeg", plot = gg_early_plot, scale = 1, 
        width = 5, height = 4, units = c("in"), dpi = 600)
@@ -1155,13 +1162,270 @@ dev.off()
 
 
 sum(wi_notreturned_all$mail_returned2020)/sum(wi_notreturned_all$total_requests2020)
+###let's read in the remaining bisg data 
+###we will want the entire wi voterfile 
 
+wi_bisg_notcounted <- read.csv("wi2020notcounted_bisg.csv")
+wi2016bisg <- read.csv("wi2016abs_bisg.csv")
+###full voterfile 
+wi_vf <- readRDS("wi_voterfile_cleaned.Rdata")
+wi_vf$Voter.Reg.Number <- str_pad(wi_vf$Voter.Reg.Number,10,side="left",pad="0")
+wi_vf$prior_voter <- NA
+for(i in 25:95){
+  wi_vf$prior_voter[wi_vf[,i]!="" & is.na(wi_vf$prior_voter)==T ] <- 1
+}
+wi_vf$prior_voter[is.na(wi_vf$prior_voter)==T] <- 0
+summary(wi_vf$prior_voter) #good, now have the prior voter complete 
+wi_vf <- subset(wi_vf, select=c(Voter.Reg.Number,prior_voter))
+wi_bisg_notcounted$voterregnumber <- str_pad(wi_bisg_notcounted$voterregnumber,10,side="left",pad="0")
+wi_bisg_notcounted <- merge(wi_bisg_notcounted, wi_vf, by.x="voterregnumber", by.y="Voter.Reg.Number",all.x=T)
+sum(is.na(wi_bisg_notcounted$prior_voter))#looks like everything merged 
+View(wi_bisg_notcounted)
+wi_bisg$Voter.Reg.Number <- str_pad(wi_bisg$Voter.Reg.Number,width = 10,side="left",pad="0")
+wi_abs_file_bisg <- merge(wi_abs_file, wi_bisg, by.y="Voter.Reg.Number", by.x="voterregnumber", all.x=T)
+wi_abs_file_bisg_lefto <- subset(wi_abs_file_bisg,is.na(pred.whi)==T )
+wi_abs_file_bisg_lefto <- subset(wi_abs_file_bisg_lefto, select= -c(pred.whi,pred.bla,pred.his,pred.oth,pred.asi))
+wi_abs_file_bisg <- subset(wi_abs_file_bisg, is.na(pred.whi)==F)
+wi_abs_file_bisg_lefto <- predict_race(wi_abs_file_bisg_lefto, surname.only=T)
+wi_abs_file_bisg <- rbind(wi_abs_file_bisg, wi_abs_file_bisg_lefto)
+wi_abs_file_bisg <- merge(wi_abs_file_bisg, wi_vf, by.x="voterregnumber", by.y="Voter.Reg.Number",all.x=T)
+wi_abs_file_bisg <- wi_abs_file_bisg[!duplicated(wi_abs_file_bisg$voterregnumber),]
+nrow(wi_abs_file_bisg)
+###now can run the analysis 
+sum(colSums(wi_abs_file_bisg[,55:59]))
+names(wi_abs_file_bisg)
+table(wi_abs_file_bisg$not_returned,wi_abs_file_bisg$prior_voter)
+table(wi_abs_file_bisg$prior_voter)/nrow(wi_abs_file_bisg)
+##getting sums 
+38445/(38445+10045)
+1089443/(1089443+109912)
+sum(wi_abs_file_bisg$prior_voter)
+nrow(wi_abs_file_bisg)
+sum(is.na(wi_abs_file_bisg$pred.whi))
+wi_abs_file_bisg <- wi_abs_file_bisg
+length(unique(wi_abs_file_bisg$voterregnumber))
+###analyzing by race
+names(wi_abs_file)
+race_tbl <- subset(wi_abs_file_bisg,not_returned==1)
+race_tbl <- race_tbl[,55:59]
+nrow(race_tbl)/nrow(wi_abs_file)
+round(colSums(race_tbl,na.rm=T),0)
+sum(round(colSums(race_tbl,na.rm=T),0))
+(colSums(race_tbl,na.rm=T)/colSums(wi_abs_file_bisg[,55:59]))*100
+119957/nrow(wi_abs_file_bisg)
+###let's now run the results for 2016 
+wi2016bisg_nc <- subset(wi2016bisg, not_returned==1)
+round(colSums(wi2016bisg_nc[,60:64],na.rm=T))
+sum(round(colSums(wi2016bisg_nc[,60:64],na.rm=T)))
+nrow(wi2016bisg_nc)/nrow(wi2016bisg)
+(colSums(wi2016bisg_nc[,60:64],na.rm=T)/colSums(wi2016bisg[,60:64],na.rm=T))*100
+nrow(wi2016bisg_nc)
+############ rejection rates by race 
+race_tblr <- subset(wi_abs_file_bisg,counted==0 & not_returned == 0)
+race_tblr <- race_tblr[,55:59]
+wi_abs_file_bisg_returned <- subset(wi_abs_file_bisg, not_returned==0)
+round(colSums(race_tblr,na.rm=T),0)
+(colSums(race_tblr,na.rm=T)/colSums(wi_abs_file_bisg_returned[,55:59]))*100
+nrow(race_tblr)/nrow(wi_abs_file_bisg_returned)
+##now for 2016 
+wi2016bisg_returned <- subset(wi2016bisg, not_returned == 0 )
+race_tblr2016 <- subset(wi2016bisg,counted==0 & not_returned == 0)
+race_tblr2016 <- race_tblr2016[,60:64]
+round(colSums(race_tblr2016,na.rm=T))
+(colSums(race_tblr2016,na.rm=T)/colSums(wi2016bisg_returned[,60:64],na.rm=T))*100
+nrow(race_tblr2016)/nrow(wi2016bisg_returned)
+###now first time voter status
+wi_abs_file_bisg_returned2 <- subset(wi_abs_file_bisg, not_returned==0)
+table(wi_abs_file_bisg_returned2$prior_voter,wi_abs_file_bisg_returned2$counted)
+1016/38445
+18982/1089443
 
+####################
+View(wi2016bisg)
+###mapping the rejection pcts 
+wi_county_shp$rejection2020pct <- 100 - wi_county_shp$counted_pct2020
+wi_county_shp$rejection2016pct <- 100 - wi_county_shp$counted_pct2016
+###let's now check and assign colors 
+medsl_reds <- c("#EDD0CB","#F59181","#F6573E","#CD3C2B","#8D2115")
+quantile(wi_county_shp$rejection2016pct, seq(0,1,by=0.05))
+# < 10, 7.5, 5, 2.5, 0 
+wi_county_shp$reject2020colors <- medsl_reds[1]
+wi_county_shp$reject2020colors[wi_county_shp$rejection2020pct > 0 & wi_county_shp$rejection2020pct <= 2.5] <- medsl_reds[2]
+wi_county_shp$reject2020colors[wi_county_shp$rejection2020pct > 2.5 & wi_county_shp$rejection2020pct <= 5] <- medsl_reds[3]
+wi_county_shp$reject2020colors[wi_county_shp$rejection2020pct > 5 & wi_county_shp$rejection2020pct <= 7.5] <- medsl_reds[4]
+wi_county_shp$reject2020colors[wi_county_shp$rejection2020pct > 7.5 ] <- medsl_reds[5]
+###2016 colors 
+wi_county_shp$reject2016colors <- medsl_reds[1]
+wi_county_shp$reject2016colors[wi_county_shp$rejection2016pct > 0 & wi_county_shp$rejection2016pct <= 2.5] <- medsl_reds[2]
+wi_county_shp$reject2016colors[wi_county_shp$rejection2016pct > 2.5 & wi_county_shp$rejection2016pct <= 5] <- medsl_reds[3]
+wi_county_shp$reject2016colors[wi_county_shp$rejection2016pct > 5 & wi_county_shp$rejection2016pct <= 7.5] <- medsl_reds[4]
+wi_county_shp$reject2016colors[wi_county_shp$rejection2016pct > 7.5 ] <- medsl_reds[5]
+###plots now 
+jpeg("wi2016reject.jpeg", res=600, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+vbm_carto <- carto_plot(wi_county_shp, log(wi_county_shp$total_requests2016), wi_county_shp$reject2016colors, 
+                        weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_reds,
+       legend = c("0%" , "0 - 2.5%", "2.5 - 5%", "5 - 7.5%", "7.5%+"), title="Rejection %",
+       bty="n", horiz=FALSE, cex=0.7)
+dev.off()
 
+jpeg("wi2020reject.jpeg", res=600, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+vbm_carto <- carto_plot(wi_county_shp, log(wi_county_shp$total_requests2020), wi_county_shp$reject2020colors, 
+                        weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_reds,
+       legend = c("0%" , "0 - 2.5%", "2.5 - 5%", "5 - 7.5%", "7.5%+"), title="Rejection %",
+       bty="n", horiz=FALSE, cex=0.7)
+dev.off()
 
-wi_notreturned_all
+1 - sum(wi_county_shp$counted2016)/sum(wi_county_shp$total_requests2016 - wi_county_shp$not_returned2016)
+1 - sum(wi_county_shp$counted2020)/sum(wi_county_shp$total_requests2020 - wi_county_shp$not_returned2020)
+
 saveRDS(wi_county_shp, "wi_county_turnout_shp.Rdata")
+####let's run the final analysis of race by mode 
+setwd("F:/voterfile/wi")
+wi_vf_abs_all <- readRDS("wi_vf_abs_all07222020.Rdata")
+sort(unique(wi_vf_abs_all$ballotreasontype))
+sort(unique(wi_vf_abs_all$ballotstatusreason))
+wi_vf_abs_all$counted <- 0
+wi_vf_abs_all$counted[is.na(wi_vf_abs_all$ballotstatusreason)==T] <- 1
+wi_vf_abs_all$counted[wi_vf_abs_all$ballotstatusreason==""] <- 1
+wi_vf_abs_all$counted[wi_vf_abs_all$ballotreasontype=="Returned"] <- 1
+nrow(wi_vf_abs_all)
+###second version 
+wi_vf_abs_all2 <- wi_vf_abs_all[,c(1:7,28,76:80)]
+nrow(wi_abs_file_bisg)
+summary(nchar(wi_vf_abs_all2$Voter.Reg.Number))
+wi_vf_abs_all2 <- merge(wi_vf_abs_all2,wi_abs_file_bisg,by.y="voterregnumber",by.x="Voter.Reg.Number",all.x=T )
+View(wi_vf_abs_all2)
+nrow(wi_vf_abs_all2) - 455786
+wi_vf_abs_all2$counted[is.na(wi_vf_abs_all2$counted)==T] <- 1
+
+
+
+sum(wi_vf_abs_all2$counted)
+
+
+
+sum(wi_vf_abs_all$problem_return,na.rm=T)
+#white
+sum(wi_abs_file_bisg_returned2$mail_counted*wi_abs_file_bisg_returned2$pred.whi,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.whi.x,na.rm=T)
+sum(wi_abs_file_bisg_returned2$early_counted*wi_abs_file_bisg_returned2$pred.whi,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.whi.x,na.rm=T)
+100-13.08-60.04
+#black
+sum(wi_abs_file_bisg_returned2$mail_counted*wi_abs_file_bisg_returned2$pred.bla,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.bla.x,na.rm=T)
+sum(wi_abs_file_bisg_returned2$early_counted*wi_abs_file_bisg_returned2$pred.bla,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.bla.x,na.rm=T)
+100-50.25-11.65
+#hispanic
+sum(wi_abs_file_bisg_returned2$mail_counted*wi_abs_file_bisg_returned2$pred.his,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.his.x,na.rm=T)
+sum(wi_abs_file_bisg_returned2$early_counted*wi_abs_file_bisg_returned2$pred.his,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.his.x,na.rm=T)
+100-7.66-45.05
+###Asian
+sum(wi_abs_file_bisg_returned2$mail_counted*wi_abs_file_bisg_returned2$pred.asi,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.asi.x,na.rm=T)
+sum(wi_abs_file_bisg_returned2$early_counted*wi_abs_file_bisg_returned2$pred.asi,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.asi.x,na.rm=T)
+100-7.91-48.42
+###other
+sum(wi_abs_file_bisg_returned2$mail_counted*wi_abs_file_bisg_returned2$pred.oth,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.oth.x,na.rm=T)
+sum(wi_abs_file_bisg_returned2$early_counted*wi_abs_file_bisg_returned2$pred.oth,na.rm=T)/
+  sum(wi_vf_abs_all2$counted*wi_vf_abs_all2$pred.oth.x,na.rm=T)
+100-10.16-53.46
+length(which(wi_vf_abs_all$April2016!=""))
+###we will be able to calculate the totals by using th edenominators from catalist 
+round(sum(wi2016bisg_returned$mail_counted*wi2016bisg_returned$pred.whi,na.rm=T),0)
+round(sum(wi2016bisg_returned$early_counted*wi2016bisg_returned$pred.whi,na.rm=T),0)
+(65463/1824136)*100 # mail
+(118706/1824136)*100 # early 
+100-6.51-3.59
+###black 2016
+round(sum(wi2016bisg_returned$mail_counted*wi2016bisg_returned$pred.bla,na.rm=T),0)
+round(sum(wi2016bisg_returned$early_counted*wi2016bisg_returned$pred.bla,na.rm=T),0)
+(4121/112952)*100 # mail
+(6408/112952)*100 # mail
+100-5.67-3.65
+#Hispanic 
+round(sum(wi2016bisg_returned$mail_counted*wi2016bisg_returned$pred.his,na.rm=T),0)
+round(sum(wi2016bisg_returned$early_counted*wi2016bisg_returned$pred.his,na.rm=T),0)
+(2973/96459)*100 # mail
+(5561/96459)*100 # mail
+100-5.77-3.08
+#Asian 
+round(sum(wi2016bisg_returned$mail_counted*wi2016bisg_returned$pred.asi,na.rm=T),0)
+round(sum(wi2016bisg_returned$early_counted*wi2016bisg_returned$pred.asi,na.rm=T),0)
+(1762/50487)*100 # mail
+(3853/50487)*100 # mail
+100-7.63-3.49
+##other 
+round(sum(wi2016bisg_returned$mail_counted*wi2016bisg_returned$pred.oth,na.rm=T),0)
+round(sum(wi2016bisg_returned$early_counted*wi2016bisg_returned$pred.oth,na.rm=T),0)
+(1630/46210)*100 # mail
+(2775/46210)*100 # mail
+100-3.53-6.01
+
+###let's read in the milwaukee data again 
+setwd("F:/MEDSL/healthy_elections/WI")
+milwaukee_sampled_df <- read.csv("master_df_mil_opened2geo_distance_df.csv")
+quantile(milwaukee_sampled_df$dist_change)
+sum(is.na(milwaukee_sampled_df$dist_change))
+nrow(milwaukee_sampled_df)
+View(milwaukee_sampled_df)
 
 
 View(wi_county_shp)
 names(wi_county_shp)
+
+###let's do some scatter plots for the remaining maps 
+
+gg_return_plot<-ggplot(wi_county_shp@data, aes(x=returned_pct2020, y=returned_pct2016)) +
+  geom_point(aes(size=mail_counted2020), color=medsl_blues[4]) + 
+  xlab("2016 Return %") + ylab("2020 Return %") + theme_bw()  + xlim(0,100) + ylim(0,100) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+gg_return_plot
+ggsave("return_scatter.jpeg", plot = gg_return_plot, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+
+###let's do rejections 
+
+gg_reject_plot<-ggplot(wi_county_shp@data, aes(x=rejection2020pct, y=rejection2016pct)) +
+  geom_point(aes(size=mail_returned2020), color=medsl_reds[4]) + 
+  xlab("2016 Reject %") + ylab("2020 Reject %") + theme_bw()  + xlim(0,100) + ylim(0,100) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+gg_reject_plot
+ggsave("reject_scatter.jpeg", plot = gg_reject_plot, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+
+###creating sample file for voter file 
+set.seed(1337)
+wi_abs_file_smpl <- dplyr::sample_n(as.data.frame(wi_abs_file), size=1000, replace=FALSE)
+nrow(wi_abs_file_smpl)
+names(wi_abs_file_smpl)
+wi_abs_file_smpl <- subset(wi_abs_file_smpl, select=c(voterregnumber,lastname,firstname,voterstatus,voterstatusreason,address1,
+                                                      address2,ballotdeliverymethod,ballotstatusreason,ballotreasontype,electionname,
+                                                      county))
+wi_abs_file_smpl$lastname <- str_to_upper(wi_abs_file_smpl$lastname)
+View(wi_abs_file_smpl)
+write.csv(wi_abs_file_smpl, "wisconsin_voterfile_sample.csv",row.names = FALSE)
+
+wisconsin_vf <- read.csv("F:/voterfile/wi/wisconsin_voterfile_sample.csv")
+wisconsin_vf$full_addrs <- paste0(wisconsin_vf$address1, sep=", ", wisconsin_vf$address2)
+wisconsin_vf$full_addrs <- str_to_upper(wisconsin_vf$full_addrs)
+wisconsin_vf <- subset(wisconsin_vf, select=c(full_addrs, county))
+wisconsin_vf <- wisconsin_vf[!duplicated(wisconsin_vf$full_addrs), ]
+nrow(wisconsin_vf)
+saveRDS(wi_county_shp, "wi_county_shp08072020.Rdata")
+head(wisconsin_vf)
+write.dbf(wisconsin_vf, "wisconsin_vf_sample.dbf")
+saveRDS(wi_abs_file_bisg, "wi_abs_file_bisg08072020.Rdata")
