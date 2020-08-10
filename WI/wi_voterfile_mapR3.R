@@ -134,7 +134,8 @@ wi_vf_wd <- "F:/voterfile/wi"
 setwd(wi_vf_wd)
 saveRDS(wi_vf_abs_all, "wi_vf_abs_all07222020.Rdata")
 wi_vf_abs_all <- readRDS("wi_vf_abs_all07222020.Rdata")
-
+length(which(wi_vf_abs_all$County.x=="Milwaukee County"))
+sort(unique(wi_vf_abs_all$County.x)) # 208330
 ###let's do mode voting by race here 
 (sum(wi_vf_abs_all$vbm_dum*wi_vf_abs_all$pred.whi,na.rm=T))/(sum(wi_vf_abs_all$pred.whi, na.rm=T))
 (sum(wi_vf_abs_all$early2*wi_vf_abs_all$pred.whi,na.rm=T))/(sum(wi_vf_abs_all$pred.whi, na.rm=T))
@@ -1028,9 +1029,9 @@ gg_ed_plot<-ggplot(wi_county_shp@data, aes(x=ed_pct, y=ip_pct2020)) +
   theme(title = element_text(size = rel(1.4), family="Styrene B"))
 ###lets create a new plot by points 
 gg_ed_plot<-ggplot(wi_county_shp@data, aes(x=ed_pct, y=ip_pct2020)) +
-  geom_point(aes(size=ip_ballots2020),color=medsl_blues[4]) + 
+  geom_point(aes(size=ip_ballots2020),color=medsl_blues[4],alpha=0.5) + 
    xlab("2016 ED %") + ylab("2020 ED %") + theme_bw() + ylim(0,100) + xlim(0,100) +
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
 
 gg_ed_plot
 ggsave("electionday_scatter.jpeg", plot = gg_ed_plot, scale = 1, 
@@ -1054,14 +1055,14 @@ legend("bottomleft", fill=medsl_purple,
        bty="n", horiz=FALSE, cex=0.7)
 dev.off()
 ###scatterplot 
-gg_vbm_plot<-ggplot(wi_county_shp@data, aes(x=vbm_pct, y=vbm_pct2020)) +
-  geom_point(aes(size=mail_returned2020),color=medsl_purple[4]) + 
+gg_vbm_plot<-ggplot(wi_county_shp@data, aes(x=vbm_pct, y=vbm_pct2020b)) +
+  geom_point(aes(size=mail_returned2020),color=medsl_purple[4], alpha=0.5) + 
   xlab("2016 VBM %") + ylab("2020 VBM %") + theme_bw() + ylim(0,100) + xlim(0,100) +
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
 gg_vbm_plot
 ggsave("vbm_scatter.jpeg", plot = gg_vbm_plot, scale = 1, 
        width = 5, height = 4, units = c("in"), dpi = 600)
-cor(wi_county_shp$vbm_pct,wi_county_shp$vbm_pct2020)
+cor(wi_county_shp$vbm_pct,wi_county_shp$vbm_pct2020b)
 
 
 ###now let's do early ballots 
@@ -1083,9 +1084,9 @@ legend("bottomleft", fill=medsl_blues,
 dev.off()
 ###scatterplot here 
 gg_early_plot<-ggplot(wi_county_shp@data, aes(x=early_pct, y=early_pct2020)) +
-  geom_point(aes(size=early_counted2020), color=medsl_blues[4]) + 
-   xlab("2016 Early %") + ylab("2020 Early %") + theme_bw()  + xlim(0,100) + ylim(0,100) +
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+  geom_point(aes(size=early_counted2020), color=medsl_blues[4],alpha=0.5) + 
+   xlab("2016 Early %") + ylab("2020 Early %") + theme_bw()  + xlim(0,25) + ylim(0,25) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) +  guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
 gg_early_plot
 ggsave("early_scatter.jpeg", plot = gg_early_plot, scale = 1, 
        width = 5, height = 4, units = c("in"), dpi = 600)
@@ -1378,7 +1379,105 @@ round(sum(wi2016bisg_returned$early_counted*wi2016bisg_returned$pred.oth,na.rm=T
 ###let's read in the milwaukee data again 
 setwd("F:/MEDSL/healthy_elections/WI")
 milwaukee_sampled_df <- read.csv("master_df_mil_opened2geo_distance_df.csv")
-quantile(milwaukee_sampled_df$dist_change)
+View(milwaukee_sampled_df)
+qgroups<-quantile(milwaukee_sampled_df$dist_change)
+###creating quant groups 
+milwaukee_sampled_df$quant_group <- 1
+milwaukee_sampled_df$quant_group[milwaukee_sampled_df$dist_change > 0 & milwaukee_sampled_df$dist_change < qgroups[3]] <- 2
+milwaukee_sampled_df$quant_group[milwaukee_sampled_df$dist_change > qgroups[3] & milwaukee_sampled_df$dist_change < qgroups[4]] <- 3
+milwaukee_sampled_df$quant_group[milwaukee_sampled_df$dist_change > qgroups[4]] <- 4
+sumtable1 <- milwaukee_sampled_df %>% group_by(quant_group,voted2020all) %>% summarise(white_tot=sum(pred.whi,na.rm=T),
+                                                                          nonwhite_tot=sum(1-pred.whi,na.rm=T))
+sumtable1$total = sumtable1$white_tot+sumtable1$nonwhite_tot
+sumtable1 <- sumtable1 %>% group_by(quant_group) %>% mutate(total_group=sum(total),white_tot_all=sum(white_tot),
+                                                            nonwhite_tot_all=sum(nonwhite_tot))
+sumtable1$total_partic <- sumtable1$total/sumtable1$total_group
+sumtable1$white_partic <- sumtable1$white_tot/sumtable1$white_tot_all
+sumtable1$white_partic <- sumtable1$nonwhite_tot/sumtable1$nonwhite_tot_all
+sumtable1
+###broken down by mode 
+milwaukee_sampled_df$vote_mode <- "Did not"
+milwaukee_sampled_df$vote_mode[milwaukee_sampled_df$voted2020ip==1] <- "Election Day"
+milwaukee_sampled_df$vote_mode[milwaukee_sampled_df$voted2020abs==1] <- "VBM/Early"
+
+sumtable2 <- milwaukee_sampled_df %>% group_by(quant_group,vote_mode) %>% summarise(white_tot=sum(pred.whi,na.rm=T),
+                                                                                       nonwhite_tot=sum(1-pred.whi,na.rm=T))
+sumtable2 <- sumtable2 %>% group_by(quant_group) %>% mutate(total_group=sum(total),white_tot_all=sum(white_tot),
+                                                            nonwhite_tot_all=sum(nonwhite_tot))
+sumtable2$total_partic <- sumtable2$total/sumtable2$total_group
+sumtable2$white_partic <- sumtable2$white_tot/sumtable2$white_tot_all
+sumtable2$nonwhite_partic <- sumtable2$nonwhite_tot/sumtable2$nonwhite_tot_all
+sumtable2
+sumtable2$total = sumtable2$white_tot+sumtable2$nonwhite_tot
+### registration analysis 
+wi_vf <- readRDS("wi_voterfile_cleaned.Rdata")
+length(which(wi_vf$County=="Milwaukee County" & wi_vf$Voter.Status!="Inactive"))
+
+
+
+121096/514501
+library(chron)
+str(wi_vf$ApplicationDate)
+wi_vf$year2016reg <- 0
+wi_vf$year2016reg[str_detect(wi_vf$ApplicationDate, "2016")] <- 1
+wi_vf$year2020reg <- 0
+wi_vf$year2020reg[str_detect(wi_vf$ApplicationDate, "2020")] <- 1
+wi_vf$regdate_num <- as.numeric(as.Date(wi_vf$ApplicationDate,tryFormats = c("%m/%d/%Y")))
+wi_vf <- subset(wi_vf, regdate_num <= 18649) # last date of 2020 is 06/05/2020
+wi_vf2016reg <- subset(wi_vf, year2016reg==1)
+wi_vf2020reg <- subset(wi_vf, year2020reg==1)
+wi_vf2020reg$before_primary <- 0
+wi_vf2020reg$before_primary[wi_vf2020reg$regdate_num <= 18359] <- 1
+wi_vf2016reg$before_primary <- 0
+wi_vf2016reg$before_primary[wi_vf2016reg$regdate_num <= 16896] <- 1
+summary(wi_vf2016reg$before_primary) # 0.3299
+summary(wi_vf2020reg$before_primary) # 0.9087
+###now let's do the bisg merge 
+wi_bisg <- readRDS("wi_bisg_results.Rdata")
+summary(nchar(wi_bisg$Voter.Reg.Number))
+summary(nchar(wi_vf2016reg$Voter.Reg.Number))
+wi_vf2016reg <- merge(wi_vf2016reg, wi_bisg, by="Voter.Reg.Number")
+wi_vf2016reg <- subset(wi_vf2016reg, regdate_num <= 16957 )
+
+
+wi_vf2020reg <- merge(wi_vf2020reg, wi_bisg, by="Voter.Reg.Number")
+wi_vf2016reg_col <- wi_vf2016reg %>% group_by(before_primary) %>% summarise(pred.whi=sum(pred.whi,na.rm=T),pred.his=sum(pred.his,na.rm=T),
+                                                                            pred.bla=sum(pred.bla,na.rm=T),
+                                                                            pred.asi=sum(pred.asi,na.rm=T),
+                                                                            pred.oth=sum(pred.oth,na.rm=T))
+wi_vf2020reg_col <- wi_vf2020reg %>% group_by(before_primary) %>% summarise(pred.whi=sum(pred.whi,na.rm=T),
+                                                                            pred.bla=sum(pred.bla,na.rm=T),
+                                                                            pred.his=sum(pred.his,na.rm=T),
+                                                                            pred.asi=sum(pred.asi,na.rm=T),
+                                                                            pred.oth=sum(pred.oth,na.rm=T))
+wi_vf2020reg_col$total <- rowSums(wi_vf2020reg_col[,2:6])
+wi_vf2016reg_col$total <- rowSums(wi_vf2016reg_col[,2:6])
+for(i in 2:6){
+  temp_name <- paste("var",sep="",i)
+  wi_vf2016reg_col$var <- wi_vf2016reg_col[,i]/wi_vf2016reg_col$total
+  colnames(wi_vf2016reg_col)[colnames(wi_vf2016reg_col)=="var"] <- temp_name
+}
+for(i in 2:6){
+  temp_name <- paste("var",sep="",i)
+  wi_vf2020reg_col$var <- wi_vf2020reg_col[,i]/wi_vf2020reg_col$total
+  colnames(wi_vf2020reg_col)[colnames(wi_vf2020reg_col)=="var"] <- temp_name
+}
+
+wi_vf2020reg_col
+wi_vf2016reg_col
+primary2016 <- "6/05/2016"
+test_time1 <- "1/01/2016 12:01:00 AM"
+cutoff2016 <- "4/05/2016 11:59:00 PM"
+cutoff2020 <- "4/07/2020 11:59:00 PM"
+as.numeric(as.Date(primary2016,tryFormats = c("%m/%d/%Y"))) # 16896
+
+as.numeric(as.Date(cutoff2016,tryFormats = c("%m/%d/%Y"))) # 16896
+as.numeric(as.Date(cutoff2020,tryFormats = c("%m/%d/%Y"))) # 16896
+
+names(wi_abs_file) 
+
+
+
 sum(is.na(milwaukee_sampled_df$dist_change))
 nrow(milwaukee_sampled_df)
 View(milwaukee_sampled_df)
@@ -1388,11 +1487,11 @@ View(wi_county_shp)
 names(wi_county_shp)
 
 ###let's do some scatter plots for the remaining maps 
-
+library(ggplot2)
 gg_return_plot<-ggplot(wi_county_shp@data, aes(x=returned_pct2020, y=returned_pct2016)) +
-  geom_point(aes(size=mail_counted2020), color=medsl_blues[4]) + 
-  xlab("2016 Return %") + ylab("2020 Return %") + theme_bw()  + xlim(0,100) + ylim(0,100) +
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+  geom_point(aes(size=mail_counted2020), color=medsl_blues[4],alpha=0.5) + 
+  xlab("2016 Return %") + ylab("2020 Return %") + theme_bw()  + xlim(80,100) + ylim(80,100) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
 gg_return_plot
 ggsave("return_scatter.jpeg", plot = gg_return_plot, scale = 1, 
        width = 5, height = 4, units = c("in"), dpi = 600)
@@ -1400,9 +1499,9 @@ ggsave("return_scatter.jpeg", plot = gg_return_plot, scale = 1,
 ###let's do rejections 
 
 gg_reject_plot<-ggplot(wi_county_shp@data, aes(x=rejection2020pct, y=rejection2016pct)) +
-  geom_point(aes(size=mail_returned2020), color=medsl_reds[4]) + 
-  xlab("2016 Reject %") + ylab("2020 Reject %") + theme_bw()  + xlim(0,100) + ylim(0,100) +
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE)
+  geom_point(aes(size=mail_returned2020), color=medsl_reds[4], alpha=0.5) + 
+  xlab("2016 Reject %") + ylab("2020 Reject %") + theme_bw()  + xlim(0,50) + ylim(0,50) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B"))+ guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
 gg_reject_plot
 ggsave("reject_scatter.jpeg", plot = gg_reject_plot, scale = 1, 
        width = 5, height = 4, units = c("in"), dpi = 600)
@@ -1425,7 +1524,202 @@ wisconsin_vf$full_addrs <- str_to_upper(wisconsin_vf$full_addrs)
 wisconsin_vf <- subset(wisconsin_vf, select=c(full_addrs, county))
 wisconsin_vf <- wisconsin_vf[!duplicated(wisconsin_vf$full_addrs), ]
 nrow(wisconsin_vf)
+setwd("F:/voterfile/wi")
+wi_county_shp$vbm_pct2020b <- 100 - wi_county_shp$ip_pct2020 - wi_county_shp$early_pct2020
+summary(wi_county_shp$vbm_pct2020b)
 saveRDS(wi_county_shp, "wi_county_shp08072020.Rdata")
+wi_county_shp <- readRDS("wi_county_shp08072020.Rdata")
 head(wisconsin_vf)
 write.dbf(wisconsin_vf, "wisconsin_vf_sample.dbf")
 saveRDS(wi_abs_file_bisg, "wi_abs_file_bisg08072020.Rdata")
+
+wi_abs_file_bisg <- readRDS("wi_abs_file_bisg08072020.Rdata")
+names(wi_abs_file_bisg)
+###recreating the plot that Charles produced in stata 
+wi_vf_abs_all$counted <- 0
+length(which(wi_vf_abs_all$April2020!= ""))
+length(which(wi_vf_abs_all$ballotstatusreason=="" | wi_vf_abs_all$ballotstatusreason== "Returned"))
+length(unique(wi_vf_abs_all$Voter.Reg.Number))
+wi_vf_abs_all$dum2 <- 1
+wi_vf_abs_all <- wi_vf_abs_all %>% group_by(Voter.Reg.Number) %>% mutate(count_v = sum(dum2))
+wi_vf_abs_all_dup <- subset(wi_vf_abs_all, count_v > 1)
+wi_vf_abs_all <- subset(wi_vf_abs_all, count_v == 1)
+nrow(wi_vf_abs_all)
+length(which(wi_vf_abs_all_dup$April2020!=""))
+wi_vf_abs_all_dup <- wi_vf_abs_all_dup[!duplicated(wi_vf_abs_all_dup$Voter.Reg.Number), ]
+length(which(is.na(wi_vf_abs_all$absapplicationdate)==F & wi_vf_abs_all$April2020!=""))
+length(which(is.na(wi_vf_abs_all$absapplicationdate)==F))
+
+
+
+wi_vf_abs_all <- rbind(wi_vf_abs_all,wi_vf_abs_all_dup)
+wi_vote_ts <- wi_vf_abs_all 
+
+nrow(wi_vf_abs_all_dup)+1582232
+
+###merged voter file 
+summary(wi_abs_file_bisg$not_returned)
+wi_abs_file_bisg$absapplicationdate_num <- as.numeric(as.Date(wi_abs_file_bisg$absapplicationdate, tryFormats = c("%m/%d/%Y")))
+summary(wi_abs_file_bisg$absapplicationdate_num)
+wi_appdate_ts_all <- wi_abs_file_bisg %>% group_by(absapplicationdate) %>% tally()
+wi_appdate_ts_all$absapplicationdate_num <- as.numeric(as.Date(wi_appdate_ts_all$absapplicationdate, tryFormats = c("%m/%d/%Y")))
+wi_appdate_ts_all <- subset(wi_appdate_ts_all, absapplicationdate_num >= 18337 )
+wi_appdate_ts_all <- subset(wi_appdate_ts_all, absapplicationdate_num <=  18359 )
+wi_appdate_ts_notreturned <- wi_abs_file_bisg %>% group_by(absapplicationdate) %>% summarise(not_returned=sum(not_returned,na.rm=T))
+summary(wi_appdate_ts_notreturned)
+wi_appdate_ts <- subset(wi_abs_file_bisg, not_returned==0)
+wi_appdate_ts <- wi_abs_file_bisg %>% group_by(counted,absapplicationdate) %>% tally()
+wi_appdate_ts$absapplicationdate_num <- as.numeric(as.Date(wi_appdate_ts$absapplicationdate, tryFormats = c("%m/%d/%Y")))
+wi_appdate_ts <- subset(wi_appdate_ts, absapplicationdate_num >= 18337 )
+wi_appdate_ts <- subset(wi_appdate_ts, absapplicationdate_num <=  18359 )
+wi_appdate_tsc <- subset(wi_appdate_ts, counted==1)
+wi_appdate_tsnc <- subset(wi_appdate_ts, counted==0)
+###now let's look at the data 
+colnames(wi_appdate_tsc)[3] <- c("counted_ballots")
+colnames(wi_appdate_tsnc)[3] <- c("returned_ballots")
+wi_appdate_tsc <- subset(wi_appdate_tsc, select=c(absapplicationdate,counted_ballots))
+wi_appdate_tsnc <- subset(wi_appdate_tsnc, select=c(absapplicationdate,returned_ballots))
+
+wi_appdate_ts_all <- merge(wi_appdate_ts_all,wi_appdate_tsc, by="absapplicationdate",all.x=T )
+wi_appdate_ts_all <- merge(wi_appdate_ts_all,wi_appdate_tsnc, by="absapplicationdate",all.x=T )
+wi_appdate_ts_all$returned_ballots <- wi_appdate_ts_all$returned_ballots + wi_appdate_ts_all$counted_ballots
+wi_appdate_ts_all$counted_pct <- (wi_appdate_ts_all$counted_ballots/wi_appdate_ts_all$n)*100
+wi_appdate_ts_all$returned_pct <- (wi_appdate_ts_all$returned_ballots/wi_appdate_ts_all$n)*100
+wi_appdate_ts_all <- merge(wi_appdate_ts_all,wi_appdate_ts_notreturned, by="absapplicationdate",all.x=T ,all.y=F)
+sum(is.na(wi_appdate_ts_all$not_returned))
+sum(is.na(wi_appdate_ts_all$counted_ballots))
+sum(is.na(wi_appdate_ts_all$returned_ballots))
+wi_appdate_ts_all$returned_ballots2 <- wi_appdate_ts_all$n - wi_appdate_ts_all$not_returned
+wi_appdate_ts_all$returned_pct <- (wi_appdate_ts_all$returned_ballots2/wi_appdate_ts_all$n)*100
+summary(wi_appdate_ts_all$returned_pct)
+wi_appdate_ts_all$Date <- wi_appdate_ts_all$absapplicationdate
+###we also want to sum by week 
+library(lubridate)
+wi_appdate_ts_all$Date2 <- format(as.Date(wi_appdate_ts_all$Date,tryFormats = c("%m/%d/%Y")), "%Y-%m-%d")
+wi_appdate_week <- wi_appdate_ts_all %>% group_by(week=week(Date2)) %>% dplyr::summarize(start_date=first(Date),total=sum(n),
+                                                                             counted=sum(counted_ballots),
+                                                                             returned=sum(returned_ballots2))
+wi_appdate_week$counted_pct <- (wi_appdate_week$counted/wi_appdate_week$total)*100
+wi_appdate_week$returned_pct <- (wi_appdate_week$returned/wi_appdate_week$total)*100
+wi_appdate_week
+###normalise 
+normalized = (x-min(x))/(max(x)-min(x))
+wi_appdate_ts_all$normalised_r <- (wi_appdate_ts_all$returned_ballots2-min(wi_appdate_ts_all$returned_ballots2))/
+  (max(wi_appdate_ts_all$returned_ballots2)-min(wi_appdate_ts_all$returned_ballots2))
+summary(wi_appdate_ts_all$normalised_r)
+wi_appdate_ts_all$normalised_c <- (wi_appdate_ts_all$counted_ballots-min(wi_appdate_ts_all$counted_ballots))/
+  (max(wi_appdate_ts_all$counted_ballots)-min(wi_appdate_ts_all$counted_ballots))
+summary(wi_appdate_ts_all$normalised_r)
+wi_appdate_ts_all$group1 <- "Counted"
+wi_appdate_ts_all$group2 <- "Returned"
+library(ggalt)
+library(grid)
+#### ts plot 
+grob_red <- grobTree(textGrob("Returned Ballots", x=0.1,  y=0.2, hjust=0,
+                                gp=gpar(col=medsl_reds[3], fontsize=12, fontface="bold")))
+grob_blue <- grobTree(textGrob("Counted Ballots", x=0.1,  y=0.1, hjust=0,
+                               gp=gpar(col=medsl_blues[3], fontsize=12, fontface="bold")))
+app_ts_plot <- ggplot(wi_appdate_ts_all) +
+  geom_line(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=returned_pct,size=normalised_r),color=medsl_reds[3], alpha=0.45, group=1) +
+  geom_line(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=counted_pct,size=normalised_c),color=medsl_blues[3], alpha=0.45, group=1) +
+  theme_minimal() + scale_x_date(date_breaks = "weeks" , date_labels = "%m-%d-%y")  + guides(size=FALSE) + 
+  labs( x= "Date", y="Percent") 
+app_ts_plot  <-  app_ts_plot + annotation_custom(grob_red) +  annotation_custom(grob_blue)
+app_ts_plot
+ggsave("return_count_timeseries.jpeg", plot = app_ts_plot, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+
+###let's try again 
+app_ts_plot <- ggplot(wi_appdate_ts_all) +
+  geom_line(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=returned_pct),color=medsl_reds[3], alpha=0.45, group=1,size=1.3) +
+  geom_line(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=counted_pct),color=medsl_blues[3], alpha=0.45, group=1,size=1.3) +
+  geom_point(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=returned_pct, size=normalised_r, color=medsl_blues[3]),alpha=0.5) +
+  geom_point(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=counted_pct, size=normalised_c, color=medsl_reds[3]),alpha=0.5) + 
+  theme_minimal() + scale_x_date(date_breaks = "weeks" , date_labels = "%m-%d-%y")  + guides(size=FALSE, color=FALSE) + 
+  labs( x= "Date", y="Percent") + annotation_custom(grob_red) +  annotation_custom(grob_blue)
+ggsave("return_count_timeseries_dot.jpeg", plot = app_ts_plot, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+
+app_ts_plot
+
+#app_ts_plot <- ggplot(wi_appdate_ts_all) +
+#  geom_line(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=returned_pct,size=normalised_r,color="red"), alpha=0.45) +
+#  geom_line(data=wi_appdate_ts_all, aes(x=as.Date(Date2), y=counted_pct,size=normalised_c,color="blue"), alpha=0.45) +
+#  theme_minimal() + scale_x_date(date_breaks = "weeks" , date_labels = "%m-%d-%y")  + guides(size=FALSE) + 
+#  labs( x= "Date", y="%") 
+#app_ts_plot
+#app_ts_plot + scale_color_manual(values=c(medsl_reds[3],medsl_blues[3]),labels=c("Returned","Counted")) +
+#  guides(color=guide_legend(""))
+
+
+
+cases_plot_all
+
+grob2weeks <-   grobTree(textGrob("2 Weeks \npost \nprimary", x=0.72,  y=0.8, hjust=0,
+                                  gp=gpar(col="black", fontsize=12, fontface="bold")))
+cases_plot_all <- cases_plot_all +  annotation_custom(grob_start) +  annotation_custom(grob_prim) + annotation_custom(grob2weeks) +
+  labs( title= "COVID-19 Cases", y="New Cases") + theme_minimal()
+cases_plot_all <- cases_plot_all + theme(title = element_text(size = rel(1.4), family="Styrene B")) #example plot of new cases 
+cases_plot_all
+
+
+
+
+
+head(wi_appdate_ts_all)
+
+View(wi_appdate_ts)
+
+18336
+####reading in the registration data 
+setwd("F:/MEDSL/healthy_elections/WI")
+wi_regs <- read.csv("wec_wi_registered_monthly.csv")
+head(wi_regs)
+sort(unique(wi_regs$date))
+substrRight <- function(x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
+wi_regs$year <- substrRight(wi_regs$date, 4 )
+sort(unique(wi_regs$year))
+wi_regs <- subset(wi_regs, year =="2016" | year =="2020")
+View(wi_regs)
+wi_regs$date2 <- as.Date(wi_regs$date, tryFormats = c("%m/%d/%Y"))
+wi_regs <- wi_regs[order(wi_regs$date2),]
+wi_regs <- wi_regs %>% group_by(year) %>% mutate(lag_reg=lag(registeredvoters,default=0))
+wi_regs$new_regs <- wi_regs$registeredvoters - wi_regs$lag_reg
+summary(wi_regs$new_regs)
+#from start of year: 
+sum(wi_regs$new_regs[2:4]) # 107893
+sum(wi_regs$new_regs[17:20]) # 90787
+wi_age_reg <- read.csv("wec_ts_registrants_age.csv")
+View(wi_age_reg)
+wi_age_reg$date2 <- as.Date(wi_age_reg$date, tryFormats = c("%m/%d/%Y"))
+wi_age_reg$year <- substrRight(wi_age_reg$date, 4 )
+for(i in 3:7){
+  temp_var_name <- paste0(colnames(wi_age_reg)[i],sep="_","lag")
+  temp_var_name <- as.name(temp_var_name)
+  var_name <- colnames(wi_age_reg)[i]
+  var_name <- as.name(var_name)
+  wi_age_reg <- wi_age_reg %>% group_by(year) %>% mutate(temp_var_name = lag(var_name,default=0))
+}
+wi_age_reg <- wi_age_reg %>% group_by(year) %>% mutate(age18_24_lag = lag(age18_24,default=0))
+wi_age_reg <- wi_age_reg %>% group_by(year) %>% mutate(age25_34_lag = lag(age25_34,default=0))
+wi_age_reg <- wi_age_reg %>% group_by(year) %>% mutate(age35_49_lag = lag(age35_49,default=0))
+wi_age_reg <- wi_age_reg %>% group_by(year) %>% mutate(age50_64_lag = lag(age50_64,default=0))
+wi_age_reg <- wi_age_reg %>% group_by(year) %>% mutate(age65_over_lag = lag(age65_over,default=0))
+###now new regs 
+wi_age_reg$new_age18_24 <- wi_age_reg
+
+setwd("F:/voterfile/wi")
+wi2016abs <- read.csv("wi2016abs_vf.csv")
+head(wi2016abs)
+table(wi2016abs$reason2)
+10358/213453
+66034+2622
+(1247845-119957)/1247845
+68656/1110674
+67066/(1247845-119957)
+10903/76125
+names(wi_age_reg)
+table(wi2016abs$Ballot.Status.Reason)
+(10166+545)/213453

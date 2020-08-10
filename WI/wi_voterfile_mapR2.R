@@ -50,6 +50,8 @@ wi_abs_file2 <- subset(wi_abs_file, electionname == "2020 Spring Election and Pr
                                length(which(wi_abs_file$electionname=="2020 Spring Primary"))) 
 
 wi_vf <- readRDS("wi_voterfile_cleaned.Rdata")
+length(which(wi_vf$County=="Milwaukee County" & wi_vf$Voter.Status!="Inactive"))
+121096/514501
 names(wi_abs_file) ##good, looks like it was read in successfully 
 nrow(wi_abs_file)
 wi_abs_file <- subset(wi_abs_file, electionname=="2020 Spring Election and Presidential Preference Vote" | 
