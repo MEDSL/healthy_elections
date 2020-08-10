@@ -74,7 +74,7 @@ cases_plot_all <- cases_plot_all +  annotation_custom(grob_start) +  annotation_
 cases_plot_all <- cases_plot_all + theme(title = element_text(size = rel(1.4), family="Styrene B")) #example plot of new cases 
 cases_plot_all
 
-ggsave("covid_wi_plot_example.jpg", plot = cases_plot_all, scale = 1,
+ggsave("covid_ga_plot_example.jpg", plot = cases_plot_all, scale = 1,
        width = 9, height = 6, units = c("in"), dpi = 600)
 
 
