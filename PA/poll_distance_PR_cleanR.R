@@ -9,7 +9,7 @@ distGeo_mod <- function(lon1,lat1,lon2,lat2){
   distGeo(c(lon1,lat1),c(lon2,lat2))
   #return(value)
 }
-
+options(stringsAsFactors = FALSE)
 #this function is for where the user has two spatial objects 
 poll_dist_fxn1 <- function(spat_vf,spat_polls){
   #step 0: pull in the coordinate fields for the poll info 
@@ -72,6 +72,18 @@ poll_dist_fxn2 <- function(spat_vf,spat_polls,spat_vf_long,spat_vf_lat,spat_poll
 }
 ###note that this should be run for both polling places before and after. If the user already knows the matched polling places before and after,
 #then simply run the data with the mapply(distGeo_mod,...) section 
+we_drop_pa <- "C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA"
+setwd(we_drop_pa)
+pa_addrs <- read.csv("pa_addrs_geocoded/pa_addrs_geocoded.csv")
+allegheny_polls <- read.csv("PA polling distance/2016alleghenygeocoded.csv")
+
+View(allegheny_polls)
+View(pa_addrs)
+allegheny_addrs <- subset(pa_addrs,county=="42003")
+nrow(allegheny_addrs)
+allegheny_addrs2 <- poll_dist_fxn2(allegheny_addrs,allegheny_polls,allegheny_addrs$X,allegheny_addrs$Y,
+                                  allegheny_polls$lon,allegheny_polls$lat)
+
 
 
 
