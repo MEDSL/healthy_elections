@@ -42,33 +42,33 @@ ts_covid_all$new_cases[ts_covid_all$new_cases<0] <- 0
 
 sort(unique(ts_covid_all$date))
 #exe
-as.numeric(sort(unique(ts_covid_all$Date))[13])#exec order
-as.numeric(sort(unique(ts_covid_all$Date))[92]) # espiration of social gathering 
-as.numeric(sort(unique(ts_covid_all$Date))[100])#primary date 
-as.numeric(sort(unique(ts_covid_all$Date))[114])#2 weeks post 
+as.numeric(sort(unique(ts_covid_all$Date))[39])# soc distance start order
+as.numeric(sort(unique(ts_covid_all$Date))[113]) # soc distance end
+as.numeric(sort(unique(ts_covid_all$Date))[21])#primary date 1 
+as.numeric(sort(unique(ts_covid_all$Date))[154])# primary date 2 
 
 ###new plot with rectangle 
 cases_plot_all <- ggplot(ts_covid_all, aes(x = Date, y = new_cases)) + 
   geom_line(color="#156DD0", size=1)+  
-  annotate("rect", xmin = as.Date("2020-03-14"), xmax = as.Date("2020-06-01"),ymin=0,ymax=5000,fill="#948DE5",
+  annotate("rect", xmin = as.Date("2020-03-21"), xmax = as.Date("2020-06-03"),ymin=0,ymax=15000,fill="#948DE5",
            alpha = .2)+ 
-  geom_vline(aes(xintercept=18422, color="#C0BA79" ), linetype=5, show.legend = F,lwd=1.4) + 
-  geom_vline(aes(xintercept=18436, color="#F6573E" ), linetype=2, show.legend = F,lwd=1.4)
+  geom_vline(aes(xintercept=18324, color="#C0BA79" ), linetype=5, show.legend = F,lwd=1.4) + 
+  geom_vline(aes(xintercept=18457, color="#F6573E" ), linetype=2, show.legend = F,lwd=1.4)
 
 #
 cases_plot_all
-grob_start <- grobTree(textGrob("Social Distancing \nDuration", x=0.2,  y=0.6, hjust=0,
+grob_start <- grobTree(textGrob("Social \nDistancing \nDuration", x=0.4,  y=0.8, hjust=0,
                                 gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob_prim <- grobTree(textGrob("Primary", x=0.57,  y=0.7, hjust=0,
+grob_prim <- grobTree(textGrob("Primary", x=0.15,  y=0.4, hjust=0,
                                gp=gpar(col="black", fontsize=12, fontface="bold")))
-grob2weeks <-   grobTree(textGrob("2 Weeks \npost \nprimary", x=0.72,  y=0.8, hjust=0,
+grob2weeks <-   grobTree(textGrob("Primary \nRunoff", x=0.7,  y=0.8, hjust=0,
                                   gp=gpar(col="black", fontsize=12, fontface="bold")))
 cases_plot_all <- cases_plot_all +  annotation_custom(grob_start) +  annotation_custom(grob_prim) + annotation_custom(grob2weeks) +
   labs( title= "COVID-19 Cases", y="New Cases") + theme_minimal()
 cases_plot_all <- cases_plot_all + theme(title = element_text(size = rel(1.4), family="Styrene B")) #example plot of new cases 
 cases_plot_all
 
-ggsave("covid_ga_plot_example.jpg", plot = cases_plot_all, scale = 1,
+ggsave("covid_tx_plot_example.jpg", plot = cases_plot_all, scale = 1,
        width = 9, height = 6, units = c("in"), dpi = 600)
 
 
