@@ -50,6 +50,8 @@ poll_dist_fxn2 <- function(spat_vf,spat_polls,spat_vf_long,spat_vf_lat,spat_poll
   spat_vf$latitude_voter <- spat_vf_lat
   #step 1: create loop to go through the observations for the voter file coordinates 
   for(i in 1:nrow(spat_vf)){
+    #svMisc::progress((i/nrow(spat_vf))*100)
+    print(i)
     temp_vf <- spat_vf[i,] #pull ith obs 
     #step 2: merge single vf coordinate onto all of the polling locations 
     temp_merge <- merge(temp_vf, spat_polls, by=NULL)
@@ -67,9 +69,12 @@ poll_dist_fxn2 <- function(spat_vf,spat_polls,spat_vf_long,spat_vf_lat,spat_poll
     }else{
       voter_poll_dyad_df <- rbind(voter_poll_dyad_df, temp_merge)
     }
-  }
+  }   
   return(voter_poll_dyad_df)
+  
 }
+
+
 ###note that this should be run for both polling places before and after. If the user already knows the matched polling places before and after,
 #then simply run the data with the mapply(distGeo_mod,...) section 
 we_drop_pa <- "C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA"
@@ -81,11 +86,71 @@ View(allegheny_polls)
 View(pa_addrs)
 allegheny_addrs <- subset(pa_addrs,county=="42003")
 nrow(allegheny_addrs)
-allegheny_addrs2 <- poll_dist_fxn2(allegheny_addrs,allegheny_polls,allegheny_addrs$X,allegheny_addrs$Y,
+nrow(allegheny_addrs) %/% 100
+u <- 1
+total_df <- data.frame(stringsAsFactors = FALSE)
+while(u < 8986){
+  start=u
+  end1 <- u+100
+  temp_sub <- allegheny_addrs[u:end1,]
+  allegheny_addrs3 <- poll_dist_fxn2(temp_sub,allegheny_polls,temp_sub$X,temp_sub$Y,
+                                     allegheny_polls$lon,allegheny_polls$lat)
+  if(nrow(total_df)==0){
+    total_df <- allegheny_addrs3 
+  }else{
+    total_df <- rbind(total_df,allegheny_addrs3)
+  }
+  start <- end1 + 1
+  print(nrow(total_df))
+}
+
+
+allegheny_addrs3 <- poll_dist_fxn2(allegheny_addrs,allegheny_polls,allegheny_addrs$X,allegheny_addrs$Y,
                                   allegheny_polls$lon,allegheny_polls$lat)
+nrow(allegheny_addrs3)
+### a third verison that will save 
+poll_dist_fxn3 <- function(spat_vf,spat_polls,spat_vf_long,spat_vf_lat,spat_polls_long,spat_polls_lat){
+  #step 0: pull in the coordinate fields 
+  voter_poll_dyad_df <- data.frame(stringsAsFactors = FALSE)
+  spat_polls$longitude_poll <- spat_polls_long
+  spat_polls$latitude_poll <- spat_polls_lat
+  spat_vf$longitude_voter <- spat_vf_long
+  spat_vf$latitude_voter <- spat_vf_lat
+  #step 1: create loop to go through the observations for the voter file coordinates 
+  for(i in 1:nrow(spat_vf)){
+    #svMisc::progress((i/nrow(spat_vf))*100)
+    print(i)
+    temp_vf <- spat_vf[i,] #pull ith obs 
+    #step 2: merge single vf coordinate onto all of the polling locations 
+    temp_merge <- merge(temp_vf, spat_polls, by=NULL)
+    #step 3: find distance between every polling place and voter coord 
+    temp_merge$euc_distance <- NA
+    temp_merge$euc_distance <- mapply(distGeo_mod, temp_merge$longitude_voter, 
+                                      temp_merge$latitude_voter, temp_merge$longitude_poll, 
+                                      temp_merge$latitude_poll )
+    #the mapply fxn applies the fxn for every row ; can use just this part if voters - polls already matched 
+    #step 4: take the row with the minimal distance 
+    temp_merge <- temp_merge %>% slice(which.min(euc_distance))
+    #step 5: bind the data into the master data frame 
+    if(nrow(voter_poll_dyad_df)==0){
+      voter_poll_dyad_df <- temp_merge
+    }else if((nrow(voter_poll_dyad_df)%%1000)==0){
+      voter_poll_dyad_df <- rbind(voter_poll_dyad_df, temp_merge)
+      sv_name <- paste0("voter_poll_dyad_df",sep="_",i,sep="",".rds")
+      saveRDS(voter_poll_dyad_df, sv_name)
+    }else{
+      voter_poll_dyad_df <- rbind(voter_poll_dyad_df, temp_merge)
+      
+    }
+  }   
+  return(voter_poll_dyad_df)
+  
+}
+setwd("C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA/allegheny_polls")
 
 
-
+allegheny_addrs3 <- poll_dist_fxn3(allegheny_addrs,allegheny_polls,allegheny_addrs$X,allegheny_addrs$Y,
+                                   allegheny_polls$lon,allegheny_polls$lat)
 
 ###test
 wi_polls <- readRDS("F:/MEDSL/covid19/cleaned_wi2/wi_final_poll_datasp.Rdata")
