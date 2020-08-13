@@ -59,6 +59,18 @@ points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color_reject_black,cex=cty_
 legend("topright", legend = c("0 to 1%", "1 to 5%", "5 to 10%","10 to 15%", "15% +" ), 
        fill = medsl_reds, title = "Ballot rejections",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
 dev.off()
+##follow up scatterplot
+gg_reject_race <- ggplot(cty_cents, aes(x=BHreject_2020combopri*100, y=WHreject_2020combopri*100)) +
+  geom_point(aes(size=votedpop_2020combopri*10), color=medsl_reds[4],alpha=0.4) + 
+  ylab("White Rej. %") + xlab("Black Rej. %") + theme_bw() + xlim(0,20) + ylim(0,20) + 
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
+gg_reject_race
+ggsave("rej_race_scatter.jpeg", plot = gg_reject_race, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+
+
+
+
 #####now let's do vbm overall VBM rates, 2016 PPP vs 2020 combined
 #graph twoway (scatter bymail_2020combopri bymail_2016prepri 
 quantile(cty_cents$bymail_2016prepri,seq(0,1,by=0.05))              
@@ -91,6 +103,16 @@ points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color2016vbm,cex=cty_cents$
 legend("topright", legend = c("< 40%", "40 to 50%", "50 to 60%", "60 to 70%", '70% +' ), 
        fill = medsl_blues, title = "VBM %",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
 dev.off()
+##scatterplot 
+gg_vbm <- ggplot(cty_cents, aes(y=bymail_2020combopri*100, x=bymail_2016prepri*100)) +
+  geom_point(aes(size=votedpop_2020combopri*10), color=medsl_blues[4],alpha=0.4) + 
+  ylab("VBM 2020 %") + xlab("VBM 2016 %") + theme_bw() + xlim(0,80) + ylim(0,80) + 
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
+gg_vbm
+ggsave("vbm_scatter.jpeg", plot = gg_vbm, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+
+
 
 ###now *overall rejection rates, 2016 PPP vs 2020 combined
 # scatter rejected_2020combopri rejected_2016prepri
@@ -124,6 +146,17 @@ points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color2016reject,cex=cty_cen
 legend("topright", legend = c("0 to 0.1%", "0.1 to 0.5%", "0.5 to 1%","1 to 1.5%", "1.5% +" ), 
        fill = medsl_reds, title = "Ballot rejections %",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
 dev.off()
+##scatter for rejections 
+gg_rej1 <- ggplot(cty_cents, aes(y=rejected_2020combopri*100, x=rejected_2016prepri*100)) +
+  geom_point(aes(size=votedpop_2020combopri*10), color=medsl_reds[4],alpha=0.4) + 
+  ylab("Rejected 2020 %") + xlab("Rejected 2016 %") + theme_bw() + xlim(0,100) + ylim(0,100) + 
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
+gg_rej1
+ggsave("rej_time_scatter.jpeg", plot = gg_rej1, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
+
+
+
 ### election day voting : electionday_2020combopri electionday_2016prepri
 quantile(cty_cents$electionday_2020combopri, seq(0,1,by=0.05)) # 0.1 to .39
 
@@ -155,6 +188,13 @@ points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color2016ed,cex=cty_cents$w
 legend("topright", legend = c("< 20%", "20 to 30%", "30 to 40%","40 to 50%", "50% +" ), 
        fill = medsl_purple, title = "Election Day %",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
 dev.off()
-#### 
+#### scatter for elections day
+gg_ed_ga <- ggplot(cty_cents, aes(y=electionday_2020combopri*100, x=electionday_2016prepri*100)) +
+  geom_point(aes(size=votedpop_2020combopri*10), color=medsl_purple[4],alpha=0.4) + 
+  ylab("Election Day 2020 %") + xlab("Election Day 2016 %") + theme_bw() + xlim(0,100) + ylim(0,100) + 
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + guides(size=FALSE,alpha=FALSE) + geom_abline(intercept = 0, lty=2)
+gg_ed_ga
+ggsave("elecday_time_scatter.jpeg", plot = gg_ed_ga, scale = 1, 
+       width = 5, height = 4, units = c("in"), dpi = 600)
 
 
