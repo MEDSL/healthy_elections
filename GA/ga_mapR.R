@@ -124,3 +124,35 @@ points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color2016reject,cex=cty_cen
 legend("topright", legend = c("0 to 0.1%", "0.1 to 0.5%", "0.5 to 1%","1 to 1.5%", "1.5% +" ), 
        fill = medsl_reds, title = "Ballot rejections %",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
 dev.off()
+### election day voting : electionday_2020combopri electionday_2016prepri
+quantile(cty_cents$electionday_2020combopri, seq(0,1,by=0.05)) # 0.1 to .39
+
+cty_cents$color2020ed <- medsl_purple[1]
+cty_cents$color2020ed[cty_cents$electionday_2020combopri > 0.2 & cty_cents$electionday_2020combopri <= 0.3] <- medsl_purple[2]
+cty_cents$color2020ed[cty_cents$electionday_2020combopri > 0.3 & cty_cents$electionday_2020combopri <= 0.4] <- medsl_purple[3]
+cty_cents$color2020ed[cty_cents$electionday_2020combopri > 0.4 & cty_cents$electionday_2020combopri <= 0.5] <- medsl_purple[4]
+cty_cents$color2020ed[cty_cents$electionday_2020combopri > 0.5 ] <- medsl_purple[5]
+###2016 colors 
+cty_cents$color2016ed <- medsl_purple[1]
+cty_cents$color2016ed[cty_cents$electionday_2016prepri > 0.2 & cty_cents$electionday_2016prepri <= 0.3] <- medsl_purple[2]
+cty_cents$color2016ed[cty_cents$electionday_2016prepri > 0.3 & cty_cents$electionday_2016prepri <= 0.4] <- medsl_purple[3]
+cty_cents$color2016ed[cty_cents$electionday_2016prepri > 0.4 & cty_cents$electionday_2016prepri <= 0.5] <- medsl_purple[4]
+cty_cents$color2016ed[cty_cents$electionday_2016prepri > 0.5 ] <- medsl_purple[5]
+###map now 
+jpeg("electionday2020plot.jpg", res=600, height = 6, width =7, units = "in")
+maps::map('county', "georgia" , fill = TRUE, col = "white", mar=c(2,2,2,2) )
+points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color2020ed,cex=cty_cents$weight)
+#legend("bottom", legend = legend.text, 
+#     fill = shades, title = "Per 100k",cex=0.6,bty = "n",ncol=2,xpd=TRUE)
+legend("topright", legend = c("< 20%", "20 to 30%", "30 to 40%","40 to 50%", "50% +" ), 
+       fill = medsl_purple, title = "Election Day %",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
+dev.off()
+jpeg("electionday2016plot.jpg", res=600, height = 6, width =7, units = "in")
+maps::map('county', "georgia" , fill = TRUE, col = "white", mar=c(2,2,2,2) )
+points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color2016ed,cex=cty_cents$weight)
+#legend("bottom", legend = legend.text, 
+#     fill = shades, title = "Per 100k",cex=0.6,bty = "n",ncol=2,xpd=TRUE)
+legend("topright", legend = c("< 20%", "20 to 30%", "30 to 40%","40 to 50%", "50% +" ), 
+       fill = medsl_purple, title = "Election Day %",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
+dev.off()
+
