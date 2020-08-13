@@ -155,4 +155,6 @@ points(cty_cents$V1,cty_cents$V2,pch=21,bg=cty_cents$color2016ed,cex=cty_cents$w
 legend("topright", legend = c("< 20%", "20 to 30%", "30 to 40%","40 to 50%", "50% +" ), 
        fill = medsl_purple, title = "Election Day %",cex=0.9,bty = "n",ncol=1,xpd = TRUE)
 dev.off()
+#### 
+
 
