@@ -8,7 +8,13 @@ library(jsonlite)
 library(httr)
 
 View(all_counted)
+medsl_blues <- c("#9FDDF3","#00BAFF","#3791FF","#04448B","#0B2E4F")
 
+mse_breaks <- c(0, 0.25, 0.5, 0.75, 1)
+### code works, but MEDSL branding isn't colorblind friendly. 
+map<- ggplot(data = shapefile_df) +
+  geom_sf(aes(fill = turnout))+
+  scale_fill_manual(breaks = mse_breaks, aesthetics = medsl_blues)
 
 maine_shape<- st_read("/Users/jessesmac/Downloads/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved-shp/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved.shp")
 maine_shape$TOWN<- toupper(as.character(maine_shape$TOWN))
@@ -19,10 +25,17 @@ shapefile_df <- fortify(maine_shape)
 
 all_counted$TOWN
 
+map<- ggplot(data = shapefile_df) +
+  geom_sf(aes(fill = perc_rejected18))+
+  scale_fill_manual(breaks = mse_breaks, aesthetics = medsl_blues, drop = F)
+map
+
+
 
 map<- ggplot(data = shapefile_df) +
   geom_sf(aes(fill = perc_rejected20))+
-  scale_fill_viridis_c(option = "plasma", trans = "sqrt")# +ggtitle("Rejected Absentee Votes by Town")
+  scale_fill_manual(breaks = mse_breaks, aesthetics = medsl_blues, drop = F)
+map
 map<- map + theme_minimal() + ggtitle("2020 Maine Absentee  Ballot \n Rejection Rate")  +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
         axis.text.x=element_blank(),
@@ -33,21 +46,34 @@ map<- map + theme_minimal() + ggtitle("2020 Maine Absentee  Ballot \n Rejection 
 map <- map + guides(fill=guide_legend(title="Rejection Rate 2020"))
 map
 
-
-map2<- ggplot(data = shapefile_df) +
+map<- ggplot(data = shapefile_df) +
   geom_sf(aes(fill = perc_rejected18))+
-  scale_fill_viridis_c(option = "plasma", trans = "sqrt")# +ggtitle("Rejected Absentee Votes by Town")
-map<- map + theme_minimal() + ggtitle("2018 Maine Absentee  \n Ballot Rejection Rate")  +
+  scale_fill_manual(breaks = mse_breaks, aesthetics = medsl_blues, drop = F)
+map<- map + theme_minimal() + ggtitle("2018 Maine Absentee  Ballot \n Rejection Rate")  +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(), 
         axis.title.y=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank())
-map2 <- map + guides(fill=guide_legend(title="Rejection Rate 2018"))
+map <- map + guides(fill=guide_legend(title="Rejection Rate 2018"))
+map
+
+
+map2<- ggplot(data = shapefile_df) +
+  geom_sf(aes(fill = perc_rejected18))+
+  scale_fill_viridis_c(option = "plasma", trans = "sqrt")# +ggtitle("Rejected Absentee Votes by Town")
+map2<- map2 + theme_minimal() + ggtitle("2018 Maine Absentee  \n Ballot Rejection Rate")  +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), 
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+map2 <- map2 + guides(fill=guide_legend(title="Rejection Rate 2018"))
 map2
 
-
+plot(shapefile_df["perc_rejected18"], main = "Rejection Rate 2018 Primary", breaks = mse_breaks, col = medsl_blues)
 
 
 maine_shape$TOWN<- toupper(maine_shape$TOWN)
@@ -72,13 +98,13 @@ file <- "/Users/jessesmac/Downloads/GitHub-Tutorial-master/healthy_elections/ME/
 
 ME_mailfile <- read.csv(file, header=TRUE)
 ME_mailfile$race<-"2020_primary"
-View(ME_mailfile)
-length(which(ME_mailfile$ACC.OR.REJ == "REJ"))
-unique(ME_mailfile$REJRSN)
+
 
 
 ME_mailfile$rejnum<- ifelse(as.character(ME_mailfile$ACC.OR.REJ) == "REJ", 1, 0)
 ME_mailfile$sbv<- ifelse(ME_mailfile$REJRSN == "SBV", 1, 0)
+
+map
 
 
 length(which(ME_mailfile$REJRSN == "BND"))
@@ -148,12 +174,37 @@ View(t)
 View(p_20)
 p_18<- read.table("2018_primary.txt", sep = "|", header = T)
 p_20<- read.csv(file, header = T)
+p_20<- p_20[!p_20$REQTYPE == "UR" & !p_20$REQTYPE == "VP",]
+
+nrow(p_20)
+
+p_20$ISSDATE<- as.character(p_20$ISSDATE)
+length(which(p_20$RECDATE == ""))
+
+length(which(p_20$ACC.OR.REJ == "ACC"))
+p_18<- p_18[!p_18$REQTYPE == "UR" & !p_18$REQTYPE == "VP",]
+
+
+summary(p_20$REJRSN)
+View(p_20)
 p_20$cast <- 1
 
+p_18$ISSDATE<- as.character(p_18$ISSDATE)
+
+(nrow(p_18) - length(which(p_18$RECDATE == ""))) / nrow(p_18)
+length(which(p_18$RECDATE == ""))
 p_18$cast <- 1
+19114/19344
+
+length(which(p_18$ACC.OR.REJ == "ACC"))
+
+31829/36042
+
+4196 / 31410
+
+31829/388393
 
 twenty_counted<- p_20 %>% 
-
   group_by(MUNICIPALITY) %>% 
   summarise(cast20 = sum(cast))
 View(eighteen_counted)
@@ -178,6 +229,7 @@ ex_plot<- ggplot(all_counted, aes(x=cast18, y=cast20)) + geom_point() + xlim(0, 
 ex_plot <- ex_plot  +  ylab("2020 Absentee Votes") + xlab("2018 Absentee Votes") + ylab("2018 Absentee Votes")+theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
 ex_plot+ggtitle("Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20))
+
 
 
 
@@ -282,9 +334,9 @@ all_counted$perc_rejected20[which(!is.finite(all_counted$perc_rejected20))] <- 0
 all_counted$perc_rejected18[which(!is.finite(all_counted$perc_rejected18))] <- 0
 
 
-ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + ylim(0,1) +theme_minimal() 
+ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + ylim(0,1) + xlim(0,1) +theme_minimal() 
 ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
-ex_plot2<- ex_plot2 +geom_point(aes(size=cast20))+ggtitle("Percent Rejected Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
+ex_plot2<- ex_plot2 +geom_point(aes(size=cast20))+ggtitle("Percent Rejected Absentee \n Votes by Town") +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20))+ guides(size=FALSE,alpha=FALSE) + labs(color="Municipality")
 ex_plot2
 
@@ -348,6 +400,11 @@ View(wide_df)
 primary2020<- ME_mailfile[ME_mailfile$race == "2020_primary",]
 priorto_2020<- ME_mailfile[!ME_mailfile$race == "2020_primary",]
 
+
+primary2020<- primary2020[!primary2020$REQTYPE == "UR" & !primary2020$REQTYPE == "VP",]
+priorto_2020<- priorto_2020[!priorto_2020$REQTYPE == "UR" & !priorto_2020$REQTYPE == "VP",]
+
+
 primary2020$previousvoter<- ifelse(primary2020$VOTER.ID %in% priorto_2020$VOTER.ID, 1, 0)
 sum(primary2020$previousvoter)
 nrow(primary2020)
@@ -356,12 +413,181 @@ newvoters<- length(unique(primary2020$VOTER.ID[primary2020$previousvoter == 0]))
 oldvoters<- length(unique(primary2020$VOTER.ID[primary2020$previousvoter == 1]))
 newvoters/ (newvoters+oldvoters)
 
-nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 1,]) / newvoters
-nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,]) / oldvoters
 
-nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 1,])+ nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,])
+
+nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,]) / newvoters
+nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 1,]) / oldvoters
+
+nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,])+ nrow(primary2020[primary2020$ACC.OR.REJ == "REJ" & primary2020$previousvoter == 0,])
 
 View(all_counted)
+
+nrow(ME_mailfile)
+
+1215/(1215+2981)
+
+###### Repulican file for 2020 july ####
+
+
+july_20<- read.table("/Users/jessesmac/Downloads/GitHub-Tutorial-master/healthy_elections/ME/july_r.txt", sep = "|", header = T)
+
+july_20$ACC.OR.REJ<- as.character(july_20$ACC.OR.REJ)
+july_20$accept<- NULL
+july_20$accept[july_20$ACC.OR.REJ == "ACC"] <- 1
+july_20$accept[july_20$ACC.OR.REJ == "REJ"] <- 0
+
+nrow(july_20)
+july_20$rej<- NULL
+july_20$rej[july_20$ACC.OR.REJ == "REJ"] <- 1
+july_20$rej[july_20$ACC.OR.REJ == "ACC"] <- 0
+sum(july_20$rej, na.rm = T)
+
+july_20$previousvoter<- ifelse(july_20$VOTER.ID %in% ME_mailfile$VOTER.ID, 1, 0)
+
+july_20<- july_20[!july_20$REQTYPE == "UR" & !july_20$REQTYPE == "VP",]
+
+
+
+nrow(july_20[july_20$accept == 1 & july_20$P == "U",])
+unique(july_20$P)
+nrow(july_20) - sum(july_20$previousvoter)
+
+nrow(july_20[july_20$previousvoter == 1 & july_20$rej == 1,])
+
+sum(july_20$rej, na.rm = T)
+nrow(july_20)
+nrow(july_20[july_20$previousvoter == 1,])
+nrow()
+nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1,]) / nrow(july_20[july_20$rej == 1,])
+#### 46.48% of rejected ballots were new voters
+
+nrow(july_20[july_20$previousvoter == 1 & july_20$rej == 1,]) / nrow(july_20[july_20$rej == 1,])
+
+
+nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1,]) /nrow(july_20[july_20$previousvoter == 0,])
+
+nrow(july_20[july_20$rej == 1,]) / nrow(july_20[july_20$previousvoter== 0,])
+##### 31% of new voters had their ballots rejected
+
+
+
+nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1 & july_20$REQTYPE == "ER",]) / nrow(july_20[july_20$rej == 1,])
+
+
+
+nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1 & july_20$REQTYPE == "WV",]) / nrow(july_20[july_20$rej == 1,])
+
+
+
+
+#### tablefor rec type 
+nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "ER",]) / nrow(july_20[july_20$rej == 1,])
+nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "UR",]) / nrow(july_20[july_20$rej == 1,])
+nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "WP",]) / nrow(july_20[july_20$rej == 1,])
+nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "WV",]) / nrow(july_20[july_20$rej == 1,])
+nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "FW",]) / nrow(july_20[july_20$rej == 1,])
+
+unique(july_20$REQTYPE)
+
+unique(july_20$REJRSN)
+
+ 
+
+a<- (as.matrix(summary(july_20$REJRSN)))
+t(a)
+
+##### 2018 data ####
+p_18<- read.table("2018_primary.txt", sep = "|", header = T)
+
+july_20$cast<- 1
+
+
+p_18$cast <- 1
+
+
+p_18<- p_18[!p_18$REQTYPE == "UR" & !p_18$REQTYPE == "VP",]
+View(p_18)
+
+eighteen_counted<- p_18 %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(cast18 = sum(cast))
+
+eighteen_uncounted<- p_18 %>% 
+  filter(ACC.OR.REJ == "REJ") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(rejected18 = sum(cast))
+
+
+
+july20_counted<- july_20 %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(cast20 = sum(cast))
+july20_uncounted<- july_20 %>% 
+  filter(ACC.OR.REJ == "REJ") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(rejected20 = sum(cast))
+all_counted<- NULL
+
+
+all_counted<- 
+  merge(eighteen_counted, july20_counted, by = "MUNICIPALITY", all = T)
+
+all_counted<- 
+  merge(all_counted, july20_uncounted, by = "MUNICIPALITY", all = T)
+all_counted<- 
+  merge(all_counted, eighteen_uncounted, by = "MUNICIPALITY", all = T)
+
+
+
+all_counted$perc_rejected20<- all_counted$rejected20/all_counted$cast20
+all_counted$perc_rejected18<- all_counted$rejected18/all_counted$cast18
+all_counted[is.na(all_counted)] <- 0
+
+maine_shape<- st_read("/Users/jessesmac/Downloads/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved-shp/Maine_Boundaries_Town_and_Townships_Polygon_Dissolved.shp")
+maine_shape$TOWN<- toupper(as.character(maine_shape$TOWN))
+all_counted$TOWN<- as.character(all_counted$MUNICIPALITY)
+maine_shape<- merge(maine_shape, all_counted, by = "TOWN", all.x = T)
+shapefile_df <- fortify(maine_shape)
+dev.off()
+
+all_counted$TOWN
+
+map<- ggplot(data = shapefile_df) +
+  geom_sf(aes(fill = perc_rejected20))+
+  scale_fill_viridis_c(option = "plasma", trans = "sqrt")# +ggtitle("Rejected Absentee Votes by Town")
+map<- map + theme_minimal() + ggtitle("2020 Maine Absentee  Ballot \n Rejection Rate")  +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), 
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+map <- map + guides(fill=guide_legend(title="Rejection Rate 2020"))
+map
+
+
+map18<- ggplot(data = shapefile_df) +
+  geom_sf(aes(fill = perc_rejected18))+
+  scale_fill_viridis_c(option = "plasma", trans = "sqrt")# +ggtitle("Rejected Absentee Votes by Town")
+map18<- map18 + theme_minimal() + ggtitle("2018 Maine Absentee  Ballot \n Rejection Rate")  +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), 
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+map18 <- map18 + guides(fill=guide_legend(title="Rejection Rate 2018"))
+map18
+
+
+
+#### scatterplot
+
+
+ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + geom_point() + xlim(0, 1) + ylim(0,1) +  theme_minimal() 
+ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B"), legend.position = "none") +  geom_abline(intercept = 0, slope = 1)
+ex_plot2 + geom_point(aes( size=cast20)) + ggtitle("Rejected Absentee Votes \n by Town, July Primary") +
+  theme(plot.title=element_text(family="Styrene B", face="bold", size=20))
 
 
 
