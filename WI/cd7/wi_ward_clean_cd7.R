@@ -419,6 +419,9 @@ wi_vf2 <- predict_race(voter.file = wi_vf2, census.geo = "tract", census.data = 
                        age = FALSE, sex = FALSE)
 saveRDS(wi_vf2,"wi_bisg_results.Rdata")
 write.csv(wi_vf2,"wi_bisg_results.csv")
+###we should read in here
+wi_vf2 <- readRDS("wi_bisg_results.Rdata")
+
 ########will now do the histogram
 library(ggplot2)
 poll_density <- ggplot(polls_all2c_df, aes(x=non_white_pct)) +
@@ -733,3 +736,7 @@ master_df_mil_merged$euc_distanceafter <- master_df_mil_merged$euc_distanceafter
 
 summary(master_df_mil_merged$euc_distanceafter)
 summary(master_df_mil_merged$euc_distancebefore)
+
+###reading in what I think is final data 
+poll_test_df <- readRDS("F:/MEDSL/covid19/cleaned_wi2/wi_final_poll_datasp.Rdata")
+nrow(poll_test_df)
