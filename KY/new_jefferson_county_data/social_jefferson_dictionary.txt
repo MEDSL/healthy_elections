@@ -1,0 +1,187 @@
+--------------------------------------------------------------------------------
+Codebook for Social Explorer report ID: R12603760
+--------------------------------------------------------------------------------
+
+Contents
+    - Table Summary
+    - Data Dictionary
+    - Citation and Use
+
+
+--------------------------------------------------------------------------------
+Table Summary
+--------------------------------------------------------------------------------
+ 
+Survey:           ACS 2018 (5-Year Estimates)
+Dataset:          Social Explorer Tables: ACS 2018 (5-Year Estimates)
+Tables:
+
+      1. Means of Transportation to Work for Workers 16 Years and Over
+         Universe:  Workers 16 Years and Over
+         Name:      A09005
+         Variables:
+            A09005_001:   Workers 16 Years and Over:
+            A09005_002:      Car, Truck, or Van
+            A09005_009:         Drove Alone
+            A09005_010:         Carpooled
+            A09005_003:      Public Transportation (Includes Taxicab)
+            A09005_004:      Motorcycle
+            A09005_005:      Bicycle
+            A09005_006:      Walked
+            A09005_007:      Other Means
+            A09005_008:      Worked At Home
+
+
+      2. Travel Time to Work for Workers 16 Years and Over
+         Universe:  Workers 16 Years and Over
+         Name:      A09001
+         Variables:
+            A09001_001:   Workers 16 Years and Over:
+            A09001_002:      Did Not Work At Home:
+            A09001_003:         Less than 10 Minutes
+            A09001_004:         10 to 19 Minutes
+            A09001_005:         20 to 29 Minutes
+            A09001_006:         30 to 39 Minutes
+            A09001_007:         40 to 59 Minutes
+            A09001_008:         60 to 89 Minutes
+            A09001_009:         90 or More Minutes
+            A09001_010:      Worked At Home
+
+
+      3. Average Commute to Work (In Min)
+         Universe:  Average Commute to Work (In min)
+         Name:      A09003
+         Variables:
+            A09003_001:   Average Commute to Work (In Min)
+
+
+      4. Vehicles Available (Renter-Occupied Housing Units)
+         Universe:  Universe:  Renter-Occupied Housing Units
+         Name:      A10054B
+         Variables:
+            A10054B_001:   Renter-Occupied Housing Units:
+            A10054B_002:      No Vehicle Available
+            A10054B_003:      1 Vehicle Available
+            A10054B_004:      2 Vehicles Available
+            A10054B_005:      3 Vehicles Available
+            A10054B_006:      4 Vehicles Available
+            A10054B_007:      5 or More Vehicles Available
+
+
+
+
+
+ 
+ 
+ 
+--------------------------------------------------------------------------------
+Data Dictionary
+--------------------------------------------------------------------------------
+ 
+Variables 
+      FIPS:           FIPS
+      GEOID:          Geographic Identifier
+      NAME:           Name of Area
+      QName:          Qualifying Name
+      STUSAB:         State/U.S.-Abbreviation (USPS)
+      SUMLEV:         Summary Level
+      GEOCOMP:        Geographic Component
+      FILEID:         File Identification
+      LOGRECNO:       Logical Record Number
+      US:             US
+      REGION:         Region
+      DIVISION:       Division
+      STATECE:        State (Census Code)
+      STATE:          State (FIPS)
+      COUNTY:         County
+      COUSUB:         County Subdivision (FIPS)
+      PLACE:          Place (FIPS Code)
+      PLACESE:        Place (State FIPS + Place FIPS)
+      TRACT:          Census Tract
+      BLKGRP:         Block Group
+      CONCIT:         Consolidated City
+      AIANHH:         American Indian Area/Alaska Native Area/Hawaiian Home Land (Census)
+      AIANHHFP:       American Indian Area/Alaska Native Area/Hawaiian Home Land (FIPS)
+      AIHHTLI:        American Indian Trust Land/Hawaiian Home Land Indicator
+      AITSCE:         American Indian Tribal Subdivision (Census)
+      AITS:           American Indian Tribal Subdivision (FIPS)
+      ANRC:           Alaska Native Regional Corporation (FIPS)
+      CBSA:           Metropolitan and Micropolitan Statistical Area
+      CSA:            Combined Statistical Area
+      METDIV:         Metropolitan Division
+      MACC:           Metropolitan Area Central City
+      MEMI:           Metropolitan/Micropolitan Indicator Flag
+      NECTA:          New England City and Town Combined Statistical Area
+      CNECTA:         New England City and Town Area
+      NECTADIV:       New England City and Town Area Division
+      UA:             Urban Area
+      UACP:           Urban Area Central Place
+      CDCURR:         Current Congressional District ***
+      SLDU:           State Legislative District Upper
+      SLDL:           State Legislative District Lower
+      VTD:            Voting District
+      ZCTA3:          ZIP Code Tabulation Area (3-digit)
+      ZCTA5:          ZIP Code Tabulation Area (5-digit)
+      SUBMCD:         Subbarrio (FIPS)
+      SDELM:          School District (Elementary)
+      SDSEC:          School District (Secondary)
+      SDUNI:          School District (Unified)
+      UR:             Urban/Rural
+      PCI:            Principal City Indicator
+      TAZ:            Traffic Analysis Zone
+      UGA:            Urban Growth Area
+      BTTR:           Tribal Tract
+      BTBG:           Tribal Block Group
+      PUMA5:          Public Use Microdata Area - 5% File
+      PUMA1:          Public Use Microdata Area - 1% File
+      A09005_001:     Workers 16 Years and Over:
+      A09005_002:     Workers 16 Years and Over: Car, Truck, or Van
+      A09005_009:     Workers 16 Years and Over: Drove Alone
+      A09005_010:     Workers 16 Years and Over: Carpooled
+      A09005_003:     Workers 16 Years and Over: Public Transportation (Includes Taxicab)
+      A09005_004:     Workers 16 Years and Over: Motorcycle
+      A09005_005:     Workers 16 Years and Over: Bicycle
+      A09005_006:     Workers 16 Years and Over: Walked
+      A09005_007:     Workers 16 Years and Over: Other Means
+      A09005_008:     Workers 16 Years and Over: Worked At Home
+      A09001_001:     Workers 16 Years and Over:
+      A09001_002:     Workers 16 Years and Over: Did Not Work At Home
+      A09001_003:     Workers 16 Years and Over: Did Not Work At Home: Less than 10 Minutes
+      A09001_004:     Workers 16 Years and Over: Did Not Work At Home: 10 to 19 Minutes
+      A09001_005:     Workers 16 Years and Over: Did Not Work At Home: 20 to 29 Minutes
+      A09001_006:     Workers 16 Years and Over: Did Not Work At Home: 30 to 39 Minutes
+      A09001_007:     Workers 16 Years and Over: Did Not Work At Home: 40 to 59 Minutes
+      A09001_008:     Workers 16 Years and Over: Did Not Work At Home: 60 to 89 Minutes
+      A09001_009:     Workers 16 Years and Over: Did Not Work At Home: 90 or More Minutes
+      A09001_010:     Workers 16 Years and Over: Worked At Home
+      A09003_001:     Average Commute to Work (In Min)
+      A10054B_001:    Renter-Occupied Housing Units
+      A10054B_002:    Renter-Occupied Housing Units: No Vehicle Available
+      A10054B_003:    Renter-Occupied Housing Units: 1 Vehicle Available
+      A10054B_004:    Renter-Occupied Housing Units: 2 Vehicles Available
+      A10054B_005:    Renter-Occupied Housing Units: 3 Vehicles Available
+      A10054B_006:    Renter-Occupied Housing Units: 4 Vehicles Available
+      A10054B_007:    Renter-Occupied Housing Units: 5 or More Vehicles Available
+
+
+
+
+--------------------------------------------------------------------------------
+Citation and Use of Data
+--------------------------------------------------------------------------------
+ 
+All persons are granted a limited license to use this documentation and the
+accompanying data, subject to the following conditions:
+
+* Publications and research reports employing the data
+  must cite it appropriately. The citation should include the following:
+
+	  www.socialexplorer.com
+	  New York City, NY: Social Explorer 2020
+
+
+* Citations should also include the URL for this report:
+
+    http://www.socialexplorer.com/pub/reportdata/HtmlResults.aspx?reportid=R12603760
+
+If you have any questions contact info@socialexplorer.com

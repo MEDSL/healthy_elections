@@ -62,8 +62,9 @@ wi_abs_dataframe <- wi_abs_dataframe %>% group_by(election,county_name) %>% muta
 wi_abs_dataframe$new_applications <- wi_abs_dataframe$abs_applications - wi_abs_dataframe$lag_applications
 wi_abs_dataframe$new_sent_ballots <- wi_abs_dataframe$ballots_sent - wi_abs_dataframe$lag_sent
 wi_abs_dataframe$new_returns <- wi_abs_dataframe$ballots_returned - wi_abs_dataframe$lag_returned
+setwd("F:/MEDSL/healthy_elections/WI/abs_reports/cd7")
 saveRDS(wi_abs_dataframe, "wi_abs_county_timeseries.Rdata")
-
+wi_abs_dataframe <- readRDS("wi_abs_county_timeseries.Rdata")
 ###good, now let's create a statewide. THen we will create the shinyR app 
 wi_stateabs_dataframe <- wi_abs_dataframe %>% group_by(election,date) %>% summarise(new_applications=sum(new_applications,na.rm=T),
                                                                                     new_sent_ballots=sum(new_sent_ballots,na.rm=T),
@@ -84,6 +85,10 @@ wi_stateabs_dataframe_cd7long <- gather(wi_stateabs_dataframe_cd7, type, total, 
 wi_stateabs_dataframe_cd7long$type2 <- as.factor(wi_stateabs_dataframe_cd7long$type)
 ###let's do the time series here 
 library(ggplot2)
+library(ggalt)
+library(grid)
+grob_prim <- grobTree(textGrob("Primary Period", x=0.15,  y=0.9, hjust=0,
+                               gp=gpar(col="black", fontsize=12, fontface="bold")))
 abs_cd7time_series <- ggplot(wi_stateabs_dataframe_cd7long) +
   geom_line( aes(x=Date,y=total,color=type2,linetype=type2),lwd=2) +
   annotate("rect", xmin = as.Date("2020-04-30"), xmax = as.Date("2020-05-12"),ymin=0,ymax=10000,fill="#948DE5",
@@ -119,8 +124,14 @@ abs_cd7time_series_cum <- ggplot(wi_stateabs_dataframe_cum_cd7long) +
 abs_cd7time_series_cum  
 ggsave("wi_cd7_abs_timeseries_cum.jpg", plot = abs_cd7time_series_cum, scale = 1,
        width = 9, height = 6, units = c("in"), dpi = 600)
+###let's read in the data here for the new abs file 
+options(stringsAsFactors = FALSE)
+wicd7abs_file <- read.csv("F:/voterfile/wi/absentee_file_20200817.csv")
+wicd7abs_file$full_addr <- paste0(wicd7abs_file$address1, sep=" ", wicd7abs_file$address2)
+wicd7abs_file <- wicd7abs_file[,c(1:4,6:8,21:25,27:30,33:37)]
+###now let's read in the
 
-
+names(wicd7abs_file)
 
 
 ###will now drop the data 
