@@ -27,4 +27,12 @@ count if counted == 1
 quietly summ counted
 local counted = r(mean)*r(N)
 
+** number of returned ballots rejected
+gen rejected = returned == 1 & accorrej == "REJ"
+count if rejected == 1
+quietly summ rejected
+local rejected = r(mean)*r(N)
+
 display "Counted pct. = " 100*`counted'/`returned'
+
+tab rejrsn if rejected == 1
