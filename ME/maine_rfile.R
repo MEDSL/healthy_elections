@@ -165,6 +165,7 @@ p_20<- p_20[!p_20$REQTYPE == "UR" &  !p_20$REQTYPE == "VP" & !p_20$REQTYPE == "F
 
 
 p_20$ISSDATE<- as.character(p_20$ISSDATE)
+length(which(p_20$ISSDATE== ""))
 
 p_18<- p_18[!p_18$REQTYPE == "UR" & !p_18$REQTYPE == "VP" & !p_18$REQTYPE == "FW",]
 
@@ -244,7 +245,6 @@ ex_plot2 +ggtitle("Rejected Absentee Votes by Town") + geom_smooth(method = lm, 
 #### towns that were lower in 2020 than 2018:
 all_counted$MUNICIPALITY[all_counted$rejected20 < all_counted$rejected18 ]
 
-
 ### where fewwer were cast in 2018 than 2020
 all_counted$MUNICIPALITY[all_counted$cast20 < all_counted$cast18]
 
@@ -265,7 +265,6 @@ dem_18$cast <- 1
 twenty_counted_dem<- dem_20 %>% 
   group_by(MUNICIPALITY) %>% 
   summarise(cast20_dem = sum(cast))
-View(eighteen_counted)
 
 
 eighteen_counted_dem<- dem_18 %>% 
