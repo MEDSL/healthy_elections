@@ -104,17 +104,7 @@ ME_mailfile$race<-"2020_primary"
 ME_mailfile$rejnum<- ifelse(as.character(ME_mailfile$ACC.OR.REJ) == "REJ", 1, 0)
 ME_mailfile$sbv<- ifelse(ME_mailfile$REJRSN == "SBV", 1, 0)
 
-map
 
-
-length(which(ME_mailfile$REJRSN == "BND"))
-
-sum(ME_mailfile$rejnum)
-
-
-me_rejdates<- ME_mailfile %>% 
-  group_by(REQDATE) %>% 
-  summarize(rejected_num = sum(rejnum))
 #Total Number Of Records: 58734
 #Total Requested: 58734
 #Total Issued: 58687
@@ -155,9 +145,7 @@ for(i in 1:length(mail_files)){
   a$race<-  substr(mail_files[i],1,nchar(mail_files[i])-4) 
   ME_mailfile <- smartbind(ME_mailfile, a)
 }
-rm(a)
-unique()
-length(unique(ME_mailfile$VOTER.ID))/nrow(ME_mailfile)
+
 ME_mailfile$r<- 1
 
 t<- ME_mailfile %>% 
