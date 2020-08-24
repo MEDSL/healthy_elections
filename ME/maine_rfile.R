@@ -207,7 +207,6 @@ length(which(p_18$ACC.OR.REJ == "ACC"))
 twenty_counted<- p_20 %>% 
   group_by(MUNICIPALITY) %>% 
   summarise(cast20 = sum(cast))
-View(eighteen_counted)
 
 
 eighteen_counted<- p_18 %>% 
@@ -335,15 +334,15 @@ all_counted$perc_rejected18[which(!is.finite(all_counted$perc_rejected18))] <- 0
 
 
 ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + ylim(0,1) + xlim(0,1) +theme_minimal() 
-ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
-ex_plot2<- ex_plot2 +geom_point(aes(size=cast20))+ggtitle("Percent Rejected Absentee \n Votes by Town") +
+ex_plot2 <- ex_plot2  +  ylab("March 2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
+ex_plot2<- ex_plot2 +geom_point(aes(size=cast20), alpha = 0.5)+ggtitle("Percent Rejected Absentee \n Votes by Town") +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20))+ guides(size=FALSE,alpha=FALSE) + labs(color="Municipality")
 ex_plot2
 
 ##### make mapes
 
 ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + geom_point()  + ylim(0,1) + theme_minimal() 
-ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Percent") + xlab("2018 Rejected Percent") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
+ex_plot2 <- ex_plot2  +  ylab("March 2020 Rejected Percent") + xlab("2018 Rejected Percent") +theme(title = element_text(size = rel(1.4), family="Styrene B")) +  geom_abline(intercept = 0, slope = 1)
 ex_plot2 +geom_point(aes( size=cast20))+ggtitle("Rejected Absentee Votes by Town") + geom_smooth(method = lm, se = FALSE) +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20)) + guides(size=FALSE,alpha=FALSE) + labs(size= "Votes Cast")
 
@@ -487,14 +486,9 @@ nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "WP",]) / nrow(july_20[july_
 nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "WV",]) / nrow(july_20[july_20$rej == 1,])
 nrow(july_20[ july_20$rej == 1 & july_20$REQTYPE == "FW",]) / nrow(july_20[july_20$rej == 1,])
 
-unique(july_20$REQTYPE)
-
-unique(july_20$REJRSN)
-
- 
 
 a<- (as.matrix(summary(july_20$REJRSN)))
-t(a)
+
 
 ##### 2018 data ####
 p_18<- read.table("2018_primary.txt", sep = "|", header = T)
@@ -584,9 +578,9 @@ map18
 #### scatterplot
 
 
-ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + geom_point() + xlim(0, 1) + ylim(0,1) +  theme_minimal() 
-ex_plot2 <- ex_plot2  +  ylab("2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B"), legend.position = "none") +  geom_abline(intercept = 0, slope = 1)
-ex_plot2 + geom_point(aes( size=cast20)) + ggtitle("Rejected Absentee Votes \n by Town, July Primary") +
+ex_plot2<- ggplot(all_counted, aes(x=perc_rejected18, y=perc_rejected20)) + geom_point(aes( size=cast20), alpha = 0.5)+ xlim(0, 1) + ylim(0,1) +  theme_minimal() 
+ex_plot2 <- ex_plot2  +  ylab("July 2020 Rejected Votes") + xlab("2018 Rejected Votes") +theme(title = element_text(size = rel(1.4), family="Styrene B"), legend.position = "none") +  geom_abline(intercept = 0, slope = 1)
+ex_plot2 +  ggtitle("Rejected Absentee Votes \n by Town, July Primary") +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20))
 
 
