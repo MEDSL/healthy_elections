@@ -138,8 +138,8 @@ me_municipality<- ME_mailfile %>%
 
 ##### now: make files for all elections. add together. 
 mail_files<- list.files("/Users/jessesmac/Downloads/GitHub-Tutorial-master/healthy_elections/ME/absentee_files/")
-
-for(i in 1:length(mail_files)){
+#maile_files<- mail_files[2:length(mail_files)]
+for(i in 2:length(mail_files)){
   a<- read.table(mail_files[i], sep = "|", header = T)
   print(mail_files[i])
   a$race<-  substr(mail_files[i],1,nchar(mail_files[i])-4) 
@@ -159,23 +159,23 @@ View(t)
 #### number of absentee ballots between years 
 #### number of rejected ballots between eyars, by municipality
 
-View(p_20)
 p_18<- read.table("2018_primary.txt", sep = "|", header = T)
 p_20<- read.csv(file, header = T)
-p_20<- p_20[!p_20$REQTYPE == "UR" & !p_20$REQTYPE == "VP",]
+p_20<- p_20[!p_20$REQTYPE == "UR" &  !p_20$REQTYPE == "VP" & !p_20$REQTYPE == "FW",]
 
-nrow(p_20)
 
 p_20$ISSDATE<- as.character(p_20$ISSDATE)
-length(which(p_20$RECDATE == ""))
 
-length(which(p_20$ACC.OR.REJ == "ACC"))
-p_18<- p_18[!p_18$REQTYPE == "UR" & !p_18$REQTYPE == "VP",]
+p_18<- p_18[!p_18$REQTYPE == "UR" & !p_18$REQTYPE == "VP" & !p_18$REQTYPE == "FW",]
 
-
-summary(p_20$REJRSN)
-View(p_20)
+p_18$cast<- 1
 p_20$cast <- 1
+
+
+
+p_18<- p_18[!p_18$REJRSN == "BND",]
+p_20<- p_20[!p_20$REJRSN == "BND",]
+
 
 p_18$ISSDATE<- as.character(p_18$ISSDATE)
 
@@ -198,13 +198,12 @@ twenty_counted<- p_20 %>%
 
 
 eighteen_counted<- p_18 %>% 
-
   group_by(MUNICIPALITY) %>% 
   summarise(cast18 = sum(cast))
 
 all_counted<- 
   merge(twenty_counted, eighteen_counted, by = "MUNICIPALITY", all = T)
-View(all_counted)
+
 
 
 all_counted[is.na(all_counted)] <- 0
@@ -359,9 +358,12 @@ View(g)
 
 write.csv(g[c(1:10),], "g.csv")
 
+628-sum(2, 0, 53, 22, 216, 3, 126, 167, 73, 7, 32, 9 )
 
 wide_DF <- g %>% spread(key=REJRSN, value=n)
 wide_DF[is.na(wide_DF)]<- 0
+
+View(wide_DF)
 
 ncol(wide_DF)
 
