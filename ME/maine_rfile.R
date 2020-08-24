@@ -146,8 +146,27 @@ for(i in 2:length(mail_files)){
   ME_mailfile <- smartbind(ME_mailfile, a)
 }
 
+unique(ME_mailfile$race)
 ME_mailfile$r<- 1
 
+ME_mailfile<-ME_mailfile[!ME_mailfile$race == "2020_primary",]
+
+#6577 first tie voters
+
+
+
+length(which(!p_20$VOTER.ID[p_20$ACC.OR.REJ == "REJ"] %in% ME_mailfile$VOTER.ID)) ### first/time voter rejection
+length(which(!p_20$VOTER.ID[p_20$ACC.OR.REJ == "ACC"] %in% ME_mailfile$VOTER.ID)) ### first/time voter rejection
+
+length(which(p_20$VOTER.ID[p_20$ACC.OR.REJ == "REJ"] %in% ME_mailfile$VOTER.ID)) ### first/time voter rejection
+length(which(p_20$VOTER.ID[p_20$ACC.OR.REJ == "ACC"] %in% ME_mailfile$VOTER.ID)) ### first/time voter rejection
+
+### 175 first time voters rejected of 5353 first time accepted 
+175/ (175+5353) ### 3.1% rejection
+
+535/ (535+26476) ### 1.9% rejected
+## 535 multi-tiem voters rejected of 
+##compared to 
 t<- ME_mailfile %>% 
   group_by(VOTER.ID) %>% 
   summarise(s = sum(r))
@@ -258,14 +277,27 @@ dem_18<- p_18[p_18$P == "D",]
 dem_20<- p_20[p_20$P == "D",]
 
 
+rep_20<- p_20[p_20$P == "R",]
+rep_20$cast <- 1
 dem_20$cast <- 1
 
 dem_18$cast <- 1
 
 twenty_counted_dem<- dem_20 %>% 
+  filter(ACC.OR.REJ == "ACC") %>% 
   group_by(MUNICIPALITY) %>% 
   summarise(cast20_dem = sum(cast))
 
+
+sum(twenty_counted_dem$cast20_dem)
+
+twenty_counted_rep<- rep_20 %>% 
+  filter(ACC.OR.REJ == "ACC") %>% 
+  group_by(MUNICIPALITY) %>% 
+  summarise(cast20_rep = sum(cast))
+
+sum(twenty_counted_dem$cast20_dem)/205937
+sum(twenty_counted_rep$cast20_rep)/113728
 
 eighteen_counted_dem<- dem_18 %>% 
   filter(ACC.OR.REJ == "ACC") %>% 
@@ -418,7 +450,7 @@ nrow(ME_mailfile)
 
 
 july_20<- read.table("/Users/jessesmac/Downloads/GitHub-Tutorial-master/healthy_elections/ME/july_r.txt", sep = "|", header = T)
-
+july_20<- july_20[!july_20$REJRSN == "BND",]
 july_20$ACC.OR.REJ<- as.character(july_20$ACC.OR.REJ)
 july_20$accept<- NULL
 july_20$accept[july_20$ACC.OR.REJ == "ACC"] <- 1
@@ -432,15 +464,16 @@ sum(july_20$rej, na.rm = T)
 
 july_20$previousvoter<- ifelse(july_20$VOTER.ID %in% ME_mailfile$VOTER.ID, 1, 0)
 
-july_20<- july_20[!july_20$REQTYPE == "UR" & !july_20$REQTYPE == "VP",]
+july_20<- july_20[!july_20$REQTYPE == "UR" & !july_20$REQTYPE == "VP" & !july_20$REQTYPE == "FW",]
 
 
 
-nrow(july_20[july_20$accept == 1 & july_20$P == "U",])
-unique(july_20$P)
-nrow(july_20) - sum(july_20$previousvoter)
+(nrow(july_20) - sum(july_20$previousvoter)) / 171153
 
-nrow(july_20[july_20$previousvoter == 1 & july_20$rej == 1,])
+nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1,])
+length(which(july_20$REJRSN == "BND"))
+
+nrow(july_20[july_20$P == "U" & july_20$ACC.OR.REJ == "ACC",])
 
 sum(july_20$rej, na.rm = T)
 nrow(july_20)
@@ -451,16 +484,21 @@ nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1,]) / nrow(july_20[jul
 
 nrow(july_20[july_20$previousvoter == 1 & july_20$rej == 1,]) / nrow(july_20[july_20$rej == 1,])
 
+897/nrow(july_20[july_20$previousvoter == 0,]) 
+nrow(july_20[july_20$previousvoter == 1 & july_20$rej == 1,])/nrow(july_20[july_20$previousvoter == 1,]) 
 
 nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1,]) /nrow(july_20[july_20$previousvoter == 0,])
 
 nrow(july_20[july_20$rej == 1,]) / nrow(july_20[july_20$previousvoter== 0,])
 ##### 31% of new voters had their ballots rejected
 
-
+summary(july_20$REJRSN)
 
 nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1 & july_20$REQTYPE == "ER",]) / nrow(july_20[july_20$rej == 1,])
 
+36 + 0+177+ 86+892+  5+ 11+545+289+136+  9+111+ 66
+
+66/2363
 
 
 nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1 & july_20$REQTYPE == "WV",]) / nrow(july_20[july_20$rej == 1,])
@@ -484,11 +522,13 @@ p_18<- read.table("2018_primary.txt", sep = "|", header = T)
 
 july_20$cast<- 1
 
+p_18<- p_18[!p_18$REJRSN == "BND",]
+
 
 p_18$cast <- 1
 
 
-p_18<- p_18[!p_18$REQTYPE == "UR" & !p_18$REQTYPE == "VP",]
+p_18<- p_18[!p_18$REQTYPE == "UR" & !p_18$REQTYPE == "VP" & !p_18$REQTYPE == "FW",]
 View(p_18)
 
 eighteen_counted<- p_18 %>% 
@@ -572,5 +612,5 @@ ex_plot2 <- ex_plot2  +  ylab("July 2020 Rejected Votes") + xlab("2018 Rejected 
 ex_plot2 +  ggtitle("Rejected Absentee Votes \n by Town, July Primary") +
   theme(plot.title=element_text(family="Styrene B", face="bold", size=20))
 
-
+length(which(all_counted$perc_rejected20==all_counted$perc_rejected18))
 
