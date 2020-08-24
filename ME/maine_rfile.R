@@ -482,12 +482,16 @@ nrow()
 nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1,]) / nrow(july_20[july_20$rej == 1,])
 #### 46.48% of rejected ballots were new voters
 
+nrow(july_20[july_20$ACC.OR.REJ == "REJ",]) /nrow(july_20)
 nrow(july_20[july_20$previousvoter == 1 & july_20$rej == 1,]) / nrow(july_20[july_20$rej == 1,])
 
 897/nrow(july_20[july_20$previousvoter == 0,]) 
 nrow(july_20[july_20$previousvoter == 1 & july_20$rej == 1,])/nrow(july_20[july_20$previousvoter == 1,]) 
 
 nrow(july_20[july_20$previousvoter == 0 & july_20$rej == 1,]) /nrow(july_20[july_20$previousvoter == 0,])
+173171-171153
+2363/173171
+
 
 nrow(july_20[july_20$rej == 1,]) / nrow(july_20[july_20$previousvoter== 0,])
 ##### 31% of new voters had their ballots rejected
