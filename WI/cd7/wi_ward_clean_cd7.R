@@ -62,7 +62,7 @@ wi_abs_dataframe <- wi_abs_dataframe %>% group_by(election,county_name) %>% muta
 wi_abs_dataframe$new_applications <- wi_abs_dataframe$abs_applications - wi_abs_dataframe$lag_applications
 wi_abs_dataframe$new_sent_ballots <- wi_abs_dataframe$ballots_sent - wi_abs_dataframe$lag_sent
 wi_abs_dataframe$new_returns <- wi_abs_dataframe$ballots_returned - wi_abs_dataframe$lag_returned
-setwd("F:/MEDSL/healthy_elections/WI/abs_reports/cd7")
+setwd("F:/MEDSL/healthy_elections/WI/abs_reports")
 saveRDS(wi_abs_dataframe, "wi_abs_county_timeseries.Rdata")
 wi_abs_dataframe <- readRDS("wi_abs_county_timeseries.Rdata")
 ###good, now let's create a statewide. THen we will create the shinyR app 
@@ -129,177 +129,167 @@ options(stringsAsFactors = FALSE)
 wicd7abs_file <- read.csv("F:/voterfile/wi/absentee_file_20200817.csv")
 wicd7abs_file$full_addr <- paste0(wicd7abs_file$address1, sep=" ", wicd7abs_file$address2)
 wicd7abs_file <- wicd7abs_file[,c(1:4,6:8,21:25,27:30,33:37)]
-###now let's read in the
+###now let's read in the August data 
+###we should also make a cumulative plot 
+wi_stateabs_dataframe_cum_aug11 <- subset(wi_stateabs_dataframe_cum, election=="aug11primary")
+wi_stateabs_dataframe_cum_aug11$Date <- as.Date(wi_stateabs_dataframe_cum_aug11$date)
+head(wi_stateabs_dataframe_cum_aug11)
+###let's just create a long data set 
+wi_stateabs_dataframe_cum_aug11long <- gather(wi_stateabs_dataframe_cum_aug11, type, total, abs_applications:ballots_returned)
+wi_stateabs_dataframe_cum_aug11long$type2 <- as.factor(wi_stateabs_dataframe_cum_aug11long$type)
+##label for primary period 
+grob_prim2 <- grobTree(textGrob("Pre-primary \nperiod", x=0.3,  y=0.9, hjust=0,
+                                gp=gpar(col="black", fontsize=12, fontface="bold")))
+abs_aug11time_series_cum <- ggplot(wi_stateabs_dataframe_cum_aug11long) +
+  geom_line( aes(x=Date,y=total,color=type2,linetype=type2),lwd=2) +
+  annotate("rect", xmin = as.Date("2020-07-06"), xmax = as.Date("2020-08-11"),ymin=0,ymax=1000000,fill="#948DE5",
+           alpha = .2)  + annotation_custom(grob_prim2) + theme_minimal() + 
+  scale_linetype_manual(values = c(1,3,5)) + scale_size_manual(values = c(2,2,2)) + 
+  labs(color="Type",title= "Absentee ballots reported",y="Total")  + 
+  guides(color = guide_legend(override.aes = list(linetype = c(1,3,5)),order=3 ),linetype=FALSE ) +
+  scale_color_manual(labels=c("Applications","Sent Ballots", "Returns"),values = c("#156DD0","#C72654", "#C0BA79"),drop=F) +
+  theme(title = element_text(size = rel(1.4), family="Styrene B"))
+abs_aug11time_series_cum  
+ggsave("wi_aug11_abs_timeseries_cum.jpg", plot = abs_aug11time_series_cum, scale = 1,
+       width = 9, height = 6, units = c("in"), dpi = 600)
+##########333 Let's looks at the voterfile and absentee data here : 
+wi_vf_wd <- "F:/voterfile/wi"
+setwd(wi_vf_wd)
+wi_vf_absaug11 <- read.csv("absentee_file_20200817.csv")
+wi_vf_cd7 <- read.csv("F:/voterfile/wi/wi_abs_export.csv")
+wi_vf_cd7$voterregnumber <- str_pad(wi_vf_cd7$voterregnumber, width=10,pad="0",side="left")
+sort(unique(wi_vf_cd7$electionname))
+wi_vf_cd7 <- subset(wi_vf_cd7, electionname=="2020 Special Election Representative in Congress District 7")
+nrow(wi_vf_cd7) #111,127
+wi_vf_cd7$dum = 1
+wi_vf_cd7 <- wi_vf_cd7 %>% group_by(voterregnumber) %>% mutate(dup_voter = sum(dum))
+summary(wi_vf_cd7$dup_voter)
+wi_vf_cd7dup <- subset(wi_vf_cd7, dup_voter > 1)
+length(unique(wi_vf_cd7dup$voterregnumber))##1224 ; need to reduce it to this 
+wi_vf_cd7dup$returned <- 0
+wi_vf_cd7dup$returned[wi_vf_cd7dup$ballotstatusreason=="Returned"] <- 1
+wi_vf_cd7dup <- wi_vf_cd7dup %>% group_by(voterregnumber) %>% mutate(returned_global=sum(returned))
+wi_vf_cd7dup <- subset(wi_vf_cd7dup, (returned == 1 & returned_global == 1) | (returned==0 & returned_global==0) )
+wi_vf_cd7dup <- wi_vf_cd7dup %>% group_by(voterregnumber) %>% mutate(dup_voter2 = sum(dum))
+wi_vf_cd7dup2 <- subset(wi_vf_cd7dup, dup_voter2>1)
+wi_vf_cd7dup <- subset(wi_vf_cd7dup, dup_voter2==1)
+ncol(wi_vf_cd7)
+wi_vf_cd7dup2 <- subset(wi_vf_cd7dup2, ballotstatusreason!="")
+wi_vf_cd7dup <- rbind(wi_vf_cd7dup,wi_vf_cd7dup2)
+wi_vf_cd7dup <- wi_vf_cd7dup[,c(1:39)]
+wi_vf_cd7 <- subset(wi_vf_cd7, dup_voter == 1)
+wi_vf_cd7 <- rbind(wi_vf_cd7, wi_vf_cd7dup)
+saveRDS(wi_vf_cd7, "wi_cd7absfile.rds" )
+#### now let's figure out how the results compare 
+table(wi_vf_cd7$ballotstatusreason) # 92375 returned 
+table(wi_vf_cd7$ballotdeliverymethod) # 8966 in person 
+wi_vf_cd7_ret <- subset(wi_vf_cd7, ballotstatusreason== "Returned")
+table(wi_vf_cd7_ret$ballotdeliverymethod)
+###let's now look at the times 
+View(wi_vf_cd7)
 
-names(wicd7abs_file)
+
+(nrow(wi_vf_cd7_ret)-8944)/191720
+8944/191720
+(191720 - nrow(wi_vf_cd7_ret))/191720
+wi_vf_cd7_ret$voterregnumber <- str_pad(wi_vf_cd7_ret$voterregnumber,width=10,side="left",pad="0")
+###what do the results look like for the entire voter file ? 
+wi_vf_raw <- readRDS("wi_voterfile_cleaned.Rdata")
+wi_vf_raw$Voter.Reg.Number <- str_pad(wi_vf_raw$Voter.Reg.Number, width=10,side="left",pad="0")
+wi_vf_rawcd7 <- subset(wi_vf_raw, Congressional=="Congressional - District 7")
+###will now look at the times for rthe abs file 
+as.numeric(as.Date("01/03/2020",tryFormats = c("%m/%d/%y")))  - as.numeric(as.Date("01/02/2020",tryFormats = c("%m/%d/%y"))) ##good, this works
+
+wi_vf_cd7$num_dateballotsent <- as.numeric(as.Date(wi_vf_cd7$dateballotsent,tryFormats = c("%m/%d/%y")))
+wi_vf_cd7$dateballotreturned[wi_vf_cd7$dateballotreturned==""] <- NA
+wi_vf_cd7$num_dateballotreturned <- as.numeric(as.Date(wi_vf_cd7$dateballotreturned,tryFormats = c("%m/%d/%y")))
+
+str(wi_vf_cd7$dateballotsent)
+str(wi_vf_cd7$dateballotreturned)
+wi_vf_cd7$time_gap <- wi_vf_cd7$num_dateballotreturned - wi_vf_cd7$num_dateballotsent
+summary(wi_vf_cd7$time_gap)#looks like the dates are mixed for these, so I'll just go ahead and flip. 
+wi_vf_cd7$time_gap[wi_vf_cd7$time_gap < 0 & is.na(wi_vf_cd7$time_gap)==F] <- 
+  (wi_vf_cd7$num_dateballotsent - wi_vf_cd7$num_dateballotreturned)[wi_vf_cd7$time_gap < 0 & is.na(wi_vf_cd7$time_gap)==F]
+##well, that works better. Let's create a histograme then? What's the deal with the 392 days? 
+wi_vf_cd7$time_gap[wi_vf_cd7$time_gap==392] <- 26
+summary(wi_vf_cd7$time_gap)#appears to work now 
+###let's create a geom histogram then
+grob_ret <- grobTree(textGrob("Accepted", x=0.7,  y=0.8, hjust=0,
+                                gp=gpar(col=medsl_blues[5], fontsize=12, fontface="bold")))
+grob_notret <- grobTree(textGrob("Not returned/rejected", x=0.7,  y=0.7, hjust=0,
+                              gp=gpar(col=medsl_red[5], fontsize=12, fontface="bold")))
+time_gap_hist <- ggplot() +
+  geom_histogram(data=subset(wi_vf_cd7,ballotstatusreason== "Returned"),aes(x=time_gap,y = ..density..), fill=medsl_blues[5],alpha=0.6) +
+  geom_histogram(data=subset(wi_vf_cd7,ballotstatusreason!= "Returned"),aes(x=time_gap,y = ..density..), fill=medsl_red[5],alpha=0.6) + 
+  labs(color="Type",title= "Absentee ballot return times",y="Density", x="Days until ballot return")  + 
+  theme(title = element_text(size = rel(1.4), family="Styrene B")) + annotation_custom(grob_ret) + annotation_custom(grob_notret)
+ggsave("cd7abs_return_times.png", plot = time_gap_hist, scale = 1,
+       width = 9, height = 6, units = c("in"), dpi = 600)  
+####get stats on returns and ballots 
+wi_vf_cd7$success_count <- 0
+wi_vf_cd7$success_count[wi_vf_cd7$ballotreasontype=="" & wi_vf_cd7$ballotstatusreason== "Returned"] <- 1
+length(which(wi_vf_cd7$ballotstatusreason== "Returned"))
+length(which(wi_vf_cd7$ballotreasontype!=""))
+table(wi_vf_cd7$ballotreasontype)
+92375/nrow(wi_vf_cd7)
+summary(wi_vf_cd7$success_count)
+table(wi_vf_cd7$ballotstatusreason)
+(10468+526)/length(which(wi_vf_cd7$ballotstatusreason!="Returned"))
+
+unique(wi_vf_cd7$ballotreasontype)
+
+
+?ggsave
+time_gap_hist
+
+View(wi_vf_cd7) 
+
+###let's read in BISG 
+wi_bisg <- readRDS("wi_bisg_results.Rdata")
+wi_bisg$Voter.Reg.Number <- str_pad(wi_bisg$Voter.Reg.Number, width=10,pad="0",side="left")
+wi_vf_rawcd7 <- merge(wi_vf_rawcd7, wi_bisg, by="Voter.Reg.Number", all.x=T,all.y=F)
+wi_vf_rawcd7_2018 <- subset(wi_vf_rawcd7, November2018!="")
+colSums(wi_vf_rawcd7_2018[,103:107],na.rm=T)
+wi_vf_rawcd7_2018abs <- subset(wi_vf_rawcd7_2018, November2018=="Absentee")
+wi_vf_rawcd7_2018ed <- subset(wi_vf_rawcd7_2018, November2018=="At Polls")
+colSums(wi_vf_rawcd7_2018abs[,103:107],na.rm=T)/colSums(wi_vf_rawcd7_2018[,103:107],na.rm=T)
+colSums(wi_vf_rawcd7_2018ed[,103:107],na.rm=T)/colSums(wi_vf_rawcd7_2018[,103:107],na.rm=T)
+
+table()
+
+table(wi_vf_rawcd7$November2018)
+table(wi_vf_rawcd7$April2020)
+
+279840/(47768  + 279840 ) # 2018 gen 
+82714/(112813 +   82714)
+wi_vf_raw2020 <- subset(wi_vf_raw, May2020!="" | April2020 != "" )
+wi_vf_raw2020$voted_april <- 0
+wi_vf_raw2020$voted_april[wi_vf_raw2020$April2020!=""] <- 1
+wi_vf_raw2020$voted_may <- 0
+wi_vf_raw2020$voted_may[wi_vf_raw2020$May2020!=""] <- 1
+wi_vf_raw2020 <- subset(wi_vf_raw2020, Congressional=="Congressional - District 7")
+
+table(wi_vf_raw2020$voted_may, wi_vf_raw2020$voted_april)
+sum(wi_vf_raw2020$voted_april) # 195527
+sum(wi_vf_raw2020$voted_may)  # 177890 ; this seems to be off compared to official 191,720
+191720 - 177890 # off by 13830 ; odd. Well, let's look at rates 
+table(wi_vf_raw2020$April2020)/(112813  +  82714)
+###let's reada in the data for april 2020 abs 
+april2020abs <- readRDS("wi_abs_file_bisg08072020.Rdata")
+april2020abs_ret <- subset(april2020abs,not_returned==0 )
+april2020abs_ret$voterregnumber <- str_pad(april2020abs_ret$voterregnumber,width=10,side="left",pad="0")
+wi_vf_cd7_dum <- subset(wi_vf_cd7_ret, select = c(voterregnumber))
+wi_vf_cd7_dum$cd7 <- 1
+april2020abs_ret <- merge(april2020abs_ret, wi_vf_cd7_dum, by="voterregnumber")
+april2020abs_ret <- subset(april2020abs_ret, cd7==1)
+nrow(april2020abs_ret)
+
+names(april2020abs_ret)
+table(april2020abs$not_returned)
+View(wi_vf_raw)
 
 
 ###will now drop the data 
-wi2020$total_dum <- 0
-wi2020$county <- str_to_upper(wi2020$county)
-wi2020$total_dum[str_detect(wi2020$county,"TOTAL" )] <- 1
-wi2020$total_dum[str_detect(wi2020$ward,"TOTAL" )] <- 1
-wi2020 <- subset(wi2020, total_dum==0)
-sort(unique(wi2020$office))
-wi2020 <- subset(wi2020, office=="PRESIDENT")
-####
-wi2016$total_dum <- 0
-wi2016$county <- str_to_upper(wi2016$county)
-wi2016$total_dum[str_detect(wi2016$county,"TOTAL" )] <- 1
-wi2016$total_dum[str_detect(wi2016$ward,"TOTAL" )] <- 1
-wi2016 <- subset(wi2016, total_dum==0)
-setwd("F:/MEDSL/healthy_elections/WI/ward2016data")
-saveRDS(wi2016, "ward2016cleaned.Rdata")
-
-sum(wi2020$total)
-sum(wi2016$total)
-wi2020$ward_pos <- sapply(wi2020$ward, function(x) str_locate(x," WARD")[1])
-wi2020$town_name <- substr(wi2020$ward, 1, wi2020$ward_pos-1)
-length(unique(wi2020$town_name))
-setwd("F:/MEDSL/healthy_elections/WI/ward2020data")
-saveRDS(wi2020, "ward2020cleaned.Rdata")
-wi2020 <- readRDS("ward2020cleaned.Rdata")
-sum(wi2020$total)
-
-####
-wi_ward_all <- merge(wi2020,wi2016,by=c("county","ward","office","party"),all.x=F,all.y=F)
-nrow(wi_ward_all)
-nrow(wi2016)
-nrow(wi2020)
-###well, got the scatter plot working. Let's look at the 
-wi_ward_all <- wi_ward_all %>% group_by(county, ward, office) %>% summarise(total2020 = sum(total.x,na.rm=T), total2016 = sum(total.y,na.rm=T))
-wi_ward_all <- subset(wi_ward_all, county!="Office Totals:")
-wi_ward_all <- subset(wi_ward_all, ward!="COUNTY TOTALS:")
-wi_ward_all$ward_pos <- sapply(wi_ward_all$ward, function(x) str_locate(x, "WARD")[1])
-wi_ward_all$muni <- substr(wi_ward_all$ward, 1, wi_ward_all$ward_pos-2)
-sort(unique(wi_ward_all$muni)) #good, it worked 
-############### scatter plot 
-####example plot  
-library(ggplot2)
-plot_scatter1 <- ggplot(wi_ward_all, aes(x=total2016,y=total2020,size=total2016,color=factor(county))) + 
-  geom_point(aes(alpha=0.3)) + 
-  ##subsetting for party and mode, and then also specifying color ; same below
-  geom_point(aes(alpha=0.3))
-plot_scatter1 <- plot_scatter1 + guides(size=FALSE,alpha=FALSE,color=FALSE) #getting rid of extra legend for size and shading (alpha)
-#given that the legend left 
-#refers to color, I am telling it to change the color lab to "party", and to make labels of the party names. Note, if I were to keep the other
-#legends, then I would replace scale_color_discrete with scale_alpha_discrete, etc. 
-plot_scatter1 <- plot_scatter1 + theme_minimal() +  
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + xlab("Total Turnout 2016") + ylab("Total Turnout 2020") 
-#changing the axis names 
-coef(lm(total2020 ~ total2016, data = wi_ward_all))
-plot_scatter1 <- plot_scatter1 + geom_abline(intercept = 0, slope = 1, colour="black",lwd=0.7,lty=2, show.legend =TRUE) + 
-  geom_abline(intercept = 5.0474452, slope = 0.5429014, colour="blue",lwd=1,lty=2, show.legend =TRUE) 
-plot_scatter1  
-###let's now do it for Milwaukee only 
-mil_wards <- subset(wi_ward_all, county=="MILWAUKEE")
-
-###plotting results 
-plot_scatter_mil <- ggplot(mil_wards, aes(x=total2016,y=total2020,size=total2016)) + 
-  geom_point(data = subset(mil_wards, muni=="CITY OF MILWAUKEE"), aes(alpha=0.3, color="#156DD0")) + 
-  ##subsetting for party and mode, and then also specifying color ; same below
-  geom_point(data = subset(mil_wards, muni!="CITY OF MILWAUKEE"), aes(alpha=0.3, color="#8D2115"))
-plot_scatter_mil <- plot_scatter_mil + guides(size=FALSE,alpha=FALSE) + labs(color="Municipality") + 
-  scale_color_discrete(labels=c("City of Milwaukee", "Other"))
-#getting rid of extra legend for size and shading (alpha)
-#given that the legend left 
-#refers to color, I am telling it to change the color lab to "party", and to make labels of the party names. Note, if I were to keep the other
-#legends, then I would replace scale_color_discrete with scale_alpha_discrete, etc. 
-plot_scatter_mil <- plot_scatter_mil + theme_minimal() +  
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + xlab("Total Turnout 2016") + ylab("Total Turnout 2020") 
-#changing the axis names 
-coef(lm(total2020 ~ total2016, data = mil_wards))
-plot_scatter_mil <- plot_scatter_mil + geom_abline(intercept = 0, slope = 1, colour="black",lwd=0.7,lty=2, show.legend =TRUE) + 
-  geom_abline(intercept = -97.9360010, slope = 0.4638166, colour="blue",lwd=1,lty=2, show.legend =TRUE) 
-plot_scatter_mil
-
-####will now run the plots with the catalist data 
-setwd("F:/MEDSL/healthy_elections/WI")
-wi_catalist <- read.csv("returns_catalist_cleaned.csv")
-wi_county_shp <- readOGR("F:/MEDSL/healthy_elections/WI/shpfiles", "wi_counties_diss")
-wi_county_shp$CNTY_NAME <- str_to_upper(wi_county_shp$CNTY_NAME)
-wi2020cty <- wi2020 %>% group_by(county,office,party) %>% summarise(votes=sum(total,na.rm=T))
-wi2020cty_dem <- subset(wi2020cty, party=="DEMOCRAT" & office=="PRESIDENT")
-wi2020cty_gop <- subset(wi2020cty, party=="REPUBLICAN" & office=="PRESIDENT")
-###
-wi2016cty <- wi2016 %>% group_by(county,office,party) %>% summarise(votes=sum(total,na.rm=T))
-wi2016cty_dem <- subset(wi2016cty, party=="DEMOCRAT" & office=="PRESIDENT")
-wi2016cty_gop <- subset(wi2016cty, party=="REPUBLICAN" & office=="PRESIDENT")
-##merge
-wi_dems <- merge(wi2020cty_dem,wi2016cty_dem,by="county")
-wi_dems <- subset(wi_dems, county!="Office Totals:")
-nrow(wi2016cty_dem)
-wi_gop <- merge(wi2020cty_gop,wi2016cty_gop,by="county")
-wi_gop <- subset(wi_gop, county!="Office Totals:")
-#####now let's get the data by county pct change 
-wi_dems$pct_change <- ((wi_dems$votes.x-wi_dems$votes.y)/(wi_dems$votes.y))*100
-wi_gop$pct_change <- ((wi_gop$votes.x-wi_gop$votes.y)/(wi_gop$votes.y))*100
-wi_dems <- subset(wi_dems, select = c(county,votes.x,votes.y,pct_change))
-wi_gop <- subset(wi_gop, select = c(county,votes.x,votes.y,pct_change))
-colnames(wi_dems)[2:4] <- c("vote2020dem","vote2016dem","dem_pct_chg")
-colnames(wi_gop)[2:4] <- c("vote2020gop","vote2016gop","gop_pct_chg")
-wi_dems$county[wi_dems$county=="ST. CROIX"] <- "SAINT CROIX"
-wi_gop$county[wi_gop$county=="ST. CROIX"] <- "SAINT CROIX"
-
-wi_county_shp <- merge(wi_county_shp,wi_dems, by.x="CNTY_NAME", by.y="county" )
-wi_county_shp <- merge(wi_county_shp,wi_gop, by.x="CNTY_NAME", by.y="county" )
-####now let's run our awesome dot plot pkg 
-names(wi_county_shp@data)
-library(medslcleanR2)
-wi_county_shp <- map_breaks_calc_wi(wi_county_shp, wi_county_shp$dem_pct_chg, color_vec = "heat_rev" )
-#wi_county_shp <- wi_county_shp[, -c(13:14)]
-colnames(wi_county_shp@data)[names(wi_county_shp@data)=="color"] <- "color_dem_heat2"
-wi_county_shp <- map_breaks_calc_wi(wi_county_shp, wi_county_shp$gop_pct_chg, color_vec = "heat_rev" )
-colnames(wi_county_shp@data)[names(wi_county_shp@data)=="color"] <- "color_gop_heat2"
-###good. Now let's run the plot 
-#readin acs data as well, and collapse by county 
-acs_data <- read.csv("F:/MEDSL/healthy_elections/general/outside_data/county_acs_demos.csv")
-acs_wi <- subset(acs_data, Geo_STUSAB=="wi")
-acs_wi$county <- str_remove(acs_wi$Geo_NAME, " County")
-acs_wi$county <- str_to_upper(acs_wi$county)
-acs_wi_cty <- acs_wi %>% group_by(county, Geo_FIPS) %>% summarise(total_pop=sum(total_pop,na.rm=T))
-acs_wi_cty$county[acs_wi_cty$county=="ST. CROIX"] <- "SAINT CROIX"
-wi_county_shp <- merge(wi_county_shp, acs_wi_cty, by.x="CNTY_NAME",by.y="county")
-wi_county_shp$log_pop <- log(wi_county_shp$total_pop)
-round(getJenksBreaks(wi_county_shp$dem_pct_chg, 4),2)
-round(getJenksBreaks(wi_county_shp$gop_pct_chg, 4),2)
-
-dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_dem_heat2, weight_mod = 4.6, size_correct = F  )
-
-gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_gop_heat2, weight_mod = 4.6, size_correct = F  )
-
-#####Let's just manually assign colors 
-wi_county_shp$color_manual_dem <- "#8D2115"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -25 & wi_county_shp$dem_pct_chg< -5] <- "#FF715A"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -5 & wi_county_shp$dem_pct_chg< 0] <- "#EBD600"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 0 & wi_county_shp$dem_pct_chg< 10] <- "#ADCC18"
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 10 ] <- "#37C256"
-###GOP 
-wi_county_shp$color_manual_gop <- "#8D2115"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -25 & wi_county_shp$gop_pct_chg< -5] <- "#FF715A"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -5 & wi_county_shp$gop_pct_chg< 0] <- "#EBD600"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 0 & wi_county_shp$gop_pct_chg< 10] <- "#ADCC18"
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 10 ] <- "#37C256"
-setwd("F:/MEDSL/healthy_elections/WI")
-saveRDS(wi_county_shp, "wi_county_turnout_shp.Rdata")
-wi_county_shp <- readRDS("wi_county_turnout_shp.Rdata")
-dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_dem, weight_mod = 4.1, size_correct = F  )
-gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_gop, weight_mod = 4.1, size_correct = F  )
-#####################3333Color assignment for single color spectrum 
-medsl_purples <- c("#DDDBFB", "#B1AAFB","#7D76C7","#635E99",  "#4E4A81")
-#####Let's just manually assign colors 
-wi_county_shp$color_manual_dem <- medsl_purples[1]
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -25 & wi_county_shp$dem_pct_chg< -5] <-medsl_purples[2]
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= -5 & wi_county_shp$dem_pct_chg< 0] <- medsl_purples[3]
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 0 & wi_county_shp$dem_pct_chg< 10] <- medsl_purples[4]
-wi_county_shp$color_manual_dem[wi_county_shp$dem_pct_chg>= 10 ] <- medsl_purples[5]
-###GOP 
-wi_county_shp$color_manual_gop <- medsl_purples[1]
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -25 & wi_county_shp$gop_pct_chg< -5] <- medsl_purples[2]
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= -5 & wi_county_shp$gop_pct_chg< 0] <- medsl_purples[3]
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 0 & wi_county_shp$gop_pct_chg< 10] <- medsl_purples[4]
-wi_county_shp$color_manual_gop[wi_county_shp$gop_pct_chg>= 10 ] <- medsl_purples[5]
-
 
 
 ######################################################################
