@@ -88,9 +88,10 @@ nrow(wi_notcounted)
 View(wi_notcounted)
 
 
-##let's save the work so far 
+##let's save the work so far
+setwd("F:/voterfile/wi")
 saveRDS(wi_abs_file, "wi_abs_file08032020.Rdata")
-
+wi_abs_file <- readRDS("wi_abs_file08032020.Rdata")
 sort(unique(wi_abs_file$ballotreasontype)) # is the field for rejection 
 table(wi_abs_file$rejection_reason)
 length(which(wi_abs_file$rejection_reason!="accepted"))
@@ -398,6 +399,13 @@ ballot_return_ts_plot <- ballot_return_ts_plot + theme_minimal() +
 ballot_return_ts_plot # the three spikes occur on: 3/18, 3/25, 3/30
 ggsave("wi_ballot_ts_plot.png", plot = ballot_return_ts_plot, scale = 1,
        width = 9, height = 6, units = c("in"), dpi = 400)
+####update for stats for lawfare 
+sum(ts_wi_ballots2$total_return[1:24])/sum(ts_wi_ballots2$total_sent[1:24])
+
+sum(ts_wi_ballots2$total_return[25:39])/sum(ts_wi_ballots2$total_sent[25:39])
+sum(ts_wi_ballots2$total_return[32:39])
+
+
 ###we should now also merge on the data for race estimates 
 wi_bisg <- readRDS("wi_bisg_results.Rdata")
 names(wi_bisg)
