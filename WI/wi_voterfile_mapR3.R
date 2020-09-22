@@ -94,6 +94,7 @@ saveRDS(wi_abs_file, "wi_abs_file08032020.Rdata")
 wi_abs_file <- readRDS("wi_abs_file08032020.Rdata")
 sort(unique(wi_abs_file$ballotreasontype)) # is the field for rejection 
 table(wi_abs_file$rejection_reason)
+table(wi_abs_file$ballotstatusreason) #  66701 for Ballot Not Returned By Deadline
 length(which(wi_abs_file$rejection_reason!="accepted"))
 
 ###let's check to make sure the results line up 

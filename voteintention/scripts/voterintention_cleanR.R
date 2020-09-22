@@ -77,7 +77,7 @@ for(i in 1:34){
   print(num_levels)
   tryCatch({ 
     temp_summs <- temp_data %>% as_survey(weights=weight) %>%
-    group_by(state_fip,question,response) %>% summarise(pct=survey_mean(vartype="ci",na.rm=T))
+      group_by(state_fip,question,response2) %>% summarise(pct=survey_mean(vartype="ci",na.rm=T))
     temp_summs$question <- q_vec[i]
     temp_summs <- merge(temp_summs, num_responsdents, by="state_fip")
     if(nrow(master_results_survey)==0){
@@ -90,8 +90,11 @@ for(i in 4:6){
   master_results_survey[,i] <- (master_results_survey[,i])*100
   master_results_survey[,i] <- round(master_results_survey[,i], 2)
 }
-saveRDS(master_results_survey, "results_summed_by_state.rds")
+saveRDS(master_results_survey, "results_summed_by_state2.rds")
 write.csv(master_results_survey,"results_summed_by_state.csv",row.names = F )
+###for some reason, question 2 a is not part of this. I'll have to check and figure out what happened 
+
+
 
 #### we now want to create stacked bar plots 
 question_list <- list("q1"=c("Already voted","Yes","Probably","No","Undecided"),"q2"=c("In person", "By mail"),
