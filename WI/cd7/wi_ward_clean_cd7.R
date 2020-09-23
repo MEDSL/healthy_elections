@@ -6,7 +6,9 @@ font_import("F:/MEDSL/healthy_elections/general/fonts/styrene_b_ttf", prompt = F
 font_import( prompt = F)
 windowsFonts(A = windowsFont("StyreneB-Regular"))
 windowsFonts(A = windowsFont("styrene_b"))
-
+substrRight <- function(x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
 library(readxl)
 library(tidyverse)
 options(stringsAsFactors = FALSE)
@@ -119,7 +121,7 @@ abs_cd7time_series_cum <- ggplot(wi_stateabs_dataframe_cum_cd7long) +
   scale_linetype_manual(values = c(1,3,5)) + scale_size_manual(values = c(2,2,2)) + 
   labs(color="Type",title= "Absentee ballots reported",y="Total")  + 
   guides(color = guide_legend(override.aes = list(linetype = c(1,3,5)),order=3 ),linetype=FALSE ) +
-  scale_color_manual(labels=c("Applications","Sent Ballots", "Returns"),values = c("#156DD0","#C72654", "#C0BA79"),drop=F) +
+  scale_color_manual(labels=c("Applications","Returns", "Sent Ballots"),values = c("#156DD0","#C72654", "#C0BA79"),drop=F) +
   theme(title = element_text(size = rel(1.4), family="Styrene B"))
 abs_cd7time_series_cum  
 ggsave("wi_cd7_abs_timeseries_cum.jpg", plot = abs_cd7time_series_cum, scale = 1,
@@ -129,6 +131,8 @@ options(stringsAsFactors = FALSE)
 wicd7abs_file <- read.csv("F:/voterfile/wi/absentee_file_20200817.csv")
 wicd7abs_file$full_addr <- paste0(wicd7abs_file$address1, sep=" ", wicd7abs_file$address2)
 wicd7abs_file <- wicd7abs_file[,c(1:4,6:8,21:25,27:30,33:37)]
+length(which(wicd7abs_file$ballotstatusreason=="Returned" & wicd7abs_file$ballotdeliverymethod=="Mail"))
+(453/187873)*100
 ###now let's read in the August data 
 ###we should also make a cumulative plot 
 wi_stateabs_dataframe_cum_aug11 <- subset(wi_stateabs_dataframe_cum, election=="aug11primary")
@@ -147,7 +151,7 @@ abs_aug11time_series_cum <- ggplot(wi_stateabs_dataframe_cum_aug11long) +
   scale_linetype_manual(values = c(1,3,5)) + scale_size_manual(values = c(2,2,2)) + 
   labs(color="Type",title= "Absentee ballots reported",y="Total")  + 
   guides(color = guide_legend(override.aes = list(linetype = c(1,3,5)),order=3 ),linetype=FALSE ) +
-  scale_color_manual(labels=c("Applications","Sent Ballots", "Returns"),values = c("#156DD0","#C72654", "#C0BA79"),drop=F) +
+  scale_color_manual(labels=c("Applications","Returns", "Sent Ballots"),values = c("#156DD0","#C72654", "#C0BA79"),drop=F) +
   theme(title = element_text(size = rel(1.4), family="Styrene B"))
 abs_aug11time_series_cum  
 ggsave("wi_aug11_abs_timeseries_cum.jpg", plot = abs_aug11time_series_cum, scale = 1,
@@ -156,6 +160,273 @@ ggsave("wi_aug11_abs_timeseries_cum.jpg", plot = abs_aug11time_series_cum, scale
 wi_vf_wd <- "F:/voterfile/wi"
 setwd(wi_vf_wd)
 wi_vf_absaug11 <- read.csv("absentee_file_20200817.csv")
+wi_vf_absaug11 <- subset(wi_vf_absaug11, electionname=="2020 Partisan Primary")
+nrow(wi_vf_absaug11) # 346416
+####let's get the ward info read in data 
+aug11files <- list.files("F:/MEDSL/healthy_elections/WI/aug11data")
+aug11files <- aug11files[3:4]
+wi_congress_df <- data.frame(stringsAsFactors = F)
+for(i in 1:2){
+  setwd("F:/MEDSL/healthy_elections/WI/aug11data")
+  temp_offices <- read_xlsx(aug11files[i])
+  num_offices <- nrow(temp_offices)
+  for(j in 1:num_offices){
+    temp_name_office <- temp_offices[j,2]
+    temp_name_office <- as.character(temp_name_office)
+    temp_xl1 <- read_xlsx(aug11files[i],sheet=j+1, skip=10)
+    if(colnames(temp_xl1)[1]!="...1"){
+      temp_xl1 <- read_xlsx(aug11files[i],sheet=j+1, skip=9)
+    }
+    temp_xl1 <- temp_xl1[,1:3]
+    colnames(temp_xl1)[1:3] <- c("county","ward","total_votes")
+    temp_xl1$ward <- str_to_upper(temp_xl1$ward)
+    temp_xl1 <- temp_xl1 %>% fill(county)
+    temp_xl1 <- subset(temp_xl1, ward != "COUNTY TOTALS:")
+    temp_xl1$ward_pos <- str_locate(temp_xl1$ward, "WARD")
+    temp_xl1$town <- substr(temp_xl1$ward,1,temp_xl1$ward_pos-2)
+    temp_xl1 <- subset(temp_xl1, select=-c(ward_pos))
+    temp_xl1$office <- "US HOUSE"
+    temp_xl1$race <- temp_name_office
+    temp_xl1$race <- str_to_upper(temp_xl1$race)
+    temp_xl1$party_pos <- str_locate(temp_xl1$race, "-")
+    temp_xl1$party <- substr(temp_xl1$race,temp_xl1$party_pos+2, nchar(temp_xl1$race) )
+    temp_xl1 <- subset(temp_xl1, select=-c(party_pos))
+    temp_xl1$district <- gsub("[^0-9.-]", "", temp_name_office)
+    temp_xl1$file <- aug11files[i]
+    if(nrow(wi_congress_df)==0){
+      wi_congress_df <- temp_xl1
+    }else{
+      wi_congress_df <- rbind(wi_congress_df, temp_xl1)
+    }
+  }
+}
+###let's save now
+wi_congress_df$year <- 2018
+wi_congress_df$year[str_detect(wi_congress_df$file,"2020")] <- 2020
+wi_congress_df$county <- str_remove(wi_congress_df$county, " COUNTY")
+sort(unique(wi_congress_df$county))
+###turnout? 
+sum(wi_congress_df$total_votes[wi_congress_df$year==2018])
+sum(wi_congress_df$total_votes[wi_congress_df$year==2020])
+
+sum(wi_congress_df$total_votes,na.rm=T)
+# 1745417
+
+saveRDS(wi_congress_df, "wi_congress_primary.rds")
+wi_congress_county <- wi_congress_df %>% group_by(county,party,file) %>% summarise(total_votes=sum(total_votes,na.rm=T))
+#wi_congress_county$district <- substr(wi_congress_county$district,1,1)
+###let's assign dates 
+wi_congress_county$year <- 2018
+wi_congress_county$year[str_detect(wi_congress_county$file,"2020")] <- 2020
+###good. Now let's do a comparison 
+wi_congress_county <- subset(wi_congress_county, party=="DEMOCRATIC" | party=="REPUBLICAN")
+wi_dems <- subset(wi_congress_county, party=="DEMOCRATIC")
+wi_gops <- subset(wi_congress_county, party=="REPUBLICAN")
+wi_dems2018 <- subset(wi_dems, year==2018)
+wi_dems <- subset(wi_dems, year==2020)
+(866949-295559-50404)/866949
+wi_dems2018 <- subset(wi_dems2018, select=c(county, total_votes))
+colnames(wi_dems2018)[2] <- "dem2018"
+wi_dems <- merge(wi_dems, wi_dems2018, by="county")
+colnames(wi_dems)[colnames(wi_dems)=="total_votes"] <- "dem2020"
+wi_dems <- subset(wi_dems, select=-c(year))
+wi_dems$dem_pct_change <- ((wi_dems$dem2020-wi_dems$dem2018)/wi_dems$dem2018)*100
+wi_dems <- subset(wi_dems, select=-c(file))
+####let's do the comparison for GOP now 
+wi_gops2018 <- subset(wi_gops, year==2018)
+wi_gops <- subset(wi_gops, year==2020)
+wi_gops2018 <- subset(wi_gops2018, select=c(county, total_votes))
+colnames(wi_gops2018)[2] <- "gop2018"
+wi_gops <- merge(wi_gops, wi_gops2018, by="county")
+colnames(wi_gops)[colnames(wi_gops)=="total_votes"] <- "gop2020"
+wi_gops <- subset(wi_gops, select=-c(year,file))
+wi_gops$gop_pct_change <- ((wi_gops$gop2020-wi_gops$gop2018)/wi_gops$gop2018)*100
+wi_gops <- subset(wi_gops, select=-c(party))
+wi_dems <- subset(wi_dems,select=-c(party))
+###ok, let's now read in the wi counties data 
+wi_county_shp <- readOGR("F:/MEDSL/healthy_elections/WI/shpfiles", "wi_counties_diss")
+wi_county_shp$CNTY_NAME <- str_to_upper(wi_county_shp$CNTY_NAME)
+wi_county_shp$CNTY_NAME[wi_county_shp$CNTY_NAME=="SAINT CROIX"] <- "ST. CROIX"
+wi_county_shp <- merge(wi_county_shp, wi_dems, by.x="CNTY_NAME",by.y="county")
+wi_county_shp <- merge(wi_county_shp, wi_gops, by.x="CNTY_NAME",by.y="county")
+###let's look at quantiles now 
+quantile(wi_county_shp$dem_pct_change,seq(0,1,by=0.05),na.rm=T)
+quantile(wi_county_shp$gop_pct_change,seq(0,1,by=0.05),na.rm=T)
+# -50, -25, 0, 25, 50,
+medsl_blues <- c("#9FDDF3","#00BAFF","#3791FF","#04448B","#0B2E4F")
+wi_county_shp$color_dem <- "lightgray"
+wi_county_shp$color_dem[wi_county_shp$dem_pct_change <= -25] <- medsl_blues[1]
+wi_county_shp$color_dem[wi_county_shp$dem_pct_change > -25 & wi_county_shp$dem_pct_change <= 0 ] <- medsl_blues[2]
+wi_county_shp$color_dem[wi_county_shp$dem_pct_change > 0 & wi_county_shp$dem_pct_change <= 25 ] <- medsl_blues[3]
+wi_county_shp$color_dem[wi_county_shp$dem_pct_change > 25 & wi_county_shp$dem_pct_change <= 50 ] <- medsl_blues[4]
+wi_county_shp$color_dem[wi_county_shp$dem_pct_change > 50  ] <- medsl_blues[5]
+####now gop 
+wi_county_shp$color_gop <- "lightgray"
+wi_county_shp$color_gop[wi_county_shp$gop_pct_change <= -25] <- medsl_blues[1]
+wi_county_shp$color_gop[wi_county_shp$gop_pct_change > -25 & wi_county_shp$gop_pct_change <= -0 ] <- medsl_blues[2]
+wi_county_shp$color_gop[wi_county_shp$gop_pct_change > 0 & wi_county_shp$gop_pct_change <= 25 ] <- medsl_blues[3]
+wi_county_shp$color_gop[wi_county_shp$gop_pct_change > 25 & wi_county_shp$gop_pct_change <= 50 ] <- medsl_blues[4]
+wi_county_shp$color_gop[wi_county_shp$gop_pct_change > 50 ] <- medsl_blues[5]
+##filling na vals 
+wi_county_shp$log_dem <- log(wi_county_shp$dem2020)
+wi_county_shp$log_dem[is.na(wi_county_shp$dem2020)==T] <- 0.1
+wi_county_shp$log_gop <- log(wi_county_shp$gop2020)
+wi_county_shp$log_gop[is.na(wi_county_shp$gop2020)==T] <- 0.1
+###now lets do a carto plot
+jpeg("wi_congress_dem_pct_chg.jpeg", res=400, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+par(mar = c(1, 1, 1, 1))
+dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_dem, wi_county_shp$color_dem, weight_mod = 4.1, size_correct = F,
+                        title = "Democratic 2020/2018 Turnout"  )
+op <- par(family = "StyreneB-Regular")
+#par(op)
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< -25%" , "-25 to 0%", "0 to 25%", "25 to 50%", "50%+"), title="Dem. % Chg.",
+       bty="n", horiz=FALSE, cex=1.1, xpd = TRUE)
+dev.off()
+
+jpeg("wi_congress_gop_pct_chg.jpeg", res=400, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+par(mar = c(1, 1, 1, 1))
+gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_gop, wi_county_shp$color_gop, weight_mod = 4.1, size_correct = F,
+                        title = "Democratic 2020/2018 Turnout"  )
+op <- par(family = "StyreneB-Regular")
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< -25%" , "-25 to 0%", "0 to 25%", "25 to 50%", "50%+"), title="GOP % Chg.",
+       bty="n", horiz=FALSE, cex=1.1, xpd = TRUE)
+dev.off()
+####skipping scatterplot; moving onto returns for aug 11 
+
+
+
+
+
+sum(wi_county_shp$dem2020,na.rm=T)
+sum(wi_county_shp$dem2018,na.rm=T)
+sum(wi_county_shp$dem2020,na.rm=T) - sum(wi_county_shp$dem2018,na.rm=T)
+sum(wi_county_shp$gop2020,na.rm=T)
+sum(wi_county_shp$gop2018,na.rm=T)
+sum(wi_county_shp$gop2020,na.rm=T) - sum(wi_county_shp$gop2018,na.rm=T)
+
+##### I'm satisfied with this. Now let's figure out the rates of absentee voting and such in the abs file 
+#line 163 where loaded
+wi_vf_absaug11$rejected_ballot <- 0
+wi_vf_absaug11$rejected_ballot[wi_vf_absaug11$ballotreasontype!=""] <- 1
+#now for returned 
+wi_vf_absaug11$early_inperson <- 0
+wi_vf_absaug11$early_inperson[wi_vf_absaug11$ballotdeliverymethod=="Voted In Person"] <- 1
+wi_vf_absaug11$returned_ballot <- 0
+wi_vf_absaug11$returned_ballot[wi_vf_absaug11$ballotstatusreason=="Returned"] <- 1
+###now we should be able to figure out lengths and such 
+length(which(wi_vf_absaug11$early_inperson==1 & wi_vf_absaug11$rejected_ballot==0)) # 50404
+length(which(wi_vf_absaug11$early_inperson==0 & wi_vf_absaug11$rejected_ballot==0)) # 295559
+##now figure out denom 
+length(which(wi_vf_absaug11$early_inperson==0 & wi_vf_absaug11$returned_ballot==0))/nrow()
+table(wi_vf_absaug11$ballotstatusreason)
+239040/(nrow(wi_vf_absaug11)-50404)
+###lets get rej rate
+table(wi_vf_absaug11$ballotstatusreason) # 239040 returned 
+length(which(wi_vf_absaug11$ballotreasontype!=""))
+(453/239040)*100
+
+####let's map these data as well 
+wi_vf_absaug11$success_counted <- 0
+wi_vf_absaug11$success_counted[wi_vf_absaug11$early_inperson == 0 & wi_vf_absaug11$ballotstatusreason=="Returned" & 
+                                 wi_vf_absaug11$ballotreasontype==""] <- 1
+###let's do a summarize 
+aug11sums <- wi_vf_absaug11 %>% group_by(county) %>% summarise(mail_counted = sum(success_counted,na.rm=T),
+                                                               returned_ballot= sum(returned_ballot,na.rm=T),
+                                                               rejected_ballot=sum(rejected_ballot,na.rm=T),
+                                                               early_inperson=sum(early_inperson,na.rm=T))
+aug11sums$county <- str_to_upper(aug11sums$county)
+aug11sums$county <- str_remove_all(aug11sums$county, " COUNTY")
+#wi_county_shp <- wi_county_shp[,1:11]
+wi_county_shp <- merge(wi_county_shp,aug11sums,by.x="CNTY_NAME",by.y="county" )
+wi_county_shp$twoparty2020vote <- wi_county_shp$dem2020 + wi_county_shp$gop2020
+wi_county_shp$mail2020pct <- (wi_county_shp$mail_counted/wi_county_shp$twoparty2020vote)*100
+wi_county_shp$early2020pct <- (wi_county_shp$early_inperson/wi_county_shp$twoparty2020vote)*100
+
+summary(wi_county_shp$mail2020pct)
+quantile(wi_county_shp$mail2020pct, seq(0,1,by=0.05))
+#10,15,20,25,25+
+summary(wi_county_shp$early2020pct)
+quantile(wi_county_shp$early2020pct, seq(0,1,by=0.05))
+#2.5, 5, 7.5, 10, 10+
+medsl_purple <- c("#DDDBFB", "#B1AAFB","#7D76C7","#635E99",  "#4E4A81")
+
+###let's do the mail map now
+
+wi_county_shp$mail_color <- medsl_purple[1]
+wi_county_shp$mail_color[wi_county_shp$mail2020pct > 10 & wi_county_shp$mail2020pct <= 15] <- medsl_purple[2]
+wi_county_shp$mail_color[wi_county_shp$mail2020pct > 15 & wi_county_shp$mail2020pct <= 20] <- medsl_purple[3]
+wi_county_shp$mail_color[wi_county_shp$mail2020pct > 20 & wi_county_shp$mail2020pct <= 25] <- medsl_purple[4]
+wi_county_shp$mail_color[wi_county_shp$mail2020pct > 25 ] <- medsl_purple[5]
+#early 
+wi_county_shp$early_color <- medsl_blues[1]
+wi_county_shp$early_color[wi_county_shp$early2020pct > 2.5 & wi_county_shp$early2020pct <= 5] <- medsl_blues[2]
+wi_county_shp$early_color[wi_county_shp$early2020pct > 5 & wi_county_shp$early2020pct <= 7.5] <- medsl_blues[3]
+wi_county_shp$early_color[wi_county_shp$early2020pct > 7.5 & wi_county_shp$early2020pct <= 10] <- medsl_blues[4]
+wi_county_shp$early_color[wi_county_shp$early2020pct > 10 ] <- medsl_blues[5]
+###now let's produce the maps 
+
+jpeg("wi_aug11vbm_map.jpeg", res=400, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+par(mar = c(1, 1, 1, 1))
+dem_carto <- carto_plot(wi_county_shp, log(wi_county_shp$mail_counted), wi_county_shp$mail_color, weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+#par(op)
+legend("bottomleft", fill=medsl_purple,
+       legend = c("< 10%" , "10 to 15%", "15 to 20%", "20 to 25%", "25%+"), title="VBM %",
+       bty="n", horiz=FALSE, cex=1.1, xpd = TRUE)
+dev.off()
+###now early 
+wi_county_shp$log_early <- log(wi_county_shp$early_inperson)
+wi_county_shp$log_early[wi_county_shp$log_early < 0] <- 0.1
+jpeg("wi_aug11early_map.jpeg", res=400, height = 6, width = 7, units = "in")
+par(mfrow=(c(1,1)))
+par(mar = c(1, 1, 1, 1))
+dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_early, wi_county_shp$early_color, weight_mod = 4.1, size_correct = F,
+                        title = ""  )
+op <- par(family = "StyreneB-Regular")
+#par(op)
+legend("bottomleft", fill=medsl_blues,
+       legend = c("< 2.5%" , "2.5 to 5%", "5 to 7.5%", "7.5 to 10%", "10%+"), title="Early %",
+       bty="n", horiz=FALSE, cex=1.1, xpd = TRUE)
+dev.off()
+
+
+
+View(wi_county_shp)
+###The ward data is severely missing 
+
+
+
+View(aug11sums)
+
+
+### turnout on ED 
+865210 - 295559 - 50404
+519247/865210 # 0.6001399 for ED 
+295559/865210 # 0.3416038 for mail
+50404/865210 # 0.05825638 for early 
+
+
+table(wi_vf_absaug11$ballotstatusreason)
+View(wi_vf_absaug11)
+239040/(nrow(wi_vf_absaug11))
+length(unique(wi_vf_absaug11$voterregnumber))
+###ok, let's see if there is data from the previous primaries 
+setwd(wi_vf_wd)
+#wi_vf_absold <- read.csv("absentee_file_20200817.csv")
+#sort(unique(wi_vf_absold$electionname))#only for 2020 races 
+#wi_vf_absaug11 <- subset(wi_vf_absaug11, electionname=="2020 Partisan Primary")
+#nrow(wi_vf_absaug11) # 346416
+
+
+
+################################################
+sort(unique(wi_vf_absaug11$electionname))
 wi_vf_cd7 <- read.csv("F:/voterfile/wi/wi_abs_export.csv")
 wi_vf_cd7$voterregnumber <- str_pad(wi_vf_cd7$voterregnumber, width=10,pad="0",side="left")
 sort(unique(wi_vf_cd7$electionname))
@@ -180,6 +451,7 @@ wi_vf_cd7dup <- wi_vf_cd7dup[,c(1:39)]
 wi_vf_cd7 <- subset(wi_vf_cd7, dup_voter == 1)
 wi_vf_cd7 <- rbind(wi_vf_cd7, wi_vf_cd7dup)
 saveRDS(wi_vf_cd7, "wi_cd7absfile.rds" )
+wi_vf_cd7 <- readRDS("wi_cd7absfile.rds")
 #### now let's figure out how the results compare 
 table(wi_vf_cd7$ballotstatusreason) # 92375 returned 
 table(wi_vf_cd7$ballotdeliverymethod) # 8966 in person 
@@ -212,6 +484,8 @@ wi_vf_cd7$time_gap[wi_vf_cd7$time_gap < 0 & is.na(wi_vf_cd7$time_gap)==F] <-
   (wi_vf_cd7$num_dateballotsent - wi_vf_cd7$num_dateballotreturned)[wi_vf_cd7$time_gap < 0 & is.na(wi_vf_cd7$time_gap)==F]
 ##well, that works better. Let's create a histograme then? What's the deal with the 392 days? 
 wi_vf_cd7$time_gap[wi_vf_cd7$time_gap==392] <- 26
+medsl_red <- c("#EDD0CB","#F59181","#F6573E","#CD3C2B","#8D2115")
+
 summary(wi_vf_cd7$time_gap)#appears to work now 
 ###let's create a geom histogram then
 grob_ret <- grobTree(textGrob("Accepted", x=0.7,  y=0.8, hjust=0,
@@ -223,8 +497,15 @@ time_gap_hist <- ggplot() +
   geom_histogram(data=subset(wi_vf_cd7,ballotstatusreason!= "Returned"),aes(x=time_gap,y = ..density..), fill=medsl_red[5],alpha=0.6) + 
   labs(color="Type",title= "Absentee ballot return times",y="Density", x="Days until ballot return")  + 
   theme(title = element_text(size = rel(1.4), family="Styrene B")) + annotation_custom(grob_ret) + annotation_custom(grob_notret)
+time_gap_hist <- time_gap_hist + theme_minimal()
+time_gap_hist
 ggsave("cd7abs_return_times.png", plot = time_gap_hist, scale = 1,
        width = 9, height = 6, units = c("in"), dpi = 600)  
+###looking at total rejected 
+length(which(wi_vf_cd7$ballotreasontype!=""))
+table(wi_vf_cd7$ballotstatusreason) # 92375 returned 
+(795/92375)*100
+
 ####get stats on returns and ballots 
 wi_vf_cd7$success_count <- 0
 wi_vf_cd7$success_count[wi_vf_cd7$ballotreasontype=="" & wi_vf_cd7$ballotstatusreason== "Returned"] <- 1
@@ -237,12 +518,13 @@ table(wi_vf_cd7$ballotstatusreason)
 (10468+526)/length(which(wi_vf_cd7$ballotstatusreason!="Returned"))
 
 unique(wi_vf_cd7$ballotreasontype)
+###let's find the average time for success v not success here 
+success_return=subset(wi_vf_cd7,ballotstatusreason== "Returned")
+failed_return=subset(wi_vf_cd7,ballotstatusreason!= "Returned")
+###now quants 
+quantile(success_return$time_gap, seq(0,1,by=0.05),na.rm=T)
+quantile(failed_return$time_gap, seq(0,1,by=0.05),na.rm=T)
 
-
-?ggsave
-time_gap_hist
-
-View(wi_vf_cd7) 
 
 ###let's read in BISG 
 wi_bisg <- readRDS("wi_bisg_results.Rdata")
@@ -295,449 +577,5 @@ View(wi_vf_raw)
 ######################################################################
 
 
-
-medsl_heat <- c("#8D2115","#FF715A","#EBD600","#ADCC18","#37C256") #red to green 
-quantile(wi_county_shp$gop_pct_chg.x, seq(0,1,by=0.05))
-####plotting the results here 
-jpeg("wi_cty_pct_chgplot_man.jpeg", res=300, height = 6, width = 10, units = "in")
-par(mfrow=(c(1,2)))
-dem_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_dem, weight_mod = 4.1, size_correct = F,
-                        title = "Democratic 2020/2016 Turnout"  )
-op <- par(family = "StyreneB-Regular")
-#par(op)
-legend("bottomleft", fill=medsl_purples,
-       legend = c("< -25%" , "-25 to -5%", "-5 to 0%", "0 to 10%", "10%+"), title="Dem. % Chg.",
-       bty="n", horiz=FALSE, cex=0.7)
-gop_carto <- carto_plot(wi_county_shp, wi_county_shp$log_pop, wi_county_shp$color_manual_gop, weight_mod = 4.1, size_correct = F,
-                        title = "Republican 2020/2016 Turnout")
-op <- par(family = "StyreneB-Regular")
-legend("bottomleft", fill=medsl_purples,
-       legend = c("< -25%" , "-25 to -5%", "-5 to 0%", "0 to 10%", "10%+"), title="GOP % Chg.",
-       bty="n", horiz=FALSE, cex=0.7)
-dev.off()
-mil_county <- subset(polls_all2c, County=="MILWAUKEE COUNTY")
-sum(mil_county$closed)
-nrow(mil_county)
-###turnout:
-sum(wi_county_shp$vote2020dem) # 1850130
-sum(wi_county_shp$vote2020gop) # 1260396 
-1260396 + 1850130
-sum(wi_county_shp$vote2016dem) # 2015200
-sum(wi_county_shp$vote2016gop) # 2211888
-sum(wi_county_shp$vote2016dem) + sum(wi_county_shp$vote2016gop)
-plot(wi_county_shp)
-plot(dem_carto)
-text(dem_carto, wi_county_shp$CNTY_NAME)
-getJenksBreaks(wi_county_shp$dem_pct_chg, 5)
-#' carto_plot(state_obj2,state_obj2$total_pop,state_obj2$color,weight_mod = 7, size_correct = TRUE)
-#' #add legend after as appropriate 
-#' legend("bottomleft", fill=medsl_purples,legend = c("< 59.22%", "59.22 -< 71.05%", "71.05 -< 84.67%", "84.67 -< 91.59%", "91.59% +"), 
-#'       title=" ",
-#'       bty="n", horiz=FALSE, cex=0.8, ncol=1)
-
-?map_breaks_calc
-
-###polling place analysis here 
-nrow(polls_all2c)
-sum(polls_all2c$closed)
-View(polls_all2c)
-
-wi_vf_wd <- "F:/voterfile/wi"
-setwd(wi_vf_wd)
-wi_vf <- read.csv("wi_voterfile.csv", header = T, skip=1)
-names(wi_vf)
-head(wi_vf)[1:21]
 ###let's create an address file 
-wi_vf$full_addr <- paste0(wi_vf$Address1, sep=", ", wi_vf$Address2)
-###we will now want to subset the data 
-setwd(getwd())
-wi_vf <- wi_vf[,c(1:4,8:9,17:26,40:118,120)]
-saveRDS(wi_vf, "wi_voterfile_cleaned.Rdata")
-wi_vf <- readRDS("wi_voterfile_cleaned.Rdata")
-wi_vf_addr <- subset(wi_vf, select=c(full_addr, County))
-wi_vf_addr <- wi_vf_addr[!duplicated(wi_vf$full_addr), ]
-write.dbf(wi_vf_addr, "wi_vf_addrs.dbf")
-####let's read in the geocoded voterfile 
-wi_geo <- read.csv("F:/voterfile/wi/wi_addr_geo.csv") 
-length(which(wi_geo$StName=="")) # 203,434 are based on postal imputation 
-length(which(wi_geo$X==0))/nrow(wi_geo) # 5591 need to be further searched. 
-nongeocoded_wi <- subset(wi_geo, X==0)
-nrow(nongeocoded_wi)
-nongeocoded_wi <- subset(nongeocoded_wi, select=c(ObjectID, full_addr, County))
-write.csv(nongeocoded_wi, "nongeocoded_wi.csv")
-####now we will read in the data for the google geocoded data 
-wi_google_addrs <- read.csv("F:/voterfile/wi/google_geocode_wi.csv")
-wi_non_google_addrs <- read.csv("F:/voterfile/wi/missing_geocoded_wi.csv")
-##we will want to merge by addr, then subset the data 
-head(wi_non_google_addrs)
-head(wi_google_addrs)
-wi_google_addrs <- subset(wi_google_addrs, select=-c(X, address))
-wi_geo <- merge(wi_geo, wi_google_addrs, by="full_addr",all.x=T)
-nrow(wi_geo)
-names(wi_geo)
-sum(is.na(wi_geo$X))
 
-
-wi_geo$X[wi_geo$X==0] <- wi_geo$lon[wi_geo$X==0]
-wi_geo$Y[wi_geo$Y==0] <- wi_geo$lat[wi_geo$Y==0]
-wi_geo <- subset(wi_geo, select = -c(County.x, ObjectID.y, County.y, lon , lat))
-nrow(wi_geo)
-wi_vf2 <- merge(wi_vf, wi_geo,  by="full_addr",all.x=T)
-sum(is.na(wi_vf2$X)) # 365 missing 
-wi_vf2 <- subset(wi_vf2, is.na(X)==F)
-###now it is time to read in the CBG data 
-library(wru)
-cbgs <- readOGR("F:/MEDSL/healthy_elections/general/outside_data/cbg_shps", "CB2010")
-census.wi <- get_census_data(key = "b85306550d1fd788ddc045abfa6acf6ba7110abc",
-                             state = c("WI"), age = FALSE, sex = FALSE)
-cbgs <- subset(cbgs, STATE_FIPS=="55")
-cbgs<- spTransform(cbgs, CRS=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
-wi_vf_coords1 <- subset(wi_vf2, select=c(X,Y))
-sum(is.na(wi_vf_coords1$X))
-wi_vf_spdf <- SpatialPointsDataFrame(coords = wi_vf_coords1, data = wi_vf2,
-                                       proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
-wi_vf_spdf$county <- over(wi_vf_spdf, cbgs)$STCOFIPS
-wi_vf_spdf$tract <- over(wi_vf_spdf, cbgs)$TRACT
-
-colnames(wi_vf_spdf@data)[colnames(wi_vf_spdf@data)=="LastName"] <- "surname"
-wi_vf2 <- wi_vf_spdf@data
-wi_vf2$state <-"WI"
-wi_vf2$county <- substr(wi_vf2$county,3,5)
-sort(unique(wi_vf2$county))
-head(wi_vf2$county)
-plot(wi_vf_spdf)
-sum(is.na(wi_vf2$tract))
-sum(is.na(wi_vf2$county))
-
-
-head(wi_vf2$tract)
-wi_vf2 <- subset(wi_vf2, is.na(tract)==F)
-names(wi_vf2)
-wi_vf2$state <-"WI"
-
-wi_vf2 <- subset(wi_vf2, select = c(Voter.Reg.Number,surname,X,Y,county,tract,state))
-wi_vf2 <- predict_race(voter.file = wi_vf2, census.geo = "tract", census.data = census.wi,
-                       age = FALSE, sex = FALSE)
-saveRDS(wi_vf2,"wi_bisg_results.Rdata")
-write.csv(wi_vf2,"wi_bisg_results.csv")
-###we should read in here
-wi_vf2 <- readRDS("wi_bisg_results.Rdata")
-
-########will now do the histogram
-library(ggplot2)
-poll_density <- ggplot(polls_all2c_df, aes(x=non_white_pct)) +
-  geom_density(data=subset(polls_all2c_df, closed==1), aes(color="#156DD0")) +
-  geom_density(data=subset(polls_all2c_df, closed==0), aes(color="#C0BA79")) 
-poll_density <- poll_density +  scale_color_discrete(labels=c("Closed", "Opened")) + theme_minimal() +  
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + xlab("Non-white %") + ylab("Proportion")  +guides(size=FALSE) +
-  labs(color="Polling \nPlace")
-setwd("F:/MEDSL/healthy_elections/WI")
-ggsave("poll_density_race.jpg",poll_density, height = 6, width = 9, units = "in", dpi=600)
-###let's now do the results by population 
-poll_density_pop <- ggplot(polls_all2c_df, aes(x=log_pop_sqkm)) +
-  geom_density(data=subset(polls_all2c_df, closed==1), aes(color="#156DD0")) +
-  geom_density(data=subset(polls_all2c_df, closed==0), aes(color="#C0BA79")) 
-poll_density_pop <- poll_density_pop +  scale_color_discrete(labels=c("Closed", "Opened")) + theme_minimal() +  
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + xlab("Logged Pop. per sqkm") + ylab("Proportion")  +guides(size=FALSE) +
-  labs(color="Polling \nPlace")
-poll_density_pop
-setwd("F:/MEDSL/healthy_elections/WI")
-ggsave("poll_density_pop.jpg",poll_density_pop, height = 6, width = 9, units = "in", dpi=600)
-##############results by party ############3
-poll_density_dem <- ggplot(polls_all2c_df, aes(x=dem_pct18)) +
-  geom_density(data=subset(polls_all2c_df, closed==1), aes(color="#156DD0")) +
-  geom_density(data=subset(polls_all2c_df, closed==0), aes(color="#C0BA79")) 
-poll_density_dem <- poll_density_dem +  scale_color_discrete(labels=c("Closed", "Opened")) + theme_minimal() +  
-  theme(title = element_text(size = rel(1.4), family="Styrene B")) + xlab("Democratic %") + ylab("Proportion")  +guides(size=FALSE) +
-  labs(color="Polling \nPlace")
-poll_density_dem
-setwd("F:/MEDSL/healthy_elections/WI")
-ggsave("poll_density_dem.jpg",poll_density_dem, height = 6, width = 9, units = "in", dpi=600)
-
-
-opened <- subset(polls_all2c_df, closed==0)
-closed <- subset(polls_all2c_df, closed==1)
-
-quantile(closed$dem_pct18, seq(0,1,by=0.05))
-quantile(opened$dem_pct18, seq(0,1,by=0.01))
-
-###ok, now I'll need to get the data by polling place and such 
-wi_vf_spdf_mil <- subset(wi_vf_spdf, County=="Milwaukee County" | County=="Milwaukee County Supervisory District 14")
-nrow(wi_vf_spdf_mil) # 1,296,383 
-wi_vf_spdf_mil <- subset(wi_vf_spdf_mil, select=c( full_addr, Voter.Reg.Number, surname,FirstName,Address1, Address2, ZipCode,                   
-                                                    Jurisdiction, DistrictCombo,Ward, Congressional,             
-                                                    State.Senate, State.Assembly, County, Voter.Status,Voter.Status.Reason,ApplicationDate,
-                                                   ApplicationSource,  IsPermanentAbsentee,  Voter.Type, May2020, April2020,
-                                                   February2020, April2019, February2019, November2018, October2018,August2018, June2018,
-                                                   May2018,    April2018,      February2018,   January2018, December2017,   April2017,
-                                                   February2017,   November2016,August2016,     April2016,      February2016, Loc_name,
-                                                   Score, StName, X,Y,county, tract))
-wi_vf_spdf_mil <- subset(wi_vf_spdf_mil, Voter.Status!="Inactive" )
-nrow(wi_vf_spdf_mil) # 514502
-
-
-sort(unique(wi_vf_spdf_mil$Voter.Status))
-#####now let's find the nearest polling place. We will want to subset 
-
-names(polls_all2c_df)
-polls_all2c_df_sub <- subset(polls_all2c_df, select = c(Longitude, Latitude,PollingPlaceAddress,PollingPlaceName,County,closed))
-polls_all2c_df_sub <- subset(polls_all2c_df_sub, County=="MILWAUKEE COUNTY")
-master_df_mil <- data.frame(stringsAsFactors = FALSE)
-for(i in 1:nrow(wi_vf_spdf_mil)){
-  temp_cbg <- wi_vf_spdf_mil[i,]
-  temp_cbg$long <- coordinates(temp_cbg)[1]
-  temp_cbg$lat <- coordinates(temp_cbg)[2]
-  temp_cbg <- temp_cbg@data
-  temp_merge <- merge(temp_cbg,polls_all2c_df_sub,by=NULL)
-  temp_merge$euc_distance <- NA
-  for(u in 1:nrow(temp_merge)){
-    temp_merge$euc_distance[u] <- distGeo(c(temp_merge$long[u],temp_merge$lat[u]), 
-                                          c(temp_merge$Longitude[u], temp_merge$Latitude[u]))
-    
-  }
-  temp_sub <- temp_merge %>% slice(which.min(euc_distance))
-  if(nrow(master_df_mil)==0){
-    master_df_mil <- temp_sub
-  }else{
-    master_df_mil <- rbind(master_df_mil, temp_sub)
-  }
-}
-saveRDS(master_df_mil, "master_df_mil07082020.Rdata")
-setwd("F:/MEDSL/covid19/cleaned_wi2")
-master_df_mil <- readRDS("master_df_mil07082020.Rdata")
-nrow(master_df_mil)
-
-polls_all2c_df <- polls_all2c@data
-###now we will do teh opened data 
-polls_all2c_df_sub <- subset(polls_all2c_df, select = c(Longitude, Latitude,PollingPlaceAddress,PollingPlaceName,closed,County))
-polls_all2c_df_sub_opened <- subset(polls_all2c_df_sub, closed==0 & County=="MILWAUKEE COUNTY")
-master_df_mil_opened <- data.frame(stringsAsFactors = FALSE)
-for(i in nrow(master_df_mil_opened):nrow(wi_vf_spdf_mil)){
-  svMisc::progress((i/nrow(wi_vf_spdf_mil))*100)
-  temp_cbg <- wi_vf_spdf_mil[i,]
-  temp_cbg$long <- coordinates(temp_cbg)[1]
-  temp_cbg$lat <- coordinates(temp_cbg)[2]
-  temp_cbg <- temp_cbg@data
-  temp_merge <- merge(temp_cbg,polls_all2c_df_sub,by=NULL)
-  temp_merge$euc_distance <- NA
-  for(u in 1:nrow(temp_merge)){
-    temp_merge$euc_distance[u] <- distGeo(c(temp_merge$long[u],temp_merge$lat[u]), 
-                                          c(temp_merge$Longitude[u], temp_merge$Latitude[u]))
-    
-  }
-  temp_sub <- temp_merge %>% slice(which.min(euc_distance))
-  if(nrow(master_df_mil_opened)==0){
-    master_df_mil_opened <- temp_sub
-  }else{
-    master_df_mil_opened <- rbind(master_df_mil_opened, temp_sub)
-  }
-}
-nrow(master_df_mil_opened) # 25861 as of 2:04 PM ; 122763 as of 9:01 AM on 7/9/2020
-saveRDS(master_df_mil_opened, "master_df_mil_opened07092020a.Rdata")
-master_df_mil_opened <- readRDS("master_df_mil_opened07082020a.Rdata")
-###finding distance of nearest polling places 
-poll_dist_mat <- data.frame(stringsAsFactors = F)
-for(i in 1:nrow(polls_all2c_df_sub)){
-  svMisc::progress((i/nrow(polls_all2c_df_sub))*100)
-  temp_poll <- polls_all2c_df_sub[i,]
-  temp_merge <- merge(temp_poll,polls_all2c_df_sub_opened,by=NULL,suffixes=c("_before","_after"))
-  for(u in 1:length(temp_merge)){
-    temp_merge$poll_distance[u] <- distGeo(c(temp_merge$Longitude_before[u],temp_merge$Latitude_before[u]), 
-                                          c(temp_merge$Longitude_after[u], temp_merge$Latitude_after[u]))
-    
-  }
-  temp_sub_poll <- temp_merge %>% slice_min(poll_distance, n = 3)
-  if(nrow(poll_dist_mat)==0){
-    poll_dist_mat <- temp_sub_poll
-  }else{
-    poll_dist_mat <- rbind(poll_dist_mat, temp_sub_poll)
-  }
-}
-###ok, so now we will want to run a quick loop, finding out the distance between three points and such 
-nrow(master_df_mil_opened) # 122763
-master_df_mil_opened_merge <- merge(master_df_mil_opened, poll_dist_mat, by.x=c("Longitude","Latitude","PollingPlaceAddress"),
-                                    by.y=c("Longitude_before","Latitude_before","PollingPlaceAddress_before"))
-master_df_mil_opened_merge_affected  <- subset(master_df_mil_opened_merge, closed==1)
-master_df_mil_opened_merge_not_affected <- subset(master_df_mil_opened_merge, closed==0)
-nrow(master_df_mil_opened_merge_affected)
-nrow(master_df_mil_opened_merge_not_affected) #need to get unique values 
-######################
-distGeo_mod <- function(lon1,lat1,lon2,lat2){
-  distGeo(c(lon1,lat1),c(lon2,lat2))
-  #return(value)
-}
-distGeo_mod(df_sub[1,1],df_sub[1,2],df_sub[1,3],df_sub[1,4])
-df_sub <- subset(master_df_mil_opened_merge_affected, select=c(Longitude,Latitude,Longitude_after,Latitude_after))
-master_df_mil_opened_merge_affected$new_distance2 <- mapply(distGeo_mod, df_sub[,1],df_sub[,2],df_sub[,3],df_sub[,4] )
-master_df_mil_opened_merge_affected$new_distance2 <- sapply(df_sub,
-                                                            function(w,x,y,z) distGeo_mod(w,x,y,z))
-summary(master_df_mil_opened_merge_affected$new_distance2)
-master_df_mil_opened_merge_affected2 <- master_df_mil_opened_merge_affected %>% group_by(Voter.Reg.Number) %>% slice(which.min(new_distance2))
-nrow(master_df_mil_opened_merge_affected2)
-master_df_mil_opened_merge_not_affected2 <- 
-  master_df_mil_opened_merge_not_affected[!duplicated(master_df_mil_opened_merge_not_affected$Voter.Reg.Number),]
-###now grabbing the fields of interest so as to merge on 
-master_df_mil_opened_merge_not_affected2 <- subset(master_df_mil_opened_merge_not_affected2, select=c(Voter.Reg.Number,euc_distance))
-master_df_mil_opened_merge_not_affected2$new_distance2 <- master_df_mil_opened_merge_not_affected2$euc_distance
-master_df_mil_opened_merge_affected2 <- subset(master_df_mil_opened_merge_affected2, select=c(Voter.Reg.Number,euc_distance,new_distance2))
-summary(master_df_mil_opened_merge_affected2$new_distance2)
-summary(master_df_mil_opened_merge_affected2$euc_distance)
-master_df_mil_opened_merge2 <- rbind(master_df_mil_opened_merge_affected2,master_df_mil_opened_merge_not_affected2)
-master_df_mil_opened_merge2$dist_change <- (master_df_mil_opened_merge2$new_distance2 - master_df_mil_opened_merge2$euc_distance)/1000
-master_df_mil_opened_merge2$dist_change[master_df_mil_opened_merge2$dist_change <0] <- 0
-summary(master_df_mil_opened_merge2$dist_change)
-##excellent! Let's merge now
-master_df_mil_opened2 <- merge(master_df_mil_opened, master_df_mil_opened_merge2,by="Voter.Reg.Number")
-###now we will find out voting history dummies 
-saveRDS(master_df_mil_opened2, "milwaukee_analysis_df07092020.Rdata")
-master_df_mil_opened2$voted2016prim <- 0
-master_df_mil_opened2$voted2016prim[master_df_mil_opened2$April2016!=""] <- 1
-master_df_mil_opened2$voted2018ge <- 0
-master_df_mil_opened2$voted2018ge[master_df_mil_opened2$November2018!=""] <- 1
-###ok, lets merge on the bisg results 
-wi_vf_wd <- "F:/voterfile/wi"
-setwd(wi_vf_wd)
-wi_bisg <- readRDS("wi_bisg_results.Rdata")
-names(wi_bisg)
-wi_bisg <- subset(wi_bisg, select = c(Voter.Reg.Number,pred.whi))
-master_df_mil_opened2 <-merge(master_df_mil_opened2, wi_bisg,by="Voter.Reg.Number")
-nrow(master_df_mil_opened2)###good 
-master_df_mil_opened2$voted2020all <- 0
-master_df_mil_opened2$voted2020all[master_df_mil_opened2$April2020!=""] <- 1
-master_df_mil_opened2$voted2020abs <- 0
-master_df_mil_opened2$voted2020abs[master_df_mil_opened2$April2020=="Absentee"] <- 1
-master_df_mil_opened2$voted2020ip <- 0
-master_df_mil_opened2$voted2020ip[master_df_mil_opened2$April2020=="At Polls"] <- 1
-###ok, good. Now we should be able to run the analysis, though we will first most likely want to create a spatial df 
-master_df_mil_opened2_coords1 <- subset(master_df_mil_opened2, select=c(X,Y))
-sum(is.na(wi_vf_coords1$X))
-master_df_mil_opened2_spdf <- SpatialPointsDataFrame(coords = master_df_mil_opened2_coords1, data = master_df_mil_opened2,
-                                     proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
-###test with a normal logit 
-master_df_mil_opened2$dum=1
-master_df_mil_opened2 <- master_df_mil_opened2 %>% group_by(PollingPlaceAddress) %>% mutate(poll_n=sum(dum,na.rm=T))
-master_df_mil_opened2 <- subset(master_df_mil_opened2, poll_n >= 30)
-library(lme4)
-test_nonspace_logit <- glmer(voted2020all ~ pred.whi + closed + dist_change  + voted2016prim + voted2018ge + 
-                               (1|PollingPlaceAddress),
-                           data=master_df_mil_opened2, family = binomial(link = "logit") )
-summary(test_nonspace_logit)
-test_nonspace_logit_fe <- glm(voted2020all ~ pred.whi + closed + dist_change  + voted2016prim + voted2018ge + 
-                               as.factor(PollingPlaceAddress),
-                             data=master_df_mil_opened2, family = binomial(link = "logit") )
-summary(test_nonspace_logit_fe)
-
-##check if we can exclude na 
-library(functional)
-test_vcovlog <- vcov(test_nonspace_logit_fe)
-dim(test_vcovlog)
-test_vcovlog <- test_vcovlog[,-165]
-test_vcovlog <- test_vcovlog[-165,]
-dim(test_vcovlog)# dropped the row and column of na vals 
-sum(is.na(test_vcovlog))
-test_ceof_log <- coef(test_nonspace_logit_fe)
-test_ceof_log <- test_ceof_log[-length(test_ceof_log)]
-###now should be able to do mvrnorm
-
-sum(is.na(test_ceof_log))
-test_nonspace_probit <- glmer(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + (1|Ward),
-                           data=master_df_mil_opened2, family = binomial(link = "probit") )
-summary(test_nonspace_probit)
-test_nonspace_probit_fe <- glm(voted2020all ~ pred.whi + closed + dist_change + voted2016prim + voted2018ge + as.factor(PollingPlaceAddress),
-                              data=master_df_mil_opened2, family = binomial(link = "probit") )
-summary(test_nonspace_probit_fe)
-summary(master_df_mil_opened2$dist_change)
-write.csv(master_df_mil_opened2, "master_df_mil_opened2geo_distance_df.csv",row.names = F)
-###let's read in the abs file
-wi_abs_file <- read.csv("F:/voterfile/wi/Absentee_file_20200702/wi_abs_file.csv")
-sort(unique(wi_abs_file$applicationsource))
-
-### will now run the mvrnorm here: 
-library(MASS)
-set.seed(1337)
-summary(master_df_mil_opened2$dist_change)
-sim.betas_vote <- mvrnorm(10000,mu=test_ceof_log,Sigma = test_vcovlog)
-dist_seq <- seq(0,12.6,by=0.1)
-distan_mat_pred_w <- as.matrix(cbind(1,1,1,dist_seq,0,1,1))
-distan_mat_pred_nw <- as.matrix(cbind(1,0,1,dist_seq,0,1,1))
-
-sim.betas_vote <- sim.betas_vote[,c(1:6,133)]
-xb2_dist_logit_w <- distan_mat_pred_w %*% t(sim.betas_vote)
-xb2_dist_logit_w <- inv.logit(xb2_dist_logit_w)
-xb2_dist_logit_colw <- apply(xb2_dist_logit_w, 1, quantile, probs=c(0.025,.5,0.975))
-xb2_dist_logit_nw <- distan_mat_pred_nw %*% t(sim.betas_vote)
-xb2_dist_logit_nw <- inv.logit(xb2_dist_logit_nw)
-xb2_dist_logit_colnw <- apply(xb2_dist_logit_nw, 1, quantile, probs=c(0.025,.5,0.975))
-
-xb2_dist_logit_colw
-xb2_dist_logit_colnw
-
-###now let's create an awesome plot 
-setwd("F:/MEDSL/covid19/cleaned_wi2")
-jpeg("distance_vote_plot.jpg", res=600, height = 6, width = 9, units = "in")
-par(mfrow=(c(1,1)))
-plot(dist_seq,xb2_dist_logit_colw[2,], type="l",lty=1, col="#3791FF",ylab="Prob. of Voting",ylim=c(0,1),lwd=2,
-     xlab="Change in Polling Place Dist. (km)", main="Effect of Polling Place Distance on Voting", cex.lab=1.2)
-lines(dist_seq,xb2_dist_logit_colw[1,], lty=4, col="#C72654")
-lines(dist_seq,xb2_dist_logit_colw[3,],lty=4, col="#C72654")
-###now for black 
-lines(dist_seq,xb2_dist_logit_colnw[2,], lty=1, col="#C0BA79",lwd=2)
-lines(dist_seq,xb2_dist_logit_colnw[1,], lty=5, col="#FF6878")
-lines(dist_seq,xb2_dist_logit_colnw[3,], lty=5, col="#FF6878")
-###legend
-legend("topright", 
-       c("White","Non-white","95% CI White","95% CI Non-white"), lty=c(1,1,4,5),col=c("#3791FF","#C0BA79", "#C72654","#FF6878"),
-       bty="n", horiz=FALSE, cex=0.7)
-rug(master_df_mil_opened2$dist_change, lwd=0.01)
-dev.off()
-
-white_pred_df <- as.data.frame(cbind(dist_seq,xb2_dist_logit_colw[2,],xb2_dist_logit_colnw[2,]))
-
-#xb2_nonwhite <- nonwhite2stage_mat %*% t(sim.betas_turn_sub)
-#xb2_nonwhite_col <- apply(xb2_nonwhite, 1, quantile, probs=c(0.025,.5,.975))
-###performing matrix algebra for hlit as well 
-
-###good. Now we should be able to do the spatial probit 
-library(spdep)
-library(spatialprobit)
-Sy8_nb <- knn2nb(knearneigh(master_df_mil_opened2_spdf, k = 5), row.names = master_df_mil_opened2_spdf$Voter.Reg.Number)
-nb2_normal <- nb2mat(Sy8_nb, style="W", zero.policy = TRUE)
-lw2 <- nb2listw(Sy8_nb, zero.policy = T)
-##weight mat 
-library(raster)
-
-nb_sparse <- as(nb2_normal, "sparseMatrix")
-poll_sarprob2 <- sarprobit(closed ~ log_pop_sqkm  +  non_white_pct  +  dem_pct18 + dem_pct2   + 
-                             ,data=polls_all2c,W=nb_sparse)
-
-
-
-names(master_df_mil_opened2)
-
-
-
-
-sum(is.na(master_df_mil_opened_merge_affected$new_distance)==F)
-nrow(master_df_mil_opened_merge_affected)
-nrow(master_df_mil_opened_merge)
-
-
-summary(master_df_mil_opened$euc_distance)
-summary(master_df_mil$euc_distance)
-###merging data by voter id 
-master_df_mil_opened_sub <- subset(master_df_mil_opened, select=c(Voter.Reg.Number,euc_distance))
-master_df_mil_merged <- merge(master_df_mil, master_df_mil_opened_sub, by="Voter.Reg.Number",suffixes=c("_before","_after"))
-str(master_df_mil_merged)
-
-###let's look at val for euc distance 
-master_df_mil_merged$dist_diff <- master_df_mil_merged$euc_distance_before - master_df_mil_merged$euc_distance_after
-summary(master_df_mil_merged$dist_diff)
-master_df_mil_merged$euc_distancebefore <- master_df_mil_merged$euc_distancebefore/1000
-master_df_mil_merged$euc_distanceafter <- master_df_mil_merged$euc_distanceafter/1000
-
-summary(master_df_mil_merged$euc_distanceafter)
-summary(master_df_mil_merged$euc_distancebefore)
-
-###reading in what I think is final data 
-poll_test_df <- readRDS("F:/MEDSL/covid19/cleaned_wi2/wi_final_poll_datasp.Rdata")
-nrow(poll_test_df)
