@@ -107,6 +107,8 @@ while(u < 8986){
 
 allegheny_addrs3 <- poll_dist_fxn2(allegheny_addrs,allegheny_polls,allegheny_addrs$X,allegheny_addrs$Y,
                                   allegheny_polls$lon,allegheny_polls$lat)
+
+
 nrow(allegheny_addrs3)
 ### a third verison that will save 
 poll_dist_fxn3 <- function(spat_vf,spat_polls,spat_vf_long,spat_vf_lat,spat_polls_long,spat_polls_lat){
@@ -151,16 +153,44 @@ setwd("C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA/alleg
 
 allegheny_addrs3 <- poll_dist_fxn3(allegheny_addrs,allegheny_polls,allegheny_addrs$X,allegheny_addrs$Y,
                                    allegheny_polls$lon,allegheny_polls$lat)
+####another version of the addrs; from 
+setwd("C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA/allegheny_polls/part2")
+allegheny_addrs_part2 <- allegheny_addrs[-c(1:485000), ]
+nrow(allegheny_addrs_part2)
+allegheny_addrs3 <- poll_dist_fxn3(allegheny_addrs_part2,allegheny_polls,allegheny_addrs_part2$X,
+                                   allegheny_addrs_part2$Y,
+                                   allegheny_polls$lon,allegheny_polls$lat)
+saveRDS(allegheny_addrs3, "pa_alleghany_dist2016part2.rds")
+write.csv(allegheny_addrs3, "pa_alleghany_dist2016part2.csv",row.names = F)
+###let's read in the data from the 
+pa_first_half <- readRDS("voter_poll_dyad_df_485001.rds")
+allegheny_addrs_all_geo <- rbind(pa_first_half,allegheny_addrs3)
+saveRDS(allegheny_addrs_all_geo, "alleghany2016dist_results_all.rds")
+write.csv(allegheny_addrs_all_geo, "alleghany2016dist_results_all.csv",row.names = F)
 
-###test
-wi_polls <- readRDS("F:/MEDSL/covid19/cleaned_wi2/wi_final_poll_datasp.Rdata")
-nrow(wi_polls)
-wi_voterfile <- readRDS("F:/MEDSL/covid19/cleaned_wi2/master_df_mil07082020.Rdata")
-wi_voterfile <- wi_voterfile[,1:47]
-wi_polls <- wi_polls@data
-wi_polls <- wi_polls[,1:12]
-wi_polls <- subset(wi_polls, County=="MILWAUKEE COUNTY")
-###now let's do the test 
-smple_vf <- wi_voterfile[1:100,]
-test_obj <- poll_dist_fxn2(smple_vf,wi_polls,smple_vf$X,smple_vf$Y,wi_polls$Longitude,wi_polls$Latitude )
-View(test_obj)
+#############reading in the data for 2016 phillie 
+
+setwd("C:/Users/johna/OneDrive/Documents/GitHub/healthy_elections/PA")
+phillie2016addrs <- read.csv("phillie2016_vgeocoded.csv")
+setwd(we_drop_pa)
+pa_addrs <- read.csv("pa_addrs_geocoded/pa_addrs_geocoded.csv")
+phillie_voters_addrs <- subset(pa_addrs, county=="42101")
+#####ok, this will take a while 
+setwd("C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA/phillie_polls")
+phillie_results1 <- poll_dist_fxn3(phillie_voters_addrs,phillie2016addrs,phillie_voters_addrs$X,phillie_voters_addrs$Y,
+                                   phillie2016addrs$lon,phillie2016addrs$lat)
+setwd("C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA/phillie_polls")
+list.files()
+phillie_results1 <- readRDS("voter_poll_dyad_df_770001.rds")
+nrow(phillie_results1)
+###3picking up where we left off after pc restarted on 8/16
+phillie_voters_addrs2 <- phillie_voters_addrs[-c(1:770001), ]
+setwd("C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA/phillie_polls/part2")
+phillie_results2 <- poll_dist_fxn3(phillie_voters_addrs2,phillie2016addrs,phillie_voters_addrs2$X,
+                                   phillie_voters_addrs2$Y,
+                                   phillie2016addrs$lon,phillie2016addrs$lat)
+###binding the results 
+phillie_results_all <- rbind(phillie_results1, phillie_results2)
+setwd("C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/PA/phillie_polls")
+saveRDS(phillie_results_all, "phillie_results2016dist_all.rds")
+write.csv(phillie_results_all, "phillie_results2016dist_all.csv", row.names = FALSE)
