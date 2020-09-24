@@ -33,7 +33,7 @@ graph drop _all
 
 
 *CHANGE THIS DIRECTORY HERE
-global mainPath = "/Users/cantstopkevin/Dropbox/Work/MEDSL/Healthy_Elections/States/GA/absenteerealtime/absenteefiles"
+global mainPath = "/Users/cantstopkevin/Dropbox/Work/MEDSL/Healthy_Elections/States/GA/absenteerealtime/"
 
 *CHANGE THIS DATE VARIABLE
 global analyzedate = "2020-09-24"
