@@ -132,6 +132,7 @@ nc_vf_all <- rbind(nc_vf1,nc_vf2,nc_vf3,nc_vf4)
 nc_vf_all$race3 <- 1
 nc_vf_all$race3[nc_vf_all$race_code=="B"] <- 2
 nc_vf_all$race3[nc_vf_all$race_code!="W" & nc_vf_all$race_code!="B"] <- 3
+table(nc_vf_all$race3)
 sort(unique(nc_vf_all$party_cd))
 nc_vf_all$democrat <- 0
 nc_vf_all$democrat[nc_vf_all$party_cd=="DEM"] <- 1
@@ -151,13 +152,14 @@ nc_vf_all <- subset(nc_vf_all, age <= 100)
 nc_vf_all <- subset(nc_vf_all, voter_status_desc != "DENIED" & voter_status_desc != "REMOVED")
 #Let's see if we can't get tallies of these then; for now, let's drop gender 
 nc_vf_sum <- nc_vf_all %>% group_by(gender,race3,age,democrat,gop,other) %>% tally()
+summary(nc_vf_sum$race3)
 summary(nc_vf_sum$age)
 nc_vf_sum$state_fip="37"
 ####will now go with expand grid in order to create the dummy data 
 #nc_expanded_df <- expand.grid(gender=1:2,race3=1:3,age=18:100,democrat=1,gop=1,state_fip="37")
 set.seed(3461)
 pred_obj_nc<- predict(bayes_vbm_all, newdata=nc_vf_sum, allow_new_levels=TRUE, 
-            nsamples=10000, summary=FALSE)
+            nsamples=1000, summary=FALSE)
 pred_obj_nc <- apply(pred_obj_nc, 2, mean)#good, this gives us the proportions 
 
 
@@ -165,9 +167,39 @@ nc_vf_sum <- cbind(nc_vf_sum,pred_obj_nc)
 colnames(nc_vf_sum)[8] <- "prop_vbm"
 nc_vf_sum$vbm_count <- nc_vf_sum$n*nc_vf_sum$prop_vbm
 ###summing by age 
-nc_vf_sum2 <- nc_vf_sum %>% group_by(race3,democrat,gop)
+nc_vf_sum2 <- nc_vf_sum %>% group_by(race3,democrat,gop,other) %>% summarise(total=sum(n),vbm_count=sum(vbm_count))
+View(nc_vf_sum2)
 ###now saving 
-saveRDS(nc_vf_sum, "nc_state_wide_mrp_ests.rds")
+saveRDS(nc_vf_sum2, "nc_state_wide_mrp_ests.rds")
+
+####let's get the results by county now 
+county_vec <- sort(unique(nc_vf_all$county_desc))
+nc_vf_sum_county <- nc_vf_all %>% group_by(gender,race3,age,democrat,gop,other,county_desc ) %>% tally()
+
+master_county_results <- data.frame()
+for (i in 1:length(county_vec)) {
+  nc_vf_sum_sub <- subset(nc_vf_sum_county, county_desc==county_vec[i])
+  temp_pred_obj_nc<- predict(bayes_vbm_all, newdata=nc_vf_sum_sub, allow_new_levels=TRUE, 
+                        nsamples=1000, summary=FALSE)
+  temp_pred_obj_nc <- apply(temp_pred_obj_nc, 2, mean)
+  nc_vf_sum_sub <- cbind(nc_vf_sum_sub,temp_pred_obj_nc)
+  colnames(nc_vf_sum_sub)[9] <- "vbm_prop"
+  nc_vf_sum_sub$vbm_count <- nc_vf_sum_sub$n*nc_vf_sum_sub$vbm_prop
+  nc_vf_sum_sub2 <- nc_vf_sum_sub %>% group_by(race3,democrat,gop,other,county_desc) %>% 
+    summarise(total=sum(n),vbm_count=sum(vbm_count))
+  nc_vf_sum_sub2 <- as.data.frame(nc_vf_sum_sub2)
+  if(nrow(master_county_results)==0){
+    master_county_results <- nc_vf_sum_sub2
+  }else{
+    master_county_results <- rbind(master_county_results,nc_vf_sum_sub2)
+  }
+  
+  
+}
+saveRDS(master_county_results, "mrp_nc_county_resultsV1.rds")
+
+
+
 ###now let's create the range of estimates 
 sum(nc_vf_sum$n)
 sum(nc_vf_sum$vbm_count)*.68
