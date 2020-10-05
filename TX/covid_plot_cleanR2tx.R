@@ -52,8 +52,8 @@ cases_plot_all <- ggplot(ts_covid_all, aes(x = Date, y = new_cases)) +
   geom_line(color="#156DD0", size=1)+  
   annotate("rect", xmin = as.Date("2020-03-21"), xmax = as.Date("2020-06-03"),ymin=0,ymax=15000,fill="#948DE5",
            alpha = .2)+ 
-  geom_vline(aes(xintercept=18324, color="#C0BA79" ), linetype=5, show.legend = F,lwd=1.4) + 
-  geom_vline(aes(xintercept=18457, color="#F6573E" ), linetype=2, show.legend = F,lwd=1.4)
+  geom_vline(aes(xintercept=18324, color="#C0BA79" ), linetype=5, show.legend = T,lwd=1.4) + 
+  geom_vline(aes(xintercept=18457, color="#F6573E" ), linetype=2, show.legend = T,lwd=1.4)
 
 #
 cases_plot_all
