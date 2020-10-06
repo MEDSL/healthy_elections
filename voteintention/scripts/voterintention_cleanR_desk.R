@@ -160,14 +160,23 @@ nc_vf_sum$state_fip="37"
 set.seed(3461)
 pred_obj_nc<- predict(bayes_vbm_all, newdata=nc_vf_sum, allow_new_levels=TRUE, 
             nsamples=1000, summary=FALSE)
-pred_obj_nc <- apply(pred_obj_nc, 2, mean)#good, this gives us the proportions 
-
-
-nc_vf_sum <- cbind(nc_vf_sum,pred_obj_nc)
-colnames(nc_vf_sum)[8] <- "prop_vbm"
-nc_vf_sum$vbm_count <- nc_vf_sum$n*nc_vf_sum$prop_vbm
+pred_obj_ncmci <- apply(pred_obj_nc, 2, mean_se)#good, this gives us the proportions 
+pred_obj_ncmci <- data.frame(matrix(unlist(pred_obj_ncmci), nrow=length(pred_obj_ncmci), byrow=T))
+####good, now we can get to the rest 
+pred_obj_ncmci <- as.data.frame(pred_obj_ncmci)
+colnames(pred_obj_ncmci) <- c("mean","low_se","up_se")
+pred_obj_ncmci$std <- pred_obj_ncmci$mean - pred_obj_ncmci$low_se
+pred_obj_ncmci$low95ci <- pred_obj_ncmci$mean -(1.96*pred_obj_ncmci$std)
+pred_obj_ncmci$up95ci <- pred_obj_ncmci$mean + (1.96*pred_obj_ncmci$std)
+####binding the data 
+nc_vf_sum <- cbind(nc_vf_sum,pred_obj_ncmci)
+nc_vf_sum$vbm_count_mean <- nc_vf_sum$n*nc_vf_sum$mean
+nc_vf_sum$vbm_count95low <- nc_vf_sum$n*nc_vf_sum$low95ci 
+nc_vf_sum$vbm_count95up <- nc_vf_sum$n*nc_vf_sum$up95ci
 ###summing by age 
-nc_vf_sum2 <- nc_vf_sum %>% group_by(race3,democrat,gop,other) %>% summarise(total=sum(n),vbm_count=sum(vbm_count))
+nc_vf_sum2 <- nc_vf_sum %>% group_by(race3,democrat,gop,other) %>% 
+  summarise(total=sum(n),vbm_count_mean=sum(vbm_count_mean),vbm_count95low=sum(vbm_count95low),
+            vbm_count95up=sum(vbm_count95up))
 View(nc_vf_sum2)
 ###now saving 
 saveRDS(nc_vf_sum2, "nc_state_wide_mrp_ests.rds")
@@ -181,25 +190,37 @@ for (i in 1:length(county_vec)) {
   nc_vf_sum_sub <- subset(nc_vf_sum_county, county_desc==county_vec[i])
   temp_pred_obj_nc<- predict(bayes_vbm_all, newdata=nc_vf_sum_sub, allow_new_levels=TRUE, 
                         nsamples=1000, summary=FALSE)
-  temp_pred_obj_nc <- apply(temp_pred_obj_nc, 2, mean)
+  temp_pred_obj_nc <- apply(temp_pred_obj_nc, 2, mean_se)
+  ###########
+  temp_pred_obj_nc <- data.frame(matrix(unlist(temp_pred_obj_nc), nrow=length(temp_pred_obj_nc), byrow=T))
+  colnames(temp_pred_obj_nc) <- c("mean","low_se","up_se")
+  temp_pred_obj_nc$std <- temp_pred_obj_nc$mean - temp_pred_obj_nc$low_se
+  temp_pred_obj_nc$low95ci <- temp_pred_obj_nc$mean -(1.96*temp_pred_obj_nc$std)
+  temp_pred_obj_nc$up95ci <- temp_pred_obj_nc$mean + (1.96*temp_pred_obj_nc$std)
+  ###########
   nc_vf_sum_sub <- cbind(nc_vf_sum_sub,temp_pred_obj_nc)
-  colnames(nc_vf_sum_sub)[9] <- "vbm_prop"
-  nc_vf_sum_sub$vbm_count <- nc_vf_sum_sub$n*nc_vf_sum_sub$vbm_prop
+  #####creating vars of intreest 
+  nc_vf_sum_sub$vbm_count_mean <- nc_vf_sum_sub$n*nc_vf_sum_sub$mean
+  nc_vf_sum_sub$vbm_count95low <- nc_vf_sum_sub$n*nc_vf_sum_sub$low95ci 
+  nc_vf_sum_sub$vbm_count95up <- nc_vf_sum_sub$n*nc_vf_sum_sub$up95ci
+  #########################
   nc_vf_sum_sub2 <- nc_vf_sum_sub %>% group_by(race3,democrat,gop,other,county_desc) %>% 
-    summarise(total=sum(n),vbm_count=sum(vbm_count))
+    summarise(total=sum(n),vbm_count_mean=sum(vbm_count_mean),vbm_count95low=sum(vbm_count95low),
+              vbm_count95up=sum(vbm_count95up))
   nc_vf_sum_sub2 <- as.data.frame(nc_vf_sum_sub2)
   if(nrow(master_county_results)==0){
     master_county_results <- nc_vf_sum_sub2
   }else{
     master_county_results <- rbind(master_county_results,nc_vf_sum_sub2)
   }
-  
-  
+
 }
 saveRDS(master_county_results, "mrp_nc_county_resultsV1.rds")
 
-
-
+#####let's try a predicted_draw 
+nc_state_draws <- bayes_vbm_all %>%
+  add_predicted_draws(newdata=nc_vf_sum, allow_new_levels=TRUE, n=1)
+View(nc_state_draws)
 ###now let's create the range of estimates 
 sum(nc_vf_sum$n)
 sum(nc_vf_sum$vbm_count)*.68
