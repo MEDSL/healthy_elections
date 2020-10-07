@@ -103,7 +103,7 @@ bayes_vbm_all %>%
                                 scale=1.5)
 ###saving model 
 saveRDS(bayes_vbm_all, "bayes_vbm_allV3.rds")
-bayes_vbm_all <- readRDS("bayes_vbm_allV2.rds")
+bayes_vbm_all <- readRDS("bayes_vbm_allV3.rds")
 ###possible to do this by coef? 
 
 #####we will now want to read in the NC voterfile, and get the necessary info. 
@@ -179,7 +179,7 @@ nc_vf_sum2 <- nc_vf_sum %>% group_by(race3,democrat,gop,other) %>%
 View(nc_vf_sum2)
 ###now saving 
 saveRDS(nc_vf_sum2, "nc_state_wide_mrp_ests.rds")
-
+nc_vf_sum2 <- readRDS("nc_state_wide_mrp_ests.rds")
 ####let's get the results by county now 
 county_vec <- sort(unique(nc_vf_all$county_desc))
 nc_vf_sum_county <- nc_vf_all %>% group_by(gender,race3,age,democrat,gop,other,county_desc ) %>% tally()
@@ -214,6 +214,15 @@ for (i in 1:length(county_vec)) {
   }
 
 }
+if(sum(master_county_results$total)==nrow(nc_vf_all)){
+  print("The numbers for the county data are fine.")
+}else{
+  print("ERROR: Something literally does not add up.")
+}
+
+
+
+View(master_county_results)
 saveRDS(master_county_results, "mrp_nc_county_resultsV1.rds")
 
 
