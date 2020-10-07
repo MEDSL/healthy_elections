@@ -163,7 +163,6 @@ pred_obj_nc<- predict(bayes_vbm_all, newdata=nc_vf_sum, allow_new_levels=TRUE,
 pred_obj_ncmci <- apply(pred_obj_nc, 2, mean_se)#good, this gives us the proportions 
 pred_obj_ncmci <- data.frame(matrix(unlist(pred_obj_ncmci), nrow=length(pred_obj_ncmci), byrow=T))
 ####good, now we can get to the rest 
-pred_obj_ncmci <- as.data.frame(pred_obj_ncmci)
 colnames(pred_obj_ncmci) <- c("mean","low_se","up_se")
 pred_obj_ncmci$std <- pred_obj_ncmci$mean - pred_obj_ncmci$low_se
 pred_obj_ncmci$low95ci <- pred_obj_ncmci$mean -(1.96*pred_obj_ncmci$std)
@@ -217,10 +216,7 @@ for (i in 1:length(county_vec)) {
 }
 saveRDS(master_county_results, "mrp_nc_county_resultsV1.rds")
 
-#####let's try a predicted_draw 
-nc_state_draws <- bayes_vbm_all %>%
-  add_predicted_draws(newdata=nc_vf_sum, allow_new_levels=TRUE, n=1)
-View(nc_state_draws)
+
 ###now let's create the range of estimates 
 sum(nc_vf_sum$n)
 sum(nc_vf_sum$vbm_count)*.68
