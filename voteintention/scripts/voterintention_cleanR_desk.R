@@ -183,6 +183,21 @@ nc_vf_sum2 <- readRDS("nc_state_wide_mrp_ests.rds")
 ####let's get the results by county now 
 county_vec <- sort(unique(nc_vf_all$county_desc))
 nc_vf_sum_county <- nc_vf_all %>% group_by(gender,race3,age,democrat,gop,other,county_desc ) %>% tally()
+####should we try to do a model limited to NC? 
+nc_vi_survey <- subset(vi_survey, state_fip=="37")
+bayes_vbm_all_nc_county <- brm(vbm_use ~ (1|gender) + (1|race3) + age + democrat + gop + other, 
+                               data=nc_vi_survey,
+                     family=bernoulli,
+                     prior=c(set_prior("normal(0,0.2)", class="b"),
+                             set_prior("normal(0,0.2)", class="sd",group="gender"),
+                             set_prior("normal(0,0.2)", class="sd",group="race3"),
+                             set_prior("normal(0,0.2)", class="b", coef="age"),
+                             set_prior("normal(-0.2,0.2)", class="b", coef = "democrat"),
+                             set_prior("normal(-0.4,0.2)", class="b", coef="other"),
+                             set_prior("normal(-0.9,0.2)", class="b", coef="gop")))  
+summary(bayes_vbm_all)
+
+
 
 master_county_results <- data.frame()
 for (i in 1:length(county_vec)) {
@@ -219,11 +234,12 @@ if(sum(master_county_results$total)==nrow(nc_vf_all)){
 }else{
   print("ERROR: Something literally does not add up.")
 }
-
+sum(master_county_results$vbm_count_mean)
+sum(nc_vf_sum2$vbm_count_mean)
 
 
 View(master_county_results)
-saveRDS(master_county_results, "mrp_nc_county_resultsV1.rds")
+saveRDS(master_county_results, "mrp_nc_county_resultsV2.rds")
 
 
 ###now let's create the range of estimates 
