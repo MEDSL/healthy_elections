@@ -4,6 +4,10 @@ library(cpsvote)
 library(tidyverse)
 library(janitor)
 library(srvyr)
+library(extrafont)
+library(showtext)
+font_import("C:/Users/johna/OneDrive/Documents/GitHub/healthy_elections/general/fonts/styrene_b_ttf")
+windowsFonts(A = windowsFont("StyreneB-Regular"))
 # https://github.com/Reed-EVIC/cpsvote - link to get the repo
 medsl_brands <- c("#3791FF","#59CBF5","#C0BA79","#F6573E","#156DD0","#C72654","#FF6878")
 theme_medsl3gen <- theme(title = element_text(size = rel(1.2), family="Styrene B"),
@@ -32,7 +36,13 @@ sort(unique(cps$VRS_VOTEMETHOD_1996to2002))
 ###applying labels 
 cps <- cps_label(cps)
 nrow(cps)
-
+###let's code race better 
+sort(unique(cps$RACEb))
+cps$RACEb <- as.character(cps$RACE)
+cps$RACE2 <- "OTHER"
+cps$RACE2[str_detect(cps$RACEb, "WHITE")] <- "WHITE"
+cps$RACE2[str_detect(cps$RACEb, "BLACK")] <- "BLACK"
+sort(unique(cps$RACE2))
 
 
 ########################## Get the states set up 
@@ -76,10 +86,113 @@ cps_recoded <- cps %>%
     )
   )
 
+cps_recoded %>%
+  filter(YEAR == 2016 & !is.na(VRS_REG) & STATE=="WI" & VRS_REG!="REFUSED" & VRS_REG!="NO RESPONSE") %>%
+  cps_recode_vote() %>%    # Create two new vote turnout variables to correspond to CPS and Hur-Achen coding
+  tabyl(VRS_REG)
+###cps normal 
+cps %>% 
+  filter(!is.na(VRS_REG) & STATE=="WI" & VRS_REG!="REFUSED" & VRS_REG!="NO RESPONSE" & RACE2=="BLACK") %>%
+  tabyl(VRS_REG, YEAR) %>%
+  adorn_percentages("col") %>%
+  adorn_pct_formatting() %>%
+  adorn_ns() 
+
+
+vccps_recoded %>% 
+  filter(!is.na(VRS_REG) & STATE=="WI" & VRS_REG!="REFUSED" & VRS_REG!="NO RESPONSE" & RACE2=="BLACK") %>%
+  tabyl(VRS_REG, YEAR) %>%
+  adorn_percentages("col") %>%
+  adorn_pct_formatting() %>%
+  adorn_ns() 
+cps_recoded %>% 
+  filter(!is.na(VRS_REG) & STATE=="WI" & VRS_REG!="REFUSED" & VRS_REG!="NO RESPONSE" & RACE2=="WHITE") %>%
+  tabyl(VRS_REG, YEAR) %>%
+  adorn_percentages("col") %>%
+  adorn_pct_formatting() %>%
+  adorn_ns() 
+
 
 cps_weight <- as_survey_design(cps_recoded, weights = WEIGHT)
-
+class(cps_weight)
 #####ggplot of the results of vote mode 
+voterreg_fig <- cps_weight %>%
+  filter(YEAR > 1994 & !is.na(VRS_REG) & STATE=="WI" & VRS_REG!="REFUSED" & VRS_REG!="NO RESPONSE") %>%
+  group_by(YEAR, VRS_REG) %>%
+  summarize(value = survey_mean(na.rm = TRUE)) %>%
+  ggplot(aes(x = YEAR, y = value, col = VRS_REG, group = VRS_REG)) +
+  geom_line(size = 1.5) +
+  geom_point(aes(x = YEAR, y = value, color = VRS_REG), size = 2) +
+  scale_x_continuous(breaks = seq(1996, 2018, by = 2)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Registered voters in Wisconsin over time", 
+       caption = "Source: Voting and Registration Supplement Current Population Survey \n 
+       https://www.census.gov/topics/public-sector/voting.html \n
+       Created using the cpsvote R package: Paul Gronke and Jay Lee, Early Voting Information Center Reed College. \n
+       https://github.com/Reed-EVIC/cpsvote",
+       color = "Mode of Voting",
+       y = "%",
+       x = "Year") +
+  theme_minimal() +theme_medsl3gen 
+voterreg_fig
+# 
+cps_weight_black <- subset(cps_weight, RACE2=="BLACK")
+#####let's try to get the results by race 
+black_voterreg_fig <- cps_weight_black %>%
+  filter(YEAR > 1994 & !is.na(VRS_REG) & STATE=="WI" & VRS_REG!="REFUSED" & VRS_REG!="NO RESPONSE" ) %>%
+  group_by(YEAR, VRS_REG) %>%
+  summarize(value = survey_mean(na.rm = TRUE)) %>%
+  ggplot(aes(x = YEAR, y = value, col = VRS_REG, group = VRS_REG)) +
+  geom_line(size = 1.5) +
+  geom_point(aes(x = YEAR, y = value, color = VRS_REG), size = 2) +
+  scale_x_continuous(breaks = seq(1996, 2018, by = 2)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Registered Black voters in Wisconsin over time", 
+       caption = "Source: Voting and Registration Supplement Current Population Survey \n 
+       https://www.census.gov/topics/public-sector/voting.html \n
+       Created using the cpsvote R package: Paul Gronke and Jay Lee, Early Voting Information Center Reed College. \n
+       https://github.com/Reed-EVIC/cpsvote",
+       color = "Mode of Voting",
+       y = "Electorate %",
+       x = "Year") +
+  theme_minimal() +theme_medsl3gen 
+black_voterreg_fig
+
+####white voters 
+cps_weight_white <- subset(cps_weight, RACE2=="WHITE")
+#####let's try to get the results by race 
+white_voterreg_fig <- cps_weight_white %>%
+  filter(YEAR > 1994 & !is.na(VRS_REG) & STATE=="WI" & VRS_REG!="REFUSED" & VRS_REG!="NO RESPONSE" ) %>%
+  group_by(YEAR, VRS_REG) %>%
+  summarize(value = survey_mean(na.rm = TRUE)) %>%
+  ggplot(aes(x = YEAR, y = value, col = VRS_REG, group = VRS_REG)) +
+  geom_line(size = 1.5) +
+  geom_point(aes(x = YEAR, y = value, color = VRS_REG), size = 2) +
+  scale_x_continuous(breaks = seq(1996, 2018, by = 2)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Registered White voters in Wisconsin over time", 
+       caption = "Source: Voting and Registration Supplement Current Population Survey \n 
+       https://www.census.gov/topics/public-sector/voting.html \n
+       Created using the cpsvote R package: Paul Gronke and Jay Lee, Early Voting Information Center Reed College. \n
+       https://github.com/Reed-EVIC/cpsvote",
+       color = "Mode of Voting",
+       y = "%",
+       x = "Year") +
+  theme_minimal() +theme_medsl3gen 
+white_voterreg_fig
+
+
+
+ggsave("mail_fig1.png",plot=mailfig1,scale=1,width=9,height=6,units=c("in"),dpi=600)
+## Recoding Vote Turnout
+# , breaks=c(0,15,30,45,60,75,90)
+#We know that CPS has an unusual method for coding turnout. Let's compare how the CPS codes turnout and the method recommended by Hur and Achen.
+
+
+####let's check WI results 
+dim(cps_weight)
+
+###let'sdo the registered voters 
 mailfig1 <- cps_weight %>%
   filter(YEAR > 1994 & !is.na(vote_mode)) %>%
   group_by(YEAR, vote_mode) %>%
@@ -98,43 +211,6 @@ mailfig1 <- cps_weight %>%
        y = "Electorate %",
        x = "Year") +
   theme_minimal() +theme_medsl3gen 
-mailfig1
-## Recoding Vote Turnout
-# , breaks=c(0,15,30,45,60,75,90)
-#We know that CPS has an unusual method for coding turnout. Let's compare how the CPS codes turnout and the method recommended by Hur and Achen.
-
-
-cps %>%
-  filter(YEAR == 2016) %>%
-  cps_label() %>%          # Convert columns with factor labels
-  cps_recode_vote() %>%    # Create two new vote turnout variables to correspond to CPS and Hur-Achen coding
-  tabyl(VRS_VOTE, cps_turnout)
-
-cps %>%
-  filter(YEAR == 2016) %>%
-  cps_label() %>%          # Convert columns with factor labels
-  cps_recode_vote() %>%    # Create two new vote turnout variables to correspond to CPS and Hur-Achen coding
-  tabyl(VRS_VOTE, achenhur_turnout) #not clear where to get this weight 
-
-cps %>%
-  filter(YEAR == 2016) %>%
-  cps_label() %>%          # Convert columns with factor labels
-  cps_recode_vote() %>%    # Create two new vote turnout variables to correspond to CPS and Hur-Achen coding
-  tabyl(cps_turnout, achenhur_turnout)
-
-
-## Voting Mode By Year With Appropriate Weights
-
-#The CPS requires that we use proper survey weights. Below, I demonstrate how to use the `srvyr` package to identify
-#the survey design, weight data properly, and produce turnout by mode of balloting. 
-
-#There are some glitches below, most notably, Voting mode appears to be available only from 2002 forward. 
-
-
-
-#
-# Set up the survey design. Weights must be used for the CPS
-#
 
 
 # Graph 2: Rate of Early In Person Voting By Year and By Region
@@ -161,6 +237,6 @@ cps_weight %>%
         legend.position = c(.15,.8), legend.background = element_rect(),  
         legend.title = element_text(size = 12, face = "bold"),
         legend.text = element_text(size = 10)) 
-
+ 
 
 
