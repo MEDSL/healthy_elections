@@ -148,6 +148,9 @@ colnames(nc_vf_all)[colnames(nc_vf_all)=="birth_age"] <- "age"
 rm(nc_vf1,nc_vf2,nc_vf3,nc_vf4)
 nc_vf_all$gender <- 1
 nc_vf_all$gender[nc_vf_all$gender_code=="F" | nc_vf_all$gender=="U"] <- 2
+###save copy here 
+saveRDS(nc_vf_all, "C:/Users/johna/Dropbox (Curiel Analytx)/Healthy_Elections/States/NC/nc_voterfile10132020.rds")
+
 nc_vf_all <- subset(nc_vf_all, age <= 100)
 nc_vf_all <- subset(nc_vf_all, voter_status_desc != "DENIED" & voter_status_desc != "REMOVED")
 #Let's see if we can't get tallies of these then; for now, let's drop gender 
@@ -195,14 +198,14 @@ bayes_vbm_all_nc_county <- brm(vbm_use ~ (1|gender) + (1|race3) + age + democrat
                              set_prior("normal(-0.2,0.2)", class="b", coef = "democrat"),
                              set_prior("normal(-0.4,0.2)", class="b", coef="other"),
                              set_prior("normal(-0.9,0.2)", class="b", coef="gop")))  
-summary(bayes_vbm_all)
+summary(bayes_vbm_all_nc_county)
 
 
 
 master_county_results <- data.frame()
 for (i in 1:length(county_vec)) {
   nc_vf_sum_sub <- subset(nc_vf_sum_county, county_desc==county_vec[i])
-  temp_pred_obj_nc<- predict(bayes_vbm_all, newdata=nc_vf_sum_sub, allow_new_levels=TRUE, 
+  temp_pred_obj_nc<- predict(bayes_vbm_all_nc_county, newdata=nc_vf_sum_sub, allow_new_levels=TRUE, 
                         nsamples=1000, summary=FALSE)
   temp_pred_obj_nc <- apply(temp_pred_obj_nc, 2, mean_se)
   ###########
@@ -234,12 +237,12 @@ if(sum(master_county_results$total)==nrow(nc_vf_all)){
 }else{
   print("ERROR: Something literally does not add up.")
 }
-sum(master_county_results$vbm_count_mean)
+sum(master_county_results$vbm_count_mean)*.68
 sum(nc_vf_sum2$vbm_count_mean)
 
 
 View(master_county_results)
-saveRDS(master_county_results, "mrp_nc_county_resultsV2.rds")
+saveRDS(master_county_results, "mrp_nc_county_resultsV3.rds")
 
 
 ###now let's create the range of estimates 
